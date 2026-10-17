@@ -142,6 +142,13 @@ document.querySelector("#applyFix").addEventListener("click",()=>{const fixed=de
 document.querySelector("#exportEvidence").addEventListener("click",()=>{const blob=new Blob(["Sotonship demo verification evidence\nResult: Counterexample found\nCOBOL: £333.50\nJAVA: £333.49\nNo backend was used."],{type:"text/plain"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="sotonship-demo-evidence.txt";a.click();URL.revokeObjectURL(a.href);showToast("Evidence exported")});
 document.querySelector("#fitGraph").addEventListener("click",()=>showToast("Dependency graph fitted to view"));
 document.querySelector("#projectSwitcher").addEventListener("click",()=>showToast("payments-modernisation is the active demo project"));
+const queueResizeHandle=document.querySelector("#queueResizeHandle");
+if(queueResizeHandle){
+  const compareView=document.querySelector("#compareView");
+  const setQueueHeight=height=>{const available=compareView.getBoundingClientRect().height;const safeHeight=Number.isFinite(height)?height:240;const max=Math.max(140,available-8-180);const next=Math.max(140,Math.min(max,safeHeight));compareView.style.gridTemplateRows=`minmax(0,1fr) 8px ${next}px`;queueResizeHandle.setAttribute("aria-valuenow",String(Math.round(next)))};
+  queueResizeHandle.addEventListener("pointerdown",event=>{event.preventDefault();queueResizeHandle.setPointerCapture(event.pointerId);const startY=event.clientY;const measured=parseFloat(getComputedStyle(document.querySelector("#reviewQueue")).height);const current=Number.isFinite(measured)?measured:240;const move=moveEvent=>setQueueHeight(current-(moveEvent.clientY-startY));const stop=()=>{queueResizeHandle.removeEventListener("pointermove",move);queueResizeHandle.removeEventListener("pointerup",stop)};queueResizeHandle.addEventListener("pointermove",move);queueResizeHandle.addEventListener("pointerup",stop)});
+  queueResizeHandle.addEventListener("keydown",event=>{if(event.key==="ArrowUp"||event.key==="ArrowDown"){event.preventDefault();const measured=parseFloat(getComputedStyle(document.querySelector("#reviewQueue")).height);const current=Number.isFinite(measured)?measured:240;setQueueHeight(current+(event.key==="ArrowUp"?24:-24))}});
+}
 
 createEditor(document.querySelector("#cobolEditor"),"cobol");
 createEditor(document.querySelector("#javaEditor"),"java");

@@ -47,6 +47,10 @@ body.hide-safe .CodeMirror-linebackground.cm-safe-line{background:transparent;bo
 .project-switcher b.dropdown-caret{display:inline-flex;align-items:center;height:1em;font-size:14px;line-height:1;transform:translateY(2px)}.project-switcher:hover b.dropdown-caret{color:#d9efff;transform:translateY(3px)}
 .nav-icon.code-icon{font:750 13px/1 var(--mono);letter-spacing:-2px}.nav-icon.graph-icon{font-size:24px;transform:none}.nav-icon.evidence-icon{font-size:20px}
 .nav-item{gap:8px}
+.comparison-workspace{position:relative;z-index:1}.review-queue{position:relative;z-index:4;min-height:0}.queue-resize-handle{position:relative;z-index:5}
+.alignment-gutter .dot-one{top:143px}.alignment-gutter .dot-two{top:372px}.alignment-gutter .dot-three{top:512px}
+.compare-view{grid-template-rows:minmax(220px,1fr) 8px 240px}.review-queue{overflow:auto}.alignment-gutter svg{height:700px;bottom:auto}
+.compare-view{grid-template-rows:minmax(0,1fr) 8px 240px}.queue-resize-handle{display:grid;place-items:center;min-height:8px;background:#0b1722;border-top:1px solid #2b3b49;border-bottom:1px solid #1e303e;cursor:ns-resize;touch-action:none;z-index:3}.queue-resize-handle span{width:42px;height:3px;border-radius:3px;background:#5d7486;opacity:.8}.queue-resize-handle:hover span,.queue-resize-handle:focus span{background:#43b8f2;opacity:1}.queue-resize-handle:focus{outline:1px solid #2d9ed8;outline-offset:-2px}
 
 /* Graph cards use the same deep navy surface as the IDE, with blue-gray
    structure and a restrained amber treatment for attention nodes. */
