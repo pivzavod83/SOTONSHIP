@@ -29,6 +29,25 @@ body.hide-safe .CodeMirror-linebackground.cm-safe-line{background:transparent;bo
 .cm-inline-warning{display:inline-flex;align-items:center;gap:7px;margin-left:20px;transform:translateY(1px);height:22px;color:#d5dce2;font:10px/1 var(--sans);white-space:nowrap;pointer-events:none}.cm-inline-warning b{color:#ff755d}.cm-inline-warning strong{height:22px;padding:6px 9px;border:1px solid #d6492f;border-radius:5px;background:#4b1f18;color:#ff9a86;font-size:9px;letter-spacing:.35px}.cm-inline-warning span{margin-left:3px}
 @media(max-height:800px){.editor-host .CodeMirror{font-size:12px}}
 
+/* Keep arrow markers single-colour; an adjacent-path selector must not tint
+   the next edge's fill or its markerhead. */
+.dependency-edges path.edge{fill:none!important}
+
+/* Keep the highlighted source and target on one readable dependency tier. */
+.classic-graph-canvas .node-interest{top:38%}
+.classic-graph-canvas .node-rate{top:35%}
+.classic-graph-canvas .node-round{top:38%}
+.classic-graph-canvas .node-eligibility{top:58%}
+.classic-graph-canvas .node-total{top:58%}
+.classic-graph-canvas .node-result{top:78%}
+.classic-graph-canvas .node-write{top:58%}
+.classic-graph-canvas .node-rate{top:25%!important}
+.run-summary{transform:translateX(-18px)}
+.run-summary>strong{position:relative;left:-8px}
+.project-switcher b.dropdown-caret{display:inline-flex;align-items:center;height:1em;font-size:14px;line-height:1;transform:translateY(2px)}.project-switcher:hover b.dropdown-caret{color:#d9efff;transform:translateY(3px)}
+.nav-icon.code-icon{font:750 13px/1 var(--mono);letter-spacing:-2px}.nav-icon.graph-icon{font-size:24px;transform:none}.nav-icon.evidence-icon{font-size:20px}
+.nav-item{gap:8px}
+
 /* Graph cards use the same deep navy surface as the IDE, with blue-gray
    structure and a restrained amber treatment for attention nodes. */
 .classic-graph-canvas .dependency-node{background:#102a3d;color:#e7f1f8;border-color:#41667f;box-shadow:3px 3px 0 rgba(0,0,0,.34)}

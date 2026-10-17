@@ -114,7 +114,7 @@ function renderFindings(){
   const shown=findings.filter(f=>state.filter==="all"||f.severity===state.filter);
   document.querySelector("#queueRows").innerHTML=shown.map(f=>`<div class="queue-row queue-data" role="row" data-finding="${f.id}"><span>${f.id}</span><span class="severity ${f.severity}"><i class="sev-dot ${f.severity}"></i>${f.label}</span><span class="location">${f.location}<i>↔</i>${f.counterpart}</span><span class="finding"><strong>${f.title}</strong><small>${f.detail}</small></span><button class="status ${f.status==='RESOLVED'||state.reviewed.has(f.id)?'resolved':''}" data-status="${f.id}">${state.reviewed.has(f.id)?'RESOLVED':f.status}</button><span class="actions"><button class="review-button" data-review="${f.id}">${f.status==='RESOLVED'?'View':'Review'}</button><button class="more-button" aria-label="More actions">⋯</button></span></div>`).join("");
 }
-function switchView(view){state.view=view;document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===`${view}View`));document.querySelectorAll(".nav-item").forEach(n=>n.classList.toggle("active",n.dataset.view===view));if(view==="compare")setTimeout(()=>Object.values(editors).forEach(e=>e.render()),0)}
+function switchView(view){state.view=view;document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===`${view}View`));document.querySelectorAll(".nav-item").forEach(n=>n.classList.toggle("active",n.dataset.view===view));if(view==="compare")setTimeout(()=>Object.values(editors).forEach(e=>e.render()),0);if(view==="dependencies")setTimeout(syncDependencyEdges,0)}
 function showToast(message){const t=document.querySelector("#toast");t.textContent=message;t.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove("show"),2200)}
 function focusMapping(mapping){
   const f=findings.find(item=>item.mapping===mapping);if(!f)return;switchView("compare");
@@ -146,6 +146,44 @@ document.querySelector("#projectSwitcher").addEventListener("click",()=>showToas
 createEditor(document.querySelector("#cobolEditor"),"cobol");
 createEditor(document.querySelector("#javaEditor"),"java");
 window.demoEditors=editors;
-const resultWriteEdge=document.querySelector('[data-edge="result-write"]');
-if(resultWriteEdge)resultWriteEdge.setAttribute("d","M726 436 H738");
+function syncDependencyEdges(){
+  const canvas=document.querySelector(".classic-graph-canvas");
+  if(!canvas)return;
+  const svg=canvas.querySelector(".dependency-edges");
+  if(!svg)return;
+  const bounds=canvas.getBoundingClientRect();
+  if(bounds.width<1||bounds.height<1)return;
+  const sx=1000/bounds.width, sy=600/bounds.height;
+  const box=key=>{
+    const el=canvas.querySelector(`.node-${key}`), r=el.getBoundingClientRect();
+    return {left:(r.left-bounds.left)*sx,right:(r.right-bounds.left)*sx,top:(r.top-bounds.top)*sy,bottom:(r.bottom-bounds.top)*sy,width:r.width*sx,height:r.height*sy,cx:(r.left+r.width/2-bounds.left)*sx,cy:(r.top+r.height/2-bounds.top)*sy};
+  };
+  const set=(name,d)=>{const edge=svg.querySelector(`[data-edge="${name}"]`);if(edge)edge.setAttribute("d",d)};
+  const interest=box("interest"), rate=box("rate"), eligibility=box("eligibility"), round=box("round"), total=box("total"), result=box("result"), write=box("write");
+  const bend=(a,b,offset=0)=>Math.round((a.right+b.left)/2+offset);
+  set("interest-rate",`M ${interest.right} ${interest.top+interest.height*.34} H ${interest.right+18} V ${rate.cy} H ${rate.left}`);
+  // Keep the high-attention route away from the eligibility route so their
+  // shared source card never produces overlapping strokes or arrowheads.
+  const attentionLaneY=Math.max(8,Math.min(rate.top,round.top)-10);
+  const attentionLaneX=interest.right+9;
+  const attentionTargetX=round.left-9;
+  set("interest-round",`M ${interest.right} ${interest.cy} H ${attentionLaneX} V ${attentionLaneY} H ${attentionTargetX} V ${round.cy} H ${round.left}`);
+  set("interest-eligibility",`M ${interest.right} ${interest.bottom-.34*interest.height} H ${interest.right+30} V ${eligibility.cy} H ${eligibility.left}`);
+  set("rate-round",`M ${rate.right} ${rate.cy} H ${round.left-18} V ${round.cy} H ${round.left}`);
+  set("rate-total",`M ${rate.right} ${rate.bottom-.28*rate.height} H ${bend(rate,total,-8)} V ${total.cy-.22*total.height} H ${total.left}`);
+  set("eligibility-total",`M ${eligibility.right} ${eligibility.cy} H ${bend(eligibility,total,-8)} V ${total.cy+.2*total.height} H ${total.left}`);
+  set("round-total",`M ${round.cx} ${round.bottom} V ${total.top}`);
+  set("total-result",`M ${total.cx} ${total.bottom} V ${result.top}`);
+  set("result-write",`M ${result.right} ${result.cy} H ${bend(result,write,0)} V ${write.cy} H ${write.left}`);
+  const attentionEdge=svg.querySelector('[data-edge="interest-round"]');
+  const callout=canvas.querySelector(".path-callout");
+  if(attentionEdge&&callout){
+    // Place the label on the clear horizontal run above the cards.
+    callout.style.left=`${(attentionLaneX+attentionTargetX)/20}%`;
+    callout.style.top=`${attentionLaneY/6}%`;
+    callout.style.transform="translate(-50%,-50%)";
+  }
+}
+window.addEventListener("resize",syncDependencyEdges);
+requestAnimationFrame(syncDependencyEdges);
 renderFindings();

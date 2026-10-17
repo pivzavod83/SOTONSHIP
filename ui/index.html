@@ -13,8 +13,8 @@
   <div class="app">
     <header class="topbar">
       <a class="brand" href="#" aria-label="Sotonship home">Sotonship</a>
-      <button class="project-switcher" id="projectSwitcher"><span>Project</span><strong>payments-modernisation</strong><b>⌄</b></button>
-      <div class="run-summary" aria-label="Verification summary"><span class="cyan">17</span> aligned <i>·</i> <span class="amber">2</span> review <i>·</i> <span class="red">1</span> disproved</div>
+      <button class="project-switcher" id="projectSwitcher" aria-haspopup="menu" aria-expanded="false"><span>Project</span><strong>payments-modernisation</strong><b class="dropdown-caret" aria-hidden="true">▾</b></button>
+      <div class="run-summary" aria-label="Function status summary"><strong>Function status:</strong> <span class="cyan">17</span> verified <i>·</i> <span class="amber">2</span> flagged <i>·</i> <span class="red">1</span> conflict</div>
       <button class="primary run-button" id="runVerification"><span>▶</span> Run verification</button>
       <button class="top-icon" id="settingsButton" aria-label="Settings">⚙</button>
       <span class="top-divider"></span>
@@ -23,9 +23,9 @@
 
     <div class="body-shell">
       <nav class="side-nav" aria-label="Main navigation">
-        <button class="nav-item active" data-view="compare"><span class="nav-icon">▤</span><span>COMPARE</span></button>
-        <button class="nav-item" data-view="dependencies"><span class="nav-icon graph-icon">♧</span><span>DEPENDENCIES</span></button>
-        <button class="nav-item" data-view="evidence"><span class="nav-icon">▱</span><span>EVIDENCE</span></button>
+        <button class="nav-item active" data-view="compare"><span class="nav-icon code-icon">&lt;/&gt;</span><span>COMPARE</span></button>
+        <button class="nav-item" data-view="dependencies"><span class="nav-icon graph-icon">◇</span><span>DEPENDENCIES</span></button>
+        <button class="nav-item" data-view="evidence"><span class="nav-icon evidence-icon">✓</span><span>EVIDENCE</span></button>
         <div class="nav-spacer"></div>
         <div class="demo-status"><i></i><span>Demo mode</span></div>
       </nav>
@@ -72,10 +72,10 @@
               <div class="graph-legend"><span><i class="legend-line dependency"></i>Dependency</span><span><i class="legend-line attention"></i>High attention</span><span><i class="legend-line selected"></i>Selected path</span></div>
               <svg class="dependency-edges" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-label="Function relationship arrows">
                 <defs><marker id="classicArrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" /></marker></defs>
-                <path class="edge selected-edge" data-edge="interest-rate" d="M226 316 H250 V139 H282" /><path class="edge attention-edge" data-edge="interest-round" d="M226 316 H246 V139 H510" />
-                <path class="edge" data-edge="interest-eligibility" d="M226 340 H250 V337 H282" /><path class="edge" data-edge="rate-round" d="M498 139 H510" />
-                <path class="edge" data-edge="rate-total" d="M498 160 H520 V287 H510" /><path class="edge" data-edge="eligibility-total" d="M498 337 H520 V287 H510" />
-                <path class="edge" data-edge="round-total" d="M726 139 H748 V287 H738" /><path class="edge" data-edge="total-result" d="M726 287 H738 V436 H738" /><path class="edge" data-edge="result-write" d="M946 436 H968 V287 H962" />
+                <path class="edge selected-edge" data-edge="interest-rate" d="M246 300 H265 V140 H280" /><path class="edge attention-edge" data-edge="interest-round" d="M246 316 H265 V140 H510" />
+                <path class="edge" data-edge="interest-eligibility" d="M246 340 H265 V339 H280" /><path class="edge" data-edge="rate-round" d="M496 140 H510" />
+                <path class="edge" data-edge="rate-total" d="M496 160 H500 V260 H510" /><path class="edge" data-edge="eligibility-total" d="M496 340 H500 V290 H510" />
+                <path class="edge" data-edge="round-total" d="M618 187 V242" /><path class="edge" data-edge="total-result" d="M618 336 V390" /><path class="edge" data-edge="result-write" d="M726 437 H735 V289 H744" />
               </svg>
               <button class="dependency-node node-interest active" data-module="interest"><span class="node-title"><strong>CALC-INTEREST</strong><em>COBOL · calculate()</em></span><span class="node-rule"></span><span class="node-detail"><b>INPUT</b> principal, rate, periods</span><span class="node-detail"><b>OUTPUT</b> interest amount</span></button>
               <button class="dependency-node node-rate" data-module="rate"><span class="node-title"><strong>APPLY-RATE</strong><em>COBOL · applyRate()</em></span><span class="node-rule"></span><span class="node-detail"><b>INPUT</b> customer type</span><span class="node-detail"><b>RETURNS</b> BigDecimal rate</span></button>
