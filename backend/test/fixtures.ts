@@ -3,6 +3,7 @@ import { VerificationAnalysis, VerificationRun, VerificationRunProps } from '../
 import { FormalProofStatusValue as Status } from '../src/modules/verification/domain/enums/formal-proof-status.enum';
 import { VerificationCategory } from '../src/modules/verification/domain/enums/verification-category.enum';
 import { ReferenceFxRate } from '../src/modules/fx-rates/domain/entities/reference-fx-rate';
+import { verificationPolicy } from '../src/common/config/verification-policy';
 
 export const ID = '11111111-1111-4111-8111-111111111111';
 export function analysis(status = Status.SAT_COUNTEREXAMPLE_FOUND, java = 'buggy Java'): VerificationAnalysis {
@@ -14,11 +15,12 @@ export function analysis(status = Status.SAT_COUNTEREXAMPLE_FOUND, java = 'buggy
     counterexamplesJson: status === Status.SAT_COUNTEREXAMPLE_FOUND ? [{ pennyDrift: '-0.01', inputAmountGbp: '1.00' }] : [],
     isFailureLimitCase: false,
     proofScope: {
+      engineVersion: verificationPolicy.engineVersion, semanticsVersion: verificationPolicy.semanticsVersion,
       supported: status !== Status.UNKNOWN_HALTED_LIMIT, bounded: true,
       inputAmountCents: { min: 0, max: 999999 },
       sourceSha256: { cobol: createHash('sha256').update('COBOL source').digest('hex'), java: createHash('sha256').update(java).digest('hex') },
     },
-    provenanceJson: { fixture: true },
+    provenanceJson: { fixture: true, engineVersion: verificationPolicy.engineVersion },
   };
 }
 export function run(overrides: Partial<VerificationRunProps> = {}): VerificationRun {

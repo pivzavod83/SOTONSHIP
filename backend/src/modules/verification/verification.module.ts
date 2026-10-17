@@ -1,3 +1,14 @@
+import { VerificationRevisionEntity } from './entities/verification-revision.entity';
+import { VERIFICATION_HISTORY } from './domain/repositories/verification-history.repository';
+import { MikroOrmVerificationHistoryRepository } from './infrastructure/repositories/mikro-orm-verification-history.repository';
+import { ReverifyVerificationHandler } from './application/commands/handlers/reverify-verification.handler';
+import { SubmitCandidateHandler } from './application/commands/handlers/submit-candidate.handler';
+import { GetVerificationReviewHandler } from './application/queries/handlers/get-verification-review.handler';
+import { GetVerificationHistoryHandler } from './application/queries/handlers/get-verification-history.handler';
+import { CODE_GENERATION_PROVIDER } from './application/ports/code-generation-provider';
+import { UnconfiguredCodeGenerationProvider } from './infrastructure/llm-bridge/unconfigured-code-generation.provider';
+import { GetGenerationConfigurationHandler } from './application/queries/handlers/get-generation-configuration.handler';
+import { GenerationController } from './presentation/controllers/generation.controller';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
@@ -15,9 +26,13 @@ import { ApplyVerifiedPatchHandler } from './application/commands/handlers/apply
 import { FxRatesModule } from '../fx-rates/fx-rates.module';
 
 @Module({
-  imports: [CqrsModule, FxRatesModule, MikroOrmModule.forFeature([VerificationEntity])],
-  controllers: [VerificationController],
+  imports: [CqrsModule, FxRatesModule, MikroOrmModule.forFeature([VerificationEntity, VerificationRevisionEntity])],
+  controllers: [VerificationController, GenerationController],
   providers: [
+    { provide: VERIFICATION_HISTORY, useClass: MikroOrmVerificationHistoryRepository },
+    ReverifyVerificationHandler, SubmitCandidateHandler, GetVerificationReviewHandler, GetVerificationHistoryHandler,
+    { provide: CODE_GENERATION_PROVIDER, useClass: UnconfiguredCodeGenerationProvider },
+    GetGenerationConfigurationHandler,
     { provide: VERIFICATION_REPOSITORY, useClass: MikroOrmVerificationRepository },
     { provide: ML_BRIDGE, useClass: PythonMlBridgeService },
     GetVerificationsListHandler, GetVerificationDetailHandler, GetBaselineComparisonMetricsHandler,

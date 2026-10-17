@@ -1,5 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEnum, IsOptional, IsString, MaxLength, MinLength, Matches } from 'class-validator';
+import { IsSourceCode } from '../../../../common/decorators/is-source-code.decorator';
+import { verificationPolicy } from '../../../../common/config/verification-policy';
 import { VerificationCategory } from '../../domain/enums/verification-category.enum';
 
 export class RunVerificationDto {
@@ -10,13 +12,13 @@ export class RunVerificationDto {
   @ApiProperty({ enum: VerificationCategory }) @IsEnum(VerificationCategory)
   category!: VerificationCategory;
 
-  @ApiProperty({ maxLength: 200000 }) @IsString() @MinLength(1) @MaxLength(200000)
+  @ApiProperty({ maxLength: verificationPolicy.maxSourceCharacters }) @IsSourceCode()
   cobolSource!: string;
 
-  @ApiProperty({ maxLength: 200000 }) @IsString() @MinLength(1) @MaxLength(200000)
+  @ApiProperty({ maxLength: verificationPolicy.maxSourceCharacters }) @IsSourceCode()
   javaSource!: string;
 
-  @ApiPropertyOptional({ maxLength: 200000, description: 'Optional candidate; applying it always requires a fresh supported UNSAT proof.' })
-  @IsOptional() @IsString() @MaxLength(200000)
+  @ApiPropertyOptional({ maxLength: verificationPolicy.maxSourceCharacters, description: 'Optional candidate; applying it always requires a fresh supported UNSAT proof.' })
+  @IsOptional() @IsSourceCode(true)
   patchedJavaSource?: string;
 }

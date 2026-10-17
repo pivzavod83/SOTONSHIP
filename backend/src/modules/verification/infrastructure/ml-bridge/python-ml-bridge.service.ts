@@ -4,6 +4,7 @@ import { resolve, isAbsolute } from 'node:path';
 import { IMlBridge, MlVerificationInput } from '../../application/ports/ml-bridge';
 import { VerificationAnalysis } from '../../domain/entities/verification-run';
 import { InfrastructureException } from '../../../../common/exceptions/infrastructure.exception';
+import { ApplicationException } from '../../../../common/exceptions/application.exception';
 import { TranslationKey } from '../../../../common/i18n/translation-key';
 
 @Injectable()
@@ -21,6 +22,8 @@ export class PythonMlBridgeService implements IMlBridge {
       const child = spawn(python, ['-m', 'ml_engine.verify', '--stdin'], { cwd: enginePath, shell: false, stdio: ['pipe', 'pipe', 'pipe'] });
       const stdout: Buffer[] = [];
       let size = 0;
+      const stderr: Buffer[] = [];
+      let errorSize = 0;
       let settled = false;
       const fail = (message: string, code: string = TranslationKey.EngineUnavailable): void => {
         if (settled) return;
@@ -38,9 +41,21 @@ export class PythonMlBridgeService implements IMlBridge {
         else stdout.push(chunk);
       });
       // Always drain stderr; do not expose source, credentials or tracebacks over HTTP.
-      child.stderr.resume();
+      child.stderr.on('data', (chunk: Buffer) => {
+        errorSize += chunk.length;
+        if (errorSize <= 16 * 1024) stderr.push(chunk);
+      });
       child.on('close', (code) => {
         if (settled) return;
+        if (code === 2) {
+          try {
+            const error: {code?: unknown; message?: unknown} = JSON.parse(Buffer.concat(stderr).toString('utf8'));
+            if (typeof error.code === 'string' && error.code.startsWith('input.') && typeof error.message === 'string') {
+              settled = true; clearTimeout(timer);
+              reject(new ApplicationException(error.message.slice(0, 500), error.code, 400)); return;
+            }
+          } catch { /* Unexpected subprocess errors retain infrastructure classification. */ }
+        }
         if (code !== 0) { fail('The analysis engine failed. Check the engine installation and input syntax.'); return; }
         try {
           const result: unknown = JSON.parse(Buffer.concat(stdout).toString('utf8'));

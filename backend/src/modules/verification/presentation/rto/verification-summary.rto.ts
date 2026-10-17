@@ -1,3 +1,4 @@
+import { analysisIsCurrent, verificationPolicy } from '../../../../common/config/verification-policy';
 import { ApiProperty } from '@nestjs/swagger';
 import { VerificationRun } from '../../domain/entities/verification-run';
 import { VerificationCategory } from '../../domain/enums/verification-category.enum';
@@ -20,10 +21,16 @@ export class VerificationSummaryRto {
   @ApiProperty({ format: 'date-time' }) createdAt!: string;
   @ApiProperty({ format: 'date-time' }) updatedAt!: string;
   @ApiProperty() version!: number;
+  @ApiProperty() analysisStale!: boolean;
+  @ApiProperty() reVerificationRequired!: boolean;
+  @ApiProperty() currentEngineVersion!: string;
 
   static fromDomain(run: VerificationRun): VerificationSummaryRto {
     const state = run.toPrimitives();
     return Object.assign(new VerificationSummaryRto(), {
+      analysisStale: !analysisIsCurrent(state.provenanceJson, state.proofScope),
+      reVerificationRequired: !analysisIsCurrent(state.provenanceJson, state.proofScope),
+      currentEngineVersion: verificationPolicy.engineVersion,
       id: state.id, moduleName: state.moduleName, category: state.category,
       gnnAlignmentScore: state.gnnAlignmentScore, gnnBugRiskScore: state.gnnBugRiskScore,
       baselineAlignmentScore: state.baselineAlignmentScore, baselineCaughtBug: state.baselineCaughtBug,

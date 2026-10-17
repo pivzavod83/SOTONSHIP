@@ -12,6 +12,8 @@ export class NeuroSymbolicMetricsRto {
 }
 export class BaselineComparisonRto {
   @ApiProperty() totalModules!: number;
+  @ApiProperty() currentAnalyzedModules!: number;
+  @ApiProperty() staleModules!: number;
   @ApiProperty() completedProofs!: number;
   @ApiProperty() unknownModules!: number;
   @ApiProperty({ type: DeterministicBaselineMetricsRto }) deterministicBaseline!: DeterministicBaselineMetricsRto;

@@ -27,7 +27,7 @@ Stdout contains exactly one JSON analysis object. Protocol/input failures exit 2
 
 The result includes alignment/risk/baseline scores, `formalProofStatus`, `bugCategory`, an English summary, graph JSON, witnesses, `isFailureLimitCase`, `proofScope`, and `provenanceJson`. `proofScope` retains input bounds, the exact rate and vintage, source SHA-256 hashes, solver version/result, the observation contract, and limitations. There is no compiler execution of submitted code.
 
-`--id` reads the same PostgreSQL tables as NestJS, using `DATABASE_URL` from the environment or root `.env`. It is read-only unless `--persist` is passed. Persistence checks the loaded version and source strings before updating analysis, rejecting stale writes after concurrent edits. `--persist` requires `--id`.
+`--id` reads the same PostgreSQL tables as NestJS, using `DATABASE_URL` from the environment or root `.env`. It is read-only unless `--persist` is passed. Persistence locks the row, checks the loaded version and source strings, and writes baseline/current revision snapshots transactionally, rejecting stale writes after concurrent edits. Apply all backend migrations first. `--persist` requires `--id`.
 
 ## Formal scope
 
@@ -45,9 +45,9 @@ The FX witness at the collected BoE GBP/EUR rate `1.1830` is **GBP 45.00 → COB
 
 ## Graph model and reproducibility
 
-`cpg_builder.py` uses NetworkX `MultiDiGraph` to retain separate AST, CFG and type-use edges. It is a line-based structural approximation; its eight features include arithmetic/storage type, normalized scale, rounding, branches, external calls and a calculated PCA structural residual. The independent formal parser validates the complete source before any proof.
+`cpg_builder.py` uses NetworkX `MultiDiGraph` to retain separate AST, CFG, CALL, READS, WRITES, DATA_FLOW and TYPE_FLOW edges. Supported sources use the closed semantic AST, real method/paragraph nodes and typed declarations. Unsupported sources receive a labeled approximation. Source-line locations are inspection hints; its eight features include arithmetic/storage type, normalized scale, rounding, branches, external calls and a calculated PCA structural residual. The independent formal parser validates the complete source before any proof.
 
-`gnn_aligner.py` applies normalized adjacency message passing through saved `8→12→8` GCN weights. Cosine similarity links paragraph and method embeddings without name features. Saved XGBoost trees produce node scores, followed by Platt calibration fitted on held-out synthetic rows. Portable JSON inference requires NumPy and NetworkX, and does not import the native XGBoost runtime.
+`gnn_aligner.py` applies sparse normalized adjacency message passing through saved `8→12→8` GCN weights. Cosine similarity links paragraph and method embeddings without name features. Missing target methods produce zero alignment with no fabricated root match. Deterministic type/operator diagnostics carry explicit rule origins and are not neural predictions. Saved XGBoost trees produce node scores, followed by Platt calibration fitted on held-out synthetic rows. Portable JSON inference requires NumPy and NetworkX, and does not import the native XGBoost runtime.
 
 Training is reproducible with a fixed seed:
 
@@ -57,8 +57,14 @@ Training is reproducible with a fixed seed:
 .venv/bin/python -m ml_engine.precompute
 ```
 
-On macOS, XGBoost training additionally needs the OpenMP runtime (`brew install libomp`); normal inference and tests do not. Artifacts include the source training script, GCN arrays, portable tree dump, original XGBoost JSON and synthetic train/calibration/test split plus metrics. These metrics apply only to generated feature rows. No measured 94% vs 18% alignment claim, real financial benchmark, production probability calibration or mathematical need for AI is asserted. An explicit mapping supplied by a human could also drive formal verification.
+On macOS, XGBoost training additionally needs the OpenMP runtime (`brew install libomp`); normal inference and tests do not. Artifacts include the source training script, GCN arrays, portable tree dump, original XGBoost JSON and synthetic train/calibration/test split plus metrics. These metrics apply only to generated feature rows. The saved weights predate the revised semantic-AST extractor; their ranking quality on these graphs has not been measured on labeled code pairs. No measured 94% vs 18% alignment claim, real financial benchmark, production probability calibration or mathematical need for AI is asserted. An explicit mapping supplied by a human could also drive formal verification.
 
 The deterministic baseline actually computes normalized name overlap and one obvious unsafe-constructor regex rule. Its scores are not ground-truth alignment accuracy, so the API reports observational comparisons rather than claiming a proven model advantage. Model inference time is recorded for each run, not guaranteed to remain below 200 ms for arbitrary inputs.
 
 The test suite checks source mutations, rounding signs/ties, overflow-compatible patches, external limits, invalid syntax and Java types, comments/string semantics, rate capacity, graph edges/message passing, name invariance, baseline behavior and CLI output. When a JDK is installed, independent JVM tests compile only the repository's generated fixtures and replay witnesses and patched boundary cases.
+
+## Shared policy and review output
+
+`../verification-policy.json` is the common API/engine contract for engine/semantics versions and resource limits. Unsupported octal Java integer literals, Unicode escape preprocessing, excessive nesting, graph size and expanded acyclic PERFORM work fail closed. Ordinary source size/line violations are protocol errors (exit 2 / HTTP 400), while unsupported program semantics return `UNKNOWN` with a reason code. The bridge imposes an outer subprocess timeout as well as the solver budget.
+
+`provenanceJson.reviewReport` contains the proof scope, witnesses, deterministic diagnostics, source locations, limitations and engineer next steps. Human review remains `PENDING` for all statuses. `UNSAT` is readiness for review within the scope, not human approval. Graph scores do not drive or prune the symbolic proof. No translation API or LLM is connected.

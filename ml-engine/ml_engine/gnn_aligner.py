@@ -11,6 +11,8 @@ from functools import lru_cache
 from pathlib import Path
 from time import perf_counter
 
+from .cpg_builder import deterministic_diagnostics
+
 import networkx as nx
 import numpy as np
 
@@ -23,15 +25,33 @@ def load_model():
 
 
 def embeddings(graph: nx.DiGraph, model: dict) -> tuple[list[str], np.ndarray]:
+    """Sparse normalized message passing; memory grows with nodes and edges."""
     nodes = list(graph)
-    adjacency = nx.to_numpy_array(graph, nodelist=nodes)
-    adjacency = np.maximum(adjacency, adjacency.T) + np.eye(len(nodes))
-    degree = adjacency.sum(axis=1)
-    normal = adjacency / np.sqrt(degree[:, None] * degree[None, :])
+    positions = {node: index for index, node in enumerate(nodes)}
+    directed = {}
+    for a, b in graph.edges():
+        pair = (positions[a], positions[b])
+        directed[pair] = directed.get(pair, 0) + 1
+    weights = {}
+    for (a, b), count in directed.items():
+        value = max(count, directed.get((b, a), 0))
+        weights[a,b] = value
+        weights[b,a] = value
+    for index in range(len(nodes)):
+        weights[index,index] = weights.get((index,index),0) + 1
+    rows = np.asarray([a for a,b in weights],dtype=int)
+    cols = np.asarray([b for a,b in weights],dtype=int)
+    weight = np.asarray(list(weights.values()),dtype=float)
+    degree = np.bincount(rows,weights=weight,minlength=len(nodes))
+    normal = weight / np.sqrt(degree[rows] * degree[cols])
+    def aggregate(values):
+        result = np.zeros_like(values,dtype=float)
+        np.add.at(result, rows, normal[:,None] * values[cols])
+        return result
     values = np.asarray([graph.nodes[node]["features"] for node in nodes])
-    first = np.maximum(normal @ values @ np.asarray(model["W1"]), 0)
-    second = normal @ first @ np.asarray(model["W2"])
-    second /= np.maximum(np.linalg.norm(second, axis=1, keepdims=True), 1e-12)
+    first = np.maximum(aggregate(values) @ np.asarray(model["W1"]),0)
+    second = aggregate(first) @ np.asarray(model["W2"])
+    second /= np.maximum(np.linalg.norm(second,axis=1,keepdims=True),1e-12)
     return nodes, second
 
 
@@ -63,10 +83,9 @@ def align(cobol: nx.DiGraph, java: nx.DiGraph) -> dict:
             graph.nodes[node]["riskScore"] = node_risk(graph.nodes[node]["features"], vector, model)
     source = [index for index, node in enumerate(c_nodes) if cobol.nodes[node]["kind"] == "paragraph"]
     target = [index for index, node in enumerate(j_nodes) if java.nodes[node]["kind"] == "method"]
-    if not source:
-        source = [0]
+    alignment_status = "ALIGNED" if source and target else "MISSING_BOTH" if not source and not target else "MISSING_SOURCE" if not source else "MISSING_TARGET"
     if not target:
-        target = [0]
+        source = []
     links = []
     for index in source:
         candidate = max(target, key=lambda other: float(c_vectors[index] @ j_vectors[other]))
@@ -84,7 +103,9 @@ def align(cobol: nx.DiGraph, java: nx.DiGraph) -> dict:
         factors.append("external state or aliased storage")
     if not factors:
         factors.append("explicit decimal scale and rounding")
-    return {"alignmentScore": round(sum(link["confidence"] for link in links) / len(links), 6),
+    return {"alignmentScore": round(sum(link["confidence"] for link in links) / len(links), 6) if links else 0.0,
             "bugRiskScore": maximum_risk, "links": links, "riskFactors": factors,
             "inferenceMs": round((perf_counter() - started) * 1000, 3),
-            "modelProvenance": model["provenance"]}
+            "modelProvenance": model["provenance"], "alignmentStatus": alignment_status,
+            "diagnostics": deterministic_diagnostics(cobol,java),
+            "modelScope": "Experimental synthetic-trained GCN ranking over actual function/paragraph nodes; deterministic type/operation diagnostics are reported separately; proof does not depend on cosine confidence."}

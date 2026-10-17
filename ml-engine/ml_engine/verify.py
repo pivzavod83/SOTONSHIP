@@ -7,13 +7,16 @@ import json
 import os
 import re
 import sys
-from datetime import date
+from datetime import date, datetime
+from decimal import Decimal
 from pathlib import Path
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from .cpg_builder import baseline, build_cpg, combined_graph_json
 from .gnn_aligner import MODEL_DIR, align
-from .z3_formal_prover import SAT, UNKNOWN, UNSAT, prove
+from .z3_formal_prover import SAT, UNKNOWN, UNSAT, initial_scope, prove
+from .policy import ENGINE_VERSION, MAX_JSON_BYTES, InputValidationError, validate_source
+from .review import build_review_report
 
 ROOT = Path(__file__).resolve().parents[2]
 REQUIRED_FIELDS = ("moduleName", "category", "cobolSource", "javaSource")
@@ -36,7 +39,7 @@ def select_rate(category: str, rates: list[dict]) -> dict:
     # The category selects input data only; neither the parser nor solver use it
     # to decide status, arithmetic, graph matches or bug presence.
     if not rates:
-        raise ValueError("At least one provenance-labelled reference FX rate is required")
+        raise InputValidationError("At least one provenance-labelled reference FX rate is required")
     if category == "REMITTANCE_FEE":
         matches = [rate for rate in rates if rate["currencyPair"] == "GBP/THB" and "World Bank" in rate["source"]]
     else:
@@ -46,31 +49,44 @@ def select_rate(category: str, rates: list[dict]) -> dict:
 
 def verify_request(request: dict) -> dict:
     if not isinstance(request, dict):
-        raise ValueError("Request must be a JSON object")
-    for key in REQUIRED_FIELDS:
-        value = request.get(key)
-        if not isinstance(value, str) or not value.strip():
-            raise ValueError(f"{key} must be a nonempty string")
-        if len(value) > 100000 or value.count("\n") > 1500:
-            raise ValueError(f"{key} exceeds the documented 100000-character/1500-line limit")
-    if "patchedJavaSource" in request and (not isinstance(request["patchedJavaSource"], str) or len(request["patchedJavaSource"]) > 100000 or request["patchedJavaSource"].count("\n") > 1500):
-        raise ValueError("patchedJavaSource must be a string within source limits when supplied")
+        raise InputValidationError("Request must be a JSON object")
+    for key in ("moduleName", "category"):
+        if not isinstance(request.get(key), str) or not request[key].strip():
+            raise InputValidationError(f"{key} must be a nonempty string")
+    if len(request["moduleName"]) > 160:
+        raise InputValidationError("moduleName exceeds 160 characters")
+    if request["category"] not in ("FX_CONVERSION","INTEREST_CALC","REMITTANCE_FEE","EXTERNAL_LIMIT_CASE"):
+        raise InputValidationError("Unsupported category")
+    for key in ("cobolSource", "javaSource"):
+        validate_source(request.get(key), key)
+    if "patchedJavaSource" in request:
+        validate_source(request["patchedJavaSource"], "patchedJavaSource", allow_empty=True)
     rates = request.get("referenceFxRates")
     if rates is None:
         rates = load_reference_rates()
     if not isinstance(rates, list) or not all(isinstance(rate, dict) for rate in rates):
-        raise ValueError("referenceFxRates must be an array")
+        raise InputValidationError("referenceFxRates must be an array")
     for rate in rates:
         for key in ("currencyPair", "rate", "source", "collectedDate"):
             if key not in rate or not str(rate[key]).strip():
-                raise ValueError(f"Reference rate requires {key}")
-        date.fromisoformat(rate["collectedDate"])
+                raise InputValidationError(f"Reference rate requires {key}")
+        try:
+            date.fromisoformat(rate["collectedDate"])
+        except (ValueError, TypeError):
+            raise InputValidationError("collectedDate must be a valid ISO date")
     cobol = build_cpg(request["cobolSource"], "cobol")
     java = build_cpg(request["javaSource"], "java")
     alignment = align(cobol, java)
     baseline_score, baseline_caught = baseline(request["cobolSource"], request["javaSource"])
     rate = select_rate(request["category"], rates)
-    proof = prove(request["cobolSource"], request["javaSource"], rate)
+    graph = combined_graph_json(cobol, java, alignment["links"])
+    graph["alignmentStatus"] = alignment.get("alignmentStatus")
+    limit = next((g.graph['semanticExtraction'] for g in (cobol, java) if g.graph['semanticExtraction']['status'] == 'LIMIT_EXCEEDED'), None)
+    if limit:
+        proof = {"formalProofStatus": UNKNOWN,"bugCategory":"RESOURCE_LIMIT","counterexamplesJson":[],"isFailureLimitCase":True,
+                 "proofScope":{**initial_scope(request["cobolSource"], request["javaSource"], rate),"reason":limit['reason'],"reasonCode":limit['reasonCode']}}
+    else:
+        proof = prove(request["cobolSource"], request["javaSource"], rate)
     status = proof["formalProofStatus"]
     if status == SAT:
         witness = proof["counterexamplesJson"][0]
@@ -89,13 +105,16 @@ def verify_request(request: dict) -> dict:
     return {"gnnAlignmentScore": alignment["alignmentScore"], "gnnBugRiskScore": alignment["bugRiskScore"],
             "baselineAlignmentScore": baseline_score, "baselineCaughtBug": baseline_caught,
             **proof, "fStringSummary": summary,
-            "cpgGraphJson": combined_graph_json(cobol, java, alignment["links"]),
-            "provenanceJson": {"engineVersion": "0.1.0", "model": alignment["modelProvenance"],
+            "cpgGraphJson": graph,
+            "provenanceJson": {"engineVersion": ENGINE_VERSION, "model": alignment["modelProvenance"],
                 "modelSha256": hashlib.sha256((MODEL_DIR / "cobol_java_gnn_v1.json").read_bytes()).hexdigest(),
                 "graphInferenceMs": alignment["inferenceMs"], "referenceRate": rate,
+                "alignmentStatus": alignment.get("alignmentStatus"),
+                "modelScope": alignment.get("modelScope"),
+                "reviewReport": build_review_report(proof,graph,alignment),
                 "alignmentIsProof": False, "measuredAlignmentBenchmark": None,
                 "sourceAuthorship": request.get("sourceAuthorship", "Caller-supplied sources; provenance not independently verified"),
-                "limitations": ["Structural graph extraction is a source-line approximation, separate from the closed formal parser.",
+                "limitations": ["Supported graphs use the closed semantic AST; unsupported graphs are explicitly approximate. Source lines are inspection hints.",
                                 "GNN/model confidence is not proof and does not prune symbolic inputs.",
                                 "Synthetic model calibration does not establish financial defect accuracy."]}}
 
@@ -133,6 +152,7 @@ def load_database_request(verification_id: str) -> dict:
 
 def persist_database_result(request: dict, result: dict):
     import psycopg
+    from psycopg.rows import dict_row
     from psycopg.types.json import Jsonb
     verification_id = request["id"]
     UUID(verification_id)
@@ -142,12 +162,37 @@ def persist_database_result(request: dict, result: dict):
               "f_string_summary": result["fStringSummary"], "cpg_graph_json": Jsonb(result["cpgGraphJson"]),
               "counterexamples_json": Jsonb(result["counterexamplesJson"]), "is_failure_limit_case": result["isFailureLimitCase"],
               "proof_scope": Jsonb(result["proofScope"]), "provenance_json": Jsonb(result["provenanceJson"])}
-    with psycopg.connect(_database_url()) as connection:
+    def snapshot(row):
+        def value(item):
+            if isinstance(item, (datetime, date)):
+                return item.isoformat()
+            if isinstance(item, UUID):
+                return str(item)
+            if isinstance(item, Decimal):
+                return float(item)
+            return item
+        return {re.sub(r"_([a-z])", lambda match: match[1].upper(), key): value(item) for key, item in row.items()}
+
+    with psycopg.connect(_database_url(), row_factory=dict_row) as connection:
+        current = connection.execute("SELECT * FROM verifications WHERE id=%s FOR UPDATE", (verification_id,)).fetchone()
+        if (current is None or current["version"] != request["expectedVersion"]
+                or current["cobol_source"] != request["cobolSource"] or current["java_source"] != request["javaSource"]):
+            raise ValueError("Verification was deleted or changed during analysis; stale --persist rejected")
+        # Retain a candidate review independently of re-analysis of current Java.
+        provenance = {**result["provenanceJson"]}
+        if "candidateReview" in current["provenance_json"]:
+            provenance["candidateReview"] = current["provenance_json"]["candidateReview"]
+        fields["provenance_json"] = Jsonb(provenance)
+        connection.execute("INSERT INTO verification_revisions (id,verification_id,version,recorded_at,snapshot_json) VALUES (%s,%s,%s,now(),%s) ON CONFLICT (verification_id,version) DO NOTHING",
+                           (uuid4(), verification_id, current["version"], Jsonb(snapshot(current))))
         # All identifiers are an internal constant map; input values are bound.
-        sql = "UPDATE verifications SET " + ", ".join(f"{key}=%s" for key in fields) + ",updated_at=now(),version=version+1 WHERE id=%s AND version=%s AND cobol_source=%s AND java_source=%s"
+        sql = "UPDATE verifications SET " + ", ".join(f"{key}=%s" for key in fields) + ",updated_at=now(),version=version+1 WHERE id=%s AND version=%s AND cobol_source=%s AND java_source=%s RETURNING *"
         cursor = connection.execute(sql, (*fields.values(), verification_id, request["expectedVersion"], request["cobolSource"], request["javaSource"]))
         if cursor.rowcount != 1:
             raise ValueError("Verification was deleted or changed during analysis; stale --persist rejected")
+        saved = cursor.fetchone()
+        connection.execute("INSERT INTO verification_revisions (id,verification_id,version,recorded_at,snapshot_json) VALUES (%s,%s,%s,now(),%s)",
+                           (uuid4(), verification_id, saved["version"], Jsonb(snapshot(saved))))
 
 
 def main():
@@ -161,9 +206,9 @@ def main():
         if arguments.persist and not arguments.id:
             raise ValueError("--persist requires --id, so source and analysis cannot become inconsistent")
         if arguments.stdin:
-            payload = sys.stdin.read(1048577)
-            if len(payload.encode("utf-8")) > 1048576:
-                raise ValueError("JSON request exceeds 1 MiB")
+            payload = sys.stdin.read(MAX_JSON_BYTES + 1)
+            if len(payload.encode("utf-8")) > MAX_JSON_BYTES:
+                raise InputValidationError("JSON request exceeds 1 MiB", "input.request_too_large")
             request = json.loads(payload)
         else:
             request = load_database_request(arguments.id)
@@ -172,8 +217,9 @@ def main():
             persist_database_result(request, result)
         print(json.dumps(result, ensure_ascii=True, allow_nan=False, separators=(",", ":")))
     except Exception as error:
-        print(json.dumps({"error": type(error).__name__, "message": str(error)}), file=sys.stderr)
-        raise SystemExit(2)
+        invalid = isinstance(error, (InputValidationError, json.JSONDecodeError))
+        print(json.dumps({"error": "ValueError" if invalid else type(error).__name__, "code": getattr(error,"code","input.invalid_json" if invalid else "engine.failure"), "message": str(error)}), file=sys.stderr)
+        raise SystemExit(2 if invalid else 1)
 
 
 if __name__ == "__main__":

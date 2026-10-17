@@ -3,6 +3,7 @@ import { VerificationAnalysis, VerificationRun, VerificationRunProps } from '../
 import { FormalProofStatusValue } from '../../domain/enums/formal-proof-status.enum';
 import { InfrastructureException } from '../../../../common/exceptions/infrastructure.exception';
 import { TranslationKey } from '../../../../common/i18n/translation-key';
+import { verificationPolicy } from '../../../../common/config/verification-policy';
 
 /** Whitelist subprocess fields and validate all invariants before persistence. */
 export function validatedAnalysis(result: VerificationAnalysis, context: Omit<VerificationRunProps, keyof VerificationAnalysis>): VerificationAnalysis {
@@ -16,6 +17,11 @@ export function validatedAnalysis(result: VerificationAnalysis, context: Omit<Ve
       proofScope: result.proofScope, provenanceJson: result.provenanceJson,
     };
     new VerificationRun({ ...context, ...analysis });
+    if (analysis.provenanceJson.engineVersion !== verificationPolicy.engineVersion
+      || analysis.proofScope.engineVersion !== verificationPolicy.engineVersion
+      || analysis.proofScope.semanticsVersion !== verificationPolicy.semanticsVersion) {
+      throw new Error('Analysis requires the current engine and semantics versions.');
+    }
     if (analysis.formalProofStatus === FormalProofStatusValue.UNSAT_PROVEN_SAFE) {
       const hashes = analysis.proofScope.sourceSha256;
       if (!hashes || typeof hashes !== 'object' || Array.isArray(hashes)

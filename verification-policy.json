@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "engineVersion": "0.2.0",
+  "semanticsVersion": "bounded-financial-scalar-v2",
+  "maxSourceCharacters": 100000,
+  "maxSourceLines": 1500,
+  "maxJsonBytes": 1048576,
+  "maxAstNesting": 64,
+  "maxExecutionSteps": 10000,
+  "maxExpressionNodes": 5000,
+  "maxGraphNodes": 2500,
+  "solverTimeoutMs": 5000
+}

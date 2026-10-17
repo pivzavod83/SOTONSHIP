@@ -93,3 +93,19 @@ def test_patched_java_matches_financial_boundary_cases(tmp_path):
             assert invoke(text, str(rate)) == expected, (row["moduleName"], text)
             checked += 1
     assert checked >= 20
+
+
+def test_octal_false_safe_regression_is_rejected_and_replayed(tmp_path):
+    from ml_engine.fixtures import FX_COBOL
+    from ml_engine.z3_formal_prover import prove, UNKNOWN
+    source = '''import java.math.BigDecimal;
+public final class OctalCase {
+ public BigDecimal calculate(BigDecimal a, BigDecimal r) {
+  if (010 == 8) { return BigDecimal.ONE; } else { return BigDecimal.ZERO; }
+ }
+}'''
+    invoke = _runner(source, tmp_path)
+    assert invoke('0','1.183') == Decimal('1.00')
+    result=prove(FX_COBOL.replace('INPUT-AMOUNT * REFERENCE-RATE','0'),source,
+      {'rate':'1.183','source':'test','currencyPair':'GBP/EUR','collectedDate':'2026-10-17'})
+    assert result['formalProofStatus']==UNKNOWN

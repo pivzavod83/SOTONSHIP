@@ -24,6 +24,10 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       status = error.statusCode; code = error.code; message = error.message;
     } else if (error instanceof InfrastructureException) {
       status = 503; code = error.code; message = error.message;
+    } else if (error instanceof Error && 'type' in error && error.type === 'entity.too.large') {
+      status = 413; code = 'input.request_too_large'; message = 'JSON request exceeds the configured body limit.';
+    } else if (error instanceof SyntaxError && 'type' in error && error.type === 'entity.parse.failed') {
+      status = 400; code = 'input.invalid_json'; message = 'Request body must contain valid JSON.';
     }
     if (status >= 500) this.logger.error(error instanceof Error ? error.stack : String(error));
     response.status(status).json({ statusCode: status, code, message });

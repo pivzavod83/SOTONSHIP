@@ -11,12 +11,16 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Any
 
+from .policy import MAX_AST_NESTING, MAX_EXPRESSION_NODES, validate_source
+
 
 class UnsupportedSemantics(ValueError):
-    pass
+    def __init__(self, message: str, code: str = "semantics.unsupported"):
+        super().__init__(message)
+        self.code = code
 
 
-JAVA_RESERVED = set("abstract assert boolean break byte case catch char class const continue default do double else enum extends final finally float for goto if implements import instanceof int interface long native new package private protected public return short static strictfp super switch synchronized this throw throws transient try void volatile while true false null record sealed permits var yield".split())
+JAVA_RESERVED = set("_ abstract assert boolean break byte case catch char class const continue default do double else enum extends final finally float for goto if implements import instanceof int interface long native new package private protected public return short static strictfp super switch synchronized this throw throws transient try void volatile while true false null record sealed permits var yield".split())
 
 
 def java_identifier(tokens) -> str:
@@ -87,6 +91,18 @@ class Tokens:
                 raise UnsupportedSemantics(f"Unrecognized token near {text[cursor:cursor + 32]!r}")
             self.items.append(next(group for group in match.groups() if group is not None))
             cursor = match.end()
+        if len(self.items) > MAX_EXPRESSION_NODES * 4:
+            raise UnsupportedSemantics("Token budget exceeded", "limit.expression_nodes")
+        depth = 0
+        for token in self.items:
+            if token in ("(", "{"):
+                depth += 1
+                if depth > MAX_AST_NESTING:
+                    raise UnsupportedSemantics("Syntax nesting budget exceeded", "limit.ast_nesting")
+            elif token in (")", "}"):
+                depth -= 1
+                if depth < 0:
+                    raise UnsupportedSemantics("Unbalanced syntax delimiters")
         self.pos = 0
 
     def peek(self) -> str:
@@ -157,9 +173,28 @@ def expression(tokens: Tokens, minimum: int = 0) -> Any:
     return left
 
 
+def checked_expression(tokens: Tokens):
+    result = expression(tokens)
+    work = [(result, 1)]
+    count = 0
+    while work:
+        node, depth = work.pop()
+        count += 1
+        if count > MAX_EXPRESSION_NODES:
+            raise UnsupportedSemantics("Expression node budget exceeded", "limit.expression_nodes")
+        if depth > MAX_AST_NESTING:
+            raise UnsupportedSemantics("Expression tree nesting budget exceeded", "limit.ast_nesting")
+        children = []
+        if node[0] == 'binary': children = [node[2], node[3]]
+        elif node[0] in ('neg', 'decimal_from_double', 'member'): children = [node[1]]
+        elif node[0] == 'call': children = [node[1], *node[3]]
+        work.extend((child, depth + 1) for child in children)
+    return result
+
+
 def parse_expression(text: str, cobol: bool = False):
     tokens = Tokens(text, cobol)
-    result = expression(tokens)
+    result = checked_expression(tokens)
     tokens.done()
     return result
 
@@ -167,7 +202,7 @@ def parse_expression(text: str, cobol: bool = False):
 def _cobol_statements(lines: list[str], index: int = 0, nested: bool = False):
     result = []
     while index < len(lines):
-        line = lines[index].rstrip(".").strip()
+        line = lines[index].removesuffix(".").strip()
         if line in ("ELSE", "END-IF"):
             if not nested:
                 raise UnsupportedSemantics("Unmatched COBOL IF delimiter")
@@ -175,9 +210,9 @@ def _cobol_statements(lines: list[str], index: int = 0, nested: bool = False):
         if line.startswith("IF "):
             yes, index = _cobol_statements(lines, index + 1, True)
             no = []
-            if index < len(lines) and lines[index].rstrip(".") == "ELSE":
+            if index < len(lines) and lines[index].removesuffix(".") == "ELSE":
                 no, index = _cobol_statements(lines, index + 1, True)
-            if index >= len(lines) or lines[index].rstrip(".") != "END-IF":
+            if index >= len(lines) or lines[index].removesuffix(".") != "END-IF":
                 raise UnsupportedSemantics("Unterminated COBOL IF")
             result.append(("if", parse_expression(line[3:], True), yes, no))
         elif match := re.fullmatch(r"COMPUTE ([A-Z][A-Z0-9-]*)( ROUNDED)? = (.+)", line):
@@ -197,6 +232,20 @@ def _cobol_statements(lines: list[str], index: int = 0, nested: bool = False):
 
 
 def parse_cobol(source: str) -> CobolProgram:
+    validate_source(source, "cobolSource")
+    depth = 0
+    for line in strip_comments(source, "cobol").splitlines():
+        word = line.strip().upper()
+        if depth and word.endswith('.') and not (word == 'END-IF.' and depth == 1):
+            raise UnsupportedSemantics("Sentence periods inside nested COBOL IF scopes are outside the supported grammar")
+        if word.startswith("IF "):
+            if word.endswith('.'):
+                raise UnsupportedSemantics("A COBOL IF header cannot terminate a sentence in this grammar")
+            depth += 1
+            if depth > MAX_AST_NESTING:
+                raise UnsupportedSemantics("COBOL IF nesting budget exceeded", "limit.ast_nesting")
+        elif word.removesuffix(".") == "END-IF":
+            depth -= 1
     text = strip_comments(source, "cobol").upper()
     pattern = (r"\s*IDENTIFICATION DIVISION\.\s*PROGRAM-ID\.\s*[A-Z0-9-]+\.\s*"
                r"DATA DIVISION\.\s*WORKING-STORAGE SECTION\.\s*(.*?)"
@@ -212,7 +261,7 @@ def parse_cobol(source: str) -> CobolProgram:
             raise UnsupportedSemantics(f"Unsupported storage declaration: {line}")
         scale_token = field[4]
         scale = int(scale_token[2:-1]) if scale_token and scale_token.startswith("9(") else len(scale_token or "")
-        if int(field[3]) > 12 or scale > 8:
+        if not 1 <= int(field[3]) <= 12 or scale > 8 or (scale_token is not None and scale == 0):
             raise UnsupportedSemantics("Storage capacity exceeds scalar proof limits")
         fields.append(Picture(field[1].replace("-", "__"), int(field[3]), scale, bool(field[2])))
     if len(fields) < 3 or fields[0].scale != 2 or len({field.name for field in fields}) != len(fields):
@@ -271,11 +320,11 @@ def _java_statements(tokens: Tokens):
     while tokens.peek() and tokens.peek() != "}":
         first = tokens.take()
         if first == "return":
-            statements.append(("return", expression(tokens)))
+            statements.append(("return", checked_expression(tokens)))
             tokens.take(";")
         elif first == "if":
             tokens.take("(")
-            condition = expression(tokens)
+            condition = checked_expression(tokens)
             tokens.take(")")
             yes = _java_statements(tokens)
             tokens.take("else")
@@ -284,7 +333,7 @@ def _java_statements(tokens: Tokens):
         elif first in ("BigDecimal", "double"):
             name = java_identifier(tokens)
             tokens.take("=")
-            statements.append(("let", name, expression(tokens), first))
+            statements.append(("let", name, checked_expression(tokens), first))
             tokens.take(";")
         else:
             raise UnsupportedSemantics(f"Unsupported Java statement {first}")
@@ -293,7 +342,15 @@ def _java_statements(tokens: Tokens):
 
 
 def parse_java(source: str) -> JavaProgram:
+    validate_source(source, "javaSource")
+    if re.search(r"\\u+[0-9a-fA-F]{4}", source):
+        raise UnsupportedSemantics("Java Unicode escape preprocessing is outside the supported grammar", "semantics.unicode_escape")
     text = strip_comments(source, "java")
+    if any(ord(character) > 127 for character in text):
+        raise UnsupportedSemantics("Non-ASCII Java source is outside the supported grammar")
+    for java_type in ("BigDecimal", "RoundingMode"):
+        if re.search(r"\b" + java_type + r"\b", text) and not re.search(r"\bimport\s+java\.math\." + java_type + r"\s*;", text):
+            raise UnsupportedSemantics(f"{java_type} requires an explicit java.math.{java_type} import")
     # Imports may appear only before the class, never inside string literals.
     text = text.lstrip()
     while (match := re.match(r"import\s+java\.math\.(?:BigDecimal|RoundingMode)\s*;\s*", text)):

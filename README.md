@@ -4,39 +4,15 @@ A runnable backend and ML prototype for comparing selected COBOL banking arithme
 
 The API uses **NestJS, strict Layered DDD, CQRS, MikroORM and PostgreSQL**. Python uses NetworkX, NumPy graph message passing, demo XGBoost risk scoring and `z3-solver`. Four precomputed analyses are loaded by an idempotent MikroORM seeder.
 
-## Project background and design goals
+## What this prototype does
 
-This overview records the project motivation and design goals. The implementation described below uses an explicit bounded scalar model and verifies caller-supplied patch candidates.
+The hackathon idea is a review gate for COBOL-to-Java migration: a developer supplies the original COBOL and a Java candidate, the verifier checks the supported financial calculation, and an engineer receives evidence to inspect. It currently **verifies supplied code; it does not translate code**. The four supplied Java patches are generated fixtures, not dynamically generated fixes.
 
-### The problem
+COBOL paragraphs and Java methods are graph nodes. Variables, expressions, calls, control flow and typed reads/writes connect them. Deterministic diagnostics flag such differences as packed decimal becoming `double` or changed arithmetic operators. A small experimental GCN suggests paragraph-to-method matches; Z3 independently compares the recognized source semantics. Neural scores never remove proof obligations or certify a candidate.
 
-Banks are modernising decades-old COBOL systems into Java, including software that calculates payments, interest, fees, and foreign-exchange conversions. A migration can compile, pass conventional tests, and still change the financial meaning of the original program.
+The useful demo is: find a concrete penny discrepancy, inspect the inputs/outputs and code locations, submit revised Java, and apply it only after a fresh proof within the recorded scope. Unsupported code produces `UNKNOWN` with an explanation. Every report starts with human review `PENDING`; this prototype does not implement reviewer sign-off or production deployment.
 
-For example, COBOL `COMP-3` values use fixed-point decimal arithmetic. Translating them into Java `double` values introduces binary floating-point behaviour, where common decimal values such as `0.1` cannot be represented exactly. Differences in scale, rounding order, digit truncation, or control flow can therefore create small discrepancies that are difficult to detect but significant across millions of transactions.
-
-This is a real operational risk, not only a theoretical concern. In 2018, TSB's migration to a new banking platform caused widespread disruption, affected a significant proportion of its 5.2 million customers, led to £32.7 million in customer redress, and resulted in £48.65 million in regulatory fines. The incident was broader than a COBOL-to-Java conversion, but it demonstrates the cost of insufficient assurance during complex banking-system migrations. At the language level, [IBM documents `COMP-3` as fixed-point packed decimal](https://www.ibm.com/docs/en/cobol-linux-x86/1.2.0?topic=arithmetic-formats-numeric-data), while [Oracle documents the exact representation error produced from a Java `double`](https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/math/BigDecimal.html). These semantic differences cannot be addressed reliably through compilation and ordinary test cases alone.
-
-### Our solution
-
-We are building a verification layer that determines whether a migrated Java module preserves the financial behaviour of its COBOL source. Rather than trusting the translation process, the system combines machine learning with formal verification to identify risky changes and prove—or disprove—financial equivalence.
-
-#### How it works
-
-1. **Program modelling:** The COBOL and Java programs are converted into Code Property Graphs that capture syntax, data flow, control flow, types, and financial operations.
-2. **Cross-language alignment:** A Graph Neural Network aligns equivalent COBOL paragraphs, variables, and operations with their Java counterparts, even when the code has been renamed or restructured. It assigns risk scores to suspicious mappings such as `COMP-3` to `double`, changed rounding rules, truncation, or altered loop behaviour.
-3. **Focused formal verification:** The highest-risk aligned subgraphs are translated into mathematical constraints and checked with the Z3 theorem prover. Relevant Bank of England exchange rates and World Bank remittance-fee data provide realistic financial scenarios.
-4. **Proof or counterexample:** If no differing result is possible within the defined model, the module is reported as mathematically equivalent. If a discrepancy exists, the verifier returns the exact input and the differing COBOL and Java outputs—for example, the transaction on which the Java implementation loses one penny.
-5. **Verified remediation:** For supported decimal and rounding defects, the system proposes a Java `BigDecimal` correction and reruns the proof. Code that depends on unbounded external state, such as an unstubbed `EXEC CICS` call, is explicitly marked unverifiable and referred for human review.
-
-### Why this solves the problem
-
-Traditional compilers and linters check syntax and local rules; tests examine only selected examples. Our approach checks semantic behaviour across languages. The GNN makes verification practical by locating equivalent and high-risk logic after refactoring, while Z3 provides mathematical evidence and reproducible counterexamples. Together, they give migration teams a clear basis for approving safe modules, correcting unsafe ones, and refusing to make unsupported claims when verification is not possible.
-
-### Evidence
-
-- [FCA: TSB fined £48.65m for operational resilience failings](https://www.fca.org.uk/news/press-releases/tsb-fined-48m-operational-resilience-failings)
-- [IBM: COBOL numeric data formats](https://www.ibm.com/docs/en/cobol-linux-x86/1.2.0?topic=arithmetic-formats-numeric-data)
-- [Oracle: Java `BigDecimal` documentation](https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/math/BigDecimal.html)
+A provider-neutral generation port and environment placeholders are included for a future translation step. No LLM provider, model or network API is connected. Setting a key does not enable generation. A future adapter must return a candidate plus assumptions and unsupported constructs; the independent verifier remains responsible for the verdict.
 
 ## Run locally
 
@@ -82,7 +58,8 @@ flowchart TD
   E <--> P[(PostgreSQL)]
   H --> ML[Python ML bridge]
   ML --> G[CPG and graph alignment]
-  G --> Z[Z3 equivalence / counterexample]
+  ML --> Z[Independent Z3 semantics / counterexample]
+  G --> O
   H --> O[Response Transfer Object]
   O --> C
 ```
@@ -100,7 +77,7 @@ Both `backend/src/modules/verification/` and `fx-rates/` use these boundaries:
 
 Controllers do not call repositories. Handlers inject domain ports such as `@Inject('IVerificationRepository')`; infrastructure implements them. Domain code imports neither NestJS nor MikroORM. Only the infrastructure mapper converts persistence models to/from domain models. Compiled ORM discovery uses `dist/**/entities/*.entity.js`, with a corresponding TypeScript pattern for development. There is no TypeORM dependency.
 
-The verification aggregate stores COBOL, Java and proposed patched Java; graph/alignment/risk results; a deterministic baseline; formal proof status; counterexamples; timestamps; and explicit proof scope/provenance. PostgreSQL uses UUID keys, JSONB graphs/witnesses/scope and decimal FX rates serialized as strings. A successful patch command re-verifies the supplied patch, requires a supported, bounded `UNSAT_PROVEN_SAFE` result tied to the exact source SHA256 hashes, and then persists the new Java and fresh results. Unsupported or failing patches leave the original Java unchanged; optimistic version locking rejects conflicting updates. Completion and discrepancy events are published through CQRS.
+The verification aggregate stores COBOL, Java and proposed patched Java; graph/alignment/risk results; a deterministic baseline; formal proof status; counterexamples; timestamps; and explicit proof scope/provenance. PostgreSQL uses UUID keys, JSONB graphs/witnesses/scope and decimal FX rates serialized as strings. A successful patch command re-verifies the supplied patch, requires a current-engine, supported, bounded `UNSAT_PROVEN_SAFE` result tied to the exact source SHA256 hashes, and then persists the new Java and fresh results. Unsupported or failing patches leave the original Java unchanged; optimistic version locking rejects conflicting updates. Completion and discrepancy events are published through CQRS.
 
 | HTTP endpoint | CQRS use case | Response |
 | --- | --- | --- |
@@ -108,18 +85,23 @@ The verification aggregate stores COBOL, Java and proposed patched Java; graph/a
 | `GET /api/verifications/baseline-comparison` | `GetBaselineComparisonMetricsQuery` | `BaselineComparisonRto` |
 | `GET /api/verifications/:id` | `GetVerificationDetailQuery` | `VerificationDetailRto` |
 | `POST /api/verifications` | `RunVerificationCommand` | `VerificationDetailRto` |
+| `POST /api/verifications/:id/reverify` | `ReverifyVerificationCommand` | Fresh analysis of current Java |
+| `POST /api/verifications/:id/candidates` | `SubmitCandidateCommand` | Separately verified candidate; current Java/proof retained |
+| `GET /api/verifications/:id/review` | `GetVerificationReviewQuery` | Engineer report and optional candidate analysis |
+| `GET /api/verifications/:id/history` | `GetVerificationHistoryQuery` | Versioned source/analysis snapshots |
+| `GET /api/generation/configuration` | `GetGenerationConfigurationQuery` | Presence flags; adapter always disabled |
 | `POST /api/verifications/:id/apply-patch` | `ApplyVerifiedPatchCommand` | `VerificationDetailRto` |
 | `GET /api/fx-rates` | FX list query | Reference FX RTOs |
 
-Use Swagger for request schemas. A run accepts `moduleName`, `category`, `cobolSource`, `javaSource` and optional `patchedJavaSource`. Categories are `FX_CONVERSION`, `INTEREST_CALC`, `REMITTANCE_FEE` and `EXTERNAL_LIMIT_CASE`. UUIDs, source length and DTO fields are validated. Submitted source is parsed as data; the bridge does not execute submitted COBOL or Java.
+Use Swagger for request schemas. A run accepts `moduleName`, `category`, `cobolSource`, `javaSource` and optional `patchedJavaSource`. Categories are `FX_CONVERSION`, `INTEREST_CALC`, `REMITTANCE_FEE` and `EXTERNAL_LIMIT_CASE`. UUIDs, DTO fields and shared source limits are validated: 100,000 characters and 1,500 lines per source, with a 1 MiB JSON body cap. Oversized source input returns HTTP 400; oversized JSON returns 413. Submitted source is parsed as data; the bridge does not execute submitted COBOL or Java.
 
 ## ML and formal pipeline
 
 `ml-engine/ml_engine/` separates three stages:
 
-1. `cpg_builder.py` extracts AST, control-flow and type-flow nodes/edges, including `PIC`, `COMP-3`, paragraph flow, Java arithmetic and external nodes. Node features are fixed-point, IEEE754, BigDecimal, scale, rounding, branching, external calls and structural residual.
-2. `gnn_aligner.py` runs two graph message-passing layers with saved demo weights, cosine subgraph alignment and node risk classification. The deterministic baseline matches names/regexes. Graph JSON includes cross-language links and node scores; an f-string explanation identifies structural/type risks and the proof outcome.
-3. `z3_formal_prover.py` parses a closed source grammar, models scaled integers/rationals, storage-width truncation and the supported Java arithmetic, and asserts unequal results. The exact source programs, actual rate and input bounds determine the constraints. Neural scores do not establish formal safety.
+1. `cpg_builder.py` uses the closed semantic AST for supported sources. Graphs retain real paragraphs/methods, typed declarations, expression operands, `READS`, `WRITES`, `DATA_FLOW`, `TYPE_FLOW`, `CFG` and `CALL` edges. Unsupported sources get an explicitly labeled structural approximation. Source line locations are inspection hints, not a proven defect localization.
+2. `gnn_aligner.py` runs sparse normalized message passing through saved `8→12→8` demo weights, cosine paragraph-to-method matching and synthetic-trained node risk classification. Missing method/paragraph nodes produce a missing-alignment status, zero alignment and no fabricated root-node match. Deterministic type/operator warnings are labeled separately from neural scores.
+3. `z3_formal_prover.py` independently parses complete sources, models scaled integers/rationals, storage-width truncation and supported Java arithmetic, and asserts unequal outputs. Exact source programs, the selected fixed rate and input bounds determine constraints. GNN alignment is advisory and does not select or prune the symbolic proof.
 
 The scalar proof input contract maps the first two COBOL fields to amount and rate, and the two Java method parameters to the same roles. COBOL storage declarations require explicit `VALUE 0`; the harness supplies the two inputs. Supported grammar, bounds and exclusions are recorded with each result. Unknown statements, external state or unsupported semantics halt proof. These are deliberately small programs, not a complete COBOL compiler, Java frontend or general program equivalence system.
 
@@ -129,7 +111,22 @@ The scalar proof input contract maps the first two COBOL fields to amount and ra
 | `UNSAT_PROVEN_SAFE` | No unequal outputs exist **within the recorded model, bounds, input contract and fixed reference rate**. This does not prove unrestricted whole-language or production banking equivalence. |
 | `UNKNOWN_HALTED_LIMIT` | Unsupported code, external CICS/JCL state, unmodeled aliases, solver limits or insufficient modeling prevents a claim. Human review is required. |
 
-AI helps prioritize structurally similar, renamed code and highlight risk; it is not mathematically required to solve every equivalence problem. The shipped model is trained/calibrated on synthetic demo data. Its confidence scores are not established real-world bug probabilities. There is no independently measured claim of **94% vs 18% accuracy**, and warm inference timing must be distinguished from Python startup, model loading and SMT proof time.
+The graph model suggests structurally similar, renamed code matches; it is not mathematically required to solve every equivalence problem. The shipped model is trained/calibrated on synthetic feature rows, not a labeled COBOL/Java mapping corpus. Its weights predate the revised AST graph extractor, so cross-language ranking quality remains unvalidated. Its confidence scores are not established real-world bug probabilities. There is no independently measured claim of **94% vs 18% accuracy**, and warm inference timing must be distinguished from Python startup, model loading and SMT proof time.
+
+## Engineer workflow and future LLM configuration
+
+1. `POST /api/verifications` with COBOL and Java, or start with one of the four seed IDs from `GET /api/verifications`.
+2. `GET /api/verifications/:id/review`. Inspect `currentReport`: proof status and scope, concrete witnesses, deterministic diagnostics, relevant locations, limitations and suggested next steps. `SAT` and `UNKNOWN` require review. A scoped `UNSAT` is ready for review and still requires a human decision.
+3. `POST /api/verifications/:id/candidates` with `{ "javaSource": "...revised Java..." }`. The response retains current Java and its verdict; `provenanceJson.candidateReview.analysis` contains the candidate's independent result. An unsafe candidate can be retained for inspection.
+4. `POST /api/verifications/:id/apply-patch`. The server re-verifies the exact stored candidate and replaces Java only for a current, source-bound, bounded `UNSAT`. `SAT`/`UNKNOWN` returns 422 without replacing current Java. Read `GET /api/verifications/:id/history` to inspect prior versions.
+
+Every successful API mutation and CLI `--persist` writes an immutable application revision in the same database transaction. This is local review history, not a tamper-proof compliance log. Legacy/seed rows receive a baseline snapshot on their first mutation; history before this feature was introduced cannot be reconstructed. Conflicting source/version updates return 409 in the API. Failed analyses do not create a saved revision; unsafe candidates can be saved using the candidate endpoint.
+
+Results retain engine and semantics versions. `analysisStale` / `reVerificationRequired` flags mean a stored analysis requires `POST /api/verifications/:id/reverify`; reseeding deliberately preserves existing rows. Stale analyses are excluded from current proof counts in baseline-comparison metrics. The shared root `verification-policy.json` defines engine versions, source/body limits, nesting/graph budgets, expanded COBOL execution work and solver timeout. Keep it alongside both services when packaging the repository. Resource or unsupported-semantics limits return `UNKNOWN`, rather than proof success.
+
+The reserved root `.env` settings are `LLM_API_KEY`, `LLM_PROVIDER`, `LLM_MODEL` and `LLM_BASE_URL`. Leave them empty until an adapter is implemented. `GET /api/generation/configuration` reports only presence booleans and `adapterEnabled: false`; it never returns credential values. No generation endpoint is advertised and no provider dependency is installed.
+
+For judging, demonstrate the verified penny witness, safe candidate gate, revision history, and honest CICS failure case. Further work includes a selected LLM adapter, independent COBOL compiler differential checks across the supported subset, broader language frontends, and a labeled real-code alignment benchmark. GNN accuracy or production banking safety should not be claimed from the four demo cases.
 
 ## Four seed scenarios
 
@@ -178,10 +175,12 @@ npm run build
 npm test
 # With the API running against a disposable local database; creates/patches test rows:
 npm run test:smoke
+# With DATABASE_URL pointing to the same disposable database:
+node test/persistence.smoke.mjs
 ```
 
 The stdin JSON contract is `{ moduleName, category, cobolSource, javaSource, patchedJavaSource, referenceFxRates }`, where FX rates are decimal strings with currency pair, source and collection date. The response includes graph data, scores, baseline, proof status, witnesses, proof scope and provenance. Stdout is reserved for machine-readable JSON; diagnostics go to stderr.
 
 Saved model inference uses a portable evaluator for the trained XGBoost trees, so it needs no native XGBoost/OpenMP library. To regenerate the synthetic demonstration model, install `ml-engine/requirements-training.txt` and run `python scripts/train_demo_models.py` from `ml-engine/` (XGBoost training on macOS also requires `libomp`). The model JSON records training seed, synthetic sample split, calibration and limitations. Reported synthetic classification metrics measure that generated task; they do not measure real cross-language alignment accuracy.
 
-Tests cover supported arithmetic/counterexamples, safe patches, negative rounding, renamed identifiers and rejection of unsupported programs, plus domain rules, CQRS orchestration and layer boundaries. The HTTP smoke check exercises Swagger, validation, seeded reads, real Python/Z3 analysis, safe-patch persistence and limit-case rejection against PostgreSQL. See the engine model metadata and individual run `proofScope` for the exact guarantees and exclusions.
+Tests cover supported arithmetic/counterexamples, safe patches, negative rounding, renamed identifiers and rejection of unsupported programs, plus domain rules, CQRS orchestration and layer boundaries. The HTTP smoke check exercises Swagger, shared input validation, seeded reads, real Python/Z3 analysis, typed graphs, review reports, candidate isolation, revision history, safe-patch persistence and limit-case rejection against PostgreSQL. The repository tests independently execute Java fixtures on a JDK when available; a COBOL compiler oracle has not yet been run for this build. See the engine model metadata and individual run `proofScope` for the exact guarantees and exclusions.

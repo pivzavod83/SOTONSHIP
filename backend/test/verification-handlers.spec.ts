@@ -108,4 +108,11 @@ describe('Verification command safety and orchestration', () => {
     expect(result.neuroSymbolic.provenCounterexamples).toBe(1);
     expect(result.interpretation).toContain('not measured alignment accuracy');
   });
+
+  it('excludes stale safe verdicts from current proof counts', async () => {
+    repository.findAll.mockResolvedValue([run(), run({ ...analysis(Status.UNSAT_PROVEN_SAFE), provenanceJson: { engineVersion: '0.1.0' } })]);
+    const result = await new GetBaselineComparisonMetricsHandler(repository).execute();
+    expect(result).toMatchObject({ totalModules: 2, currentAnalyzedModules: 1, staleModules: 1, completedProofs: 1 });
+    expect(result.neuroSymbolic.provenSafeModules).toBe(0);
+  });
 });

@@ -1,7 +1,9 @@
 # Project Summary
 
-Banks are replacing decades-old COBOL systems with modern Java applications, but even a tiny translation error can alter a payment, interest, fee, or currency calculation. A one-penny discrepancy may appear insignificant, yet across millions of transactions it can create financial, regulatory, and customer consequences.
+COBOL-to-Java migrations can change rounding, numeric capacity or control flow even when the new code looks plausible. This hackathon prototype provides an evidence-based review gate for a deliberately small financial arithmetic subset.
 
-Our project provides a safety and verification layer for this migration process. It uses a Graph Neural Network to compare the structure and financial logic of the original COBOL program with the new Java version, even when code has been renamed or reorganised. A mathematical verification engine then checks whether both programs always produce the same result. If a difference exists, the system identifies the exact transaction that exposes it and can recommend a correction. If verification is not possible, it requests human review instead of making an unsupported claim.
+A developer supplies COBOL and Java. Typed graphs expose paragraphs, methods and data flow; deterministic rules highlight type/operator differences, while an experimental graph model suggests structural matches. Z3 independently checks the supported bounded semantics and returns either a concrete differing transaction, equivalence within the recorded scope, or an explicit unsupported/limit result.
 
-This gives teams evidence-based confidence that modernised banking software preserves the behaviour of the original system.
+Engineers can inspect a report, submit revised Java, retain source/analysis history, and apply a candidate only after fresh bounded verification succeeds. Four generated educational cases demonstrate penny drift, paragraph/width differences, a safe remittance calculation and external CICS state requiring review.
+
+This is currently a verifier, not a translator. A provider-neutral API-key configuration holder is present, but no LLM is connected. The synthetic-trained graph model has no validated real-code alignment accuracy. The prototype does not certify arbitrary banking programs or replace human approval.

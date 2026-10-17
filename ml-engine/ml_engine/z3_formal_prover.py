@@ -16,6 +16,7 @@ from typing import Any
 
 import z3
 
+from .policy import ENGINE_VERSION, SEMANTICS_VERSION, MAX_EXECUTION_STEPS, SOLVER_TIMEOUT_MS
 from .semantics import (CobolProgram, JavaProgram, Picture, UnsupportedSemantics,
                         parse_cobol, parse_java, strip_comments)
 
@@ -78,6 +79,8 @@ def evaluate(node, environment: dict[str, Value], java_type: str = "BigDecimal")
             if not math.isfinite(numeric) or (numeric == 0.0 and Fraction(literal) != 0):
                 raise UnsupportedSemantics("Nonfinite or underflowed Java literals are outside the supported grammar")
             return Value(z3.FPVal(float(literal), z3.Float64()), "fp")
+        if len(literal) > 1 and literal.startswith("0"):
+            raise UnsupportedSemantics("Java octal/leading-zero integer literals are outside the supported grammar", "semantics.java_integer_literal")
         if int(literal) > 2147483647:
             raise UnsupportedSemantics("Java integer literals must fit signed int")
         return Value(z3.IntVal(literal), "int")
@@ -173,9 +176,14 @@ def execute_cobol(program: CobolProgram, amount, rate):
     environment[program.fields[1].name] = Value(rate)
     names = list(program.paragraphs)
 
+    executed = 0
     def statements(items, env, stack):
+        nonlocal executed
         halted = False
         for statement in items:
+            executed += 1
+            if executed > MAX_EXECUTION_STEPS:
+                raise UnsupportedSemantics("COBOL execution expansion budget exceeded", "limit.execution_steps")
             kind = statement[0]
             if halted:
                 raise UnsupportedSemantics("Unreachable COBOL statements are outside the supported grammar")
@@ -302,10 +310,10 @@ def _candidate_cents(rate: str, lower: int, upper: int):
             yield cents
 
 
-def prove(cobol_source: str, java_source: str, reference_rate: dict, timeout_ms: int = 5000) -> dict:
-    scope = {"supported": False, "bounded": True, "inputUnit": "integer cents",
+def initial_scope(cobol_source: str, java_source: str, reference_rate: dict) -> dict:
+    return {"supported": False, "bounded": True, "inputUnit": "integer cents",
              "inputAmountCents": {"min": -999999999, "max": 999999999},
-             "rate": reference_rate, "semantics": "restricted COBOL/Java scalar arithmetic v1",
+             "rate": reference_rate, "semantics": SEMANTICS_VERSION, "semanticsVersion": SEMANTICS_VERSION, "engineVersion": ENGINE_VERSION,
              "outputObservation": "monetary values rounded HALF_UP to integer cents",
              "sourceSha256": {"cobol": hashlib.sha256(cobol_source.encode()).hexdigest(),
                               "java": hashlib.sha256(java_source.encode()).hexdigest()},
@@ -314,8 +322,13 @@ def prove(cobol_source: str, java_source: str, reference_rate: dict, timeout_ms:
                              "UNSAT covers only the explicit finite input domain, never arbitrary whole programs.",
                              "GNN alignments guide inspection and do not authorize a proof."]}
 
-    def unknown(reason: str, category: str = "UNSUPPORTED_SEMANTICS"):
+
+def prove(cobol_source: str, java_source: str, reference_rate: dict, timeout_ms: int = SOLVER_TIMEOUT_MS) -> dict:
+    scope = initial_scope(cobol_source, java_source, reference_rate)
+
+    def unknown(reason: str, category: str = "UNSUPPORTED_SEMANTICS", reason_code: str = "semantics.unsupported"):
         scope["reason"] = reason
+        scope["reasonCode"] = reason_code
         return {"formalProofStatus": UNKNOWN, "bugCategory": category, "counterexamplesJson": [],
                 "isFailureLimitCase": True, "proofScope": scope}
 
@@ -324,6 +337,7 @@ def prove(cobol_source: str, java_source: str, reference_rate: dict, timeout_ms:
         return unknown("External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly.", "UNBOUNDED_CICS_LIMIT")
     try:
         cobol, java = parse_cobol(cobol_source), parse_java(java_source)
+        scope["inputContract"] = {"mapping": "positional-explicit-v1", "amountCobolField": cobol.fields[0].name.replace("__", "-"), "rateCobolField": cobol.fields[1].name.replace("__", "-"), "javaParameters": [{"name": name, "type": kind} for kind, name in java.parameters], "outputCobolField": cobol.fields[-1].name.replace("__", "-"), "javaOutput": "method return", "amountScale": 2, "initialState": "non-input VALUE 0", "dialect": "documented scalar COBOL free format"}
         lower, upper = cobol.min_cents, cobol.max_cents
         # Keep all scalar proofs bounded to the advertised 7-integer-digit amount limit.
         lower, upper = max(lower, -999999999), min(upper, 999999999)
@@ -385,5 +399,5 @@ def prove(cobol_source: str, java_source: str, reference_rate: dict, timeout_ms:
             counterexample.update(cobolOutputEur=_money(expected), javaOutputEur=_money(actual))
         return {"formalProofStatus": SAT, "bugCategory": category, "counterexamplesJson": [counterexample],
                 "isFailureLimitCase": False, "proofScope": scope}
-    except (UnsupportedSemantics, ValueError, TypeError, KeyError, z3.Z3Exception) as error:
-        return unknown(str(error))
+    except (UnsupportedSemantics, ValueError, TypeError, KeyError, RecursionError, z3.Z3Exception) as error:
+        return unknown(str(error) or "Expression recursion budget exceeded", reason_code=getattr(error, "code", "semantics.unsupported"))
