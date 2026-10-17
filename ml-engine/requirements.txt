@@ -1,0 +1,5 @@
+networkx==3.5
+numpy==2.3.4
+z3-solver==4.15.3.0
+psycopg[binary]==3.2.10
+pytest==8.4.2

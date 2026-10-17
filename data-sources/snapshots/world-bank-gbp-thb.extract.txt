@@ -1,0 +1,19 @@
+World Bank Remittance Prices Worldwide
+Source URL: https://remittanceprices.worldbank.org/corridor/United-Kingdom/Thailand
+Retrieved/checked: 2026-10-17 (Europe/London client date)
+Capture method: Numeric extract checked against the primary page using the web research tool.
+This is a transcription of a single displayed survey row, not the raw HTTP response.
+
+Corridor: United Kingdom -> Thailand
+Provider survey collection period: 2025-08-08 through 2025-08-22
+Selected send amount: GBP 120.00 (USD 200 equivalent displayed by the site)
+First Wise row; access point: Internet
+Sender fee: GBP 1.89
+Displayed exchange-rate margin: 0.06 percent
+Displayed market reference rate: THB 44.01 per GBP
+Displayed provider exchange rate: THB 43.98 per GBP
+Displayed total cost: 1.64 percent / GBP 1.96
+
+The World Bank, Remittance Prices Worldwide, available at http://remittanceprices.worldbank.org
+Dataset licence: Creative Commons Attribution 4.0.
+Numeric fields are rounded on the source page; a tier tariff cannot be inferred from this observation.

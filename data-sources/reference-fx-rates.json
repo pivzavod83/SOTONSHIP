@@ -1,0 +1,59 @@
+[
+  {
+    "currencyPair": "GBP/EUR",
+    "rate": "1.183",
+    "source": "Bank of England Daily Spot Rate",
+    "collectedDate": "2026-10-17",
+    "observationDate": "2026-10-15",
+    "seriesCode": "XUDLERS",
+    "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+    "licence": "OGL-UK-3.0",
+    "provenance": {
+      "id": "boe-XUDLERS",
+      "units": "EUR per 1 GBP",
+      "snapshotPath": "snapshots/boe-XUDLERS.html",
+      "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+      "requestedObservationThrough": "2026-10-17",
+      "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+      "desiredDemoObservationDate": "2026-10-16"
+    }
+  },
+  {
+    "currencyPair": "GBP/USD",
+    "rate": "1.3253",
+    "source": "Bank of England Daily Spot Rate",
+    "collectedDate": "2026-10-17",
+    "observationDate": "2026-10-15",
+    "seriesCode": "XUDLUSS",
+    "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLUSS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLUSS",
+    "licence": "OGL-UK-3.0",
+    "provenance": {
+      "id": "boe-XUDLUSS",
+      "units": "USD per 1 GBP",
+      "snapshotPath": "snapshots/boe-XUDLUSS.html",
+      "snapshotSha256": "acf9f188023e7b8818c25dfc6235f68774134ca7dea58971cdec8683e765f816",
+      "requestedObservationThrough": "2026-10-17",
+      "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+      "desiredDemoObservationDate": "2026-10-16"
+    }
+  },
+  {
+    "currencyPair": "GBP/THB",
+    "rate": "44.4158",
+    "source": "Bank of England Daily Spot Rate",
+    "collectedDate": "2026-10-17",
+    "observationDate": "2026-10-15",
+    "seriesCode": "XUDLBK87",
+    "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLBK87&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLBK87",
+    "licence": "OGL-UK-3.0",
+    "provenance": {
+      "id": "boe-XUDLBK87",
+      "units": "THB per 1 GBP",
+      "snapshotPath": "snapshots/boe-XUDLBK87.html",
+      "snapshotSha256": "423499acbd803cda3f357175c737b2ac883883c5f84944a791fd51a1e897bdd5",
+      "requestedObservationThrough": "2026-10-17",
+      "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+      "desiredDemoObservationDate": "2026-10-16"
+    }
+  }
+]

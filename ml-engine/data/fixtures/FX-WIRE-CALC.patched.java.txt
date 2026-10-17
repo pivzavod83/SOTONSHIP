@@ -1,0 +1,7 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+public final class FxWireService {
+    public BigDecimal calculate(BigDecimal principal, BigDecimal quote) {
+        return principal.multiply(quote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal("10000000"));
+    }
+}
