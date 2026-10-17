@@ -11,7 +11,7 @@ const findings = [
   { id: 3, severity: "low", label: "Low", location: "CALC-INTEREST.cbl:18", counterpart: "InterestCalculator.java:18", title: "Conditional logic aligned", detail: "IF condition and outcomes appear equivalent.", status: "RESOLVED", mapping: "condition" }
 ];
 
-const state = { view: "compare", filter: "all", queueVisible: true, running: false, reviewed: new Set() };
+const state = { view: "compare", filter: "all", queueVisible: true, running: false, reviewed: new Set(), expandedFindings: new Set() };
 const editors = {};
 let scrollLock = false;
 const graphDetails = {
@@ -95,7 +95,7 @@ function createEditor(host,language){
     if(!cm.getAllMarks().some(mark=>mark.__attentionMark)){
       const label=document.createElement("span");
       label.className="cm-inline-warning";
-      label.innerHTML='<b>▲</b><strong>HIGH ATTENTION</strong><span>Decimal precision may differ</span>';
+      label.innerHTML='<button type="button" class="warning-toggle" aria-expanded="false"><b>▲</b><strong>HIGH ATTENTION</strong></button><span>Decimal precision may differ</span>';
       const ch=cm.getLine(riskLine)?.length||0;
       const mark=cm.setBookmark({line:riskLine,ch},{widget:label,insertLeft:false});
       mark.__attentionMark=true;
@@ -110,9 +110,17 @@ function createEditor(host,language){
   decorate();
 }
 
+function findingExpandedContent(f){
+  const content={
+    1:{detected:"The COBOL calculation uses packed-decimal COMP-3 arithmetic with the ROUNDED phrase. The Java translation multiplies using BigDecimal and then applies HALF_EVEN scaling.",impact:"Rounding order and tie-breaking can produce different cents for boundary values, even when ordinary examples appear identical.",inspect:"Compare intermediate precision, the point at which rounding occurs, and HALF_EVEN behavior against representative boundary inputs."},
+    2:{detected:"The source field uses a signed packed-decimal representation with an implied scale, while the Java side represents the value as BigDecimal.",impact:"A difference in range, sign handling, or implied decimal places can change values before the calculation begins.",inspect:"Check sign conventions, maximum digits, scale, null/default behavior, and conversion rules at the mapping boundary."},
+    3:{detected:"Both implementations test whether the calculated interest is greater than zero and assign the same Y or N outcome.",impact:"No behavioral difference is currently visible in this branch, but the comparison depends on the same numeric value reaching both conditions.",inspect:"Confirm the preceding calculation and zero comparison remain unchanged if either implementation is edited."}
+  }[f.id];
+  return `<div class="finding-detail"><section><b>WHAT WAS DETECTED</b><p>${content.detected}</p></section><section><b>WHY IT MATTERS</b><p>${content.impact}</p></section><section><b>WHAT TO INSPECT</b><p>${content.inspect}</p></section></div>`;
+}
 function renderFindings(){
   const shown=findings.filter(f=>state.filter==="all"||f.severity===state.filter);
-  document.querySelector("#queueRows").innerHTML=shown.map(f=>`<div class="queue-row queue-data" role="row" data-finding="${f.id}"><span>${f.id}</span><span class="severity ${f.severity}"><i class="sev-dot ${f.severity}"></i>${f.label}</span><span class="location">${f.location}<i>↔</i>${f.counterpart}</span><span class="finding"><strong>${f.title}</strong><small>${f.detail}</small></span><button class="status ${f.status==='RESOLVED'||state.reviewed.has(f.id)?'resolved':''}" data-status="${f.id}">${state.reviewed.has(f.id)?'RESOLVED':f.status}</button><span class="actions"><button class="review-button" data-review="${f.id}">${f.status==='RESOLVED'?'View':'Review'}</button><button class="more-button" aria-label="More actions">⋯</button></span></div>`).join("");
+  document.querySelector("#queueRows").innerHTML=shown.map(f=>{const formatLocation=value=>value.replace(/:(\d+)$/," line : $1");const expanded=state.expandedFindings.has(f.id);return `<div class="queue-row queue-data${expanded?' expanded':''}" role="row" data-finding="${f.id}"><span>${f.id}</span><span class="severity ${f.severity}"><i class="sev-dot ${f.severity}"></i>${f.label}</span><span class="location"><span class="location-ref"><b>COBOL</b>${formatLocation(f.location)}</span><i aria-hidden="true">↔</i><span class="location-ref"><b>JAVA</b>${formatLocation(f.counterpart)}</span></span><button type="button" class="finding finding-toggle" data-expand-finding="${f.id}" aria-expanded="${expanded}"><strong>${f.title}</strong><small>${f.detail}</small>${findingExpandedContent(f)}</button><button class="status ${f.status==='RESOLVED'||state.reviewed.has(f.id)?'resolved':''}" data-status="${f.id}">${state.reviewed.has(f.id)?'RESOLVED':f.status}</button><span class="actions"><button class="review-button" data-review="${f.id}">Review</button><button class="more-button" data-expand-finding="${f.id}" aria-label="${expanded?'Collapse':'Expand'} explanation">${expanded?'−':'+'}</button></span></div>`}).join("");
 }
 function switchView(view){state.view=view;document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===`${view}View`));document.querySelectorAll(".nav-item").forEach(n=>n.classList.toggle("active",n.dataset.view===view));if(view==="compare")setTimeout(()=>Object.values(editors).forEach(e=>e.render()),0);if(view==="dependencies")setTimeout(syncDependencyEdges,0)}
 function showToast(message){const t=document.querySelector("#toast");t.textContent=message;t.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove("show"),2200)}
@@ -128,6 +136,7 @@ document.addEventListener("click",event=>{
   const filter=event.target.closest("[data-filter]");if(filter){state.filter=filter.dataset.filter;document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b===filter));renderFindings();return}
   const mapping=event.target.closest("[data-mapping]");if(mapping)return focusMapping(mapping.dataset.mapping);
   const review=event.target.closest("[data-review]");if(review)return focusMapping(findings.find(f=>f.id===Number(review.dataset.review)).mapping);
+  const expand=event.target.closest("[data-expand-finding]");if(expand){const id=Number(expand.dataset.expandFinding);state.expandedFindings.has(id)?state.expandedFindings.delete(id):state.expandedFindings.add(id);renderFindings();return}
   const status=event.target.closest("[data-status]");if(status){const id=Number(status.dataset.status);state.reviewed.has(id)?state.reviewed.delete(id):state.reviewed.add(id);renderFindings();showToast(state.reviewed.has(id)?"Finding marked resolved":"Finding reopened");return}
   const close=event.target.closest("[data-close-modal]");if(close)document.querySelector("#settingsModal").hidden=true;
   const module=event.target.closest("[data-module]");if(module){const detail=graphDetails[module.dataset.module];document.querySelectorAll("[data-module]").forEach(n=>n.classList.toggle("active",n.dataset.module===module.dataset.module));if(detail){document.querySelector("#mappingTitle").textContent=detail.title;document.querySelector("#mappingCode").textContent=detail.code;document.querySelector("#mappingInputs").textContent=detail.input;document.querySelector("#mappingOutputs").textContent=detail.output;document.querySelector("#mappingReturns").textContent=detail.returns;document.querySelector("#mappingConfidence").textContent=`${detail.confidence}%`;document.querySelector("#mappingConfidenceBar").style.width=`${detail.confidence}%`;document.querySelector("#mappingRisk").textContent=detail.risk}showToast(`${detail?.title||"Function"} selected`)}
@@ -142,6 +151,7 @@ document.querySelector("#applyFix").addEventListener("click",()=>{const fixed=de
 document.querySelector("#exportEvidence").addEventListener("click",()=>{const blob=new Blob(["Sotonship demo verification evidence\nResult: Counterexample found\nCOBOL: £333.50\nJAVA: £333.49\nNo backend was used."],{type:"text/plain"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="sotonship-demo-evidence.txt";a.click();URL.revokeObjectURL(a.href);showToast("Evidence exported")});
 document.querySelector("#fitGraph").addEventListener("click",()=>showToast("Dependency graph fitted to view"));
 document.querySelector("#projectSwitcher").addEventListener("click",()=>showToast("payments-modernisation is the active demo project"));
+document.addEventListener("click",event=>{const toggle=event.target.closest(".warning-toggle");if(!toggle)return;const warning=toggle.closest(".cm-inline-warning");const expanded=warning.classList.toggle("expanded");toggle.setAttribute("aria-expanded",String(expanded))});
 const queueResizeHandle=document.querySelector("#queueResizeHandle");
 if(queueResizeHandle){
   const compareView=document.querySelector("#compareView");
