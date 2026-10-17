@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Sotonship COBOL-to-Java verification demo" />
+  <title>Sotonship · Code comparison</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Sotonship home">Sotonship</a>
+      <button class="project-switcher" id="projectSwitcher"><span>Project</span><strong>payments-modernisation</strong><b>⌄</b></button>
+      <div class="run-summary" aria-label="Verification summary"><span class="cyan">17</span> aligned <i>·</i> <span class="amber">2</span> review <i>·</i> <span class="red">1</span> disproved</div>
+      <button class="primary run-button" id="runVerification"><span>▶</span> Run verification</button>
+      <button class="top-icon" id="settingsButton" aria-label="Settings">⚙</button>
+      <span class="top-divider"></span>
+      <button class="top-icon" id="layoutButton" aria-label="Toggle review queue">◫</button>
+    </header>
+
+    <div class="body-shell">
+      <nav class="side-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="compare"><span class="nav-icon">▤</span><span>COMPARE</span></button>
+        <button class="nav-item" data-view="dependencies"><span class="nav-icon graph-icon">♧</span><span>DEPENDENCIES</span></button>
+        <button class="nav-item" data-view="evidence"><span class="nav-icon">▱</span><span>EVIDENCE</span></button>
+        <div class="nav-spacer"></div>
+        <div class="demo-status"><i></i><span>Demo mode</span></div>
+      </nav>
+
+      <main class="main-area">
+        <section class="view compare-view active" id="compareView">
+          <div class="comparison-workspace">
+            <article class="editor-panel" id="cobolPanel">
+              <div class="file-tabs"><button class="file-tab active"><strong>COBOL</strong><i>·</i><span>CALC-INTEREST.cbl</span><b>×</b></button><button class="add-tab" aria-label="Add COBOL file">＋</button></div>
+              <div class="editor-host" id="cobolEditor" data-language="cobol"></div>
+            </article>
+
+            <div class="alignment-gutter" aria-label="Aligned logic segments">
+              <svg viewBox="0 0 64 700" preserveAspectRatio="none" aria-hidden="true">
+                <path class="map-line" d="M0 143 C35 143 27 315 64 315" />
+                <path class="map-line risk-map" d="M0 358 C35 358 28 319 64 319" />
+                <path class="map-line" d="M0 492 C35 492 27 452 64 452" />
+              </svg>
+              <button class="mapping-dot dot-one" data-mapping="types">1</button>
+              <button class="mapping-dot risk dot-two" data-mapping="precision">2</button>
+              <button class="mapping-dot dot-three" data-mapping="condition">3</button>
+            </div>
+
+            <article class="editor-panel" id="javaPanel">
+              <div class="file-tabs"><button class="file-tab active"><strong>JAVA</strong><i>·</i><span>InterestCalculator.java</span><b>×</b></button><button class="add-tab" aria-label="Add Java file">＋</button></div>
+              <div class="editor-host" id="javaEditor" data-language="java"></div>
+            </article>
+          </div>
+
+          <section class="review-queue" id="reviewQueue">
+            <div class="queue-heading"><div><h1>Review queue</h1><span id="queueCount">(3)</span></div><div class="filters" id="filters"><button class="filter active" data-filter="all">All (3)</button><button class="filter" data-filter="high"><i class="sev-dot high"></i>High (1)</button><button class="filter" data-filter="medium"><i class="sev-dot medium"></i>Medium (1)</button><button class="filter" data-filter="low"><i class="sev-dot low"></i>Low (1)</button></div></div>
+            <div class="queue-table" role="table" aria-label="Translation review findings">
+              <div class="queue-row queue-header" role="row"><span>#</span><span>SEVERITY</span><span>LOCATION</span><span>FINDING</span><span>STATUS</span><span>ACTIONS</span></div>
+              <div id="queueRows"></div>
+            </div>
+          </section>
+        </section>
+
+        <section class="view dependency-view" id="dependenciesView">
+          <div class="view-header"><div><span class="eyebrow">Classic function dependencies · all relationships shown</span><h1>Dependency graph</h1><p>Follow the execution flow from the COBOL paragraph through its translated Java methods.</p></div><div class="header-actions"><button class="secondary" id="fitGraph">Fit view</button><button class="primary" data-view-target="compare">Open comparison</button></div></div>
+          <div class="classic-graph-layout">
+            <aside class="module-list classic-function-list"><h2>Functions</h2><button class="module active" data-module="interest">CALC-INTEREST</button><button class="module" data-module="rate">APPLY-RATE</button><button class="module" data-module="eligibility">CHECK-ELIGIBILITY</button><button class="module" data-module="round">ROUND-INTEREST</button><button class="module" data-module="total">CALC-TOTAL</button><button class="module" data-module="result">BUILD-RESULT</button><button class="module" data-module="write">WRITE-DETAIL</button></aside>
+            <div class="classic-graph-canvas" id="classicGraphCanvas">
+              <div class="graph-legend"><span><i class="legend-line dependency"></i>Dependency</span><span><i class="legend-line attention"></i>High attention</span><span><i class="legend-line selected"></i>Selected path</span></div>
+              <svg class="dependency-edges" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-label="Function relationship arrows">
+                <defs><marker id="classicArrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" /></marker></defs>
+                <path class="edge selected-edge" data-edge="interest-rate" d="M226 316 H250 V139 H282" /><path class="edge attention-edge" data-edge="interest-round" d="M226 316 H246 V139 H510" />
+                <path class="edge" data-edge="interest-eligibility" d="M226 340 H250 V337 H282" /><path class="edge" data-edge="rate-round" d="M498 139 H510" />
+                <path class="edge" data-edge="rate-total" d="M498 160 H520 V287 H510" /><path class="edge" data-edge="eligibility-total" d="M498 337 H520 V287 H510" />
+                <path class="edge" data-edge="round-total" d="M726 139 H748 V287 H738" /><path class="edge" data-edge="total-result" d="M726 287 H738 V436 H738" /><path class="edge" data-edge="result-write" d="M946 436 H968 V287 H962" />
+              </svg>
+              <button class="dependency-node node-interest active" data-module="interest"><span class="node-title"><strong>CALC-INTEREST</strong><em>COBOL · calculate()</em></span><span class="node-rule"></span><span class="node-detail"><b>INPUT</b> principal, rate, periods</span><span class="node-detail"><b>OUTPUT</b> interest amount</span></button>
+              <button class="dependency-node node-rate" data-module="rate"><span class="node-title"><strong>APPLY-RATE</strong><em>COBOL · applyRate()</em></span><span class="node-rule"></span><span class="node-detail"><b>INPUT</b> customer type</span><span class="node-detail"><b>RETURNS</b> BigDecimal rate</span></button>
+              <button class="dependency-node node-eligibility" data-module="eligibility"><span class="node-title"><strong>CHECK-ELIGIBILITY</strong><em>COBOL · isEligible()</em></span><span class="node-rule"></span><span class="node-detail"><b>INPUT</b> interest > ZERO</span><span class="node-detail"><b>RETURNS</b> Y / N flag</span></button>
+              <button class="dependency-node node-round attention-node" data-module="round"><span class="node-title"><strong>ROUND-INTEREST</strong><em>COBOL · setScale()</em></span><span class="node-rule"></span><span class="node-detail"><b>INPUT</b> packed decimal</span><span class="node-detail"><b>OUTPUT</b> 2dp HALF-EVEN</span><span class="node-badge">▲ REVIEW</span></button>
+              <button class="dependency-node node-total" data-module="total"><span class="node-title"><strong>CALC-TOTAL</strong><em>COBOL · calculateTotal()</em></span><span class="node-rule"></span><span class="node-detail"><b>INPUT</b> principal + interest</span><span class="node-detail"><b>RETURNS</b> total amount</span></button>
+              <button class="dependency-node node-result" data-module="result"><span class="node-title"><strong>BUILD-RESULT</strong><em>COBOL · Result(...)</em></span><span class="node-rule"></span><span class="node-detail"><b>INPUT</b> interest, total, flag</span><span class="node-detail"><b>RETURNS</b> Result object</span></button>
+              <button class="dependency-node node-write" data-module="write"><span class="node-title"><strong>WRITE-DETAIL</strong><em>COBOL · save()</em></span><span class="node-rule"></span><span class="node-detail"><b>INPUT</b> Result object</span><span class="node-detail"><b>OUTPUT</b> payment record</span></button>
+              <div class="path-callout"><span>▲</span><div><strong>High attention relationship</strong><small>CALC-INTEREST → ROUND-INTEREST</small></div></div>
+            </div>
+            <aside class="mapping-details classic-details"><span class="eyebrow">Selected function</span><h2 id="mappingTitle">CALC-INTEREST</h2><div class="detail-code" id="mappingCode">COBOL ↔ calculate()</div><div class="classic-detail-row"><span>INPUT</span><strong id="mappingInputs">principal, rate, periods</strong></div><div class="classic-detail-row"><span>OUTPUT</span><strong id="mappingOutputs">interest amount</strong></div><div class="classic-detail-row"><span>RETURNS</span><strong id="mappingReturns">BigDecimal interest</strong></div><div class="score-row"><span>Alignment confidence</span><b id="mappingConfidence">96%</b></div><div class="score-bar"><i id="mappingConfidenceBar" style="width:96%"></i></div><div class="detail-alert"><span>▲</span><p id="mappingRisk">Packed-decimal rounding maps to Java BigDecimal. Review the highlighted relationship.</p></div><button class="primary full" data-view-target="compare">Inspect in code</button></aside>
+          </div>
+        </section>
+
+        <section class="view evidence-view" id="evidenceView">
+          <div class="view-header"><div><span class="eyebrow">Verification run · Demo data</span><h1>Verification evidence</h1><p>Simulated evidence for the selected code mapping. No backend or ML service is connected.</p></div><div class="proof-pill"><span>!</span><div><small>RESULT</small><strong>Counterexample found</strong></div></div></div>
+          <div class="evidence-grid">
+            <article class="evidence-card danger-card"><div class="card-top"><span class="tag danger">DISPROVED</span><span>Numeric equivalence</span></div><h2>One-penny discrepancy</h2><p>The Java translation can produce a different result because decimal scaling occurs after multiplication.</p><div class="transaction"><div><small>Principal</small><strong>£10,000.00</strong></div><div><small>Rate</small><strong>0.03335</strong></div><div><small>Periods</small><strong>3</strong></div></div><div class="outputs"><div><span>COBOL</span><strong>£333.50</strong></div><b>≠</b><div><span>JAVA</span><strong>£333.49</strong></div></div></article>
+            <article class="evidence-card"><div class="card-top"><span class="tag safe">PROVED</span><span>Control flow</span></div><h2>Eligibility branch aligned</h2><p>The same inputs select the same branch and produce the same eligibility flag.</p><div class="big-score">100<small>%</small></div><button class="secondary full" data-view-target="compare">View aligned code</button></article>
+            <article class="evidence-card"><div class="card-top"><span class="tag info">SUGGESTED FIX</span><span>InterestCalculator.java</span></div><h2>Preserve decimal semantics</h2><p>Use BigDecimal throughout and apply the scale with the verified rounding mode.</p><pre><code>BigDecimal interest = principal
+  .multiply(rate)
+  .setScale(2, RoundingMode.HALF_EVEN);</code></pre><button class="primary" id="applyFix">Apply to demo editor</button></article>
+          </div>
+          <section class="check-list"><div class="check-heading"><div><h2>Proof obligations</h2><span>4 checks</span></div><button class="secondary" id="exportEvidence">Export evidence</button></div><div class="check"><i class="pass">✓</i><div><strong>Input domain</strong><small>Principal, rate and periods are bounded consistently.</small></div><span class="tag safe">Passed</span></div><div class="check"><i class="fail">!</i><div><strong>Decimal arithmetic</strong><small>A counterexample demonstrates a rounding difference.</small></div><span class="tag danger">Failed</span></div><div class="check"><i class="pass">✓</i><div><strong>Branch behaviour</strong><small>Eligibility outcomes are equivalent.</small></div><span class="tag safe">Passed</span></div></section>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop" id="settingsModal" hidden><div class="modal"><div class="modal-title"><h2>Demo settings</h2><button class="top-icon" data-close-modal>×</button></div><label><input type="checkbox" id="saveEdits" checked /> Save code edits in this browser</label><label><input type="checkbox" id="syncEditors" checked /> Synchronize editor scrolling</label><label><input type="checkbox" id="showSafe" checked /> Highlight aligned code segments</label><div class="modal-footer"><button class="secondary" id="resetDemo">Reset demo</button><button class="primary" data-close-modal>Done</button></div></div></div>
+  <script src="node_modules/codemirror/lib/codemirror.js"></script>
+  <script src="node_modules/codemirror/mode/cobol/cobol.js"></script>
+  <script src="node_modules/codemirror/mode/clike/clike.js"></script>
+  <script src="node_modules/codemirror/addon/edit/closebrackets.js"></script>
+  <script src="node_modules/codemirror/addon/edit/matchbrackets.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

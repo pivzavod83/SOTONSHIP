@@ -1,0 +1,5 @@
+# Installed dependencies are restored with npm install from package.json.
+node_modules/
+
+# Local visual QA screenshots are generated artifacts, not source files.
+*-preview.png

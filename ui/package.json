@@ -1,0 +1,13 @@
+{
+  "name": "sotonship-ui-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive COBOL-to-Java comparison UI demo",
+  "scripts": {
+    "start": "node serve.mjs",
+    "test": "node qa.cjs"
+  },
+  "dependencies": {
+    "codemirror": "^5.65.16"
+  }
+}
