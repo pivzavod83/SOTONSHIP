@@ -1,0 +1,11 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+public final class RemittanceFeeEngine {
+    public BigDecimal calculate(BigDecimal transfer, BigDecimal bahtQuote) {
+        if (transfer.compareTo(new BigDecimal("120")) <= 0) {
+            return new BigDecimal("1.89").multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal("10000000"));
+        } else {
+            return transfer.multiply(new BigDecimal("0.01")).multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal("10000000"));
+        }
+    }
+}

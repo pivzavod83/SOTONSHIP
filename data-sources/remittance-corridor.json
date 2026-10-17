@@ -1,0 +1,38 @@
+{
+  "id": "world-bank-gbp-thb-wise-2025q3",
+  "currencyPair": "GBP/THB",
+  "sendingCountry": "United Kingdom",
+  "receivingCountry": "Thailand",
+  "provider": "Wise",
+  "accessPoint": "Internet",
+  "sendAmountGbp": "120.00",
+  "feeGbp": "1.89",
+  "exchangeRateMarginPercent": "0.06",
+  "displayedMarketReferenceRate": "44.01",
+  "displayedProviderExchangeRate": "43.98",
+  "rateUnits": "THB per 1 GBP",
+  "totalCostPercent": "1.64",
+  "totalCostGbp": "1.96",
+  "surveyCollectionStart": "2025-08-08",
+  "surveyCollectionEnd": "2025-08-22",
+  "collectedDate": "2026-10-17",
+  "source": "World Bank Remittance Prices Worldwide",
+  "sourceUrl": "https://remittanceprices.worldbank.org/corridor/United-Kingdom/Thailand",
+  "licence": "CC-BY-4.0",
+  "licenceUrl": "https://datacatalog.worldbank.org/search/dataset/0037898/remittance-prices-worldwide",
+  "attribution": "The World Bank, Remittance Prices Worldwide, available at http://remittanceprices.worldbank.org",
+  "provenance": {
+    "snapshotPath": "snapshots/world-bank-gbp-thb.extract.txt",
+    "snapshotType": "manually transcribed numeric row verified against primary-page web extraction",
+    "rawHttpResponseArchived": false,
+    "downloadLimitation": "The primary page and workbook returned HTTP 403 to direct Python downloads. The public corridor page remained readable through the web research tool.",
+    "rowSelection": "First Wise Internet row on the GBP 120 / USD 200 tab, survey 2025Q3"
+  },
+  "limitations": [
+    "Historical survey observation, not a live quote or October 2026 spot reference rate.",
+    "The source displays rounded values. Do not reconstruct an exact provider tariff or FX margin from these rounded values.",
+    "Total cost combines sender fees and the exchange-rate margin and is not itself an FX rate.",
+    "Any demonstration tier schedule used by the verifier is AI-authored, not a World Bank or Wise published tariff.",
+    "No provider or World Bank endorsement is implied."
+  ]
+}

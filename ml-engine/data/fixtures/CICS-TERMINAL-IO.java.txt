@@ -1,0 +1,5 @@
+public final class TerminalSessionHandler {
+    public void receiveMap(TerminalGateway gateway) {
+        gateway.receiveMap("WIREMAP");
+    }
+}
