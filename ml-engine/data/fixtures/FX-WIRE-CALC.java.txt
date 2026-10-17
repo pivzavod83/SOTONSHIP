@@ -1,7 +1,0 @@
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-public final class FxWireService {
-    public BigDecimal calculate(double principal, double quote) {
-        return new BigDecimal(principal * quote).setScale(2, RoundingMode.HALF_UP);
-    }
-}

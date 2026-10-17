@@ -1,8 +1,0 @@
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-public final class MortgageInterestCalculator {
-    public BigDecimal calculate(BigDecimal balance, BigDecimal unusedReference) {
-        BigDecimal tier = balance.multiply(new BigDecimal("0.05")).setScale(0, RoundingMode.DOWN).remainder(new BigDecimal("100000"));
-        return tier.add(BigDecimal.ONE).setScale(0, RoundingMode.DOWN).remainder(new BigDecimal("100000"));
-    }
-}
