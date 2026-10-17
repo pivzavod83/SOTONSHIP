@@ -32,16 +32,26 @@ def load_reference_rates() -> list[dict]:
     return rates
 
 
-def select_rate(category: str, rates: list[dict]) -> dict:
+def select_rate(category: str, rates: list[dict], proof_inputs: dict | None) -> dict | None:
     # The category selects input data only; neither the parser nor solver use it
     # to decide status, arithmetic, graph matches or bug presence.
-    if not rates:
-        raise ValueError("At least one provenance-labelled reference FX rate is required")
+    if not rates or not isinstance(proof_inputs, dict):
+        return None
+    pair, source, collected = (proof_inputs.get("referenceCurrencyPair"),
+                               proof_inputs.get("referenceSource"),
+                               proof_inputs.get("referenceCollectedDate"))
+    if not all(isinstance(value, str) and value.strip() for value in (pair, source, collected)):
+        return None
     if category == "REMITTANCE_FEE":
-        matches = [rate for rate in rates if rate["currencyPair"] == "GBP/THB" and "World Bank" in rate["source"]]
+        matches = [rate for rate in rates if rate["currencyPair"] == pair == "GBP/THB"
+                   and rate["source"] == source and "World Bank" in source
+                   and rate["collectedDate"] == collected]
     else:
-        matches = [rate for rate in rates if rate["currencyPair"] == "GBP/EUR"]
-    return dict((matches or rates)[0])
+        matches = [rate for rate in rates if rate["currencyPair"] == pair == "GBP/EUR"
+                   and rate["source"] == source and rate["collectedDate"] == collected]
+    # Never substitute a different pair/source: a proof at the wrong rate can
+    # still be mathematically valid while being irrelevant to the request.
+    return dict(matches[0]) if matches else None
 
 
 def verify_request(request: dict) -> dict:
@@ -65,12 +75,15 @@ def verify_request(request: dict) -> dict:
             if key not in rate or not str(rate[key]).strip():
                 raise ValueError(f"Reference rate requires {key}")
         date.fromisoformat(rate["collectedDate"])
-    cobol = build_cpg(request["cobolSource"], "cobol")
+    source_format = request.get("proofInputs", {}).get("cobolSourceFormat", "FREE") if isinstance(request.get("proofInputs"), dict) else "FREE"
+    graph_source_format = source_format if source_format in ("FREE", "FIXED") else "FREE"
+    cobol = build_cpg(request["cobolSource"], "cobol", graph_source_format)
     java = build_cpg(request["javaSource"], "java")
     alignment = align(cobol, java)
     baseline_score, baseline_caught = baseline(request["cobolSource"], request["javaSource"])
-    rate = select_rate(request["category"], rates)
-    proof = prove(request["cobolSource"], request["javaSource"], rate)
+    proof_inputs = request.get("proofInputs")
+    rate = select_rate(request["category"], rates, proof_inputs)
+    proof = prove(request["cobolSource"], request["javaSource"], rate, proof_inputs=proof_inputs)
     status = proof["formalProofStatus"]
     if status == SAT:
         witness = proof["counterexamplesJson"][0]
@@ -94,6 +107,7 @@ def verify_request(request: dict) -> dict:
                 "modelSha256": hashlib.sha256((MODEL_DIR / "cobol_java_gnn_v1.json").read_bytes()).hexdigest(),
                 "graphInferenceMs": alignment["inferenceMs"], "referenceRate": rate,
                 "alignmentIsProof": False, "measuredAlignmentBenchmark": None,
+                "mlValidation": {"status": "NOT_VALIDATED", "evidence": "synthetic demo data only", "humanReviewedCorpus": None},
                 "sourceAuthorship": request.get("sourceAuthorship", "Caller-supplied sources; provenance not independently verified"),
                 "limitations": ["Structural graph extraction is a source-line approximation, separate from the closed formal parser.",
                                 "GNN/model confidence is not proof and does not prune symbolic inputs.",
@@ -120,12 +134,13 @@ def load_database_request(verification_id: str) -> dict:
     from psycopg.rows import dict_row
     UUID(verification_id)
     with psycopg.connect(_database_url(), row_factory=dict_row) as connection:
-        row = connection.execute("SELECT id,module_name,category,cobol_source,java_source,patched_java_source,version FROM verifications WHERE id=%s", (verification_id,)).fetchone()
+        row = connection.execute("SELECT id,module_name,category,cobol_source,java_source,patched_java_source,proof_scope,version FROM verifications WHERE id=%s", (verification_id,)).fetchone()
         if row is None:
             raise ValueError("Verification not found")
         rates = connection.execute("SELECT currency_pair,rate,source,collected_date,observation_date,provenance_json FROM reference_fx_rates ORDER BY source,currency_pair").fetchall()
     return {"id": str(row["id"]), "expectedVersion": row["version"], "moduleName": row["module_name"], "category": row["category"],
             "cobolSource": row["cobol_source"], "javaSource": row["java_source"], "patchedJavaSource": row["patched_java_source"],
+            "proofInputs": row["proof_scope"].get("proofInputs") if row["proof_scope"] else None,
             "referenceFxRates": [{"currencyPair": rate["currency_pair"], "rate": str(rate["rate"]),
                                   "source": rate["source"], "collectedDate": rate["collected_date"],
                                   "observationDate": rate["observation_date"], "provenanceJson": rate["provenance_json"]} for rate in rates]}

@@ -57,8 +57,10 @@ def test_changed_patch_is_never_approved_from_category_or_bigdecimal_marker():
     wrong = FX_PATCH.replace('principal.multiply(quote)', 'principal.add(quote)')
     result = prove(FX_COBOL, wrong, RATE)
     assert result["formalProofStatus"] == SAT
-    request = {**demo_requests()[0], "javaSource": wrong, "category": "REMITTANCE_FEE", "referenceFxRates": [RATE]}
+    request = {**demo_requests()[0], "javaSource": wrong, "referenceFxRates": [RATE]}
     assert verify_request(request)["formalProofStatus"] == SAT
+    mismatched = {**request, "category": "REMITTANCE_FEE"}
+    assert verify_request(mismatched)["formalProofStatus"] == UNKNOWN
 
 
 @pytest.mark.parametrize("source", [

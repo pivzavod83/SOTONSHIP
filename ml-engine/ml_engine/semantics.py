@@ -184,6 +184,14 @@ def _cobol_statements(lines: list[str], index: int = 0, nested: bool = False):
             result.append(("store", match[1].replace("-", "__"), parse_expression(match[3], True), bool(match[2])))
         elif match := re.fullmatch(r"MOVE (.+) TO ([A-Z][A-Z0-9-]*)", line):
             result.append(("store", match[2].replace("-", "__"), parse_expression(match[1], True), False))
+        elif match := re.fullmatch(r"ADD (.+) TO ([A-Z][A-Z0-9-]*)( ROUNDED)?", line):
+            target = match[2].replace("-", "__")
+            value = ("binary", "+", ("var", target), parse_expression(match[1], True))
+            result.append(("store", target, value, bool(match[3])))
+        elif match := re.fullmatch(r"SUBTRACT (.+) FROM ([A-Z][A-Z0-9-]*)( ROUNDED)?", line):
+            target = match[2].replace("-", "__")
+            value = ("binary", "-", ("var", target), parse_expression(match[1], True))
+            result.append(("store", target, value, bool(match[3])))
         elif match := re.fullmatch(r"PERFORM ([A-Z][A-Z0-9-]*) THRU ([A-Z][A-Z0-9-]*)", line):
             result.append(("perform", match[1], match[2]))
         elif line in ("GOBACK", "STOP RUN"):
@@ -196,8 +204,32 @@ def _cobol_statements(lines: list[str], index: int = 0, nested: bool = False):
     return result, index
 
 
-def parse_cobol(source: str) -> CobolProgram:
-    text = strip_comments(source, "cobol").upper()
+def normalize_cobol_source(source: str, source_format: str = "FREE") -> str:
+    if source_format == "FREE":
+        return strip_comments(source, "cobol")
+    if source_format != "FIXED":
+        raise UnsupportedSemantics("COBOL source format must be explicitly FREE or FIXED")
+    normalized = []
+    for line_number, line in enumerate(source.splitlines(), 1):
+        if not line.strip():
+            continue
+        if len(line) < 7:
+            raise UnsupportedSemantics(f"Fixed-format source line {line_number} is shorter than the indicator area")
+        indicator = line[6]
+        if indicator in ("*", "/"):
+            continue
+        if indicator == "D":
+            raise UnsupportedSemantics("Fixed-format debugging lines require compiler-option semantics")
+        if indicator == "-":
+            raise UnsupportedSemantics("Fixed-format continuation lines are outside the current parser profile")
+        if indicator != " ":
+            raise UnsupportedSemantics(f"Unsupported fixed-format indicator {indicator!r} on line {line_number}")
+        normalized.append(line[7:72].split("*>", 1)[0])
+    return "\n".join(normalized)
+
+
+def parse_cobol(source: str, source_format: str = "FREE") -> CobolProgram:
+    text = normalize_cobol_source(source, source_format).upper()
     pattern = (r"\s*IDENTIFICATION DIVISION\.\s*PROGRAM-ID\.\s*[A-Z0-9-]+\.\s*"
                r"DATA DIVISION\.\s*WORKING-STORAGE SECTION\.\s*(.*?)"
                r"PROCEDURE DIVISION\.\s*(.*?)\s*")

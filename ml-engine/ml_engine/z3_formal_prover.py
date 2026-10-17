@@ -22,6 +22,7 @@ from .semantics import (CobolProgram, JavaProgram, Picture, UnsupportedSemantics
 SAT = "SAT_COUNTEREXAMPLE_FOUND"
 UNSAT = "UNSAT_PROVEN_SAFE"
 UNKNOWN = "UNKNOWN_HALTED_LIMIT"
+SUPPORTED_COBOL_PROFILE = "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"
 
 
 def trunc(value):
@@ -302,10 +303,12 @@ def _candidate_cents(rate: str, lower: int, upper: int):
             yield cents
 
 
-def prove(cobol_source: str, java_source: str, reference_rate: dict, timeout_ms: int = 5000) -> dict:
+def prove(cobol_source: str, java_source: str, reference_rate: dict, timeout_ms: int = 5000,
+          proof_inputs: dict | None = None) -> dict:
     scope = {"supported": False, "bounded": True, "inputUnit": "integer cents",
              "inputAmountCents": {"min": -999999999, "max": 999999999},
-             "rate": reference_rate, "semantics": "restricted COBOL/Java scalar arithmetic v1",
+             "rate": reference_rate, "proofInputs": proof_inputs,
+             "semantics": "restricted COBOL/Java scalar arithmetic v1",
              "outputObservation": "monetary values rounded HALF_UP to integer cents",
              "sourceSha256": {"cobol": hashlib.sha256(cobol_source.encode()).hexdigest(),
                               "java": hashlib.sha256(java_source.encode()).hexdigest()},
@@ -319,12 +322,44 @@ def prove(cobol_source: str, java_source: str, reference_rate: dict, timeout_ms:
         return {"formalProofStatus": UNKNOWN, "bugCategory": category, "counterexamplesJson": [],
                 "isFailureLimitCase": True, "proofScope": scope}
 
+    if not isinstance(reference_rate, dict):
+        return unknown("No exact reference rate matched the requested proof profile.", "MISSING_PROOF_INPUT")
+    if proof_inputs is not None and not isinstance(proof_inputs, dict):
+        return unknown("Proof inputs must be a structured object.", "MISSING_PROOF_INPUT")
+
     code = strip_comments(cobol_source, "cobol")
     if re.search(r"\bEXEC\s+CICS\b|\bJCL\b|\bREDEFINES\b", code, re.I):
         return unknown("External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly.", "UNBOUNDED_CICS_LIMIT")
     try:
-        cobol, java = parse_cobol(cobol_source), parse_java(java_source)
-        lower, upper = cobol.min_cents, cobol.max_cents
+        cobol_format = proof_inputs.get("cobolSourceFormat", "FREE") if proof_inputs is not None else "FREE"
+        cobol, java = parse_cobol(cobol_source, cobol_format), parse_java(java_source)
+        if proof_inputs is None:
+            # The external verify_request path supplies no rate when the
+            # explicit request contract is absent, so it returns UNKNOWN above.
+            lower, upper = cobol.min_cents, cobol.max_cents
+        else:
+            required = ("cobolDialectProfile", "cobolSourceFormat", "amountField", "rateField", "resultField", "javaAmountParameter", "javaRateParameter",
+                        "amountMinCents", "amountMaxCents", "referenceCurrencyPair", "referenceSource", "referenceCollectedDate")
+            if any(key not in proof_inputs for key in required):
+                return unknown("Proof inputs must identify the COBOL profile, source fields, Java parameters, amount bounds and exact rate provenance.", "MISSING_PROOF_INPUT")
+            if proof_inputs["cobolDialectProfile"] != SUPPORTED_COBOL_PROFILE:
+                return unknown("The declared COBOL dialect profile is not supported by this parser.", "UNSUPPORTED_DIALECT")
+            normalized = lambda value: str(value).replace("-", "__").upper()
+            fields = [field.name for field in cobol.fields]
+            if (normalized(proof_inputs["amountField"]) != fields[0]
+                    or normalized(proof_inputs["rateField"]) != fields[1]
+                    or normalized(proof_inputs["resultField"]) != fields[-1]
+                    or proof_inputs["javaAmountParameter"] != java.parameters[0][1]
+                    or proof_inputs["javaRateParameter"] != java.parameters[1][1]):
+                return unknown("Explicit input/output mappings do not match the parsed COBOL fields and Java parameters.", "MISMATCHED_PROOF_INPUT")
+            if (proof_inputs["referenceCurrencyPair"] != reference_rate.get("currencyPair")
+                    or proof_inputs["referenceSource"] != reference_rate.get("source")
+                    or proof_inputs["referenceCollectedDate"] != reference_rate.get("collectedDate")):
+                return unknown("The selected reference rate does not match the declared proof inputs.", "MISMATCHED_PROOF_INPUT")
+            lower, upper = proof_inputs["amountMinCents"], proof_inputs["amountMaxCents"]
+            if (not isinstance(lower, int) or isinstance(lower, bool) or not isinstance(upper, int) or isinstance(upper, bool)
+                    or lower > upper or lower < cobol.min_cents or upper > cobol.max_cents):
+                return unknown("Explicit amount bounds must be integers inside the declared COBOL input picture.", "MISMATCHED_PROOF_INPUT")
         # Keep all scalar proofs bounded to the advertised 7-integer-digit amount limit.
         lower, upper = max(lower, -999999999), min(upper, 999999999)
         scope["inputAmountCents"] = {"min": lower, "max": upper}
@@ -375,7 +410,7 @@ def prove(cobol_source: str, java_source: str, reference_rate: dict, timeout_ms:
         input_cents = model.eval(amount_cents).as_long()
         expected, actual = model.eval(cobol_cents).as_long(), model.eval(java_cents).as_long()
         category = "IEEE754_PENNY_DRIFT" if uses_floating_point else "PERFORM_THRU_FALLTHROUGH" if re.search(r"PERFORM.*THRU", code) else "PIC_SILENT_TRUNCATION"
-        counterexample = {"inputAmountGbp": _money(input_cents), "boeFxRate": str(reference_rate["rate"]),
+        counterexample = {"inputAmountGbp": _money(input_cents), "referenceRate": str(reference_rate["rate"]),
                           "cobolOutput": _money(expected), "javaOutput": _money(actual),
                           "pennyDrift": _money(actual - expected), "dataSource": reference_rate["source"],
                           "collectedDate": reference_rate["collectedDate"],

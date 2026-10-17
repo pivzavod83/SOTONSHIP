@@ -16,6 +16,13 @@ export function analysis(status = Status.SAT_COUNTEREXAMPLE_FOUND, java = 'buggy
     proofScope: {
       supported: status !== Status.UNKNOWN_HALTED_LIMIT, bounded: true,
       inputAmountCents: { min: 0, max: 999999 },
+      rate: { currencyPair: 'GBP/EUR', source: 'Bank of England', collectedDate: '2026-10-17', rate: '1.158600000000' },
+      proofInputs: {
+        cobolDialectProfile: 'IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1',
+        cobolSourceFormat: 'FREE', amountField: 'INPUT-AMOUNT', rateField: 'REFERENCE-RATE', resultField: 'SETTLEMENT-RESULT',
+        javaAmountParameter: 'principal', javaRateParameter: 'quote', amountMinCents: 0, amountMaxCents: 999999,
+        referenceCurrencyPair: 'GBP/EUR', referenceSource: 'Bank of England', referenceCollectedDate: '2026-10-17',
+      },
       sourceSha256: { cobol: createHash('sha256').update('COBOL source').digest('hex'), java: createHash('sha256').update(java).digest('hex') },
     },
     provenanceJson: { fixture: true },

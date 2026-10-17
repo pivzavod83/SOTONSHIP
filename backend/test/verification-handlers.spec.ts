@@ -21,7 +21,7 @@ describe('Verification command safety and orchestration', () => {
   let events: EventBus;
 
   beforeEach(() => {
-    repository = { findAll: jest.fn(), findById: jest.fn().mockResolvedValue(run()), save: jest.fn().mockImplementation(async (value: VerificationRun) => value) };
+    repository = { findAll: jest.fn(), findPage: jest.fn(), findById: jest.fn().mockResolvedValue(run()), save: jest.fn().mockImplementation(async (value: VerificationRun) => value) };
     engine = { verify: jest.fn() };
     rates = { findAll: jest.fn().mockResolvedValue([rate]) };
     publishAll = jest.fn();

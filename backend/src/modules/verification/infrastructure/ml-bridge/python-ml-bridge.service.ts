@@ -8,7 +8,37 @@ import { TranslationKey } from '../../../../common/i18n/translation-key';
 
 @Injectable()
 export class PythonMlBridgeService implements IMlBridge {
-  async verify(input: MlVerificationInput): Promise<VerificationAnalysis> {
+  private readonly queue: { input: MlVerificationInput; resolve: (value: VerificationAnalysis) => void; reject: (error: Error) => void }[] = [];
+  private active = 0;
+
+  verify(input: MlVerificationInput): Promise<VerificationAnalysis> {
+    const concurrency = Number(process.env.ML_WORKER_CONCURRENCY ?? 2);
+    const queueLimit = Number(process.env.ML_WORKER_QUEUE_LIMIT ?? 64);
+    if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 8
+      || !Number.isInteger(queueLimit) || queueLimit < 1 || queueLimit > 1024) {
+      return Promise.reject(new InfrastructureException('ML worker concurrency/queue settings are invalid.', TranslationKey.EngineUnavailable));
+    }
+    if (this.queue.length >= queueLimit) {
+      return Promise.reject(new InfrastructureException('Analysis capacity is full; retry after queued work completes.', 'engine.queue_full'));
+    }
+    return new Promise((resolveResult, reject) => {
+      this.queue.push({ input, resolve: resolveResult, reject });
+      this.pump(concurrency);
+    });
+  }
+
+  private pump(concurrency: number): void {
+    while (this.active < concurrency && this.queue.length) {
+      const task = this.queue.shift()!;
+      this.active += 1;
+      this.run(task.input).then(task.resolve, task.reject).finally(() => {
+        this.active -= 1;
+        this.pump(Number(process.env.ML_WORKER_CONCURRENCY ?? 2));
+      });
+    }
+  }
+
+  private async run(input: MlVerificationInput): Promise<VerificationAnalysis> {
     const enginePath = resolve(process.env.ML_ENGINE_PATH ?? '../ml-engine');
     const requestedPython = process.env.PYTHON_BIN ?? 'python3';
     // Resolve relative executable paths BEFORE changing the subprocess cwd.

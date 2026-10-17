@@ -26,7 +26,8 @@ export class RunVerificationHandler implements ICommandHandler<RunVerificationCo
       patchedJavaSource: dto.patchedJavaSource ?? '', createdAt: now, updatedAt: now, version: 1,
     };
     if (context.patchedJavaSource) new CodeSnippet(context.patchedJavaSource);
-    const result = await this.engine.verify({ ...context, referenceFxRates: (await this.rates.findAll()).map((rate) => rate.toPrimitives()) });
+    const result = await this.engine.verify({ ...context, proofInputs: dto.proofInputs,
+      referenceFxRates: (await this.rates.findAll()).map((rate) => rate.toPrimitives()) });
     const run = new NewVerificationRun({ ...context, ...validatedAnalysis(result, context) });
     const saved = await this.repository.save(run);
     this.eventBus.publishAll(run.pullEvents());

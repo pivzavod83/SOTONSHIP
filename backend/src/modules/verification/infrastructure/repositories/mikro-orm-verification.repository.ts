@@ -19,6 +19,11 @@ export class MikroOrmVerificationRepository implements IVerificationRepository {
       return (await this.repository.findAll({ orderBy: { createdAt: 'asc', moduleName: 'asc' } })).map(VerificationMapper.toDomain);
     } catch (cause) { throw new InfrastructureException('Could not read verification records.', 'database.read_failed', { cause }); }
   }
+  async findPage(limit: number, offset: number): Promise<VerificationRun[]> {
+    try {
+      return (await this.repository.findAll({ limit, offset, orderBy: { createdAt: 'asc', moduleName: 'asc' } })).map(VerificationMapper.toDomain);
+    } catch (cause) { throw new InfrastructureException('Could not read a page of verification records.', 'database.read_failed', { cause }); }
+  }
   async findById(id: VerificationId): Promise<VerificationRun | null> {
     try {
       const row = await this.repository.findOne({ id: id.value });

@@ -109,6 +109,27 @@ def demo_requests() -> list[dict]:
             ("MORTGAGE-INT-CALC.cbl", "INTEREST_CALC", MORTGAGE_COBOL, MORTGAGE_JAVA, MORTGAGE_PATCH),
             ("REMIT-TIER-FEE.cbl", "REMITTANCE_FEE", REMIT_COBOL, REMIT_JAVA, REMIT_JAVA),
             ("CICS-TERMINAL-IO.cbl", "EXTERNAL_LIMIT_CASE", CICS_COBOL, CICS_JAVA, CICS_JAVA)]
-    return [{"id": str(uuid5(NAMESPACE_URL, "sotonship:verification:" + name)), "moduleName": name,
-             "category": category, "cobolSource": old, "javaSource": new, "patchedJavaSource": patch}
-            for name, category, old, new, patch in rows]
+    mappings = {
+        "FX_CONVERSION": ("INPUT-AMOUNT", "REFERENCE-RATE", "SETTLEMENT-RESULT", "principal", "quote", -999999999,
+                          "GBP/EUR", "Bank of England Daily Spot Rate", "2026-10-17"),
+        "INTEREST_CALC": ("INPUT-AMOUNT", "REFERENCE-RATE", "SETTLEMENT-RESULT", "balance", "unusedReference", 0,
+                          "GBP/EUR", "Bank of England Daily Spot Rate", "2026-10-17"),
+        "REMITTANCE_FEE": ("INPUT-AMOUNT", "REFERENCE-RATE", "SETTLEMENT-RESULT", "transfer", "bahtQuote", -999999999,
+                           "GBP/THB", "World Bank Remittance Prices Worldwide", "2026-10-17"),
+        "EXTERNAL_LIMIT_CASE": ("INPUT-AMOUNT", "REFERENCE-RATE", "SETTLEMENT-RESULT", "amount", "rate", 0,
+                                "GBP/EUR", "Bank of England Daily Spot Rate", "2026-10-17"),
+    }
+    requests = []
+    for name, category, old, new, patch in rows:
+        (amount_field, rate_field, result_field, amount_parameter, rate_parameter, min_cents,
+         pair, source, collected) = mappings[category]
+        requests.append({"id": str(uuid5(NAMESPACE_URL, "sotonship:verification:" + name)), "moduleName": name,
+                         "category": category, "cobolSource": old, "javaSource": new, "patchedJavaSource": patch,
+                         "proofInputs": {"cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+                             "cobolSourceFormat": "FREE", "amountField": amount_field,
+                             "rateField": rate_field, "resultField": result_field,
+                             "javaAmountParameter": amount_parameter, "javaRateParameter": rate_parameter,
+                             "amountMinCents": min_cents, "amountMaxCents": 999999999,
+                             "referenceCurrencyPair": pair, "referenceSource": source,
+                             "referenceCollectedDate": collected}})
+    return requests

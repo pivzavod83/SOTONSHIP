@@ -6,7 +6,7 @@ import re
 import networkx as nx
 import numpy as np
 
-from .semantics import strip_comments
+from .semantics import normalize_cobol_source, strip_comments
 
 FEATURE_NAMES = ["is_fixed_point_comp3", "is_ieee754_float", "is_big_decimal", "decimal_scale",
                  "has_rounding_clause", "is_loop_branch", "is_external_call", "pca_structural_residual"]
@@ -26,11 +26,11 @@ def features(text: str, language: str) -> list[float]:
             float(bool(re.search(r"EXEC\s+CICS|\bJCL\b|REDEFINES|receiveMap", text, re.I))), 0.0]
 
 
-def build_cpg(source: str, language: str) -> nx.DiGraph:
+def build_cpg(source: str, language: str, source_format: str = "FREE") -> nx.DiGraph:
     if language not in ("cobol", "java"):
         raise ValueError("language must be cobol or java")
     graph = nx.MultiDiGraph(language=language, extractor="restricted-source-cpg-v1")
-    text = strip_comments(source, language)
+    text = normalize_cobol_source(source, source_format) if language == "cobol" else strip_comments(source, language)
     root = f"{language}:root"
     graph.add_node(root, label=language.upper(), kind="program", language=language,
                    line=1, features=features(text, language), riskScore=0.0)

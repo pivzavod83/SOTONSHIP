@@ -4,7 +4,7 @@ import { IVerificationRepository, VERIFICATION_REPOSITORY } from '../../../domai
 import { PatchedVerificationRun } from '../../../domain/entities/patched-verification-run';
 import { VerificationId } from '../../../domain/value-objects/verification-id';
 import { FormalProofStatusValue } from '../../../domain/enums/formal-proof-status.enum';
-import { IMlBridge, ML_BRIDGE } from '../../ports/ml-bridge';
+import { IMlBridge, ML_BRIDGE, MlVerificationInput } from '../../ports/ml-bridge';
 import { FX_RATE_REPOSITORY, IReferenceFxRateRepository } from '../../../../fx-rates/domain/repositories/reference-fx-rate.repository';
 import { VerificationDetailRto } from '../../../presentation/rto/verification-detail.rto';
 import { ApplyVerifiedPatchCommand } from '../apply-verified-patch.command';
@@ -30,6 +30,7 @@ export class ApplyVerifiedPatchHandler implements ICommandHandler<ApplyVerifiedP
     const result = await this.engine.verify({
       id: state.id, moduleName: state.moduleName, category: state.category, cobolSource: state.cobolSource,
       javaSource: state.patchedJavaSource, patchedJavaSource: state.patchedJavaSource,
+      proofInputs: state.proofScope.proofInputs as unknown as MlVerificationInput['proofInputs'],
       referenceFxRates: (await this.rates.findAll()).map((rate) => rate.toPrimitives()),
     });
     if (result.formalProofStatus !== FormalProofStatusValue.UNSAT_PROVEN_SAFE) {

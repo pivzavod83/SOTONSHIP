@@ -15,3 +15,6 @@ __pycache__/
 *.log
 *.tsbuildinfo
 pgdata/
+ml-engine/evaluation/private/
+ml-engine/evaluation/corpora/
+ml-engine/evaluation/reports/

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags, ApiUnprocessableEntityResponse } from '@nestjs/swagger';
 import { GetVerificationsListQuery } from '../../application/queries/get-verifications-list.query';
@@ -8,10 +8,12 @@ import { RunVerificationCommand } from '../../application/commands/run-verificat
 import { ApplyVerifiedPatchCommand } from '../../application/commands/apply-verified-patch.command';
 import { RunVerificationDto } from '../dto/run-verification.dto';
 import { VerificationIdDto } from '../dto/verification-id.dto';
-import { VerificationSummaryRto } from '../rto/verification-summary.rto';
 import { VerificationDetailRto } from '../rto/verification-detail.rto';
 import { BaselineComparisonRto } from '../rto/baseline-comparison.rto';
 import { ErrorRto } from '../../../../common/rto/error.rto';
+import { VerificationPageDto } from '../dto/verification-page.dto';
+import { VerificationPageRto } from '../rto/verification-page.rto';
+import { Roles } from '../../../../common/auth/roles.decorator';
 
 @ApiTags('Verifications')
 @ApiBadRequestResponse({ type: ErrorRto })
@@ -20,14 +22,19 @@ export class VerificationController {
   constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
 
   @Get()
-  @ApiOkResponse({ type: VerificationSummaryRto, isArray: true })
-  list(): Promise<VerificationSummaryRto[]> { return this.queryBus.execute(new GetVerificationsListQuery()); }
+  @Roles('verifications:read')
+  @ApiOkResponse({ type: VerificationPageRto })
+  list(@Query() query: VerificationPageDto): Promise<VerificationPageRto> {
+    return this.queryBus.execute(new GetVerificationsListQuery(query.page, query.pageSize));
+  }
 
   @Get('baseline-comparison')
+  @Roles('verifications:read')
   @ApiOkResponse({ type: BaselineComparisonRto })
   metrics(): Promise<BaselineComparisonRto> { return this.queryBus.execute(new GetBaselineComparisonMetricsQuery()); }
 
   @Get(':id')
+  @Roles('verifications:read')
   @ApiOkResponse({ type: VerificationDetailRto })
   @ApiNotFoundResponse({ type: ErrorRto })
   detail(@Param() params: VerificationIdDto): Promise<VerificationDetailRto> {
@@ -35,11 +42,13 @@ export class VerificationController {
   }
 
   @Post()
+  @Roles('verifications:write')
   @ApiOperation({ summary: 'Analyse restricted COBOL/Java source; unsupported semantics return UNKNOWN.' })
   @ApiCreatedResponse({ type: VerificationDetailRto })
   run(@Body() dto: RunVerificationDto): Promise<VerificationDetailRto> { return this.commandBus.execute(new RunVerificationCommand(dto)); }
 
   @Post(':id/apply-patch')
+  @Roles('verifications:write')
   @ApiOperation({ summary: 'Re-prove the candidate and replace Java source only for supported, bounded UNSAT.' })
   @ApiCreatedResponse({ type: VerificationDetailRto })
   @ApiNotFoundResponse({ type: ErrorRto })

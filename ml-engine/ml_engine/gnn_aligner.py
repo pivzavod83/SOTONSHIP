@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import math
+from collections import Counter
 from functools import lru_cache
 from pathlib import Path
 from time import perf_counter
@@ -23,14 +24,58 @@ def load_model():
 
 
 def embeddings(graph: nx.DiGraph, model: dict) -> tuple[list[str], np.ndarray]:
+    """Run the saved GCN using sparse edge aggregation.
+
+    The old implementation materialized an N x N dense adjacency matrix. The
+    source graph is sparse, so that wasted O(N^2) memory and compute on mostly
+    zero entries. This builds the same symmetrized, self-looped, normalized
+    adjacency as before, then aggregates only over existing edges.
+    """
     nodes = list(graph)
-    adjacency = nx.to_numpy_array(graph, nodelist=nodes)
-    adjacency = np.maximum(adjacency, adjacency.T) + np.eye(len(nodes))
-    degree = adjacency.sum(axis=1)
-    normal = adjacency / np.sqrt(degree[:, None] * degree[None, :])
+    indices = {node: index for index, node in enumerate(nodes)}
+    directed_counts = Counter((indices[source], indices[target]) for source, target in graph.edges())
+    undirected_weights: dict[tuple[int, int], int] = {}
+    for source, target in directed_counts:
+        left, right = sorted((source, target))
+        if left == right:
+            undirected_weights[(left, right)] = directed_counts[(left, right)] + 1
+        else:
+            undirected_weights[(left, right)] = max(
+                directed_counts[(left, right)], directed_counts[(right, left)])
+
+    rows: list[int] = []
+    columns: list[int] = []
+    weights: list[float] = []
+    for (left, right), weight in undirected_weights.items():
+        rows.append(left)
+        columns.append(right)
+        weights.append(float(weight))
+        if left != right:
+            rows.append(right)
+            columns.append(left)
+            weights.append(float(weight))
+    # Include a self-loop for every isolated node, matching A + I.
+    for index in range(len(nodes)):
+        if (index, index) not in undirected_weights:
+            rows.append(index)
+            columns.append(index)
+            weights.append(1.0)
+
+    row_indices = np.asarray(rows, dtype=np.intp)
+    column_indices = np.asarray(columns, dtype=np.intp)
+    edge_weights = np.asarray(weights, dtype=float)
+    degree = np.bincount(row_indices, weights=edge_weights, minlength=len(nodes))
+    normalized_weights = edge_weights / np.sqrt(degree[row_indices] * degree[column_indices])
     values = np.asarray([graph.nodes[node]["features"] for node in nodes])
-    first = np.maximum(normal @ values @ np.asarray(model["W1"]), 0)
-    second = normal @ first @ np.asarray(model["W2"])
+
+    def aggregate(features: np.ndarray) -> np.ndarray:
+        result = np.zeros_like(features, dtype=float)
+        np.add.at(result, row_indices,
+                  features[column_indices] * normalized_weights[:, None])
+        return result
+
+    first = np.maximum(aggregate(values) @ np.asarray(model["W1"]), 0)
+    second = aggregate(first) @ np.asarray(model["W2"])
     second /= np.maximum(np.linalg.norm(second, axis=1, keepdims=True), 1e-12)
     return nodes, second
 

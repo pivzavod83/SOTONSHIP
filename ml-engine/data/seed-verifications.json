@@ -244,6 +244,20 @@
           "version": "4.15.3",
           "result": "sat",
           "timeoutMs": 5000
+        },
+        "proofInputs": {
+          "cobolSourceFormat": "FREE",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "principal",
+          "javaRateParameter": "quote",
+          "amountMinCents": -999999999,
+          "amountMaxCents": 999999999,
+          "referenceCurrencyPair": "GBP/EUR",
+          "referenceSource": "Bank of England Daily Spot Rate",
+          "referenceCollectedDate": "2026-10-17",
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"
         }
       },
       "fStringSummary": "Structural GCN alignment cosine 0.960; synthetic-calibrated node risk 0.527. Factors: packed fixed-point to IEEE754 type boundary. Z3 found amount 45.00 GBP: COBOL 53.24, Java 53.23, drift -0.01 output units. Rate 1.183 (Bank of England Daily Spot Rate; observed 2026-10-15).",
@@ -962,6 +976,11 @@
               "timeoutMs": 5000
             }
           }
+        },
+        "mlValidation": {
+          "status": "NOT_VALIDATED",
+          "evidence": "synthetic demo data only",
+          "humanReviewedCorpus": null
         }
       },
       "createdAt": "2026-10-17T16:13:22.453318+00:00",
@@ -1056,6 +1075,20 @@
           "version": "4.15.3",
           "result": "sat",
           "timeoutMs": 5000
+        },
+        "proofInputs": {
+          "cobolSourceFormat": "FREE",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "balance",
+          "javaRateParameter": "unusedReference",
+          "amountMinCents": 0,
+          "amountMaxCents": 999999999,
+          "referenceCurrencyPair": "GBP/EUR",
+          "referenceSource": "Bank of England Daily Spot Rate",
+          "referenceCollectedDate": "2026-10-17",
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"
         }
       },
       "fStringSummary": "Structural GCN alignment cosine 0.855; synthetic-calibrated node risk 0.093. Factors: branch or PERFORM range control flow. Z3 found amount 2000000.00 GBP: COBOL 1.00, Java 100000.00, drift 99999.00 output units. Rate 1.183 (Bank of England Daily Spot Rate; observed 2026-10-15).",
@@ -1972,6 +2005,11 @@
               "timeoutMs": 5000
             }
           }
+        },
+        "mlValidation": {
+          "status": "NOT_VALIDATED",
+          "evidence": "synthetic demo data only",
+          "humanReviewedCorpus": null
         }
       },
       "createdAt": "2026-10-17T16:13:22.453318+00:00",
@@ -2064,6 +2102,20 @@
           "version": "4.15.3",
           "result": "unsat",
           "timeoutMs": 5000
+        },
+        "proofInputs": {
+          "cobolSourceFormat": "FREE",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "transfer",
+          "javaRateParameter": "bahtQuote",
+          "amountMinCents": -999999999,
+          "amountMaxCents": 999999999,
+          "referenceCurrencyPair": "GBP/THB",
+          "referenceSource": "World Bank Remittance Prices Worldwide",
+          "referenceCollectedDate": "2026-10-17",
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"
         }
       },
       "fStringSummary": "Structural GCN alignment cosine 0.948; synthetic-calibrated node risk 0.092. Factors: branch or PERFORM range control flow. Z3 UNSAT: no differing cent-observable outputs for integer cents in [-999999999, 999999999] with exact rate 43.98. This is equivalence of the supported bounded scalar model.",
@@ -3066,6 +3118,11 @@
               "timeoutMs": 5000
             }
           }
+        },
+        "mlValidation": {
+          "status": "NOT_VALIDATED",
+          "evidence": "synthetic demo data only",
+          "humanReviewedCorpus": null
         }
       },
       "createdAt": "2026-10-17T16:13:22.453318+00:00",
@@ -3140,7 +3197,21 @@
           "UNSAT covers only the explicit finite input domain, never arbitrary whole programs.",
           "GNN alignments guide inspection and do not authorize a proof."
         ],
-        "reason": "External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly."
+        "reason": "External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly.",
+        "proofInputs": {
+          "cobolSourceFormat": "FREE",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "amount",
+          "javaRateParameter": "rate",
+          "amountMinCents": -999999999,
+          "amountMaxCents": 999999999,
+          "referenceCurrencyPair": "GBP/EUR",
+          "referenceSource": "Bank of England Daily Spot Rate",
+          "referenceCollectedDate": "2026-10-17",
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"
+        }
       },
       "fStringSummary": "Structural GCN alignment cosine 0.994; synthetic-calibrated node risk 0.257. Factors: external state or aliased storage. Proof halted: External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly.. Human review is required.",
       "cpgGraphJson": {
@@ -3829,6 +3900,11 @@
             ],
             "reason": "External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly."
           }
+        },
+        "mlValidation": {
+          "status": "NOT_VALIDATED",
+          "evidence": "synthetic demo data only",
+          "humanReviewedCorpus": null
         }
       },
       "createdAt": "2026-10-17T16:13:22.453318+00:00",

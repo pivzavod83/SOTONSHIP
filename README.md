@@ -6,6 +6,8 @@ The API uses **NestJS, strict Layered DDD, CQRS, MikroORM and PostgreSQL**. Pyth
 
 ## Project background and design goals
 
+The proposed compiler profiles, initial conversion boundary, evidence gates, and open enterprise controls are documented in [docs/conversion-scope.md](./docs/conversion-scope.md).
+
 This overview records the project motivation and design goals. The implementation described below uses an explicit bounded scalar model and verifies caller-supplied patch candidates.
 
 ### The problem
@@ -56,14 +58,14 @@ npm run setup
 npm run start
 ```
 
-`setup` runs migrations and seeds the four stored analyses and reference FX rows. It preserves existing verification rows, including applied patches. The API listens on **http://localhost:3001/api/verifications**; Swagger is at **http://localhost:3001/api/docs**. `npm run start:dev` runs TypeScript directly. Database credentials, port, Python executable and engine path are configured in the root `.env`; `backend/.env` can override them. With an existing database, set `DATABASE_URL` and skip the Docker command.
+`setup` runs migrations and seeds the four stored analyses and reference FX rows. It preserves existing verification rows, including applied patches. The API listens on **http://localhost:3001/api/verifications**. Swagger is available on local nonproduction runs only when `SWAGGER_ENABLED=true`. API routes require an RS256 Bearer token matching `AUTH_JWT_ISSUER`, `AUTH_JWT_AUDIENCE`, and `AUTH_JWT_PUBLIC_KEY`. Read routes require `verifications:read`; run and patch routes require `verifications:write`. Replace the example identity settings with an approved identity-provider configuration before use. `npm run start:dev` runs TypeScript directly. Database credentials, port, Python executable, worker limits and engine path are configured in the root `.env`; `backend/.env` can override them. With an existing database, set `DATABASE_URL` and skip the Docker command.
 
 The committed seed JSON is available immediately, so no upload or model training is required. Python dependencies are required for new analyses and patch re-verification. A missing engine or solver error produces an infrastructure error, never a successful proof.
 
 ```sh
-curl http://localhost:3001/api/verifications
-curl http://localhost:3001/api/verifications/baseline-comparison
-curl http://localhost:3001/api/fx-rates
+curl -H "Authorization: Bearer $API_BEARER_TOKEN" 'http://localhost:3001/api/verifications?page=1&pageSize=50'
+curl -H "Authorization: Bearer $API_BEARER_TOKEN" http://localhost:3001/api/verifications/baseline-comparison
+curl -H "Authorization: Bearer $API_BEARER_TOKEN" http://localhost:3001/api/fx-rates
 ```
 
 Stop PostgreSQL with `docker compose down`. Its named volume retains local data. Rebuilding the database is unnecessary for normal restarts.
@@ -100,18 +102,18 @@ Both `backend/src/modules/verification/` and `fx-rates/` use these boundaries:
 
 Controllers do not call repositories. Handlers inject domain ports such as `@Inject('IVerificationRepository')`; infrastructure implements them. Domain code imports neither NestJS nor MikroORM. Only the infrastructure mapper converts persistence models to/from domain models. Compiled ORM discovery uses `dist/**/entities/*.entity.js`, with a corresponding TypeScript pattern for development. There is no TypeORM dependency.
 
-The verification aggregate stores COBOL, Java and proposed patched Java; graph/alignment/risk results; a deterministic baseline; formal proof status; counterexamples; timestamps; and explicit proof scope/provenance. PostgreSQL uses UUID keys, JSONB graphs/witnesses/scope and decimal FX rates serialized as strings. A successful patch command re-verifies the supplied patch, requires a supported, bounded `UNSAT_PROVEN_SAFE` result tied to the exact source SHA256 hashes, and then persists the new Java and fresh results. Unsupported or failing patches leave the original Java unchanged; optimistic version locking rejects conflicting updates. Completion and discrepancy events are published through CQRS.
+The verification aggregate stores COBOL, Java and proposed patched Java; graph/alignment/risk results; a deterministic baseline; formal proof status; counterexamples; timestamps; and explicit proof scope/provenance. PostgreSQL uses UUID keys, JSONB graphs/witnesses/scope and decimal FX rates serialized as strings. A successful patch command re-verifies the supplied patch, requires a supported, bounded `UNSAT_PROVEN_SAFE` result tied to the exact source SHA256 hashes, and then persists the new Java and fresh results. Unsupported or failing patches leave the original Java unchanged; optimistic version locking rejects conflicting updates. Completion and discrepancy events are published through CQRS. Analysis subprocesses run through a bounded in-process asynchronous queue (`ML_WORKER_CONCURRENCY`, `ML_WORKER_QUEUE_LIMIT`); queued jobs are not durable across API restarts.
 
 | HTTP endpoint | CQRS use case | Response |
 | --- | --- | --- |
-| `GET /api/verifications` | `GetVerificationsListQuery` | `VerificationSummaryRto[]` |
+| `GET /api/verifications?page=1&pageSize=50` | `GetVerificationsListQuery` | `VerificationPageRto` with `items`, `page`, `pageSize`, `hasNext` |
 | `GET /api/verifications/baseline-comparison` | `GetBaselineComparisonMetricsQuery` | `BaselineComparisonRto` |
 | `GET /api/verifications/:id` | `GetVerificationDetailQuery` | `VerificationDetailRto` |
 | `POST /api/verifications` | `RunVerificationCommand` | `VerificationDetailRto` |
 | `POST /api/verifications/:id/apply-patch` | `ApplyVerifiedPatchCommand` | `VerificationDetailRto` |
 | `GET /api/fx-rates` | FX list query | Reference FX RTOs |
 
-Use Swagger for request schemas. A run accepts `moduleName`, `category`, `cobolSource`, `javaSource` and optional `patchedJavaSource`. Categories are `FX_CONVERSION`, `INTEREST_CALC`, `REMITTANCE_FEE` and `EXTERNAL_LIMIT_CASE`. UUIDs, source length and DTO fields are validated. Submitted source is parsed as data; the bridge does not execute submitted COBOL or Java.
+Use Swagger for request schemas. A run accepts `moduleName`, `category`, `cobolSource`, `javaSource`, and optional `patchedJavaSource`. Positive proof status also requires `proofInputs`: the declared `IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1` profile, source format, amount/rate/result fields, Java parameter names, cent bounds, and exact reference-rate currency pair/source/collection date. This is a verifier grammar label, not evidence that IBM compiled the source or that all compiler options are modeled. Missing or mismatched inputs return `UNKNOWN_HALTED_LIMIT`; no unrelated FX row is substituted. Supported COBOL source formats are `FREE` and a restricted fixed-format normalizer; continuation/debug lines and unsupported language features still halt proof. Categories are `FX_CONVERSION`, `INTEREST_CALC`, `REMITTANCE_FEE` and `EXTERNAL_LIMIT_CASE`. UUIDs, source length and DTO fields are validated. Submitted source is parsed as data; the bridge does not execute submitted COBOL or Java.
 
 ## ML and formal pipeline
 
@@ -129,7 +131,9 @@ The scalar proof input contract maps the first two COBOL fields to amount and ra
 | `UNSAT_PROVEN_SAFE` | No unequal outputs exist **within the recorded model, bounds, input contract and fixed reference rate**. This does not prove unrestricted whole-language or production banking equivalence. |
 | `UNKNOWN_HALTED_LIMIT` | Unsupported code, external CICS/JCL state, unmodeled aliases, solver limits or insufficient modeling prevents a claim. Human review is required. |
 
-AI helps prioritize structurally similar, renamed code and highlight risk; it is not mathematically required to solve every equivalence problem. The shipped model is trained/calibrated on synthetic demo data. Its confidence scores are not established real-world bug probabilities. There is no independently measured claim of **94% vs 18% accuracy**, and warm inference timing must be distinguished from Python startup, model loading and SMT proof time.
+AI helps prioritize structurally similar, renamed code and highlight risk; it is not mathematically required to solve every equivalence problem. The shipped model is trained/calibrated on synthetic demo data. Each analysis now marks ML validation as `NOT_VALIDATED` until a representative, human-reviewed corpus is supplied. Its confidence scores are not established real-world bug probabilities. There is no independently measured claim of **94% vs 18% accuracy**, and warm inference timing must be distinguished from Python startup, model loading and SMT proof time.
+
+The authorized-corpus schema, reviewer adjudication workflow, codebase-level holdout policy and baseline comparison tool are documented in [ml-engine/evaluation/README.md](./ml-engine/evaluation/README.md). The tool evaluates a frozen model and records misses; it does not train or change proof decisions. Production source must remain in an approved access-controlled corpus, outside this repository.
 
 ## Four seed scenarios
 

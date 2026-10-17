@@ -85,9 +85,20 @@ export class VerificationRun {
 export function assertSupportedProof(analysis: Pick<VerificationAnalysis, 'proofScope' | 'counterexamplesJson'>): void {
   const scope = analysis.proofScope;
   const bounds = scope.inputAmountCents;
+  const inputs = scope.proofInputs;
+  const rate = scope.rate;
   if (scope.supported !== true || scope.bounded !== true || !bounds || typeof bounds !== 'object' || Array.isArray(bounds)
     || typeof bounds.min !== 'number' || typeof bounds.max !== 'number'
     || !Number.isSafeInteger(bounds.min) || !Number.isSafeInteger(bounds.max) || bounds.min > bounds.max
+    || !inputs || typeof inputs !== 'object' || Array.isArray(inputs)
+    || inputs.cobolDialectProfile !== 'IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1'
+    || typeof inputs.cobolSourceFormat !== 'string' || !['FREE', 'FIXED'].includes(inputs.cobolSourceFormat)
+    || typeof inputs.amountField !== 'string' || typeof inputs.rateField !== 'string' || typeof inputs.resultField !== 'string'
+    || typeof inputs.javaAmountParameter !== 'string' || typeof inputs.javaRateParameter !== 'string'
+    || inputs.amountMinCents !== bounds.min || inputs.amountMaxCents !== bounds.max
+    || !rate || typeof rate !== 'object' || Array.isArray(rate)
+    || inputs.referenceCurrencyPair !== rate.currencyPair || inputs.referenceSource !== rate.source
+    || inputs.referenceCollectedDate !== rate.collectedDate
     || analysis.counterexamplesJson.length !== 0) {
     throw new DomainException('UNSAT requires a supported, bounded proof with no counterexamples.', 'verification.invalid_proof_scope');
   }
