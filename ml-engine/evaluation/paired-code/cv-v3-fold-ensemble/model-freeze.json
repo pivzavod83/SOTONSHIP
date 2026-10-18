@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "runId": "paired-cv-v3-ensemble-96a1806f504e39f5",
+  "frozenAt": "2026-10-18T04:07:33.929421+00:00",
+  "runPlanSha256": "4c36e0e0973f22b9a15534bbba1e1b5df3f159acc040e3d05a5ef85a33216106",
+  "partitionPlanSha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+  "sourceSha256": {
+    "scripts/train_paired_gnn_fold_ensemble.py": "8896f57ac9c109168c29fe08ac63590ba8a5bb9aee9930b9848310d7e90ce890",
+    "scripts/train_paired_gnn_cv.py": "38fa40e409cb712a366bd7f3b361630726e2a9a7f861b1bba01f92d1c9326f5f",
+    "ml_engine/code_graph.py": "bff04bf64896bec4aead98835857d65b14fb92dbd77f1e94608a26bb4dbfd369",
+    "ml_engine/paired_gnn.py": "d08a919eef8ae67846fd0300ff952bb2a8cc475f262e2599522440e0f4336563",
+    "scripts/train_paired_gnn.py": "14953c909696ed76094faacfb8be8ea16993287b1a0ba26a4dea14b5598d5de0",
+    "ml_engine/cv_partition.py": "b1491886337ac9e81e4d3af9ab4475fb48c90e00efefe438c5452b4b9ca185f8",
+    "scripts/partition_paired_dataset.py": "a432861232c1dba05eb60197c3e2257e514aa252893b67f2b5072feee3dca90c"
+  },
+  "datasetSha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+  "fullDevelopmentRefit": false,
+  "gnnMembersSha256": "c6c0dfe2b721e176ad64449a840eb62119a339b9b54eeb68e75966f571b1c520",
+  "noMessageMembersSha256": "3aacedddfd778d2e0a4da7f9435b579eccb748e75ddb60183db5e89728ca86b7",
+  "files": {
+    "frozen-checkpoint.json": "dfda89d0eece01f9333385bb5c6ce9279ec732b8ed0725a2efe2c82ff91edfda",
+    "frozen-no-message-checkpoint.json": "1bcf84a7689cca9eca4491d394e7311de479a45ac729182efb875a0e236947ba",
+    "cv-training-report.json": "b457e967da88779075793bb5967dc9a6c75ad9307c0cfb5018be373450720a08"
+  },
+  "selectedEpoch": 80,
+  "noMessageSelectedEpoch": 30,
+  "ensemble": {
+    "aggregation": "MEAN_COSINE",
+    "members": 5
+  },
+  "thresholds": {
+    "minimumSimilarity": 1.0,
+    "minimumMargin": 2.0,
+    "calibration": {
+      "enabled": false,
+      "reason": "Benchmark-only retrieval evidence; financial-domain reliability remains unvalidated. Every ranking requires explicit human review.",
+      "method": "Fixed before CV and final evaluation; no holdout threshold selection."
+    }
+  },
+  "previousModelSha256": {
+    "previousV1Gnn": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+    "previousV2Gnn": "dbcd2aae97c9be9e7f8771b814b0eefedd9eb906872e3cf20c5b48867055af52"
+  },
+  "finalHoldoutLearnedEncodingOrScoringPerformed": false,
+  "finalEvaluationRule": "One evaluation of frozen ensembles and fixed historical baselines on the same 23-task gallery; no final-data selection or subsequent refit.",
+  "freezeId": "paired-cv-v3-ensemble-freeze-7f592bff3d8365e8"
+}

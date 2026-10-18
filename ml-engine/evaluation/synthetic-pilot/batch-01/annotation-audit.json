@@ -1,0 +1,43 @@
+{
+  "inputSha256": "4090c19e8ca05f2edb53c749791dfc34aee25d758fb0da5959cbdcbbb5411fc6",
+  "status": "STRUCTURALLY_CONSISTENT_NOT_TRAINING_READY",
+  "independentFamilies": 2,
+  "candidatePairs": 8,
+  "proposedEquivalent": 4,
+  "proposedDefective": 4,
+  "validatedSourceSpans": 35,
+  "validatedAlignmentLinks": 28,
+  "alignmentMeaning": "Bounds, identifiers and references checked; semantic alignment labels remain AI-proposed.",
+  "issues": [
+    {
+      "id": "FALSE_POSITIVE_LABELS",
+      "variants": [
+        "F002-V1",
+        "F002-V2"
+      ],
+      "details": "Actual compiled additional valid-domain cases F002-A1/A2 refute equivalence. Preserve COBOL behavior; correct Java storage assignment before credit subtraction, or explicitly revise contract/version."
+    },
+    {
+      "id": "SOURCE_LABEL_LEAKAGE",
+      "details": "Public class suffixes V1/V2 mean positive, V3/V4 mean defective. Normalize names in model inputs; exclude IDs and labels."
+    },
+    {
+      "id": "STYLE_LABEL_CORRELATION",
+      "details": "Both integer-based V2 rewrites are positive; vary implementation style across both classes in later batches."
+    },
+    {
+      "id": "MISSING_DATASET_PLAN",
+      "details": "No 20-family manifest supplied; cannot verify eventual family isolation/category balance/validation/test allocations."
+    },
+    {
+      "id": "INPUT_LEXICAL_DOMAIN",
+      "details": "Declare canonical numeric input spelling/length compatible with PIC X(20); numeric bounds alone do not bound accepted line lengths."
+    },
+    {
+      "id": "SEGMENT_CONTEXT",
+      "details": "Preserve surrounding PIC/type declarations and dependency context with model input; computation lines alone omit storage scale/width."
+    }
+  ],
+  "modelsTrained": false,
+  "originalInputEdited": false
+}

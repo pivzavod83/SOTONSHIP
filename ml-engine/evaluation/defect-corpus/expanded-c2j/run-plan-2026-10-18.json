@@ -1,0 +1,78 @@
+{
+  "version": "expanded-natural-c2j-adjudication-v1",
+  "createdDate": "2026-10-18",
+  "status": "FROZEN_BEFORE_NEW_COHORT_EXECUTION",
+  "scope": "Adjudicate all23remaining development Java-screen-flagged source families with explicit actual-source behavioral contracts. No model fitting in this corpus-curation stage.",
+  "previousSummary": {
+    "path": "ml-engine/evaluation/defect-corpus/natural-c2j-audit-summary-2026-10-18.json",
+    "sha256": "95a088d71ceae68196c08a19a2394904f4ac2d3921e54b2b8d3184555a54180e"
+  },
+  "assignedFamilies": {
+    "numeric-a": [
+      35,
+      43,
+      47,
+      70,
+      73,
+      74,
+      85,
+      88
+    ],
+    "numeric-b": [
+      92,
+      103,
+      113,
+      119,
+      120,
+      126,
+      128,
+      134
+    ],
+    "text": [
+      17,
+      99,
+      105,
+      110,
+      143,
+      145,
+      151
+    ]
+  },
+  "datasetCommit": "2b14b7bf7e55556205654c6f7657fa60e36251fa",
+  "datasetSha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+  "partitionSha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+  "holdoutPolicy": "Existing23reserved families and alltheirderivativesremainunexecutedandunusedforselection. Earlierretrievalexposureremainsdisclosed.",
+  "inputPolicy": [
+    "Use unchanged original drivers and original candidate programs. Freeze exact argument mappings, source/probe/helper hashes and exclusions before each cohort executes.",
+    "Fixed OCCURS arrays require explicit Java lengths and full initialization; do not silently add values.",
+    "COBOL PIC limits, encoding, padding and precision define shared-input boundaries.",
+    "COMP-2 maps to Java Double; integer-looking MOVE syntax does not establish an Integer runtime type.",
+    "Interface adaptations require an explicit original contract; do not rename candidate methods to force compatibility."
+  ],
+  "outputPolicy": [
+    "Compare actual original COBOL execution, not declared benchmark expected answers.",
+    "Canonical Java is a separate control and can itself disagree with the source. Retain both observations.",
+    "List prefixes require an independent source-derived logical length and explicit tail/shape inspection; report them as projected contracts rather than full-language equivalence.",
+    "Never strip significant whitespace or choose floating tolerances after seeing candidate differences.",
+    "Source-reference disagreement may reflect an original source bug, desired policy change or lost representation. Keep it distinct from a strong source-fidelity discrepancy with agreeing controls."
+  ],
+  "outcomeClasses": [
+    "REPRODUCED_SOURCE_DISCREPANCY_CONTROL_AGREES_PENDING_REVIEW",
+    "SOURCE_DISCREPANCY_REFERENCE_OR_REPRESENTATION_CONFLICT",
+    "NO_MISMATCH_OBSERVED_WITHIN_FROZEN_CONTRACT",
+    "BUILD_OR_INTERFACE_FAILURE",
+    "UNSUPPORTED_OR_NONSHARED_INPUT_MAPPING",
+    "HARNESS_ERROR_UNRESOLVED"
+  ],
+  "reporting": [
+    "Every23familymusthaveexplicit disposition and evidence/reason, including unexecuted/unsupported cases.",
+    "Count faulty candidate programs and distinct source-task groups separately from driver witnesses.",
+    "Keep historical reports immutable; preserve raw outputs and source bytes in ignored cache with versioned hash pointers.",
+    "All cohorts are selected after screening: do not interpret discrepancy prevalence as detector accuracy or unbiased generalization.",
+    "No independent human-review votes, gold localization labels or unmeasured model performance are created."
+  ],
+  "trainingDecision": "Decide data readiness from reproduced independent source families, controls and review coverage after adjudication. Do not relabel Java-test-only failures or representation conflicts as semantic defects to increase the training count.",
+  "introducedMutations": 0,
+  "llmApiCalls": 0,
+  "aiDisclosure": "AI-generated protocol, adapters and local peer checks; not independent human adjudication."
+}

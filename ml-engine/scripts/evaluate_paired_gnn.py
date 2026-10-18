@@ -28,7 +28,9 @@ def evaluate(dataset):
     if hashlib.sha256(raw).hexdigest()!=manifest['sha256']:raise ValueError('Pinned dataset hash mismatch')
     byid={row['task_id']:row for row in (json.loads(line) for line in raw.decode().splitlines() if line.strip())}
     split=json.loads((ROOT/'evaluation/paired-code/task-splits.json').read_text());ids=split['splits']['test']
-    rows=[byid[identifier] for identifier in ids];model=load_model();vectors=[[],[],[]];hist=[[],[],[]]
+    # These 29 IDs belong to v1's historical split. Six will enter v2 development;
+    # never report this old split as a fresh test of the active CV-trained model.
+    rows=[byid[identifier] for identifier in ids];model=load_model(ROOT/'ml_engine/models/paired_program_gnn_v1.json');vectors=[[],[],[]];hist=[[],[],[]]
     for row in rows:
         sources=((row['COBOL_canonical_solution'],'cobol'),(row['Java_canonical_solution'],'java'),(anonymise_java(row['Java_canonical_solution']),'java'))
         for k,(source,language) in enumerate(sources):

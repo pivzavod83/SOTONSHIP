@@ -1,0 +1,10 @@
+{
+  "modelId": "paired-program-gnn-v2-cv",
+  "runId": "paired-cv-v2-dd00a1038de20a04",
+  "modelSha256": "dbcd2aae97c9be9e7f8771b814b0eefedd9eb906872e3cf20c5b48867055af52",
+  "frozenCheckpointSha256": "31edb93d55cbf79b5e45b84252a5d7c090e6c6526c433a8ab8079ccd8c623ac0",
+  "finalEvaluationReportSha256": "fdb3dd1c62d8f358d1cdf696488659fa104dc2ed84c22dd071a36f990600cfe3",
+  "weightsChangedAfterFreeze": false,
+  "weightsSha256": "8de58afe02ff59b303fbf3470b89e944fbc617a56132f23dc367a4a5bd3998ce",
+  "note": "Deployment artifact adds measured evaluation/provenance metadata; exact frozen rounded weights and gate are preserved."
+}

@@ -1,0 +1,81 @@
+{
+  "artifact": "metadata-only dataset repair",
+  "revision": "batch-02-repaired-r1",
+  "createdAtUtc": "2026-10-18T09:19:05.727215+00:00",
+  "datasetKind": "SYNTHETIC_AI_GENERATED",
+  "upstream": {
+    "path": "ml-engine/evaluation/synthetic-pilot/batch-02/input-batch.json",
+    "sha256": "f08dc2a1dffeb19ef75e4ac0750c8942b1cd30da3c5086269d9137e6f91507b9"
+  },
+  "repairedDataset": {
+    "path": "ml-engine/evaluation/synthetic-pilot/batch-02-repaired-r1/dataset.json",
+    "sha256": "228cfeeee1f15db171250de181201e471ba24a359ac6b0411b6ea8044bb0713e"
+  },
+  "evidence": [
+    {
+      "path": "ml-engine/evaluation/synthetic-pilot/batch-02/runtime-audit-2026-10-18/report.json",
+      "sha256": "242fd2c8574ab95829d45360a18223d11540f503a5a532acad97573abc32a656"
+    },
+    {
+      "path": "ml-engine/evaluation/synthetic-pilot/batch-02/runtime-audit-2026-10-18/source-hashes.json",
+      "sha256": "5d6d9e881c6fbcc9084401dfd4e76b1d3624ac348d5f3aa1da192a688ce02005"
+    }
+  ],
+  "changes": [
+    {
+      "op": "replace",
+      "path": "/families/1/variants/3/defectCategory",
+      "oldValue": "DECIMAL_ROUNDING_AND_SCALE",
+      "value": "ARITHMETIC_FORMULA"
+    },
+    {
+      "op": "add",
+      "path": "/families/1/variants/3/defectSubtype",
+      "value": "UNWEIGHTED_MEAN"
+    },
+    {
+      "op": "replace",
+      "path": "/families/1/variants/3/labelRationale",
+      "oldValue": "Segment J3 aligns with C3 as the unit-average computation step but averages the raw unit prices (cost1 + cost2) / 2 instead of dividing the weighted extended total (ext1 + ext2) by totQty. Whenever QTY-1 != QTY-2 and COST-1 != COST-2 (as in T5: 15.00 vs 16.67, and T6: 10.01 vs 10.02), J3 diverges from COBOL.",
+      "value": "Segment J3 aligns with C3 as the unit-average computation step but computes the unweighted mean (cost1 + cost2) / 2 instead of the quantity-weighted mean (ext1 + ext2) / totQty. This can change the rounded output: T5 yields Java 15.00 versus COBOL 16.67, and T6 yields Java 10.01 versus COBOL 10.02. Unequal quantities and unequal unit prices do not guarantee different rounded outputs; rounding can mask the formula error, as the audited F004-A4 case (quantities 1 and 2, costs 10.00 and 10.01) produces 10.01 in both programs."
+    }
+  ],
+  "runtimeWitnessesFromExistingReport": [
+    {
+      "testId": "F004-T5",
+      "origin": "SUPPLIED",
+      "stdin": "1\n10.00\n2\n20.00\n",
+      "observedReferenceValue": "16.67",
+      "observedJavaValue": "15.00",
+      "observedMismatch": true
+    },
+    {
+      "testId": "F004-T6",
+      "origin": "SUPPLIED",
+      "stdin": "1\n10.00\n3\n10.02\n",
+      "observedReferenceValue": "10.02",
+      "observedJavaValue": "10.01",
+      "observedMismatch": true
+    },
+    {
+      "testId": "F004-A4",
+      "origin": "ADDITIONAL_DOMAIN_PROBE",
+      "stdin": "1\n10.00\n2\n10.01\n",
+      "observedReferenceValue": "10.01",
+      "observedJavaValue": "10.01",
+      "observedMismatch": false
+    }
+  ],
+  "verification": {
+    "onlyThreeMetadataChanges": true,
+    "allSourceLinesUnchanged": true,
+    "allTestsAndPredictionsUnchanged": true,
+    "allAlignmentsUnchanged": true,
+    "allSplitsUnchanged": true,
+    "allExpectedEquivalentFlagsUnchanged": true,
+    "allExecutionLabelsUnchanged": true,
+    "newCompilationOrExecutionPerformed": false,
+    "modelTrained": false
+  },
+  "interpretation": "The existing report supplies finite runtime evidence for the unchanged code; it is not proof of equivalence. This repair corrects only defect taxonomy and wording. Original data and runtime artifacts remain unchanged."
+}

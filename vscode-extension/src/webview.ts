@@ -18,13 +18,13 @@ export function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri
 <body>
   <div class="workbench">
     <header class="page-header">
-      <div><p class="eyebrow">COBOL → JAVA</p><h1>Migration workbench</h1><p class="subtitle">Find corresponding programs with a GNN, then check supported financial behavior.</p></div>
+      <div><p class="eyebrow">COBOL → JAVA</p><h1>Migration workbench</h1><p class="subtitle">Review translation defects with AI, then verify supported financial behavior independently.</p></div>
       <button id="demo" class="secondary">Try penny drift demo</button>
     </header>
     <section class="connection" aria-label="Backend connection">
       <div class="connection-label"><span class="connection-dot" aria-hidden="true"></span><label for="backend-url">Verification backend</label></div>
       <div class="endpoint-control"><input id="backend-url" type="url" spellcheck="false" aria-describedby="endpoint-help"><button id="save-endpoint" class="quiet">Use address</button><button id="open-settings" class="quiet">Settings</button></div>
-      <p id="endpoint-help" class="muted">Source code is sent to this address only when you request matching or verification. No LLM is connected.</p>
+      <p id="endpoint-help" class="muted">Selected code is sent only when you request analysis. “Analyze pair with AI” also sends the pair through this backend to its configured model provider. API keys stay on the server.</p>
     </section>
     <p id="status-message" class="status-message" role="status" aria-live="polite">Choose a COBOL source and a Java candidate to begin.</p>
     <main class="workspace-grid">
@@ -43,6 +43,15 @@ export function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri
           <div class="file-slot"><div class="file-heading"><label>Java to verify</label><button id="choose-java" class="quiet">Choose file</button></div><button id="open-java" class="file-link" disabled>No Java file selected</button><p id="java-path" class="file-path"></p></div>
           <label for="category" class="field-label">Financial context</label>
           <select id="category"><option value="FX_CONVERSION">Foreign exchange</option><option value="INTEREST_CALC">Interest calculation</option><option value="REMITTANCE_FEE">Remittance fee</option><option value="EXTERNAL_LIMIT_CASE">External / unsupported case</option></select>
+        </section>
+        <section class="card ai-review-setup">
+          <div class="section-heading"><span class="step" aria-hidden="true">AI</span><div><h2>Review translation defects</h2><p>Analyze the supplied pair for semantic differences. No proof mapping is needed for this review.</p></div></div>
+          <label for="ai-review-format" class="field-label">COBOL format for AI review</label>
+          <select id="ai-review-format"><option value="AUTO">Auto-detect</option><option value="FREE">Free format</option><option value="FIXED">Fixed format</option></select>
+          <label for="ai-review-context" class="field-label">Behavioral context · optional</label>
+          <textarea id="ai-review-context" spellcheck="false" rows="4" maxlength="8000" placeholder="Describe entry points, expected input fields, compiler assumptions or a known symptom."></textarea>
+          <button id="analyze-pair-ai" class="primary wide" disabled>Analyze pair with AI</button>
+          <p class="muted">This action sends both selected sources and context to the configured model provider via your backend. Findings are hypotheses; proposed inputs are never executed and fixes are never applied automatically.</p>
         </section>
         <section class="card contract-card">
           <div class="section-heading"><span class="step" aria-hidden="true">2</span><div><h2>Declare the proof scope</h2><p>Map fields and parameters explicitly; choose finite input bounds and the exact reference rate.</p></div></div>
@@ -64,10 +73,11 @@ export function getWebviewHtml(webview: vscode.Webview, extensionUri: vscode.Uri
       <section class="evidence-column" aria-label="Verification evidence">
         <div class="evidence-heading"><div><p class="eyebrow">ENGINEER REVIEW</p><h2>Evidence before approval</h2></div><button id="export-report" class="secondary" disabled>Export report</button></div>
         <div id="matching-result"></div>
+        <div id="ai-review-result"></div>
         <div id="empty-state" class="empty-state"><div class="empty-mark" aria-hidden="true">≠</div><h3>Find the transaction that changes.</h3><p>Run the source pair to see a concrete counterexample, a bounded equivalence result, or an explicit reason the verifier cannot decide.</p><div class="legend"><span><i class="dot sat" aria-hidden="true"></i>SAT · differing output found</span><span><i class="dot unsat" aria-hidden="true"></i>UNSAT · equivalent within scope</span><span><i class="dot unknown" aria-hidden="true"></i>UNKNOWN · human review needed</span></div></div>
         <div id="original-result"></div>
         <div id="candidate-result"></div>
-        <footer class="evidence-footer">A proof covers the supported scalar model and declared bounds. It does not certify arbitrary COBOL, external systems, or production readiness. GNN similarities rank whole programs; they are not proof, calibrated confidence, or exact fault localization.</footer>
+        <footer class="evidence-footer">AI findings are suspected mismatches, not proof. A Z3 proof covers only the supported scalar model and declared bounds. Neither certifies arbitrary COBOL, external systems, or production readiness. GNN similarities rank whole programs and do not identify proven fault locations.</footer>
       </section>
     </main>
   </div>

@@ -1,0 +1,11 @@
+{
+  "F005": {
+    "cobol": "58d7c81bbf5d2a733184f3adaa705611c05106d5d825f9ad15c25a6ce9f6336e",
+    "java": {
+      "F005-V1": "812a5033a24c426f9da33619f5cc65fa3c37e4f2bc23946a07f25df87fea67c3",
+      "F005-V2": "c3733df961ac1bf0b260bdd12da16b4c2f9dc0bbd8ada336c2acdae4fca49751",
+      "F005-V3": "00cc94bfb54e809c723dd4acf90bf5bcf5f744f18dd432c15734732d01b0de98",
+      "F005-V4": "ea7bbdfcf24a3af7257e32d277214541e75628409cf4bda42cb99fbc6a70b599"
+    }
+  }
+}

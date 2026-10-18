@@ -6,25 +6,84 @@ normalised embedding. Cosine similarity is a retrieval score, never probability.
 from __future__ import annotations
 import hashlib
 import json
+from collections import Counter
 from functools import lru_cache
 from pathlib import Path
 import numpy as np
 from .code_graph import CodeGraph, FEATURE_NAMES, RELATIONS, build_graph
 
-MODEL_PATH = Path(__file__).parent/'models'/'paired_program_gnn_v1.json'
+MODEL_PATH = Path(__file__).parent/'models'/'paired_program_v4_selected.json'
 
-@lru_cache(maxsize=1)
-def load_model() -> dict:
-    raw=MODEL_PATH.read_bytes()
+
+def _validate_weights(weights: dict, expected: dict) -> None:
+    if not isinstance(weights, dict) or set(weights) != set(expected):
+        raise ValueError('invalid paired model weight keys')
+    for name, reference in expected.items():
+        values = np.asarray(weights[name], dtype=float)
+        if values.shape != reference.shape or not np.all(np.isfinite(values)):
+            raise ValueError('invalid paired model weight shape or nonfinite values')
+
+
+def _validate_ensemble(model: dict, expected: dict) -> None:
+    ensemble = model.get('ensemble', {})
+    members = model.get('members')
+    if (not isinstance(ensemble, dict) or ensemble.get('aggregation') != 'MEAN_COSINE'
+            or ensemble.get('members') != 5 or not isinstance(members, list) or len(members) != 5):
+        raise ValueError('fold ensemble requires exactly five members and MEAN_COSINE aggregation')
+    if 'weights' in model or model.get('training', {}).get('fullDevelopmentRefit') is not False:
+        raise ValueError('fold ensemble must retain member weights without a full-development refit')
+    selected_epoch = model['training'].get('selectedEpoch')
+    if isinstance(selected_epoch, bool) or not isinstance(selected_epoch, int) or selected_epoch < 1:
+        raise ValueError('invalid shared ensemble checkpoint epoch')
+    if not isinstance(model.get('messagePassing', True), bool):
+        raise ValueError('invalid ensemble message-passing flag')
+    development = None
+    validation_counts = Counter()
+    folds = []
+    for member in members:
+        if not isinstance(member, dict):
+            raise ValueError('invalid fold ensemble member')
+        fold = member.get('fold')
+        if isinstance(fold, bool) or not isinstance(fold, int):
+            raise ValueError('invalid ensemble fold index')
+        folds.append(fold)
+        groups = []
+        for field, count in (('trainingTaskIds', 96), ('validationTaskIds', 24)):
+            identifiers = member.get(field)
+            if (not isinstance(identifiers, list) or len(identifiers) != count
+                    or any(not isinstance(value, str) or not value for value in identifiers)
+                    or len(set(identifiers)) != count):
+                raise ValueError('ensemble members must record unique 96/24 fitting/validation task IDs')
+            groups.append(set(identifiers))
+        train, validation = groups
+        if train & validation or (development is not None and train | validation != development):
+            raise ValueError('ensemble member partitions must be disjoint and cover the same 120 development tasks')
+        development = train | validation
+        validation_counts.update(validation)
+        epoch = member.get('selectedEpoch')
+        if isinstance(epoch, bool) or not isinstance(epoch, int) or epoch != selected_epoch:
+            raise ValueError('ensemble members must retain the selected shared checkpoint epoch')
+        _validate_weights(member.get('weights'), expected)
+    if folds != [1, 2, 3, 4, 5] or set(validation_counts) != development or any(count != 1 for count in validation_counts.values()):
+        raise ValueError('ensemble must preserve all five folds and exactly one held-out fold per development task')
+
+@lru_cache(maxsize=2)
+def load_model(model_path: str | Path | None = None) -> dict:
+    """Load the active artifact, or an explicitly pinned historical checkpoint."""
+    raw=(Path(model_path) if model_path is not None else MODEL_PATH).read_bytes()
     model=json.loads(raw)
     if model['featureNames'] != list(FEATURE_NAMES) or model['relations'] != list(RELATIONS):
         raise ValueError('paired graph model/extractor schema mismatch')
     expected=initialise()
-    if set(model.get('weights',{}))!=set(expected): raise ValueError('invalid paired model weight keys')
-    for name,reference in expected.items():
-        values=np.asarray(model['weights'][name],dtype=float)
-        if values.shape!=reference.shape or not np.all(np.isfinite(values)):
-            raise ValueError('invalid paired model weight shape or nonfinite values')
+    if model.get('kind') == 'SELECTED_FOLD_ENSEMBLE':
+        from .candidate_retrieval import validate_candidate_model
+        validate_candidate_model(model)
+    elif model.get('kind') == 'FOLD_ENSEMBLE':
+        _validate_ensemble(model, expected)
+    elif model.get('kind') is None:
+        _validate_weights(model.get('weights'), expected)
+    else:
+        raise ValueError('unknown paired model artifact kind')
     gate=model['thresholds']
     if not (-1<=gate['minimumSimilarity']<=1 and 0<=gate['minimumMargin']<=2):
         raise ValueError('invalid paired model thresholds')
@@ -35,9 +94,14 @@ def load_model() -> dict:
 def model_metadata(model=None) -> dict:
     model=model or load_model()
     if '_artifactSha256' not in model: raise ValueError('metadata requires a loaded artifact snapshot')
-    return {'id':model['id'],'sha256':model['_artifactSha256'],
+    metadata = {'id':model['id'],'sha256':model['_artifactSha256'],
             'trainingDataset':model['training']['dataset'], 'evaluation':model['evaluation'],
             'limitations':model['limitations']}
+    if model.get('kind') in ('FOLD_ENSEMBLE', 'SELECTED_FOLD_ENSEMBLE'):
+        metadata['ensemble'] = model['ensemble']
+    if model.get('kind') == 'SELECTED_FOLD_ENSEMBLE':
+        metadata['candidateId'] = model['candidateId']
+    return metadata
 
 
 def batch_graphs(graphs: list[CodeGraph], message_passing=True):
@@ -122,11 +186,21 @@ def paired_loss(c,j,temperature=.12):
     return loss,d@j,d.T@c
 
 
-def encode_graph(graph: CodeGraph, model=None) -> np.ndarray:
+def encode_graph(graph: CodeGraph, model=None, language: str | None = None) -> np.ndarray:
     model=model or load_model()
+    if model.get('kind') == 'SELECTED_FOLD_ENSEMBLE':
+        from .candidate_retrieval import encode_candidate
+        return encode_candidate(graph, model, language)
+    if model.get('kind') == 'FOLD_ENSEMBLE':
+        batch = batch_graphs([graph], model.get('messagePassing', True))
+        vectors = [forward(batch, {key: np.asarray(value, dtype=float) for key, value in member['weights'].items()})[0]
+                   for member in model['members']]
+        # Independent training rotates embedding spaces. Concatenation preserves
+        # their individual cosine scores; its dot product is the equal mean.
+        return np.concatenate(vectors) / np.sqrt(len(vectors))
     params={k:np.asarray(v,dtype=float) for k,v in model['weights'].items()}
     return forward(batch_graphs([graph]),params)[0]
 
 
 def encode_source(source: str, language: str, source_format='AUTO', model=None) -> np.ndarray:
-    return encode_graph(build_graph(source,language,source_format),model)
+    return encode_graph(build_graph(source,language,source_format),model,language)

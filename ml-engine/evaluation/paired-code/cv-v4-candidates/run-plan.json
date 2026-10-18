@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-18T04:24:45.763825+00:00",
+  "sourceSha256": {
+    "scripts/train_paired_candidates.py": "56ae5143de82759a189df274e8b5289a1330f1ef3040b874de16082df023da12",
+    "scripts/train_paired_gnn_cv.py": "38fa40e409cb712a366bd7f3b361630726e2a9a7f861b1bba01f92d1c9326f5f",
+    "scripts/train_paired_gnn.py": "14953c909696ed76094faacfb8be8ea16993287b1a0ba26a4dea14b5598d5de0",
+    "scripts/partition_paired_dataset.py": "a432861232c1dba05eb60197c3e2257e514aa252893b67f2b5072feee3dca90c",
+    "ml_engine/code_graph.py": "bff04bf64896bec4aead98835857d65b14fb92dbd77f1e94608a26bb4dbfd369",
+    "ml_engine/cv_partition.py": "b1491886337ac9e81e4d3af9ab4475fb48c90e00efefe438c5452b4b9ca185f8",
+    "ml_engine/paired_gnn.py": "c5e20484e924f22103c3f3f4dfcf262d87bfffdd4de4c3f3591a6b42c85fcc80",
+    "ml_engine/candidate_gnn.py": "8903e6a98a31b6773342827f73294131a2a448bbf725a8dbba3f156f4e458505",
+    "ml_engine/structural_cca.py": "87cd0950707ddd844f0a33bfeda8e29a3d3e9f0499a3f152cc2fb2417e75768c",
+    "ml_engine/candidate_retrieval.py": "a059f81ecd4271017b1effc2be40461d497b46b95d03979b4df25cfa393cab62",
+    "ml_engine/matching.py": "7154c8decf305a401fc42d5d58746ae92eb369560ec2a21d3bfae8459e6fd4cb"
+  },
+  "datasetSha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+  "partitionPlanSha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+  "numpyVersion": "2.3.4",
+  "papers": {
+    "count_readout": {
+      "title": "How Powerful are Graph Neural Networks?",
+      "authors": "Xu et al.",
+      "venue": "ICLR 2019",
+      "url": "https://arxiv.org/abs/1810.00826",
+      "adaptation": "Mean/max/scaled-sum layer readouts plus explicit log node count. Motivated by multiset/count expressiveness; not a GIN reproduction or expressivity proof."
+    },
+    "language_heads": {
+      "title": "Deep Canonical Correlation Analysis",
+      "authors": "Andrew et al.",
+      "venue": "ICML 2013",
+      "url": "https://proceedings.mlr.press/v28/andrew13.html",
+      "adaptation": "Shared GNN backbone with separate paired-view COBOL/Java projections, trained with InfoNCE. Paired-view motivation, not the DCCA objective."
+    },
+    "structural_cca": {
+      "title": "Weisfeiler-Lehman Graph Kernels",
+      "authors": "Shervashidze et al.",
+      "venue": "JMLR 2011",
+      "url": "https://www.jmlr.org/papers/v12/shervashidze11a.html",
+      "additionalPaper": "https://proceedings.mlr.press/v28/andrew13.html",
+      "adaptation": "Fixed hashed relation-aware WL counts and semantic statistics; fold-local standardization and regularized linear CCA (ridge0.1,24outputs), not DCCA."
+    },
+    "graph_regularized": {
+      "title": "Graph Contrastive Learning with Augmentations",
+      "authors": "You et al.",
+      "venue": "NeurIPS 2020",
+      "url": "https://proceedings.neurips.cc/paper/2020/hash/3fe230348e9a12c13120749e3f9fa4cd-Abstract.html",
+      "adaptation": "10% auxiliary sequence-edge dropout during fitting, preserving paired directions and all data/control edges and numeric features. GraphCL-inspired regularization, not a full GraphCL reproduction."
+    }
+  },
+  "configuration": {
+    "candidates": [
+      "baseline",
+      "structural_cca",
+      "graph_regularized",
+      "language_heads",
+      "count_readout"
+    ],
+    "newImprovements": 4,
+    "seed": 431,
+    "epochsBudget": 250,
+    "checkpointEpochs": [
+      1,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      90,
+      100,
+      110,
+      120,
+      130,
+      140,
+      150,
+      160,
+      170,
+      180,
+      190,
+      200,
+      210,
+      220,
+      230,
+      240,
+      250
+    ],
+    "folds": 5,
+    "trainingPerFold": 96,
+    "validationPerFold": 24,
+    "developmentPairs": 120,
+    "finalEvaluationPairs": 23,
+    "fullDevelopmentRefit": false,
+    "selection": "Checkpoint: pooled120 OOF Top1, then MRR, then lower validation loss, then earliest epoch. Candidate: pooled OOF Top1, then MRR, then fixed declared simplicity order.",
+    "candidateTieOrder": [
+      "baseline",
+      "structural_cca",
+      "graph_regularized",
+      "language_heads",
+      "count_readout"
+    ],
+    "ensemble": {
+      "aggregation": "MEAN_COSINE",
+      "members": 5
+    },
+    "neuralTraining": {
+      "objective": "symmetric paired InfoNCE",
+      "temperature": 0.12,
+      "optimizer": "Adam",
+      "learningRate": 0.004,
+      "weightDecay": 0.0001,
+      "hidden": 24,
+      "output": 24,
+      "initialization": "fresh parameters and Adam state for every96-pair fold"
+    },
+    "structuralCca": {
+      "regularization": 0.1,
+      "output": 24,
+      "rounds": [
+        0,
+        1,
+        2
+      ],
+      "hashBins": 512,
+      "preprocessing": "means/scales and CCA fitted exclusively on each96-pair fitting fold"
+    },
+    "augmentation": {
+      "sequenceEdgeDropout": 0.1,
+      "evaluation": "unmodified graphs",
+      "featureMasking": false
+    },
+    "thresholds": {
+      "minimumSimilarity": 1.0,
+      "minimumMargin": 2.0,
+      "calibration": {
+        "enabled": false,
+        "reason": "Benchmark-only retrieval evidence; financial-domain reliability remains unvalidated. Every ranking requires explicit human review.",
+        "method": "Fixed before CV and final evaluation; no holdout threshold selection."
+      }
+    },
+    "finalProtocol": "Freeze all5candidate ensembles and CVwinner before final learned encoding; evaluate all on same23once; deploy CVwinner regardless final ranking.",
+    "partitionPolicyOverride": "Reuse v2/v3 graph components and exact120/23/foldassignments. Supersede historical full-development refit policy: neverfit120."
+  },
+  "priorExposure": {
+    "previouslyEvaluated": true,
+    "protocolChangedAfterExposure": true,
+    "previousV3ReportSha256": "db17a859e2a2bfb8096187bc0b1977fd83838f2db8000e96e54a1913f45547e9"
+  },
+  "limitations": [
+    "143 small HumanEval-derived paired tasks, not production banking migrations or defect labels.",
+    "All23 final tasks were evaluated in v1/v2/v3. This new protocol was requested after earlier results were visible; final results are descriptive on a reused benchmark, not pristine unseen-data evidence.",
+    "Every learned transformation and preprocessing statistic uses only its96 fitting pairs. No120-pair full-development fit or refit.",
+    "CV evaluates each query by its one designated held-out member, not by the other four members that trained on it; CV is a selection statistic, not nested unbiased ensemble validation.",
+    "Names, comments, task IDs and method/program names are excluded from learned features. Structural graphs are heuristic, not compiler semantics.",
+    "Graph dropout is regularization on views of original fitting pairs, not additional authentic source pairs or a behavior-preserving code transformation.",
+    "Paper results motivate these adaptations; they do not guarantee gains on COBOL-JavaTrans.",
+    "Matching cosine is not a correctness probability or equivalence proof. Every result requires review; Z3 is independent.",
+    "All final candidates are reported, but deployment follows the frozen CV winner even if another final score is higher. No final-driven tuning, member choice or model switch."
+  ],
+  "runId": "paired-v4-candidates-ee8575e5e10c63c3"
+}

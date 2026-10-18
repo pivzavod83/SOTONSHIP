@@ -1,0 +1,7 @@
+{
+  "runId": "paired-cv-v3-ensemble-96a1806f504e39f5",
+  "freezeId": "paired-cv-v3-ensemble-freeze-7f592bff3d8365e8",
+  "freezeSha256": "0553d30955e65f85edeb86b0aa5d15e40c80c92094e6f93c3da190920f8b2d9d",
+  "startedAt": "2026-10-18T04:07:59.352753+00:00",
+  "warning": "One-shot marker. Preserve even if scoring fails; never silently repeat or tune on these final tasks."
+}

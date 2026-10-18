@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-18",
+  "pytest": {
+    "command": ".venv/bin/python -m pytest -q",
+    "workingDirectory": "ml-engine",
+    "passed": 326,
+    "failed": 0,
+    "elapsedSeconds": 5.13
+  },
+  "summarySha256": "cdfe04067f45ea5f23b5640ae69969d79c6298f589d7c188cf191a58c8e5d2d2",
+  "reviewQueueSha256": "24c39ea5aabcb94a675fff199c9c17653c59203131b521394609ad4f7ed16b8b",
+  "aggregatorTestSourceSha256": "143212f78c6161e581f375481392f8b49f8617ffee75d875d3a43db8de4c91da",
+  "historicalImmutableArtifactsVerifiedUnchanged": 37,
+  "linkedEvidenceHashesVerified": 8,
+  "queuedWitnessesVerifiedAgainstRawEvidence": 25,
+  "localDocumentationLinksVerified": 34,
+  "independentAgentReview": "Read-only separate-agent reconstruction and byte checks passed; this is AI review, not independent human adjudication.",
+  "independentHumanReviews": 0,
+  "gitDiffCheck": "PASS",
+  "activeModelPartitionAndOriginalUserEdit": "UNCHANGED",
+  "frontend": "only .gitkeep"
+}

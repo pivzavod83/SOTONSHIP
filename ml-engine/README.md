@@ -1,6 +1,8 @@
-# Paired-program matching and bounded financial verification
+# Paired AI defect review, program matching and bounded verification
 
-The migration workflow has two independent engines: a relation-aware GNN learns whole-program COBOL/Java correspondence from actual source pairs; Z3 checks the supported financial arithmetic after an engineer confirms a pair and an explicit input contract. No LLM is connected. No defect-risk classifier or synthetic-feature training dataset is shipped.
+The migration workflow includes local learned supplied-pair defect review, optional coding-LLM review, optional whole-program GNN matching and independent bounded Z3 verification. AI hypotheses never become proof. The new local graph-feature classifier/ranker uses a separately frozen ten-family synthetic dataset; it failed held-out evaluation (1/8 correct, 12.5%, below 50% baselines). See the [detector guide](../docs/local-defect-model.md) and [actual experiment](evaluation/synthetic-pilot/defect-model-v1/README.md). No API key is required for local inference.
+
+`python -m ml_engine.defect_detection --stdin` analyzes a source pair with portable NumPy weights and returns source-bound `MODEL_HYPOTHESIS` locations. The browser uses this through the readonly `/api/defect-reviews` CQRS endpoint. Its three fold checkpoints retain separate training subsets, with no full refit. The graph extractor is heuristic; this is not a trained GNN or proof. Test results and failed generalization remain visible in the UI.
 
 From this directory, install and check:
 
@@ -10,18 +12,41 @@ python3 -m venv .venv
 .venv/bin/python -m pytest -q
 ```
 
+## Paired AI defect review
+
+`ml_engine.ai_review` uses a configurable OpenAI-compatible Chat Completions endpoint. Set `LLM_MODEL`, `LLM_API_KEY` and optionally `LLM_BASE_URL` on the backend. HTTPS is required for remote providers; plain HTTP without credentials is allowed only for explicit loopback providers. Strict structured output is the default, with explicit JSON-mode/text compatibility settings. No provider SDK or extra Python dependency is required.
+
+```sh
+.venv/bin/python -m ml_engine.ai_review --stdin < ai-review-request.json
+```
+
+Input contains `moduleName`, `cobolSource`, `javaSource`, optional `cobolSourceFormat` (`AUTO`/`FREE`/`FIXED`) and optional `analysisContext`. Exact sources are limited to 100,000 characters and 1,500 LF-separated lines each. Output includes status, summary, line-anchored findings, exact source hashes and provider model metadata. Each finding is `AI_HYPOTHESIS`, and candidate inputs are `NOT_EXECUTED`. The model cannot run code, apply changes or modify proof status. Standalone CLI configuration comes from exported environment variables; the Nest backend also loads the documented `.env` files.
+
+Missing model/key returns `NOT_CONFIGURED`; provider failures, refusal and invalid output return explicit empty-finding statuses. Empty successful findings do not prove equivalence. Source spans and proposed JSON inputs are locally validated; excerpts are copied from raw source, never trusted from the model. Transport has bounded time/size, no redirects or automatic retries, and errors do not expose provider bodies or credentials. Code/comments are treated as untrusted analysis data.
+
+See [setup and API examples](../docs/ai-defect-review.md). Tests use local mock responses and establish protocol correctness, not model detection accuracy. Existing immutable corpus/model experiments and the 23 reserved families are untouched.
+
 ## Dataset and actual fitting
 
 The pinned COBOL-JavaTrans benchmark contains 143 small HumanEval-derived program pairs, not production banking modules. Sources and tests are upstream-created and reviewed according to the authors; we use their program correspondence labels, not a claim of unrestricted equivalence. Raw code remains outside Git in `evaluation/corpora/`. The manifest, licence attribution, split task IDs, model weights and measured report are versioned.
 
 ```sh
 .venv/bin/python scripts/fetch_paired_dataset.py
-OPENBLAS_NUM_THREADS=1 .venv/bin/python scripts/train_paired_gnn.py
+.venv/bin/python scripts/partition_paired_dataset.py
+OPENBLAS_NUM_THREADS=1 .venv/bin/python scripts/train_paired_candidates.py --prepare
+OPENBLAS_NUM_THREADS=1 .venv/bin/python scripts/train_paired_candidates.py --train
+OPENBLAS_NUM_THREADS=1 .venv/bin/python scripts/train_paired_candidates.py --evaluate-final
 ```
 
-The task-grouped split contains 85 training, 29 validation and 29 test tasks. Near-duplicates stay together. Training uses a symmetric paired-source contrastive objective, two relation-aware message-passing layers and whole-program pooling. Checkpoint selection and retrieval gates use validation only. A corrected-model report records that an earlier implementation's test results were observed before code-review fixes; it does not claim a pristine unseen research benchmark.
+The active v4 experiment compares four fixed improvements with a fresh GNN control: count-sensitive mean/max/scaled-sum readouts, separate COBOL/Java heads, WL graph features with ridge CCA, and fitting-only sequence-edge dropout. Every candidate retains five 96-pair models from the frozen grouped folds (24 validation each). **No final fit on all 120 occurs.** CCA preprocessing is fitted on each training fold only. The shared checkpoint and candidate are chosen by pooled development-only Top-1, then MRR and the frozen tie-breaks. Runtime averages the five member cosine scores.
 
-The measured GNN is an experimental pilot, not established as superior to name matching. See [evaluation/README.md](evaluation/README.md) and [the exact training report](evaluation/paired-code/training-report.json). The 143 task pairs do not provide statement correspondence, bug locations or faulty-to-correct patch labels. There is no automatic code generation, exact failure localization or trained risk probability.
+The selected regularized GNN uses epoch 80 and scores **9/23 Top-1 (39.13%)**, **15/23 Top-3 (65.22%)**, **17/23 Top-5 (73.91%)**, **MRR 0.563294**. The original control scores 7/23 Top-1; separate heads score 11/23 but were not selected by CV, so the final ranking does not change deployment. CV selected the regularized GNN at 51/120 Top-1 (42.50%, tied control), with higher MRR 0.5658 vs 0.5583. Name matching still scores 22/23.
+
+All candidates and the CV winner were frozen before the one-shot final comparison. The 23 were previously assessed in v1/v2/v3, and this protocol follows those results: they are excluded from all new fitting and selection, but are not genuinely unforeseen data. A development query's CV score comes only from the member that excluded it; these are selection statistics for individual held-out members, not unbiased five-member ensemble validation.
+
+See [the evaluation guide](evaluation/README.md), [papers and frozen settings](evaluation/paired-code/cv-v4-candidates/run-plan.json), and [complete results](evaluation/paired-code/cv-v4-candidates/final-evaluation-report.json). These changes adapt ideas from GIN, paired-view learning, WL kernels and GraphCL; they do not reproduce those full architectures. The regularizer modifies graph views of original training pairs, not labels or source-program counts. Completed default stages are immutable: use a new output directory and model path for an explicitly declared reproduction.
+
+The four financial fixtures are excluded from matching training. This matching model has no Java generation, defect-risk probability or localization head; the separate synthetic detector above is a different experiment with uncalibrated learned scores. The fixed human-review gate remains unchanged; Z3 independently checks its supported financial contract. Historical v1/v2/v3 models and reports remain intact. The old v2 refit instruction is superseded by v4's no-refit plan without changing assignments.
 
 ## Matching CLI
 
@@ -48,7 +73,7 @@ The inspection graph in `cpg_builder.py` is separate from the learned matching g
 
 Four AI-authored financial fixtures remain as independent Z3 regression scenarios, **excluded from GNN training**. Precomputation produces two counterexamples, one bounded match and one external-state limit, and checks proposed arithmetic fixes. Reference rates and licences live in `../data-sources/`. The backend's idempotent MikroORM seeder preserves existing applied patches.
 
-The optional `verify --id UUID` CLI reads PostgreSQL with `DATABASE_URL`; `--persist` additionally updates analysis with version/source checks. Sources and database credentials are never sent to a model provider.
+The optional `verify --id UUID` CLI reads PostgreSQL with `DATABASE_URL`; `--persist` additionally updates analysis with version/source checks. The verification CLI does not send sources or database credentials to a model provider. The separate AI review action sends selected source text and context to the configured provider; it never receives database credentials.
 
 ## Formal scope
 

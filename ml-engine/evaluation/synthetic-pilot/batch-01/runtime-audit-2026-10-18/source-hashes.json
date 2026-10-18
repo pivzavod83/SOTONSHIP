@@ -1,0 +1,20 @@
+{
+  "F001": {
+    "cobol": "444ccd83da615d73f56bea7fe866a447ccdeca8ecd79a7d86b62e31ab728811a",
+    "java": {
+      "F001-V1": "5f053dcef3bab1533b2b1b24ff889aa55e2fc1179554c3ae95ba76db06e4ee2c",
+      "F001-V2": "ef7b7578f0bd0b6a5ab1b696bce7b706fe193754f2c36cdfd4b862cc6cc96177",
+      "F001-V3": "99aee20929d937b4148619db3683c3dba99d84a0b91770f07ed1088c9daecde8",
+      "F001-V4": "7ba1fc45a4d9eddea00186a14ab38b6ea9eb24973bcb83d0958da10f934fb0ef"
+    }
+  },
+  "F002": {
+    "cobol": "b1b71511e5864baac1dbdac08827a18dc6ed8831d1eaa7a29ce7879155d4e73f",
+    "java": {
+      "F002-V1": "9a30853e56500be31ac2961db2adc486dc90dbb549813d86723e3fc416e16a60",
+      "F002-V2": "ddb6a5f27545bb64b3ca2d4a3ace93f53eae2c861a62f99476ef7db489ff59d3",
+      "F002-V3": "78ea15f6db1f44e83cd637980cc492f3861eb6636b1dd775b90096110775e515",
+      "F002-V4": "308fe74e9c25f469fb90cc64499ae7b11158960c794789b2ef20366cb3dbbc2f"
+    }
+  }
+}

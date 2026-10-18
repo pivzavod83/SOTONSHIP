@@ -1,0 +1,903 @@
+{
+  "schemaVersion": 1,
+  "status": "AI_CURATED_MACHINE_EVIDENCE_PENDING_INDEPENDENT_HUMAN_REVIEW",
+  "cohort": "numeric-a",
+  "rootRunPlanSha256": "3543a6b77558a9d330e1e2d39c6d3f7cebe2a05e5834a70462ab4612c4df0469",
+  "sourceReportSha256": "66ddeb081dad65c6c6d867628b33038d925d4a6b47690fad7cf93e8bc56075c9",
+  "familyDispositions": [
+    {
+      "taskId": "HumanEval/35",
+      "disposition": "no_mismatch",
+      "adjudicationCode": "NO_MISMATCH_OBSERVED_SCOPED",
+      "driverCount": 2,
+      "supportedDriverCount": 2,
+      "canonicalAgreementDriverCount": 2,
+      "reason": null,
+      "candidateSummary": {
+        "7b": {
+          "outcomeCounts": {
+            "no_mismatch": 2
+          },
+          "counterexamplesOrFailures": []
+        },
+        "14b": {
+          "outcomeCounts": {
+            "no_mismatch": 2
+          },
+          "counterexamplesOrFailures": []
+        }
+      }
+    },
+    {
+      "taskId": "HumanEval/43",
+      "disposition": "no_mismatch",
+      "adjudicationCode": "NO_MISMATCH_OBSERVED_SCOPED",
+      "driverCount": 4,
+      "supportedDriverCount": 4,
+      "canonicalAgreementDriverCount": 4,
+      "reason": null,
+      "candidateSummary": {
+        "7b": {
+          "outcomeCounts": {
+            "no_mismatch": 4
+          },
+          "counterexamplesOrFailures": []
+        },
+        "14b": {
+          "outcomeCounts": {
+            "no_mismatch": 4
+          },
+          "counterexamplesOrFailures": []
+        }
+      }
+    },
+    {
+      "taskId": "HumanEval/47",
+      "disposition": "source_diff_control_agrees",
+      "adjudicationCode": "REPRODUCED_DISCREPANCY_PENDING_HUMAN_REVIEW",
+      "driverCount": 3,
+      "supportedDriverCount": 3,
+      "canonicalAgreementDriverCount": 3,
+      "reason": null,
+      "candidateSummary": {
+        "7b": {
+          "outcomeCounts": {
+            "source_diff_control_agrees": 3
+          },
+          "counterexamplesOrFailures": [
+            {
+              "driverIndex": 0,
+              "arguments": [
+                3,
+                1,
+                2,
+                4,
+                5
+              ],
+              "category": "source_diff_control_agrees",
+              "canonicalControl": "AGREES",
+              "cobolResult": "3.00000",
+              "javaResult": "4.0",
+              "javaStatus": "OBSERVED",
+              "javaStdoutSha256": "fbd04e1aae9ce0b11a8946e2c9ac2619f7428a64d32d01eff61d809dcb70ee8e",
+              "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "driverIndex": 1,
+              "arguments": [
+                -10,
+                4,
+                6,
+                1000,
+                10
+              ],
+              "category": "source_diff_control_agrees",
+              "canonicalControl": "AGREES",
+              "cobolResult": "6.00000",
+              "javaResult": "10.0",
+              "javaStatus": "OBSERVED",
+              "javaStdoutSha256": "f1e42019aecc858ffbcca7fddec511b761b474916fde37b1a6ff321a9b459330",
+              "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "driverIndex": 2,
+              "arguments": [
+                8,
+                1,
+                3,
+                9,
+                9
+              ],
+              "category": "source_diff_control_agrees",
+              "canonicalControl": "AGREES",
+              "cobolResult": "8.00000",
+              "javaResult": "9.0",
+              "javaStatus": "OBSERVED",
+              "javaStdoutSha256": "b7edbb1d306a68faf170673ebef76f1dfef2045c0c190bdc1bb37837e37504a4",
+              "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+          ]
+        },
+        "14b": {
+          "outcomeCounts": {
+            "no_mismatch": 3
+          },
+          "counterexamplesOrFailures": []
+        }
+      }
+    },
+    {
+      "taskId": "HumanEval/70",
+      "disposition": "no_mismatch",
+      "adjudicationCode": "NO_MISMATCH_OBSERVED_SCOPED",
+      "driverCount": 5,
+      "supportedDriverCount": 5,
+      "canonicalAgreementDriverCount": 5,
+      "reason": "Comparison is limited to the source-defined list prefix; full native tails are retained.",
+      "candidateSummary": {
+        "7b": {
+          "outcomeCounts": {
+            "no_mismatch": 5
+          },
+          "counterexamplesOrFailures": []
+        },
+        "14b": {
+          "outcomeCounts": {
+            "no_mismatch": 5
+          },
+          "counterexamplesOrFailures": []
+        }
+      }
+    },
+    {
+      "taskId": "HumanEval/73",
+      "disposition": "no_mismatch",
+      "adjudicationCode": "NO_MISMATCH_OBSERVED_SCOPED",
+      "driverCount": 2,
+      "supportedDriverCount": 2,
+      "canonicalAgreementDriverCount": 2,
+      "reason": null,
+      "candidateSummary": {
+        "7b": {
+          "outcomeCounts": {
+            "no_mismatch": 2
+          },
+          "counterexamplesOrFailures": []
+        },
+        "14b": {
+          "outcomeCounts": {
+            "no_mismatch": 2
+          },
+          "counterexamplesOrFailures": []
+        }
+      }
+    },
+    {
+      "taskId": "HumanEval/74",
+      "disposition": "unsupported",
+      "adjudicationCode": "UNSUPPORTED",
+      "driverCount": 2,
+      "supportedDriverCount": 0,
+      "canonicalAgreementDriverCount": 0,
+      "reason": "Original drivers do not initialize all20 declared input string slots. No Java values or logical list lengths are inferred for uninitialized occurrences; RESULT has100 string slots without an explicit logical return length.",
+      "candidateSummary": {
+        "7b": {
+          "outcomeCounts": {
+            "unsupported": 2
+          },
+          "counterexamplesOrFailures": []
+        },
+        "14b": {
+          "outcomeCounts": {
+            "unsupported": 2
+          },
+          "counterexamplesOrFailures": []
+        }
+      }
+    },
+    {
+      "taskId": "HumanEval/85",
+      "disposition": "no_mismatch",
+      "adjudicationCode": "NO_MISMATCH_OBSERVED_SCOPED",
+      "driverCount": 2,
+      "supportedDriverCount": 2,
+      "canonicalAgreementDriverCount": 2,
+      "reason": null,
+      "candidateSummary": {
+        "7b": {
+          "outcomeCounts": {
+            "no_mismatch": 2
+          },
+          "counterexamplesOrFailures": []
+        },
+        "14b": {
+          "outcomeCounts": {
+            "no_mismatch": 2
+          },
+          "counterexamplesOrFailures": []
+        }
+      }
+    },
+    {
+      "taskId": "HumanEval/88",
+      "disposition": "no_mismatch",
+      "adjudicationCode": "NO_MISMATCH_OBSERVED_SCOPED",
+      "driverCount": 3,
+      "supportedDriverCount": 3,
+      "canonicalAgreementDriverCount": 3,
+      "reason": "Comparison is limited to the source-defined list prefix; full native tails are retained.",
+      "candidateSummary": {
+        "7b": {
+          "outcomeCounts": {
+            "no_mismatch": 3
+          },
+          "counterexamplesOrFailures": []
+        },
+        "14b": {
+          "outcomeCounts": {
+            "no_mismatch": 3
+          },
+          "counterexamplesOrFailures": []
+        }
+      }
+    }
+  ],
+  "familyDispositionCounts": {
+    "no_mismatch": 6,
+    "source_diff_control_agrees": 1,
+    "unsupported": 1
+  },
+  "sourceFamilyCount": 8,
+  "originalDriverCount": 23,
+  "supportedOriginalDriverCount": 21,
+  "witnesses": [
+    {
+      "taskId": "HumanEval/47",
+      "variant": "7b",
+      "driverIndex": 0,
+      "arguments": [
+        3,
+        1,
+        2,
+        4,
+        5
+      ],
+      "category": "source_diff_control_agrees",
+      "canonicalControl": "AGREES",
+      "cobolResult": "3.00000",
+      "javaResult": "4.0",
+      "javaStatus": "OBSERVED",
+      "javaStdoutSha256": "fbd04e1aae9ce0b11a8946e2c9ac2619f7428a64d32d01eff61d809dcb70ee8e",
+      "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "variant": "7b",
+      "driverIndex": 1,
+      "arguments": [
+        -10,
+        4,
+        6,
+        1000,
+        10
+      ],
+      "category": "source_diff_control_agrees",
+      "canonicalControl": "AGREES",
+      "cobolResult": "6.00000",
+      "javaResult": "10.0",
+      "javaStatus": "OBSERVED",
+      "javaStdoutSha256": "f1e42019aecc858ffbcca7fddec511b761b474916fde37b1a6ff321a9b459330",
+      "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "variant": "7b",
+      "driverIndex": 2,
+      "arguments": [
+        8,
+        1,
+        3,
+        9,
+        9
+      ],
+      "category": "source_diff_control_agrees",
+      "canonicalControl": "AGREES",
+      "cobolResult": "8.00000",
+      "javaResult": "9.0",
+      "javaStatus": "OBSERVED",
+      "javaStdoutSha256": "b7edbb1d306a68faf170673ebef76f1dfef2045c0c190bdc1bb37837e37504a4",
+      "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "verifiedRawOutputHashes": [
+    {
+      "taskId": "HumanEval/35",
+      "driverIndex": 0,
+      "kind": "cobol-output",
+      "sha256": "325ea28ed3c81f38b73cfa86b6ada032572bf66c6fb02486a5ac6c8ea283e93b"
+    },
+    {
+      "taskId": "HumanEval/35",
+      "driverIndex": 1,
+      "kind": "cobol-output",
+      "sha256": "038e629f17879a3acbd869b3748cf5b55af8b65c06d8f2a14f054f44f460cd14"
+    },
+    {
+      "taskId": "HumanEval/35",
+      "driverIndex": 0,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5"
+    },
+    {
+      "taskId": "HumanEval/35",
+      "driverIndex": 1,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "6affdae3b3c1aa6aa7689e9b6a7b3225a636aa1ac0025f490cca1285ceaf1487"
+    },
+    {
+      "taskId": "HumanEval/35",
+      "driverIndex": 0,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5"
+    },
+    {
+      "taskId": "HumanEval/35",
+      "driverIndex": 1,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "6affdae3b3c1aa6aa7689e9b6a7b3225a636aa1ac0025f490cca1285ceaf1487"
+    },
+    {
+      "taskId": "HumanEval/35",
+      "driverIndex": 0,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5"
+    },
+    {
+      "taskId": "HumanEval/35",
+      "driverIndex": 1,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "6affdae3b3c1aa6aa7689e9b6a7b3225a636aa1ac0025f490cca1285ceaf1487"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 0,
+      "kind": "cobol-output",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 1,
+      "kind": "cobol-output",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 2,
+      "kind": "cobol-output",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 3,
+      "kind": "cobol-output",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 0,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 1,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 2,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 3,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 0,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 1,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 2,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 3,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 0,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 1,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 2,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "driverIndex": 3,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "driverIndex": 0,
+      "kind": "cobol-output",
+      "sha256": "b8ccdf325223cce7fbeb4dd801b5934bf9fbb461e2e24ff8a7b64a9792258a9d"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "driverIndex": 1,
+      "kind": "cobol-output",
+      "sha256": "14751c82bc2676cdae46012a123342bae941feffba4f59358e257d2155cd8a6d"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "driverIndex": 2,
+      "kind": "cobol-output",
+      "sha256": "194a3d844e923fa221459f616fa39c32811539ec131588f32ba73bab1909d43a"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "driverIndex": 0,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "a416ea84421fa7e1351582da48235bac88380a337ec5cb5a9239dc7d57908b4b"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "driverIndex": 1,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "8ab31b5afaea56114427e1f01b81d001b079a0f59539f6db3f099816ca794055"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "driverIndex": 2,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "7b1bd53949b752d143d871408483b5382371b5bc48d195d0c040ec93cfa2748b"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "driverIndex": 0,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "fbd04e1aae9ce0b11a8946e2c9ac2619f7428a64d32d01eff61d809dcb70ee8e"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "driverIndex": 1,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "f1e42019aecc858ffbcca7fddec511b761b474916fde37b1a6ff321a9b459330"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "driverIndex": 2,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "b7edbb1d306a68faf170673ebef76f1dfef2045c0c190bdc1bb37837e37504a4"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "driverIndex": 0,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "a416ea84421fa7e1351582da48235bac88380a337ec5cb5a9239dc7d57908b4b"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "driverIndex": 1,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "8ab31b5afaea56114427e1f01b81d001b079a0f59539f6db3f099816ca794055"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "driverIndex": 2,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "7b1bd53949b752d143d871408483b5382371b5bc48d195d0c040ec93cfa2748b"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 0,
+      "kind": "cobol-output",
+      "sha256": "9306a628c15c2900ae2565b659f2bc95d1a7ebdf1ac78d4cd96738a74fd4c201"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 1,
+      "kind": "cobol-output",
+      "sha256": "58cdee93b75bd85ac2e6dbbad052665a791169811db11a843659c77a3a54a31c"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 2,
+      "kind": "cobol-output",
+      "sha256": "2073be52f19c60ffc350016789f0d70d394453c5be456e2d367749446c071e0b"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 3,
+      "kind": "cobol-output",
+      "sha256": "c6b8361eccad6f726a25496780bd8142a7dad32cd5a6c589ef63b42b20981dcb"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 4,
+      "kind": "cobol-output",
+      "sha256": "5d163aea020aaf276aeeac9fae0c581173704733a9ad2e56615c0413207edcf4"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 0,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "6dce0a93deb6f7c5fe02ef0c8cca2f7ba3d1d7b829417ebf761f47b2e588b9c4"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 1,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "e564a46b60fd61cc3db4260aaf358ed41e9a4de59213d6473407fdc34d9d935e"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 2,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "0dda26049f39bb67e4a122442d019dcc352d2b57f486b54b2ccf35679a49cc40"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 3,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "7ad0de3af204a94bec878c9afc46f9461f646b36337341ca3b70ad69131d51d2"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 4,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "64ed0225d52b2819a0e0d50b24d582711a0c24cf35e99e817a188408722a29a4"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 0,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "6dce0a93deb6f7c5fe02ef0c8cca2f7ba3d1d7b829417ebf761f47b2e588b9c4"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 1,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "e564a46b60fd61cc3db4260aaf358ed41e9a4de59213d6473407fdc34d9d935e"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 2,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "0dda26049f39bb67e4a122442d019dcc352d2b57f486b54b2ccf35679a49cc40"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 3,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "7ad0de3af204a94bec878c9afc46f9461f646b36337341ca3b70ad69131d51d2"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 4,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "64ed0225d52b2819a0e0d50b24d582711a0c24cf35e99e817a188408722a29a4"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 0,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "6dce0a93deb6f7c5fe02ef0c8cca2f7ba3d1d7b829417ebf761f47b2e588b9c4"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 1,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "e564a46b60fd61cc3db4260aaf358ed41e9a4de59213d6473407fdc34d9d935e"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 2,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "0dda26049f39bb67e4a122442d019dcc352d2b57f486b54b2ccf35679a49cc40"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 3,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "7ad0de3af204a94bec878c9afc46f9461f646b36337341ca3b70ad69131d51d2"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "driverIndex": 4,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "64ed0225d52b2819a0e0d50b24d582711a0c24cf35e99e817a188408722a29a4"
+    },
+    {
+      "taskId": "HumanEval/73",
+      "driverIndex": 0,
+      "kind": "cobol-output",
+      "sha256": "194ac618b8bfcb8e1ae7e58d0eeaf0f4f0afb1add29edf460b68794966f333bd"
+    },
+    {
+      "taskId": "HumanEval/73",
+      "driverIndex": 1,
+      "kind": "cobol-output",
+      "sha256": "6f92601344e16851316e7cda90d053c0ad234e047ccf81ce6fe89e78bbdb111e"
+    },
+    {
+      "taskId": "HumanEval/73",
+      "driverIndex": 0,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+    },
+    {
+      "taskId": "HumanEval/73",
+      "driverIndex": 1,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "taskId": "HumanEval/73",
+      "driverIndex": 0,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+    },
+    {
+      "taskId": "HumanEval/73",
+      "driverIndex": 1,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "taskId": "HumanEval/73",
+      "driverIndex": 0,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+    },
+    {
+      "taskId": "HumanEval/73",
+      "driverIndex": 1,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "taskId": "HumanEval/74",
+      "driverIndex": 0,
+      "kind": "cobol-output",
+      "sha256": "2c4659394f5a04b9947bfeceaacafd05a7e9a4fc7635b9b5543464c63dcf9623"
+    },
+    {
+      "taskId": "HumanEval/74",
+      "driverIndex": 1,
+      "kind": "cobol-output",
+      "sha256": "c863177f59994e2d30cc537cf18397e657080638505c8a2a1730e3d32983d2e3"
+    },
+    {
+      "taskId": "HumanEval/85",
+      "driverIndex": 0,
+      "kind": "cobol-output",
+      "sha256": "6f92601344e16851316e7cda90d053c0ad234e047ccf81ce6fe89e78bbdb111e"
+    },
+    {
+      "taskId": "HumanEval/85",
+      "driverIndex": 1,
+      "kind": "cobol-output",
+      "sha256": "a169a9d304a2e81fe9178eb47e6703c44409615106a5719bb4882c0f4cbc2d39"
+    },
+    {
+      "taskId": "HumanEval/85",
+      "driverIndex": 0,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "taskId": "HumanEval/85",
+      "driverIndex": 1,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"
+    },
+    {
+      "taskId": "HumanEval/85",
+      "driverIndex": 0,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "taskId": "HumanEval/85",
+      "driverIndex": 1,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"
+    },
+    {
+      "taskId": "HumanEval/85",
+      "driverIndex": 0,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "taskId": "HumanEval/85",
+      "driverIndex": 1,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "driverIndex": 0,
+      "kind": "cobol-output",
+      "sha256": "9bf49723164dbe9cd6891264ccef8a704a4a6e5b56270c6ed89b8b05e7b8f277"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "driverIndex": 1,
+      "kind": "cobol-output",
+      "sha256": "cfeed115e0a390e0523111b4372505276f5677e007b34f1b8832234fa2c9e7b3"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "driverIndex": 2,
+      "kind": "cobol-output",
+      "sha256": "51607f1aca9ee40e0ef23351a36d830e497c467d5e09d7d933af3a29bc982eba"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "driverIndex": 0,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "068ff0cf40cd49ec76ac5101505e9ea3875525b709a9db927049e4812f3bd59f"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "driverIndex": 1,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "7f9220c81687a6cea8522c33305e5563744e98e8b57ba35ca0a0016f632477e5"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "driverIndex": 2,
+      "variant": "canonical",
+      "kind": "java-stdout",
+      "sha256": "72c6a20eb8f2c6f258229763f2e8fb943960125ce1ebee76e58c00689c2720b7"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "driverIndex": 0,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "068ff0cf40cd49ec76ac5101505e9ea3875525b709a9db927049e4812f3bd59f"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "driverIndex": 1,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "7f9220c81687a6cea8522c33305e5563744e98e8b57ba35ca0a0016f632477e5"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "driverIndex": 2,
+      "variant": "7b",
+      "kind": "java-stdout",
+      "sha256": "72c6a20eb8f2c6f258229763f2e8fb943960125ce1ebee76e58c00689c2720b7"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "driverIndex": 0,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "068ff0cf40cd49ec76ac5101505e9ea3875525b709a9db927049e4812f3bd59f"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "driverIndex": 1,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "7f9220c81687a6cea8522c33305e5563744e98e8b57ba35ca0a0016f632477e5"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "driverIndex": 2,
+      "variant": "14b",
+      "kind": "java-stdout",
+      "sha256": "72c6a20eb8f2c6f258229763f2e8fb943960125ce1ebee76e58c00689c2720b7"
+    }
+  ],
+  "independentHumanReviewsPerformed": 0,
+  "admittedDefectLabels": 0,
+  "modelTrainingPerformed": false,
+  "reservedTasksExecuted": 0,
+  "sourceCorrectionsPerformed": false,
+  "suspectedLocalizationNotGold": {
+    "taskId": "HumanEval/47",
+    "variant": "7b",
+    "description": "Original COBOL WS-MIDDLE=3 selects occurrence3; the translation sets middle=3 then uses zero-based arr[middle], selecting occurrence4. Insertion of missing minus1 is a suspected repair, not a performed or independently reviewed fix."
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "modelId": "paired-program-gnn-v3-fold-ensemble",
+  "createdAt": "2026-10-18T04:06:37.760538+00:00",
+  "datasetSha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+  "partitionPlanSha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+  "sourceSha256": {
+    "scripts/train_paired_gnn_fold_ensemble.py": "8896f57ac9c109168c29fe08ac63590ba8a5bb9aee9930b9848310d7e90ce890",
+    "scripts/train_paired_gnn_cv.py": "38fa40e409cb712a366bd7f3b361630726e2a9a7f861b1bba01f92d1c9326f5f",
+    "ml_engine/code_graph.py": "bff04bf64896bec4aead98835857d65b14fb92dbd77f1e94608a26bb4dbfd369",
+    "ml_engine/paired_gnn.py": "d08a919eef8ae67846fd0300ff952bb2a8cc475f262e2599522440e0f4336563",
+    "scripts/train_paired_gnn.py": "14953c909696ed76094faacfb8be8ea16993287b1a0ba26a4dea14b5598d5de0",
+    "ml_engine/cv_partition.py": "b1491886337ac9e81e4d3af9ab4475fb48c90e00efefe438c5452b4b9ca185f8",
+    "scripts/partition_paired_dataset.py": "a432861232c1dba05eb60197c3e2257e514aa252893b67f2b5072feee3dca90c"
+  },
+  "sourceSnapshotDirectory": "source-snapshot",
+  "numpyVersion": "2.3.4",
+  "partitionPlanUse": {
+    "assignments": "Reuse the unchanged score-independent graph components, 120/23 membership and five 96/24 folds.",
+    "supersededPolicy": "Freeze this plan before new training; choose training duration using only the five development folds; refit on all 120 development pairs; evaluate the 23 held-out pairs once after choices freeze.",
+    "policyOverride": "The frozen partition plan also records the historical v2 full-development-refit policy. This v3 run reuses assignments only and explicitly supersedes that policy: retain the five selected fold checkpoints and never fit/refit any member on all 120.",
+    "fullDevelopmentRefit": false
+  },
+  "previousModels": {
+    "previousV1Gnn": {
+      "id": "paired-program-gnn-v1",
+      "sha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+      "path": "ml_engine/models/paired_program_gnn_v1.json",
+      "purpose": "Frozen descriptive baseline on the same 23-task gallery; never used for any selection."
+    },
+    "previousV2Gnn": {
+      "id": "paired-program-gnn-v2-cv",
+      "sha256": "dbcd2aae97c9be9e7f8771b814b0eefedd9eb906872e3cf20c5b48867055af52",
+      "path": "ml_engine/models/paired_program_gnn_v2_cv.json",
+      "purpose": "Frozen descriptive baseline on the same 23-task gallery; never used for any selection."
+    }
+  },
+  "configuration": {
+    "seed": 431,
+    "epochsBudget": 250,
+    "checkpointEpochs": [
+      1,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      90,
+      100,
+      110,
+      120,
+      130,
+      140,
+      150,
+      160,
+      170,
+      180,
+      190,
+      200,
+      210,
+      220,
+      230,
+      240,
+      250
+    ],
+    "foldCount": 5,
+    "developmentTasks": 120,
+    "finalHoldoutTasks": 23,
+    "foldTrainingTasks": 96,
+    "foldValidationTasks": 24,
+    "initialization": "Fresh parameters and fresh Adam state for every fold and ablation; same declared seed.",
+    "architecture": "Unchanged two-layer relation-aware GNN; hidden/output 24; shared COBOL/Java encoder.",
+    "optimizer": {
+      "name": "Adam",
+      "learningRate": 0.004,
+      "beta1": 0.9,
+      "beta2": 0.999,
+      "epsilon": 1e-08,
+      "weightDecay": 0.0001,
+      "gradientClip": 5
+    },
+    "objective": "Symmetric paired-source InfoNCE, temperature 0.12; negatives only from the current 96-pair fitting fold.",
+    "selection": "One common epoch selected by pooled 120 out-of-fold reciprocal ranks (MRR), then query-weighted validation loss, then earliest checkpoint. No final-set selection.",
+    "ablation": "Five no-message members with identical capacity, fresh seed, optimizer, epoch budget and folds; its own same pooled-OOF epoch rule.",
+    "ensemble": {
+      "aggregation": "MEAN_COSINE",
+      "members": 5,
+      "weights": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "selection": "Retain every fold at the common selected epoch; no best-fold selection."
+    },
+    "fullDevelopmentRefit": false,
+    "thresholds": {
+      "minimumSimilarity": 1.0,
+      "minimumMargin": 2.0,
+      "calibration": {
+        "enabled": false,
+        "reason": "Benchmark-only retrieval evidence; financial-domain reliability remains unvalidated. Every ranking requires explicit human review.",
+        "method": "Fixed before CV and final evaluation; no holdout threshold selection."
+      }
+    },
+    "ties": "Stable candidate order saved in the frozen partition plan.",
+    "finalProtocol": "Freeze both five-member ensembles, selected epochs, gate and CV report before any learned encoding/scoring of the final 23. One final evaluation per frozen run. All final scores use the declared mean of member cosine similarities.",
+    "prohibited": [
+      "No model fit or refit on all 120 development pairs.",
+      "No final-holdout graphs/embeddings/loss/negative gallery in fitting, CV or selection.",
+      "No architecture, augmentation, loss, seed, threshold or aggregation search.",
+      "No fold selection, parameter averaging, or embedding averaging."
+    ]
+  },
+  "priorExposure": {
+    "previousModelId": "paired-program-gnn-v1",
+    "all143SourcesPreviouslyProcessed": true,
+    "finalHoldoutTaskPriorMembership": {
+      "HumanEval/1": "test",
+      "HumanEval/2": "test",
+      "HumanEval/9": "test",
+      "HumanEval/13": "test",
+      "HumanEval/15": "test",
+      "HumanEval/21": "test",
+      "HumanEval/41": "test",
+      "HumanEval/54": "test",
+      "HumanEval/68": "test",
+      "HumanEval/69": "test",
+      "HumanEval/72": "test",
+      "HumanEval/76": "test",
+      "HumanEval/81": "test",
+      "HumanEval/84": "test",
+      "HumanEval/90": "test",
+      "HumanEval/102": "test",
+      "HumanEval/118": "test",
+      "HumanEval/124": "test",
+      "HumanEval/146": "test",
+      "HumanEval/147": "test",
+      "HumanEval/149": "test",
+      "HumanEval/155": "test",
+      "HumanEval/160": "test"
+    },
+    "priorMembershipCounts": {
+      "train": 0,
+      "validation": 0,
+      "test": 23
+    },
+    "previouslyEvaluatedFinalHoldoutTasks": 23,
+    "limitation": "The same final 23 were evaluated in both v1 and v2. They remain excluded from every new fit and CV choice, but are previously exposed evaluation tasks, not new unforeseen data. The user-requested no-refit comparison is descriptive.",
+    "priorSplitSha256": "82854f09344f90b7dcf0cd237cce902d4446f179538e333936ed35cd679f259e",
+    "priorReportSha256": "b399b8723701e6a51b03b13c25f03908846d6d27e88a3a3d28eb230418200346",
+    "previouslyEvaluatedByV2": true,
+    "previousV2ReportSha256": "fdb3dd1c62d8f358d1cdf696488659fa104dc2ed84c22dd071a36f990600cfe3",
+    "protocolChangedAfterExposure": true
+  },
+  "limitations": [
+    "143 small HumanEval-derived source pairs, not banking migrations.",
+    "Pair labels express upstream correspondence, not formal equivalence or defect locations.",
+    "Heuristic operation graphs are not full compiler ASTs or control-flow graphs.",
+    "Names are excluded from the model; the name-matching baseline can outperform it.",
+    "Cosine similarities are not calibrated correctness probabilities.",
+    "Final holdout is excluded from this fit and CV, but all 23 tasks were previously evaluated by v1; it is not pristine unseen or external data.",
+    "Financial-domain generalization, repair, and defect prediction remain unvalidated.",
+    "The selected-epoch out-of-fold results were used for epoch selection; they are exploratory selection evidence, not an unbiased nested-CV generalization estimate.",
+    "CV galleries contain 24 candidates; final evaluation contains 23. Metrics from different gallery sizes or earlier 29-task reports are not directly comparable.",
+    "All final 23 tasks were previously evaluated in v1 and v2. The no-refit protocol was requested after those results were visible; this final comparison is descriptive, not a new unbiased validation.",
+    "A fixed equal-mean cosine ensemble retains all five CV checkpoints. No individual fold, ensemble weight, aggregation rule, seed or epoch is selected using final-holdout results.",
+    "Each retained member fits 96 development pairs. Across the five members all 120 development pairs are used, but no member is fitted or refitted on all 120.",
+    "Pooled out-of-fold metrics describe one held-out member per development query; they do not estimate the deployed five-member ensemble, whose other members saw that development query.",
+    "These experiments do not isolate or prove that the v2 full-development refit caused a change in generalization or weight variance."
+  ],
+  "runId": "paired-cv-v3-ensemble-96a1806f504e39f5"
+}

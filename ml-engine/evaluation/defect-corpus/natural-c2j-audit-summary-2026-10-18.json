@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "collectedDate": "2026-10-18",
+  "status": "DEVELOPMENT_CORPUS_AUDIT_COMPLETED_WITH_BOUNDED_REPLAY_AND_UNRESOLVED_CASES",
+  "evidence": {
+    "javaScreening": {
+      "path": "ml-engine/evaluation/defect-corpus/natural-c2j-audit/2026-10-18-java-screening-v1/screening-report.json",
+      "sha256": "5386e16c6070ac4d38815920b6e662977157978441ff04faeca63d96bc5e1d31"
+    },
+    "cobolControlHealth": {
+      "path": "ml-engine/evaluation/defect-corpus/cobol-reference-audit/development-120-2026-10-18.json",
+      "sha256": "72603eead613724dca6ece8a810261af859d66a590a5f611715e441322a30429"
+    },
+    "scalarReplay": {
+      "path": "ml-engine/evaluation/defect-corpus/scalar-c2j-replay/replay-2026-10-18.json",
+      "sha256": "14f8e2adb12cc1b69612388e1aed12161f2ec9ea957eb8495d1a6609678eaab1"
+    },
+    "textReplay": {
+      "path": "ml-engine/evaluation/defect-corpus/text-c2j-replay/exploratory-98-2026-10-18/replay-report.json",
+      "sha256": "5cd7d9b014c84a7dd1fda9b40c6fbd7316ff50188ee01cb0075764dedfad73f3"
+    },
+    "arrayReplay": {
+      "path": "ml-engine/evaluation/defect-corpus/array-c2j-replay/replay-2026-10-18.json",
+      "sha256": "e8d24265bbcba5877d93b66730753bec2e8a907fc86ebd449a7ecc31c15077bd"
+    }
+  },
+  "inventory": {
+    "taskFamilies": 143,
+    "publishedCandidateTranslations": 286,
+    "developmentFamilies": 120,
+    "developmentCandidates": 240,
+    "reservedFamilies": 23,
+    "reservedCandidates": 46,
+    "reservedCandidateExecutions": 0,
+    "reservedReferenceExecutions": 0
+  },
+  "javaBenchmarkScreening": {
+    "candidateProgramsScreened": 239,
+    "testsPass": 198,
+    "assertionFailures": 16,
+    "runtimeFailures": 24,
+    "compileFailures": 1,
+    "interfaceMappingQuarantined": 1,
+    "uniqueFlaggedFamiliesIncludingCompilation": 26,
+    "canonicalReferenceTestsPass": 120,
+    "semanticDefectLabelsFromJavaTestsAlone": 0
+  },
+  "cobolReferenceHealth": {
+    "driversCompiledAndExecuted": 681,
+    "declaredOracleCompatible": 648,
+    "declaredOracleMismatch": 33,
+    "mismatchTaskFamilies": 9,
+    "allDriversCompatibleTaskFamilies": 111,
+    "limitations": "Includes upstream expected-length projection for150 list drivers, whitespace normalization and float tolerance. These are health checks, not equivalence labels."
+  },
+  "sharedInputReplay": {
+    "taskFamilies": 19,
+    "originalDriverCases": 127,
+    "uniqueTaskInputCombinations": 126,
+    "candidateInputComparisons": 247,
+    "candidateAgreementCases": 243,
+    "candidateDisagreementCases": 4,
+    "unavailableCandidateComparisonsFromCompilation": 7,
+    "sourceTasksWithReproducedDiscrepancies": 2,
+    "candidateProgramsWithReproducedDiscrepancies": 2,
+    "selection": "17 scalar tasks selected before replay; text98 and array94 selected exploratorily after development screening. Not an unbiased performance sample.",
+    "cohorts": {
+      "scalar": {
+        "taskFamilies": 17,
+        "driverCases": 118,
+        "uniqueTaskInputCombinations": 117,
+        "behavioralDiscrepancies": 0
+      },
+      "text98": {
+        "taskFamilies": 1,
+        "driverCases": 6,
+        "rejectedDrivers": 1,
+        "behavioralDiscrepancies": 3
+      },
+      "array94": {
+        "taskFamilies": 1,
+        "driverCases": 3,
+        "behavioralDiscrepancies": 1
+      }
+    }
+  },
+  "reproducedCases": [
+    {
+      "taskId": "HumanEval/98",
+      "variant": "7b",
+      "witnesses": [
+        {
+          "input": "aBCdEf",
+          "cobol": 1,
+          "java": 0
+        },
+        {
+          "input": "dBBE",
+          "cobol": 0,
+          "java": 1
+        },
+        {
+          "input": "U",
+          "cobol": 1,
+          "java": 0
+        }
+      ],
+      "aiInspectedCause": "Zero-based Java index is decremented before parity test, shifting counted positions.",
+      "reviewStatus": "PENDING_INDEPENDENT_HUMAN_ADJUDICATION",
+      "goldLocalization": false
+    },
+    {
+      "taskId": "HumanEval/94",
+      "variant": "14b",
+      "witnesses": [
+        {
+          "input": [
+            0,
+            8,
+            1,
+            2,
+            1,
+            7
+          ],
+          "cobol": 7,
+          "java": 8
+        }
+      ],
+      "aiInspectedCause": "Original even-number rejection omitted before odd-divisor primality loop.",
+      "reviewStatus": "PENDING_INDEPENDENT_HUMAN_ADJUDICATION",
+      "goldLocalization": false
+    }
+  ],
+  "remainingCoverage": {
+    "screenFlaggedFamiliesWithoutBehavioralAdjudication": [
+      "HumanEval/17",
+      "HumanEval/35",
+      "HumanEval/43",
+      "HumanEval/47",
+      "HumanEval/70",
+      "HumanEval/73",
+      "HumanEval/74",
+      "HumanEval/85",
+      "HumanEval/88",
+      "HumanEval/92",
+      "HumanEval/99",
+      "HumanEval/103",
+      "HumanEval/105",
+      "HumanEval/110",
+      "HumanEval/113",
+      "HumanEval/119",
+      "HumanEval/120",
+      "HumanEval/126",
+      "HumanEval/128",
+      "HumanEval/134",
+      "HumanEval/143",
+      "HumanEval/145",
+      "HumanEval/151"
+    ],
+    "count": 23,
+    "amongTheseWithCobolOracleDisagreement": [
+      "HumanEval/103",
+      "HumanEval/113",
+      "HumanEval/134",
+      "HumanEval/92",
+      "HumanEval/99"
+    ],
+    "outsideSharedReplay": "101 of120 development task families lack this shared-contract replay; test-passing candidates may still disagree outside measured contracts.",
+    "policy": "Do not treat unresolved flags as defects or unflagged programs as universally correct."
+  },
+  "trainingDecision": {
+    "newModelTrained": false,
+    "independentHumanReviews": 0,
+    "goldDefectLabelsAdmitted": 0,
+    "modelAccuracyReported": false,
+    "assessment": "Two discrepant source tasks support a reproducible pilot demonstration, not a generalizable supervised GNN defect-detector evaluation. More independently reviewed behavioral defects and task diversity are needed."
+  },
+  "introducedMutations": 0,
+  "llmApiCalls": 0,
+  "originalProgramsRewritten": false,
+  "activeModelChanged": false,
+  "aiDisclosure": "Audit plans, execution adapters, interpretation and local reviews are AI-generated. Separate agent checks are not independent human review."
+}

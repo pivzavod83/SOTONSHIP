@@ -5,13 +5,13 @@ import { InfrastructureException } from '../../exceptions/infrastructure.excepti
 import { TranslationKey } from '../../i18n/translation-key';
 
 interface WorkerTask {
-  module: 'ml_engine.verify' | 'ml_engine.matching';
+  module: 'ml_engine.verify' | 'ml_engine.matching' | 'ml_engine.ai_review' | 'ml_engine.defect_detection';
   input: unknown;
   resolve: (value: unknown) => void;
   reject: (error: Error) => void;
 }
 
-/** One bounded queue is shared by verification and discovery subprocesses. */
+/** One bounded queue is shared by verification, discovery and defect-review subprocesses. */
 @Injectable()
 export class PythonJsonWorkerService {
   private readonly queue: WorkerTask[] = [];

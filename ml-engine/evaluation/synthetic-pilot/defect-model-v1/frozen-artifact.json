@@ -1,0 +1,14 @@
+{
+  "modelPath": "ml_engine/models/defect_model_v1.json",
+  "sha256": "50d2fdbf7475ca36e5fd50c22696381dbc8c3db88bb47ab6bca15285083d444c",
+  "implementationHashes": {
+    "scripts/train_defect_model.py": "ede018ff789f0d4ad47fad770e3e8c44803e87238dba1445191f5ebbe3d10401",
+    "ml_engine/defect_features.py": "777de1500e54ab9c314fcaca89cd03188c1a9ed5d7d8bc462594c61898d3a04d",
+    "ml_engine/defect_detection.py": "3f6dc0c3019d58fb388aca833d4fa337e079c9427cbc86f3f5996588a5da161b"
+  },
+  "datasetSha256": "7d6f612855da2e75ee5f552ea0ebc9e0fd95e5f3399a28e6d982f10c194c9dcb",
+  "threshold": 0.5,
+  "selectedC": 1.0,
+  "frozenBeforeFinalTest": true,
+  "createdUtc": "2026-10-18T10:01:41.720695+00:00"
+}

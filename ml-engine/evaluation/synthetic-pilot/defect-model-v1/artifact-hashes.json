@@ -1,0 +1,27 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/README.md": "96439023c7cf441737e542d6bd9284de7a5792bc44128703173212377f263f30",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/baseline-settings.json": "940cb52714f7728417dcf41dd635953ff2c1749c75b8299b48d6b43720d9256c",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/candidate-selection.json": "1f91f142c566f281af2c19db16c70ab1ffef7a91e6da15d16e2a4ad9698ce7d4",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/final-test-evaluation.json": "6e4f49d42b612f38abcc7b720344a8070468f4ac770809169cde14b818bd0696",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/fold-1.json": "16299866a2fed7a2df571c6df58a5583a042a0b355afc4b180d55862fc2394bf",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/fold-2.json": "ef481358630c79ee5a81917389440fe348bc820176a6f790e594f77a98e68e8a",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/fold-3.json": "3bf16c609882452c86fd502d3ae375187d49f1acd2797951bf1c57bbeef1b298",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/frozen-artifact.json": "eb520f2705770ce10248556f07145454bfdee457a2809fbdebb6a03026c9f9fd",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/frozen-source/ml_engine/defect_detection.py": "3f6dc0c3019d58fb388aca833d4fa337e079c9427cbc86f3f5996588a5da161b",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/frozen-source/ml_engine/defect_features.py": "777de1500e54ab9c314fcaca89cd03188c1a9ed5d7d8bc462594c61898d3a04d",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/frozen-source/scripts/train_defect_model.py": "ede018ff789f0d4ad47fad770e3e8c44803e87238dba1445191f5ebbe3d10401",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/pretest-exploration-initial/candidate-selection.json": "ec49ed14e6852366400aff4eaafe80e545239c1c72ec69fb78a75e274963f53a",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/pretest-exploration-initial/disclosure.json": "79e0095b5c48ae5365c817404d793eba00c9003e0e6bd8fd7cd19344c272cbbd",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/pretest-exploration-initial/frozen-artifact.json": "772add2d6c3354cf859bd9b081795a3985deac2a29c7cc0ffa16e1a21fe5d5cb",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/pretest-exploration-initial/model.json": "e6e7f75b54ce9daa2deb31c7bd45a6727019f8f00b0226a3ae9c1ae82d7b69e0",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/pretest-exploration-initial/protocol.json": "b6ab436efa10e9def7717ad77dee0208e98aac9f526be53a3048d876f270ad62",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/pretest-exploration-initial/validation-evaluation.json": "a577653e487ea16adc0160fe59bb2ea65ca5024873f411b36d2b333f214df143",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/protocol.json": "75b1d3094a1a55782880ee83143cd8b497a3ed19362ca09e0be14e5b877e5cae",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/training-requirements.txt": "2efbd81af14b48113362fe76b8bda3369f3dd1bbde4f3610f705f1b23637ce0d",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/validation-evaluation.json": "ea22985914c444654988a61792586e66e9106236d4831ddf27140dd0b6e71c30",
+    "ml-engine/evaluation/synthetic-pilot/defect-model-v1/verification.json": "24fb64aaee1feb44d246d9eb502fbcc1ad929c1e37428f7c858c178913c2c505",
+    "ml-engine/ml_engine/models/defect_model_v1.json": "50d2fdbf7475ca36e5fd50c22696381dbc8c3db88bb47ab6bca15285083d444c"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "inputSha256": "b77464a12665fd053c9a17bd7cce6956420d19ea374a334acef586cb97547dc3",
+  "appliedInDataset": "ml-engine/evaluation/synthetic-pilot/pilot-10-r3/dataset.json",
+  "datasetSha256": "7d6f612855da2e75ee5f552ea0ebc9e0fd95e5f3399a28e6d982f10c194c9dcb",
+  "changes": [
+    {
+      "familyId": "F009",
+      "variantId": "F009-V1",
+      "field": "intermediateBounds/a,b,c,temp,median",
+      "oldValue": "Each remains in [-99999,99999]. temp starts at 0. Only comparisons and assignments are required; the defective absolute-value insertion also stays within this range.",
+      "newValue": "Each remains in [-99999,99999]. temp starts at 0. Only signed comparisons and assignments are performed.",
+      "reason": "Remove copied references to an absolute-value insertion absent from this correct candidate."
+    },
+    {
+      "familyId": "F009",
+      "variantId": "F009-V1",
+      "field": "intermediateBounds/longSafety",
+      "oldValue": "The domain excludes Long.MIN_VALUE, so even the deliberately inserted Math.abs cannot overflow. No addition or multiplication is performed.",
+      "newValue": "All named long values remain in [-99999,99999]. This candidate uses comparisons and assignments only; no arithmetic operation can overflow.",
+      "reason": "Remove copied references to an absolute-value insertion absent from this correct candidate."
+    }
+  ],
+  "sourceOrPredictionChange": false
+}

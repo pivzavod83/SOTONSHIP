@@ -1,0 +1,22 @@
+{
+  "inputSha256": "340dea0c97b2abea74f2e92154954eff1606d68da74ae463d23ff165dc103c53",
+  "familyRevision": "F005-R2",
+  "status": "RUNTIME_AND_STRUCTURAL_CHECKS_PASS_FOR_SUPPLIED_INPUTS",
+  "counts": {
+    "families": 1,
+    "pairs": 4,
+    "sourceSpans": 23,
+    "alignmentRecords": 16,
+    "actualProgramRuns": 30,
+    "referencePredictionErrors": 0,
+    "javaPredictionErrors": 0,
+    "mismatchFlagErrors": 0
+  },
+  "codeOrPredictionCorrectionRequired": false,
+  "provenanceCorrectionsAppliedIn": "ml-engine/evaluation/synthetic-pilot/pilot-10-r1/provenance.json",
+  "trainingPerformed": false,
+  "testUse": "Only supplied cases executed for data quality. No model fitting, tuning or extra test probes.",
+  "positiveEquivalenceAssessment": "MATCHES_EXECUTED_INPUTS_ONLY",
+  "negativeEquivalenceAssessment": "DEFECT_CONFIRMED_BY_RUNTIME_WITNESS",
+  "alignmentGoldStatus": "AI_PROPOSED_STRUCTURALLY_CHECKED_ONLY"
+}

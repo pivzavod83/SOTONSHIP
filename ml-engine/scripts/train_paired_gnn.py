@@ -15,7 +15,10 @@ import numpy as np
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from ml_engine.code_graph import build_graph,clean_source,TOKEN,KEYWORDS,FEATURE_NAMES,RELATIONS
-from ml_engine.paired_gnn import batch_graphs,initialise,forward,backward,paired_loss,MODEL_PATH
+from ml_engine.paired_gnn import batch_graphs,initialise,forward,backward,paired_loss
+
+# Historical v1 reproduction must never overwrite the active CV-trained model.
+MODEL_PATH=ROOT/'ml_engine/models/paired_program_gnn_v1.json'
 
 
 def normalised_shingles(source):

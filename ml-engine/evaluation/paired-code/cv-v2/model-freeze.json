@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "runId": "paired-cv-v2-dd00a1038de20a04",
+  "frozenAt": "2026-10-18T03:52:36.462428+00:00",
+  "runPlanSha256": "745228ce10c1a475ec7cbb258c2ed4e703498a99a9daa8e330725119b79f3389",
+  "partitionPlanSha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+  "sourceSha256": {
+    "scripts/train_paired_gnn_cv.py": "38fa40e409cb712a366bd7f3b361630726e2a9a7f861b1bba01f92d1c9326f5f",
+    "ml_engine/code_graph.py": "bff04bf64896bec4aead98835857d65b14fb92dbd77f1e94608a26bb4dbfd369",
+    "ml_engine/paired_gnn.py": "b4d6164bf2900ad0148759ff7463e6e5cc1f577f27619d14fa2990b93f09ab6a",
+    "scripts/train_paired_gnn.py": "14953c909696ed76094faacfb8be8ea16993287b1a0ba26a4dea14b5598d5de0",
+    "ml_engine/cv_partition.py": "b1491886337ac9e81e4d3af9ab4475fb48c90e00efefe438c5452b4b9ca185f8",
+    "scripts/partition_paired_dataset.py": "a432861232c1dba05eb60197c3e2257e514aa252893b67f2b5072feee3dca90c"
+  },
+  "datasetSha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+  "gnnWeightsSha256": "8de58afe02ff59b303fbf3470b89e944fbc617a56132f23dc367a4a5bd3998ce",
+  "noMessageWeightsSha256": "bd6f61d7c314fe70633bb2df32ae38e55a38b2195f7ffdbbe26b6926b2780b96",
+  "files": {
+    "frozen-checkpoint.json": "31edb93d55cbf79b5e45b84252a5d7c090e6c6526c433a8ab8079ccd8c623ac0",
+    "frozen-no-message-checkpoint.json": "82d5896ee30ba132f8bf441f78bb3737dbea50394d7241dac25a5340ecdf25de",
+    "cv-training-report.json": "6b8257af1a63466c3768dd2d66626f5d9b78a26383f806f9e8d59c1ee4436d7b"
+  },
+  "selectedEpoch": 80,
+  "noMessageSelectedEpoch": 30,
+  "thresholds": {
+    "minimumSimilarity": 1.0,
+    "minimumMargin": 2.0,
+    "calibration": {
+      "enabled": false,
+      "reason": "Benchmark-only retrieval evidence; financial-domain reliability remains unvalidated. Every ranking requires explicit human review.",
+      "method": "Fixed before CV and final evaluation; no holdout threshold selection."
+    }
+  },
+  "previousModelSha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+  "finalHoldoutLearnedEncodingOrScoringPerformed": false,
+  "finalEvaluationRule": "One evaluation of the frozen checkpoints and pinned previous-model baseline against the declared 23-task gallery; never retrain or tune from its results.",
+  "freezeId": "paired-cv-freeze-0ff0b8c25ab3c8bf"
+}

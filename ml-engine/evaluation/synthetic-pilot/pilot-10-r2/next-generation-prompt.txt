@@ -1,0 +1,19 @@
+Generate the FINAL batch 5, containing ONLY F009 and F010, for our ten-family synthetic COBOL-to-Java feasibility pilot. Use the SAME complete JSON batch schema as F007/F008: compilerProfile, families, contracts, source-line arrays, segment spans, alignments, unmatched/defect segment references, six tests per family and all candidate predictions. Do not regenerate a manifest or any previous family.
+
+F009 / familyRevision F009-R1
+Category NUMERIC_STORAGE_AND_SIGN; split validation.
+Inputs: three canonical signed integers, each -99999..99999, one per line.
+Algorithm: select the signed median with an explicit fixed comparison-and-swap network using signed temporary storage. Return the middle numeric value; duplicate values are allowed. Use no library sort/median routine in place of the algorithm. All COBOL storage, comparisons and temporaries must preserve sign. Output one scalar signed integer.
+Potential genuine defects: losing a negative sign in a swap, or selecting an extreme rather than the middle value. Replacing > with >= in an otherwise complete swap network may still preserve the median and must not be labelled defective without a whole-program mismatch. Include negative, mixed-sign, duplicate and boundary inputs, and two real predicted mismatch witnesses per defective variant.
+
+F010 / familyRevision F010-R1
+Category NUMERIC_STORAGE_AND_SIGN; split test.
+Inputs: two canonical signed integers -99999..99999, not both zero, one per line.
+Algorithm: take both magnitudes and run an explicit Euclidean remainder loop to compute gcd(abs(a),abs(b)); handle a zero operand correctly. Output one positive scalar integer 1..99999. Do not replace the algorithm with a built-in gcd function. Specify safe bounds and termination for every candidate.
+Potential genuine defects: returning a negative result for some signed inputs, or incorrectly returning zero whenever either operand is zero. Different remainder/division techniques are not automatically defective: each proposed defect needs at least two valid whole-program differing-output witnesses. Include zero operands, signed nonzero operands and magnitude bounds.
+
+For each family supply one complete GnuCOBOL 3.2 FREE reference and four complete Java 21 candidates, with two proposed equivalent and two defective. Each defective candidate has one explainable semantic error; do not fix it or add unrelated errors. Balance arithmetic styles across labels: one long/integer and one BigDecimal candidate per label. Use neutral Java class Program. All programs must terminate on the declared valid input domain.
+
+Use meaningful one-based inclusive source spans and alignments, including grouped correspondence when internal intermediates differ. Missing and inserted operations belong in unmatched annotations; do not force fabricated correspondences. Provide predicted reference outputs and every Java prediction/mismatch flag for all six tests. Preserve signs during output normalization. Inputs are canonical ASCII integers, no plus, exponent, padding or leading zeroes; zero is 0 and negative zero is forbidden; at most 20 characters per line. Output exactly one base-ten scalar integer.
+
+Keep datasetKind=SYNTHETIC_AI_GENERATED and labelStatus=PROPOSED. Unless you actually compile and run the exact supplied source, retain executionStatus=NOT_EXECUTED and executionEvidence=null. Do not invent compiler results, human review, model training or accuracy. No omitted code or ellipses. Return one strict JSON object.

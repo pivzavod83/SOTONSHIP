@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-10-18",
+  "rawAndSnapshotHashChecks": 89,
+  "result": "PASS",
+  "frozenPlanSha256": "9edb5e2ea5b322852cdb03c682371eaba38097fb07c0b98232ee42fbdd89bf00",
+  "reportSha256": "5cd7d9b014c84a7dd1fda9b40c6fbd7316ff50188ee01cb0075764dedfad73f3",
+  "additionalJavacSha256": "475858f1be81fb3575e5bd3f5c5c032087b53e856ac76643101a4e68f9dde3f1",
+  "independentHumanReviews": 0,
+  "scope": "Root automation verifies byte identities and counters; this is not human adjudication or universal equivalence."
+}

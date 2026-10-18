@@ -1,0 +1,16 @@
+{
+  "inputSha256": "b77464a12665fd053c9a17bd7cce6956420d19ea374a334acef586cb97547dc3",
+  "familyRevisions": {
+    "F009": "F009-R1",
+    "F010": "F010-R1"
+  },
+  "sourceReview": "AI-assisted static inspection; not independent human review",
+  "suppliedCasesPerFamily": 6,
+  "extraCases": {
+    "F009": [],
+    "F010": []
+  },
+  "executionScope": "Pinned source only, no source edits, no original 143-task corpus or training",
+  "comparison": "Exact decimal normalization; no tolerance and no float conversion",
+  "equivalenceLimit": "Passing executed inputs never establishes universal equivalence"
+}

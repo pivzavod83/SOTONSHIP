@@ -61,6 +61,17 @@ describe('Shared Python subprocess capacity and protocol', () => {
     expect(child.kill).toHaveBeenCalledWith('SIGKILL');
   });
 
+  it('runs AI review through the same bounded stdin worker without a shell', async () => {
+    const child = processStub(); spawnMock.mockReturnValue(child);
+    const input = { cobolSource: 'COBOL', javaSource: 'Java' };
+    const result = new PythonJsonWorkerService().execute('ml_engine.ai_review', input);
+    expect(spawnMock.mock.calls[0][1]).toEqual(['-m', 'ml_engine.ai_review', '--stdin']);
+    expect(spawnMock.mock.calls[0][2]).toMatchObject({ shell: false });
+    expect(child.stdin!.end).toHaveBeenCalledWith(JSON.stringify(input));
+    finish(child, '{"status":"NOT_CONFIGURED"}');
+    await expect(result).resolves.toEqual({ status: 'NOT_CONFIGURED' });
+  });
+
   it.each(['[]', 'not json', 'null'])('rejects non-object or invalid JSON: %s', async (payload) => {
     const child = processStub(); spawnMock.mockReturnValue(child);
     const result = new PythonJsonWorkerService().execute('ml_engine.matching', {});

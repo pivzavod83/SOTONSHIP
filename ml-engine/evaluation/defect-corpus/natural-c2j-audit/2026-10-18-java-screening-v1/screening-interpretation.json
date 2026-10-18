@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "collectedDate": "2026-10-18",
+  "screeningReportSha256": "5386e16c6070ac4d38815920b6e662977157978441ff04faeca63d96bc5e1d31",
+  "executionScriptSnapshot": "audit_natural_c2j_candidates.source.py",
+  "executionScriptSha256": "2bc1518b701f7f56ea58f4b14d74dd745336135908e792414879ff53cf6e4282",
+  "independentHumanReviewsPerformed": 0,
+  "upstreamPerExampleDefectReviewsEstablished": 0,
+  "semanticDefectTrainingLabelsAdmitted": 0,
+  "mutationsIntroduced": 0,
+  "modelTrainingPerformed": false,
+  "developmentSummary": {
+    "candidateTranslations": 240,
+    "compiledAndExecutedOrCompileAttempted": 239,
+    "javaTestCompatibleCandidates": 198,
+    "javaTestCompatibleTaskFamilies": 104,
+    "javaScreeningFailures": 41,
+    "javaScreeningFailureTaskFamilies": 26,
+    "javaRuntimeOrAssertionFailures": 40,
+    "javaRuntimeOrAssertionFailureTaskFamilies": 25,
+    "compilationFailures": 1,
+    "familiesWithBothCandidatesFailingJavaScreen": 15,
+    "interfaceQuarantinedCandidates": 1
+  },
+  "reserved": {
+    "candidateInventory": 46,
+    "referenceInventory": 23,
+    "executed": 0
+  },
+  "normalizationAudit": {
+    "rawSourcesExecutedUnchanged": true,
+    "upstreamCleanerWouldChangeCandidates": 0
+  },
+  "interpretationNotes": [
+    "Counts are outcomes against supplied Java tests, not COBOL semantic defect labels or detector accuracy.",
+    "HumanEval/99 has entry_point closest_integer and COBOL PROGRAM-ID CLOSEST-INTEGER, but Java template/reference/tests declare countUpper(String). The14b candidate declares closestInteger(String) and is quarantined for interface disagreement. Renaming an API can be legitimate; no semantic conclusion or task misordering is inferred.",
+    "HumanEval/77 14b looks as if it rejects zero because loop starts at1, but int overflow at i2048 yields cube0 and the actual program passes its zero test. Missing an explicit branch alone does not establish a behavioral defect.",
+    "Natural translation failures still require replay on inputs valid for the original COBOL and review of adapters/oracles before admission.",
+    "AI-generated audit tooling and machine-generated interpretation do not constitute independent human review."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "inputSha256": "b77464a12665fd053c9a17bd7cce6956420d19ea374a334acef586cb97547dc3",
+  "status": "RUNTIME_CHECKS_PASS_MINOR_METADATA_REPAIR_APPLIED",
+  "counts": {
+    "families": 2,
+    "pairs": 8,
+    "validSourceSpans": 68,
+    "validAlignmentRecords": 48,
+    "actualExecutions": 60,
+    "referencePredictionErrors": 0,
+    "javaPredictionErrors": 0,
+    "mismatchFlagErrors": 0
+  },
+  "newMetadataEdits": 2,
+  "sourceOrPredictionChanges": false,
+  "trainingPerformed": false,
+  "validationTestUse": "Only supplied cases executed for data-quality review; no added probes, model fitting or selection.",
+  "positiveEquivalenceAssessment": "MATCHES_EXECUTED_INPUTS_ONLY",
+  "negativeEquivalenceAssessment": "DEFECT_CONFIRMED_BY_RUNTIME_WITNESS",
+  "alignmentGoldStatus": "AI_PROPOSED_STRUCTURALLY_CHECKED_ONLY"
+}

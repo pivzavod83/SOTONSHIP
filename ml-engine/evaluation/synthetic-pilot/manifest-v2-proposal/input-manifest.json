@@ -1,0 +1,29 @@
+{
+  "datasetVersion": "synthetic-pilot-v2",
+  "status": "PROPOSED_BEFORE_BATCH_4",
+  "allocation": {"familyCount": 20, "train": 10, "validation": 5, "test": 5, "categories": 5, "familiesPerCategory": 4},
+  "splitPolicy": "Families in the same declared cloneGroup stay in one split. Split assignment is at family level, not variant or test-case level.",
+  "provenanceNote": "F001 and F006 summaries, and F005's prior split/category, are taken from the supplied batch-03 audit and JSON. Other family entries are proposed plan slots because their source definitions were not included with this request; reconcile their algorithms and clone groups against batches 01-02 before treating the manifest as authoritative.",
+  "families": [
+    {"familyId":"F001","algorithm":"Two-stage percentage adjustment: truncate the first percentage amount, subtract it from the principal, then round a second percentage amount on the intermediate balance and subtract it.","category":"DECIMAL_ROUNDING_AND_SCALE","split":"train","cloneGroup":"CG-F001-TWO-STAGE-PERCENT-ADJUSTMENT"},
+    {"familyId":"F002","algorithm":"Apply a signed adjustment to an opening balance through an unsigned intermediate, then apply a signed fee to the resulting amount.","category":"NUMERIC_STORAGE_AND_SIGN","split":"train","cloneGroup":"CG-UNSIGNED-INTERMEDIATE-SIGNED-ADJUSTMENT"},
+    {"familyId":"F003","algorithm":"Select a tiered charge using ordered threshold branches, then compute the final charge from the selected tier.","category":"CONTROL_FLOW_AND_BRANCHING","split":"train","cloneGroup":"CG-F003-TIERED-THRESHOLD"},
+    {"familyId":"F004","algorithm":"Parse a compact date and compute the day count to a fixed reference date with leap-year handling.","category":"DATE_AND_CALENDAR","split":"train","cloneGroup":"CG-F004-DATE-DAY-COUNT"},
+    {"familyId":"F005","algorithm":"Convert one foreign-currency amount using a four-decimal exchange rate, round to cents, then quantize to the nearest 0.05 cash denomination.","category":"DECIMAL_ROUNDING_AND_SCALE","split":"test","cloneGroup":"CG-F005-FX-CASH-ROUNDING"},
+    {"familyId":"F006","algorithm":"Add a signed adjustment to an opening balance in an unsigned intermediate field, then subtract a signed fee into a signed final field.","category":"NUMERIC_STORAGE_AND_SIGN","split":"train","cloneGroup":"CG-UNSIGNED-INTERMEDIATE-SIGNED-ADJUSTMENT"},
+    {"familyId":"F007","algorithm":"Tokenize a fixed-width input record, normalize selected fields, and choose an output code based on field contents.","category":"CONTROL_FLOW_AND_BRANCHING","split":"test","cloneGroup":"CG-F007-FIELD-CLASSIFICATION"},
+    {"familyId":"F008","algorithm":"Accumulate repeated dated entries into a period summary and report the maximum period total.","category":"DATE_AND_CALENDAR","split":"test","cloneGroup":"CG-F008-PERIOD-AGGREGATION"},
+    {"familyId":"F009","algorithm":"Allocate a fixed discount proportionally across three item amounts, round the first two shares to cents, and assign the remainder to the final item.","category":"DECIMAL_ROUNDING_AND_SCALE","split":"validation","cloneGroup":"CG-F009-PROPORTIONAL-REMAINDER-ALLOCATION"},
+    {"familyId":"F010","algorithm":"Apply a signed delta to a bounded counter with explicit saturation at the representable minimum and maximum.","category":"NUMERIC_STORAGE_AND_SIGN","split":"test","cloneGroup":"CG-F010-SATURATING-COUNTER"},
+    {"familyId":"F011","algorithm":"Walk an ordered set of ranges and return the first matching range's code, with an explicit no-match result.","category":"CONTROL_FLOW_AND_BRANCHING","split":"validation","cloneGroup":"CG-F011-FIRST-MATCH-RANGE"},
+    {"familyId":"F012","algorithm":"Advance a date by a specified number of days across month and year boundaries, including leap days.","category":"DATE_AND_CALENDAR","split":"validation","cloneGroup":"CG-F012-DATE-ADVANCE"},
+    {"familyId":"F013","algorithm":"Parse a decimal quantity with an explicit scale, apply a single percentage fee, and round once to the required currency scale.","category":"DECIMAL_ROUNDING_AND_SCALE","split":"train","cloneGroup":"CG-F013-SINGLE-PERCENT-FEE"},
+    {"familyId":"F014","algorithm":"Combine two fixed-width signed counters, floor the combined value at zero, and calculate a numeric checksum from the bounded result.","category":"NUMERIC_STORAGE_AND_SIGN","split":"validation","cloneGroup":"CG-F014-BOUNDED-COUNTER-CHECKSUM"},
+    {"familyId":"F015","algorithm":"Evaluate a precedence-ordered set of eligibility rules and return the first applicable decision code.","category":"CONTROL_FLOW_AND_BRANCHING","split":"train","cloneGroup":"CG-F015-ELIGIBILITY-PRIORITY"},
+    {"familyId":"F016","algorithm":"Validate a date against month length and leap-year rules, returning a validity flag and normalized date key.","category":"DATE_AND_CALENDAR","split":"train","cloneGroup":"CG-F016-DATE-VALIDATION"},
+    {"familyId":"F017","algorithm":"Scan a delimited record, trim field padding, and count non-empty fields while preserving empty interior fields.","category":"STRING_AND_RECORD_PARSING","split":"train","cloneGroup":"CG-F017-DELIMITED-FIELD-COUNT"},
+    {"familyId":"F018","algorithm":"Normalize a fixed-width identifier by removing leading zeroes while preserving one zero for an all-zero identifier.","category":"STRING_AND_RECORD_PARSING","split":"test","cloneGroup":"CG-F018-ZERO-NORMALIZATION"},
+    {"familyId":"F019","algorithm":"Compare two fixed-width names using trimmed, case-normalized content and return an ordering code.","category":"STRING_AND_RECORD_PARSING","split":"validation","cloneGroup":"CG-F019-NORMALIZED-COMPARE"},
+    {"familyId":"F020","algorithm":"Extract a bounded substring using start and length fields, handling out-of-range requests with a defined empty result.","category":"STRING_AND_RECORD_PARSING","split":"train","cloneGroup":"CG-F020-BOUNDED-SUBSTRING"}
+  ]
+}

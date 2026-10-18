@@ -1,0 +1,60 @@
+{
+  "version": "natural-c2j-defect-screening-v1",
+  "createdDate": "2026-10-18",
+  "status": "FROZEN_BEFORE_LOCAL_EXECUTION_SCREENING",
+  "objective": "Measure candidate natural behavioral defects in published COBOL-to-Java translations; no model fitting or automatic human-review claims.",
+  "datasetCommit": "2b14b7bf7e55556205654c6f7657fa60e36251fa",
+  "datasetSha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+  "outputSha256": {
+    "7b": "f2a640f57159d257de6d6c3fdbd5af970ef447ab4fb24a72b928e7f77b76dba6",
+    "14b": "5282a929afc7b0e0775f2f2109805a19052f8885e8143d81f7736b24906f4c41"
+  },
+  "split": {
+    "plan": "ml-engine/evaluation/paired-code/cv-partition-plan.json",
+    "sha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+    "developmentFamilies": 120,
+    "reservedFamilies": 23,
+    "developmentCandidates": 240,
+    "reservedCandidates": 46,
+    "policy": "Inventory all published files; execute development only. No reserved candidate or reference compilation, execution, failure-label inspection or selection. Keep all derivatives and related task groups together. Prior retrieval exposure remains disclosed."
+  },
+  "stages": [
+    "Pinned-source/hash and ordinal/interface audit",
+    "Canonical Java controls and generated Java benchmark screening",
+    "Canonical COBOL driver execution and oracle audit",
+    "Explicit shared-input contract and same-input differential replay on eligible development cases",
+    "Count reproduced discrepancies separately from reviewed translation defects; decide model feasibility from independent family counts"
+  ],
+  "screeningLabels": [
+    "COMPILE_FAILURE",
+    "RUNTIME_FAILURE",
+    "TIMEOUT",
+    "BENCHMARK_ASSERTION_FAILURE",
+    "TEST_COMPATIBLE",
+    "REFERENCE_OR_HARNESS_UNRESOLVED"
+  ],
+  "admission": {
+    "semanticDefect": "Both exact programs execute on a shared valid input under a pinned contract and exhibit a reproducible difference; original COBOL defects/specification differences and adapter errors require adjudication. Compiler/runtime context is part of the evidence.",
+    "control": "Agreement on recorded tests only, never universal equivalence.",
+    "review": "AI analysis is not independent human review. No upstream maintainer or author votes invented; machine-reproduced discrepancies remain pending independent review.",
+    "localization": "Only validated/reviewed source spans constitute fault-location gold labels; attention and compiler diffs do not."
+  },
+  "prohibitions": [
+    "No injected code mutations",
+    "No foreign-language defect training",
+    "No LLM API requests",
+    "No held-out evaluation",
+    "No replacement model training until eligible data are measured",
+    "No changes to original programs to force an expected result",
+    "No similarity or benchmark-test success relabelled as semantic proof"
+  ],
+  "reporting": [
+    "Raw candidate and unique-family counts",
+    "Reference controls and harness exclusions",
+    "Compilation/runtime/assertion/timeout outcomes separately",
+    "Shared-contract witness coverage and unresolved cases",
+    "Compiler/runtime/platform versions, exact source/tool/script hashes and collection dates",
+    "Raw logs in ignored cache with versioned metadata pointers"
+  ],
+  "aiDisclosure": "AI-generated audit plan and tooling; no independent human review performed by this automation."
+}

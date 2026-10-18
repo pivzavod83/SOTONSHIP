@@ -1,0 +1,42 @@
+{
+  "upstreamCommit": "2b14b7bf7e55556205654c6f7657fa60e36251fa",
+  "files": [
+    {
+      "upstreamPath": "evaluation/evaluate_coboleval.py",
+      "url": "https://github.com/COBOL-Coder/COBOL-Coder/blob/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/evaluate_coboleval.py",
+      "rawCachePath": "evaluation/corpora/natural-c2j/cobol-reference-upstream/evaluation_evaluate_coboleval.py",
+      "sha256": "0cfac0125d40c5d0c0099c520ff75f996d51e056422805f17927721d93dcab51",
+      "bytes": 10352
+    },
+    {
+      "upstreamPath": "evaluation/utils.py",
+      "url": "https://github.com/COBOL-Coder/COBOL-Coder/blob/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/utils.py",
+      "rawCachePath": "evaluation/corpora/natural-c2j/cobol-reference-upstream/evaluation_utils.py",
+      "sha256": "273eb153d1045b26d104f0e73c4dcabf5b2f3a5cf020187223863b87019d85b8",
+      "bytes": 7915
+    },
+    {
+      "upstreamPath": "evaluation/evaluate_translation_c2j.py",
+      "url": "https://github.com/COBOL-Coder/COBOL-Coder/blob/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/evaluate_translation_c2j.py",
+      "rawCachePath": "evaluation/corpora/natural-c2j/cobol-reference-upstream/evaluation_evaluate_translation_c2j.py",
+      "sha256": "c188f079d7f2152720fd8695328a26f6e844680dc8bf7a47bfbc314c1df0a4b8",
+      "bytes": 5365
+    },
+    {
+      "upstreamPath": "LICENSE",
+      "url": "https://github.com/COBOL-Coder/COBOL-Coder/blob/2b14b7bf7e55556205654c6f7657fa60e36251fa/LICENSE",
+      "rawCachePath": "evaluation/corpora/natural-c2j/cobol-reference-upstream/LICENSE",
+      "sha256": "50e6751797c50dedd75ef1b8a0d9e42f5f8472e9fbce91f34718e9f97b0c780a",
+      "bytes": 11324
+    }
+  ],
+  "licence": "Repository LICENSE is Apache-2.0; evaluator says adapted from OpenAI HumanEval; original benchmark source licences/notices still apply. No upstream code copied into versioned runner.",
+  "comparisonDifferences": [
+    "ast.literal_eval replaces upstream eval",
+    "Boolean serialization strictly accepts 0 or 1 instead of treating every other value as False",
+    "Floating-point list lengths are checked before zipped comparisons",
+    "No source clean_response_for_eval section reordering; canonical source bytes remain unchanged",
+    "Lists still use expected-length projection, explicitly tracked; strings strip whitespace and float abs_tol=0.001 follows upstream",
+    "Compilation and runtime failures are recorded separately"
+  ]
+}

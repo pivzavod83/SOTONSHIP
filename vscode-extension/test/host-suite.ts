@@ -6,6 +6,7 @@ import * as vscode from 'vscode';
 import type { WorkbenchController } from '../src/extension';
 import type { ProofInputs, VerificationResult } from '../src/contracts';
 import type { MatchingRequest, MatchingResult } from '../src/matching-contracts';
+import type { AiReviewRequest, AiReviewResult } from '../src/ai-review-contracts';
 
 const backendUrl = process.env.LIVE_VERIFIER_URL ?? 'http://127.0.0.1:3002';
 let assertions = 0;
@@ -116,6 +117,30 @@ async function matchingGate(): Promise<{ url: string; requests: MatchingRequest[
     async close() { server.closeAllConnections(); await new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve())); } };
 }
 
+/** Local protocol fixture only; it exercises the editor and HTTP adapter, not model quality. */
+async function aiReviewGate(): Promise<{ url: string; requests: AiReviewRequest[]; holdNext(): { requested: Promise<void>; release(): void }; close(): Promise<void> }> {
+  const requests: AiReviewRequest[] = []; let hold: { reached(): void; released: Promise<void> } | undefined;
+  const hash = (value: string) => createHash('sha256').update(value).digest('hex');
+  const server = createServer(async (req, res) => {
+    const chunks: Buffer[] = []; for await (const chunk of req) chunks.push(Buffer.from(chunk));
+    assert.equal(req.url, '/api/ai-reviews'); assert.equal(req.headers.authorization, undefined);
+    const input = JSON.parse(Buffer.concat(chunks).toString('utf8')) as AiReviewRequest; requests.push(input);
+    const pending = hold; hold = undefined; if (pending) { pending.reached(); await pending.released; }
+    const result: AiReviewResult = { status: 'ANALYZED', summary: 'Native protocol fixture: inspect the selected pair.',
+      findings: [{ findingId: 'F1', title: 'Protocol fixture hypothesis', category: 'ARITHMETIC', severity: 'MEDIUM', explanation: 'Editor integration fixture, not a measured model result.',
+        cobolLines: { start: 1, end: 1 }, javaLines: { start: 1, end: 1 }, cobolExcerpt: input.cobolSource.split('\n')[0], javaExcerpt: input.javaSource.split('\n')[0],
+        suggestedFix: '', candidateInputs: [{ inputsJson: '{"amount":"45.00"}', rationale: 'An unexecuted fixture input.', status: 'NOT_EXECUTED' }], evidenceStatus: 'AI_HYPOTHESIS' }],
+      limitations: ['Mock backend protocol; not AI quality evidence.'], sourceHashes: { cobol: hash(input.cobolSource), java: hash(input.javaSource) },
+      provider: { protocol: 'OPENAI_COMPATIBLE_CHAT', model: 'native-host-protocol-fixture' }, aiIsProof: false, promptVersion: 'paired-defect-review-v1', counterexamplesExecuted: false };
+    res.writeHead(201, { 'Content-Type': 'application/json' }); res.end(JSON.stringify(result));
+  });
+  server.listen(0, '127.0.0.1'); await once(server, 'listening'); const address = server.address(); assert.ok(address && typeof address !== 'string');
+  return { url: `http://127.0.0.1:${address.port}`, requests,
+    holdNext() { let reached!: () => void; let release!: () => void; const requested = new Promise<void>(resolve => { reached = resolve; });
+      hold = { reached, released: new Promise<void>(resolve => { release = resolve; }) }; return { requested, release }; },
+    async close() { server.closeAllConnections(); await new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve())); } };
+}
+
 /** Called by the real VS Code Extension Development Host, not by node --test. */
 export async function run(): Promise<void> {
   console.log(`SOTONSHIP native Extension Host integration suite; live engine: ${backendUrl}`);
@@ -124,7 +149,7 @@ export async function run(): Promise<void> {
   const controller = await extension.activate();
   ok(extension.isActive);
   const commands = await vscode.commands.getCommands(true);
-  for (const command of ['sotonship.openWorkbench', 'sotonship.verifyFiles', 'sotonship.matchPrograms', 'sotonship.tryDemo', 'sotonship.showFixDiff', 'vscode.diff']) {
+  for (const command of ['sotonship.openWorkbench', 'sotonship.verifyFiles', 'sotonship.matchPrograms', 'sotonship.analyzePairWithAi', 'sotonship.tryDemo', 'sotonship.showFixDiff', 'vscode.diff']) {
     ok(commands.includes(command), `${command} must be registered in the native host.`);
   }
   await vscode.commands.executeCommand('sotonship.openWorkbench');
@@ -146,6 +171,37 @@ export async function run(): Promise<void> {
   });
   await configure();
   passed('demo opens three unsaved sources and an explicit mapping without sending code');
+
+  const aiGate = await aiReviewGate();
+  try {
+    await controller.configureAiReview({ cobol: cobol.uri, java: java.uri, backendUrl: aiGate.url, sourceFormat: 'FREE', analysisContext: 'Native fixture context.' });
+    equal(aiGate.requests.length, 0, 'AI configuration must not upload selected source.');
+    const aiResult = await controller.analyzePairWithAi();
+    equal(aiGate.requests.length, 1); equal(aiGate.requests[0].javaSource, original); equal(aiGate.requests[0].cobolSource, cobol.getText());
+    equal(aiGate.requests[0].analysisContext, 'Native fixture context.'); equal(aiResult.aiIsProof, false);
+    equal(controller.getState().aiReviewStale, false); equal(controller.getState().canApply, false);
+    equal(controller.getDiagnosticCount(), 0, 'AI hypotheses must not create formal verification diagnostics.');
+    equal(java.getText(), original, 'AI review must not edit the source.');
+    passed('explicit AI action sends exact editor text and keeps hypotheses separate from proof and edits');
+
+    const gate = aiGate.holdNext(); const pendingReview = controller.analyzePairWithAi(); await reached(gate.requested);
+    await replace(java, `${original}\n// Edited while AI review was pending.\n`);
+    await replace(java, original);
+    gate.release(); await pendingReview;
+    equal(controller.getState().aiReviewStale, true, 'Editing and restoring the same source must invalidate the in-flight result by version/generation.');
+    equal(controller.getState().canApply, false); equal(java.getText(), original);
+    passed('native editor edit and restoration invalidate delayed AI findings even when source hashes match again');
+
+    await controller.analyzePairWithAi(); equal(controller.getState().aiReviewStale, false);
+    await controller.configureAiReview({ cobol: cobol.uri, java: java.uri, sourceFormat: 'FIXED', analysisContext: 'Changed context.' });
+    equal(controller.getState().aiReviewStale, true); equal(aiGate.requests.length, 3, 'Changing AI context or format must not send a request.');
+    passed('changing AI review context and format invalidates findings without automatic uploads');
+  } finally { await aiGate.close(); }
+  if (process.env.AI_REVIEW_HOST_ONLY === '1') {
+    console.log(`Native Extension Host AI protocol: ${scenarios} scenarios, ${assertions} assertions passed. Mock provider; no model quality measured. All edited documents were untitled.`);
+    return;
+  }
+  await configure();
 
   const baseline = await controller.verify(false);
   equal(baseline.formalProofStatus, 'SAT_COUNTEREXAMPLE_FOUND');

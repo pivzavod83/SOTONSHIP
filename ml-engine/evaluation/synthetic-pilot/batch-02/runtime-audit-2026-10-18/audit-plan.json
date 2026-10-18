@@ -1,0 +1,54 @@
+{
+  "inputSha256": "f08dc2a1dffeb19ef75e4ac0750c8942b1cd30da3c5086269d9137e6f91507b9",
+  "sourceReview": "AI-assisted static inspection; not independent human review",
+  "suppliedCasesPerFamily": 6,
+  "extraCases": {
+    "F003": [
+      [
+        "A1",
+        "100.00\n0.5000\n0.5000\n0.00\n",
+        "Minimum conversion with no wire fee."
+      ],
+      [
+        "A2",
+        "1000.00\n0.5000\n80.0000\n25.00\n",
+        "Maximum base and second rate with minimum first rate."
+      ],
+      [
+        "A3",
+        "100.00\n0.5001\n0.5000\n25.00\n",
+        "Exact half-cent settlement above a maximum fee."
+      ],
+      [
+        "A4",
+        "1000.00\n9.9999\n79.9999\n25.00\n",
+        "Adjacent maximum rates, no width overflow."
+      ]
+    ],
+    "F004": [
+      [
+        "A1",
+        "1\n999.99\n999\n0.00\n",
+        "Highly unequal lot sizes, first price maximum."
+      ],
+      [
+        "A2",
+        "999\n999.99\n1\n0.00\n",
+        "Opposite lot weighting at maximum quantity and cost."
+      ],
+      [
+        "A3",
+        "1\n0.00\n1\n0.01\n",
+        "Exact half-cent average with equal quantities."
+      ],
+      [
+        "A4",
+        "1\n10.00\n2\n10.01\n",
+        "Rounding can mask unequal-price/quantity weighting error."
+      ]
+    ]
+  },
+  "executionScope": "Pinned source only, no source edits, no original 143-task corpus or training",
+  "comparison": "Exact decimal normalization; no tolerance and no float conversion",
+  "equivalenceLimit": "Passing executed inputs never establishes universal equivalence"
+}

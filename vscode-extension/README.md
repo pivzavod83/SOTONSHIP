@@ -1,8 +1,8 @@
 # SOTONSHIP Verification for VS Code
 
-Find candidate COBOL/Java program matches with the paired-source GNN, then compare supported financial behavior from your editor. This extension sends explicitly selected sources to the SOTONSHIP backend, shows the advisory ranking, and lets an engineer confirm the Java counterpart before supplying a proof contract.
+Review a supplied COBOL/Java pair for suspected translation defects with an LLM, then compare supported financial behavior independently with Z3. Optional paired-source GNN matching can help find the Java counterpart when it is not already known.
 
-The extension is a client for the matching engine and verifier. It does not translate COBOL or connect an LLM. Matching and verification are separate operations: a GNN similarity never establishes equivalence or authorizes a fix.
+The extension is a client for the backend's AI review, matching and verification endpoints. AI review uses the model configured on your server; the extension never stores its key. AI hypotheses, GNN similarity and Z3 evidence remain separate. No automatic translation or AI fix application is implemented.
 
 ## Install and start
 
@@ -17,9 +17,20 @@ npm test
 npm run package
 ```
 
-In VS Code, run **Extensions: Install from VSIX…** and select `sotonship-financial-verifier-0.2.0.vsix` in this directory. Reload VS Code if prompted.
+In VS Code, run **Extensions: Install from VSIX…** and select `sotonship-financial-verifier-0.3.0.vsix` in this directory. Reload VS Code if prompted.
 
 For development, open `vscode-extension/` as the workspace folder and press **F5**. In the new Extension Development Host window, open your source folder and use the commands below.
+
+## Analyze a supplied pair with AI
+
+Configure `LLM_BASE_URL`, `LLM_MODEL`, `LLM_API_KEY` and the provider's supported response mode on the backend, then restart it. See the complete [AI review setup and API guide](../docs/ai-defect-review.md). There is no bundled key or running model; missing configuration returns `NOT_CONFIGURED` with no invented findings.
+
+1. Open **SOTONSHIP: Open Verification Workbench** and select the original COBOL and translated Java. Selection alone sends nothing.
+2. Set the AI COBOL source format and optional behavioral context, then click **Analyze pair with AI**. This explicit action sends both selected documents' current unsaved text and context through the backend to its configured provider. Alternatively, **SOTONSHIP: Analyze Pair with AI** opens the two file pickers and requests the review immediately using the current AI format/context. No financial proof contract is required for AI review.
+3. Inspect the suspected mismatches, one-based source spans, exact source excerpts, proposed correction descriptions and limitations. Findings are labelled **AI HYPOTHESIS**; proposed JSON inputs are **NOT EXECUTED**. Neither establishes a defect or equivalence by itself.
+4. Confirm a hypothesis through engineer review or an independently controlled test. For supported financial routines, run the separate Z3 verification with explicit proof inputs. An empty AI review does not mean the pair is correct.
+
+Changing selected sources, their editor versions, the backend, AI source format or context makes results stale. Stale findings are hidden, including a late response after editing and restoring the same source text. AI findings do not create verified Problems diagnostics, apply code or unlock the verified-fix action. Exported reports include the explicit stale flag. HTTP provider errors, refusal and malformed model output are visible statuses rather than fake results.
 
 ## Find the Java counterpart with the GNN
 
@@ -71,15 +82,15 @@ Run verification to inspect the current pair. To evaluate a revision, select a p
 
 `UNSAT_PROVEN_SAFE` covers the recognized scalar arithmetic subset, explicit bounds and recorded arithmetic semantics. It is not full COBOL/Java language equivalence. External CICS/JCL behavior and other unsupported constructs can return `UNKNOWN_HALTED_LIMIT`; that result is not evidence that a migration is safe.
 
-Learned program matching is an inspection aid. The workbench shows its separate evaluation provenance rather than presenting similarity as defect probability. Defect risk is not estimated. Matching does not authorize a Z3 proof or establish production banking reliability.
+Learned program matching is an inspection aid. The workbench shows its separate evaluation provenance rather than presenting similarity as defect probability. The GNN does not estimate defect risk; the LLM's qualitative hypotheses have no measured accuracy or calibrated confidence in this project. Neither AI stage authorizes a Z3 proof or establishes production banking reliability.
 
 ## Validation
 
-`npm test` runs source-binding, ranking-contract and HTTP failure/cancellation tests alongside the verification contract tests. With a live verifier running, `LIVE_VERIFIER_URL=http://127.0.0.1:3001 npm run test:host` launches isolated native VS Code tests. Add `LIVE_MATCHING_URL=http://127.0.0.1:3001` to exercise real GNN ranking followed by explicit engineer selection and independent Z3 verification. These tests do not assert financial-domain model accuracy. Matching workflow race tests use clearly labelled protocol fixtures. Every edited test document is untitled.
+`npm test` runs AI schema/source binding, literal-text rendering, cancellation, matching and verification contract tests. `AI_REVIEW_HOST_ONLY=1 npm run test:host` exercises the native AI command/controller and editor races against a clearly labelled local HTTP protocol fixture, with no key, model or database. With a live verifier running, `LIVE_VERIFIER_URL=http://127.0.0.1:3001 npm run test:host` runs the full isolated native suite. Add `LIVE_MATCHING_URL=http://127.0.0.1:3001` to exercise real GNN ranking followed by explicit engineer selection and independent Z3 verification. These checks establish integration behavior, not model quality. Every edited test document is untitled.
 
 ## Files and data
 
-The extension uses a local API without authentication. It uploads selected source text only when you invoke program matching, verification, a fix check or application of a verified fix; opening VS Code or a workspace does not upload files. Requests use the configured loopback backend with no redirects. No LLM or external translation provider is connected.
+The extension uses a local API without authentication. It uploads selected source text only when you invoke AI review, program matching, verification, a fix check or application of a verified fix; opening VS Code or a workspace does not upload files. Requests use the configured loopback backend with no redirects. Only the explicit AI review action additionally sends that pair and its context to the provider configured on the backend. API keys stay in server environment variables. The API and extension do not compile or execute submitted source or model-proposed inputs.
 
 [examples/penny-drift.json](examples/penny-drift.json) copies the FX fixture’s source pair, proposed fix and proof inputs from `ml-engine/data/seed-verifications.json`. The fixture is AI-generated demonstration code, not production bank code. Its reference rate is the Bank of England EUR-per-GBP observation **1.183** from **2026-10-15**, collected **2026-10-17**, under **OGL-UK-3.0**. See [data-sources](../data-sources/README.md) for the upstream records, licences and attribution.
 

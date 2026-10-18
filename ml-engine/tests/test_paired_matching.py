@@ -77,8 +77,10 @@ def test_message_passing_is_actual_learned_differentiable_computation():
     assert not np.allclose(forward(batch,params),forward(batch_graphs([graph],False),params))
 
 
-def test_model_provenance_matches_real_training_artifact_and_grouped_splits():
-    model=load_model();meta=model_metadata();root=Path(__file__).resolve().parents[1]
+def test_historical_model_provenance_matches_its_training_artifact_and_grouped_splits():
+    root=Path(__file__).resolve().parents[1]
+    historical_path=root/'ml_engine/models/paired_program_gnn_v1.json'
+    model=load_model(historical_path);meta=model_metadata(model)
     report=json.loads((root/'evaluation/paired-code/training-report.json').read_text())
     split=json.loads((root/'evaluation/paired-code/task-splits.json').read_text())
     partitions=[set(values) for values in split['splits'].values()]
@@ -86,7 +88,7 @@ def test_model_provenance_matches_real_training_artifact_and_grouped_splits():
     assert not partitions[0]&partitions[1] and not partitions[0]&partitions[2] and not partitions[1]&partitions[2]
     for group in split['groups']:
         assert sum(bool(set(group)&partition) for partition in partitions)==1
-    sha=hashlib.sha256(MODEL_PATH.read_bytes()).hexdigest()
+    sha=hashlib.sha256(historical_path.read_bytes()).hexdigest()
     assert meta['sha256']==report['modelSha256']==sha
     assert model['evaluation']['status']=='BENCHMARK_PILOT'
     assert model['training']['datasetSha256']=='ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d'

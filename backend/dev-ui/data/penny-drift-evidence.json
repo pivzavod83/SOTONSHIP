@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "status": "CONFIRMED_REPLAY",
+  "checkedAtUtc": "2026-10-18T07:29:29.904645+00:00",
+  "title": "A real one-cent rounding discrepancy in the repository demo pair",
+  "provenance": "AI-authored educational repository fixture; not a discovered production-bank defect.",
+  "sourceHashes": {
+    "cobol": "c9bd04358c7ee83cd2c61530262e6d55ee880ab846a854467491d5138ee5f395",
+    "java": "211340a44236a811b8eaff6ec6d0d3007130cabfd0cd092832ce87699e1e4561",
+    "patchedJava": "57649c44b80daa20f15a7daead24d30d3749cd145f07665c4f73aaf06ff96123"
+  },
+  "finding": {
+    "title": "Binary floating-point changes COBOL decimal rounding",
+    "cobolLines": {
+      "start": 10,
+      "end": 10
+    },
+    "javaLines": {
+      "start": 4,
+      "end": 5
+    },
+    "patchedJavaLines": {
+      "start": 4,
+      "end": 5
+    },
+    "explanation": "COBOL packed-decimal arithmetic computes 45.00 \u00d7 1.1830 = 53.235 and ROUNDED stores 53.24. Java multiplies binary double values first; new BigDecimal(double) preserves that slightly smaller binary result and HALF_UP produces 53.23. This exact difference was independently observed by running both implementations.",
+    "suggestedFix": "Accept decimal inputs as BigDecimal and multiply before rounding; construct the values from decimal strings, not doubles. The supplied patch also models the declared COBOL result field's high-order digit truncation."
+  },
+  "witness": {
+    "inputs": {
+      "amount": "45.00",
+      "rate": "1.1830"
+    },
+    "outputs": {
+      "cobol": "53.24",
+      "java": "53.23",
+      "patchedJava": "53.24"
+    },
+    "difference": "-0.01",
+    "status": "EXECUTED",
+    "executedByLlm": false
+  },
+  "proofStatus": "SAT_COUNTEREXAMPLE_FOUND",
+  "patchedProofStatus": "UNSAT_PROVEN_SAFE",
+  "toolVersions": {
+    "cobol": "cobc (GnuCOBOL) 3.2.0",
+    "java": "java version \"21.0.10\" 2026-01-20 LTS"
+  },
+  "harnessTransformations": [
+    "COBOL: insert MOVE 45.00 TO INPUT-AMOUNT and MOVE 1.1830 TO REFERENCE-RATE immediately after MAIN.; preserve original declarations and calculation body.",
+    "COBOL: insert DISPLAY SETTLEMENT-RESULT immediately before original GOBACK.; compile the recorded derivative with GnuCOBOL -free.",
+    "Java: copy the pinned fixture byte-for-byte to FxWireService.java; compile it with a separate Replay.java that only constructs inputs, invokes calculate and prints its result."
+  ],
+  "limitations": [
+    "This is one executed input witness, not exhaustive runtime testing or whole-program equivalence.",
+    "The original COBOL fixture has VALUE 0 inputs and no I/O; execution uses the fully recorded input/output harness derivative, not the original zero-input program unchanged.",
+    "GnuCOBOL runtime replay is an independent corroboration for this arithmetic case, not an IBM Enterprise COBOL certification.",
+    "The patched Z3 UNSAT result covers only the recorded finite amount range, exact fixed rate and supported scalar subset; it does not prove arbitrary programs safe.",
+    "This fixture's rate carries the existing example's provenance; no live external FX data was fetched during replay.",
+    "Runtime evidence and Z3 output are separate from any AI analysis; this report is not an LLM finding."
+  ],
+  "evidenceDirectory": "penny-drift-replay",
+  "artifactHashes": {
+    "original-FX-WIRE-CALC.cbl": "c9bd04358c7ee83cd2c61530262e6d55ee880ab846a854467491d5138ee5f395",
+    "original-FX-WIRE-CALC.java.txt": "211340a44236a811b8eaff6ec6d0d3007130cabfd0cd092832ce87699e1e4561",
+    "original-FX-WIRE-CALC.patched.java.txt": "57649c44b80daa20f15a7daead24d30d3749cd145f07665c4f73aaf06ff96123",
+    "cobol-replay.cbl": "7ad6dfcac9c9c8521b8cdb9e4556c3fc89bda2915ea4ff7ccdb06f44d91f751a",
+    "java-Replay.java": "e54eb4c487d5476f64a436b62b0d8a3d0e060f0c381f66480e4d21ea879de715",
+    "patchedJava-Replay.java": "721fdf7f6ec59db36bf0b25e6fbdb55a6d09a233ec8580afdad927aba39aac95",
+    "runtime-log.json": "a5985cf6e26ae650943ea4777327ec3e56d9fff2933b15aaa4315b58a638f224",
+    "z3-original.json": "0d2422a58900bebf445c24c75ec7b4ab14017866243636bc3c693656a863df62",
+    "z3-patched.json": "aeb2b31c6dde61682799a184e28d72523c864b8d5407c093da35db8f37412c93"
+  },
+  "reproduction": "ml-engine/.venv/bin/python ml-engine/scripts/replay_penny_drift_demo.py"
+}

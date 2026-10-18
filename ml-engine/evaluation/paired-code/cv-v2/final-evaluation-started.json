@@ -1,0 +1,7 @@
+{
+  "runId": "paired-cv-v2-dd00a1038de20a04",
+  "freezeId": "paired-cv-freeze-0ff0b8c25ab3c8bf",
+  "freezeSha256": "1c1b13358ef96cbfb6a985dbcb5fb177097bb1b91bfdfe8aa2bb52ee5c7d1838",
+  "startedAt": "2026-10-18T03:52:51.744985+00:00",
+  "warning": "One-shot marker. Preserve even if evaluation fails; do not silently repeat or tune on this holdout."
+}

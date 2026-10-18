@@ -1,0 +1,54 @@
+{
+  "inputSha256": "4090c19e8ca05f2edb53c749791dfc34aee25d758fb0da5959cbdcbbb5411fc6",
+  "sourceReview": "AI-assisted static inspection; not independent human review",
+  "suppliedCasesPerFamily": 6,
+  "extraCases": {
+    "F001": [
+      [
+        "A1",
+        "99999.99\n0.00\n99.99\n",
+        "Maximum subtotal and tax; no discount."
+      ],
+      [
+        "A2",
+        "99999.99\n99.99\n99.99\n",
+        "Maximum values in all three declared fields."
+      ],
+      [
+        "A3",
+        "1.00\n99.99\n99.99\n",
+        "Discount truncation and tax rounding at a one-cent net amount."
+      ],
+      [
+        "A4",
+        "0.01\n0.00\n50.00\n",
+        "Exact half-cent tax at the smallest positive subtotal."
+      ]
+    ],
+    "F002": [
+      [
+        "A1",
+        "99999.99\n365\n0.00\n",
+        "Maximum fee and days; rounded gross may exceed its PIC capacity."
+      ],
+      [
+        "A2",
+        "99999.99\n365\n9999.99\n",
+        "Maximum fee/days and credit after gross storage assignment."
+      ],
+      [
+        "A3",
+        "0.00\n365\n9999.99\n",
+        "Zero fee with maximum days and credit."
+      ],
+      [
+        "A4",
+        "99999.99\n364\n0.00\n",
+        "Adjacent day boundary without rounded gross overflow."
+      ]
+    ]
+  },
+  "executionScope": "Pinned source only, no source edits, no original 143-task corpus or training",
+  "comparison": "Exact decimal normalization; no tolerance and no float conversion",
+  "equivalenceLimit": "Passing executed inputs never establishes universal equivalence"
+}

@@ -16,7 +16,7 @@ async function bootstrap(): Promise<void> {
   app.enableShutdownHooks();
   const swagger = new DocumentBuilder()
     .setTitle('Neuro-Symbolic COBOL-to-Java Financial Verifier')
-    .setDescription('Layered DDD + CQRS + MikroORM. Paired-source GNN matching suggests program correspondence for human confirmation, never proof. SAT supplies counterexamples; UNSAT applies only within explicit proofScope; unsupported programs remain UNKNOWN.')
+    .setDescription('Layered DDD + CQRS + MikroORM. A local trained graph-feature pilot and optional coding LLM report source-bound defect hypotheses, never proof. The local synthetic detector failed held-out evaluation and requires human review. Optional GNN matching suggests program correspondence. SAT supplies counterexamples; UNSAT applies only within explicit proofScope; unsupported programs remain UNKNOWN.')
     .setVersion('1.0.0').build();
   if (process.env.SWAGGER_ENABLED === 'true' && process.env.NODE_ENV !== 'production') {
     SwaggerModule.setup('api/docs', app, SwaggerModule.createDocument(app, swagger));

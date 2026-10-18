@@ -12,7 +12,10 @@
     "setup": "npm run db:migrate && npm run db:seed",
     "test": "jest --runInBand",
     "test:smoke": "node test/api.smoke.mjs",
-    "test:matching": "node test/matching.smoke.mjs"
+    "test:matching": "node test/matching.smoke.mjs",
+    "test:ai-review:smoke": "node test/ai-review.smoke.mjs",
+    "ui": "node dev-ui/serve.mjs",
+    "test:ui": "node --test test/dev-ui.test.mjs"
   },
   "engines": { "node": ">=22" },
   "dependencies": {

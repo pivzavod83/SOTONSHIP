@@ -33,10 +33,10 @@ def match_sources(request: dict) -> dict:
             raise ValueError('moduleName must be nonempty, at most 160 characters, without paths or controls')
         java=_source(candidate.get('javaSource'),'javaSource');seen.add(identifier)
         validated.append((identifier,name,java))
-    model=load_model();graph=build_graph(cobol,'cobol',fmt);vector=encode_graph(graph,model)
+    model=load_model();graph=build_graph(cobol,'cobol',fmt);vector=encode_graph(graph,model,language='cobol')
     ranked=[];feature_counts={}
     for identifier,name,java in validated:
-        target=build_graph(java,'java');embedding=encode_graph(target,model)
+        target=build_graph(java,'java');embedding=encode_graph(target,model,language='java')
         similarity=float(np.clip(vector@embedding,-1,1));feature_counts[identifier]=target.stats['operations']
         ranked.append({'candidateId':identifier,'moduleName':name,'javaSourceSha256':hashlib.sha256(java.encode()).hexdigest(),
                        'similarity':round(similarity,8)})

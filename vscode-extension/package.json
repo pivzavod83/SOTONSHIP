@@ -1,8 +1,8 @@
 {
   "name": "sotonship-financial-verifier",
   "displayName": "SOTONSHIP Financial Verifier",
-  "description": "Rank COBOL/Java program matches with a GNN and inspect bounded financial proof evidence in VS Code.",
-  "version": "0.2.0",
+  "description": "Inspect COBOL-to-Java translation defects with an LLM, optional GNN program matching and independent bounded Z3 proofs.",
+  "version": "0.3.0",
   "publisher": "sotonship",
   "license": "UNLICENSED",
   "repository": {
@@ -31,7 +31,7 @@
   "capabilities": {
     "untrustedWorkspaces": {
       "supported": false,
-      "description": "Verification reads selected source files and sends them to the configured local backend only when requested."
+      "description": "Reads selected source files only on requested analysis. AI review sends source through the backend to its configured model provider."
     },
     "virtualWorkspaces": false
   },
@@ -70,6 +70,11 @@
         "category": "SOTONSHIP"
       },
       {
+        "command": "sotonship.analyzePairWithAi",
+        "title": "Analyze Pair with AI",
+        "category": "SOTONSHIP"
+      },
+      {
         "command": "sotonship.matchPrograms",
         "title": "Find Java Program Matches with GNN",
         "category": "SOTONSHIP"
@@ -91,14 +96,14 @@
         "sotonship.backendUrl": {
           "type": "string",
           "default": "http://127.0.0.1:3001",
-          "description": "Local API address. Only explicitly selected sources are sent when you run matching or verification."
+          "description": "Local API address. Explicit AI review sends selected code to the model provider configured on that server; keys stay on the backend."
         },
         "sotonship.requestTimeoutMs": {
           "type": "number",
           "default": 120000,
           "minimum": 1000,
           "maximum": 600000,
-          "description": "Maximum time to wait for a matching or verification response."
+          "description": "Maximum time to wait for AI review, matching or verification responses."
         }
       }
     }
@@ -109,7 +114,7 @@
     "test": "npm run compile && node --test dist/test/*.test.js",
     "test:host": "npm run compile && node test/run-host.cjs",
     "vscode:prepublish": "npm run compile",
-    "package": "vsce package --no-dependencies --skip-license --out sotonship-financial-verifier-0.2.0.vsix"
+    "package": "vsce package --no-dependencies --skip-license --out sotonship-financial-verifier-0.3.0.vsix"
   },
   "devDependencies": {
     "@types/node": "22.19.7",

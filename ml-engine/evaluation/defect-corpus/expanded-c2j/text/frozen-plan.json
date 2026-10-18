@@ -1,0 +1,827 @@
+{
+  "acceptedOriginalDrivers": 28,
+  "admittedLabels": 0,
+  "artifacts": {
+    "14b": {
+      "bytes": 115855,
+      "sha256": "5282a929afc7b0e0775f2f2109805a19052f8885e8143d81f7736b24906f4c41",
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/output/translation_COBOL_to_Java_COBOL-Coder_14b.jsonl"
+    },
+    "7b": {
+      "bytes": 102732,
+      "sha256": "f2a640f57159d257de6d6c3fdbd5af970ef447ab4fb24a72b928e7f77b76dba6",
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/output/translation_COBOL_to_Java_COBOL-Coder_7b.jsonl"
+    },
+    "data": {
+      "bytes": 1857161,
+      "sha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/data/COBOL-JavaTrans.jsonl"
+    },
+    "evaluator": {
+      "bytes": 5365,
+      "sha256": "c188f079d7f2152720fd8695328a26f6e844680dc8bf7a47bfbc314c1df0a4b8",
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/evaluate_translation_c2j.py"
+    },
+    "generator": {
+      "bytes": 7272,
+      "sha256": "ae23e080366a54bbdf427acd572d67091ed3ec68dc7548ac25e5d7a2bd548497",
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/generate_cobol_javatrans.py"
+    },
+    "license": {
+      "bytes": 11324,
+      "sha256": "50e6751797c50dedd75ef1b8a0d9e42f5f8472e9fbce91f34718e9f97b0c780a",
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/LICENSE"
+    },
+    "utils": {
+      "bytes": 7915,
+      "sha256": "273eb153d1045b26d104f0e73c4dcabf5b2f3a5cf020187223863b87019d85b8",
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/utils.py"
+    }
+  },
+  "expectedAnswerMetadataUsed": false,
+  "logicalLengthsNeverReadFromExpectedAnswers": true,
+  "numericRepresentationPolicy": "Every COMP-2 array element maps to Java Double. Integer boxing is not inferred from literal spelling.",
+  "partitionSha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+  "preparedAtUtc": "2026-10-18T06:33:50.730144+00:00",
+  "rejectedOriginalDrivers": 1,
+  "reservedTasksExecuted": 0,
+  "schemaVersion": "expanded-c2j-text-contract-v1",
+  "scriptHashes": {
+    "adjudicate_c2j_text_cases.py": "ad99f9dab449d3bba96159cc41188065aa38da768aac471805cf43e79cc7e63d",
+    "audit_cobol_references.py": "04033f2be18f62c79ff3633389ea44a90db52ee06a46652321b84f7d641fb206",
+    "audit_natural_c2j_candidates.py": "2bc1518b701f7f56ea58f4b14d74dd745336135908e792414879ff53cf6e4282",
+    "replay_scalar_c2j_witnesses.py": "a93cb91eaed6d728032639f4b2971a483c9d10773e440ac45b94e0fc0660ea74"
+  },
+  "selection": "EXPLORATORY_AFTER_JAVA_SCREENING",
+  "source99Policy": "Quoted alphanumeric MOVE into COMP-2 and Java String API is not an established common numeric contract; observe as artifact evidence only.",
+  "status": "FROZEN_BEFORE_EXECUTION",
+  "taskCount": 7,
+  "tasks": [
+    {
+      "candidateInterfaceEvidence": {
+        "14b": {
+          "expectedMethod": "parseMusic",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "parseMusic"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        },
+        "7b": {
+          "expectedMethod": "parseMusic",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "parseMusic"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        }
+      },
+      "candidateJavaSha256": {
+        "14b": "d1f76ae833621471bde46c530491522c41d6cb062e5fb3a96cf4ffcc78f1629a",
+        "7b": "857d191de708fab430689eca452fdec1e79de58f13a9e8f3f5167c6642ba23a6"
+      },
+      "canonicalJavaSha256": "f7ca7addf3888a694782c7e43fde33d0abd22f4f51a8a50e6f9a40d9f53ebc5e",
+      "cases": [
+        {
+          "arguments": [
+            "o o o o"
+          ],
+          "driverIndex": 1,
+          "driverSha256": "74cde2c2e8c5e3f92fd456f84ecc3474a371158eb35ce0d9279c816c5a6fbe65",
+          "inputMapping": "music",
+          "logicalResultLength": 4,
+          "mappingEligible": true,
+          "outputFile": "PARSE-MUSIC.TXT",
+          "sourceInputLiteral": "o o o o"
+        },
+        {
+          "arguments": [
+            ".| .| .| .|"
+          ],
+          "driverIndex": 2,
+          "driverSha256": "9c0c2b5a8c997c718882abe51a855fabc27688126302f85e6c8fa52ae15cab0f",
+          "inputMapping": "music",
+          "logicalResultLength": 4,
+          "mappingEligible": true,
+          "outputFile": "PARSE-MUSIC.TXT",
+          "sourceInputLiteral": ".| .| .| .|"
+        },
+        {
+          "arguments": [
+            "o| o| .| .| o o o o"
+          ],
+          "driverIndex": 3,
+          "driverSha256": "47d240924f95f1d3b3e1d86650844392156f0a96997204fadc1473412bea6471",
+          "inputMapping": "music",
+          "logicalResultLength": 8,
+          "mappingEligible": true,
+          "outputFile": "PARSE-MUSIC.TXT",
+          "sourceInputLiteral": "o| o| .| .| o o o o"
+        },
+        {
+          "arguments": [
+            "o| .| o| .| o o| o o|"
+          ],
+          "driverIndex": 4,
+          "driverSha256": "6520d88cfc4f3bfcdfcfd9a8696785d4dc2124d0de2dde4626976209aac3e945",
+          "inputMapping": "music",
+          "logicalResultLength": 8,
+          "mappingEligible": true,
+          "outputFile": "PARSE-MUSIC.TXT",
+          "sourceInputLiteral": "o| .| o| .| o o| o o|"
+        }
+      ],
+      "cobolSha256": "ae5711154ed6009a3583809372adda6000643868724784208e9bf9d716fda70e",
+      "contract": {
+        "input": "music",
+        "logicalOutput": "one integer per original grammar token; all remaining serialized slots must be zero",
+        "method": "parseMusic",
+        "program": "PARSE-MUSIC",
+        "result": "integerList",
+        "sourceLayout": "05 L-MUSIC-STRING PIC X(100). 05 RESULT OCCURS 100 TIMES INDEXED BY NI PIC S9(10)."
+      },
+      "probeSha256": "adbb8b8ac43946c3a168c5d01baa793361972240204e047faac31b60a134c034",
+      "rejectedCases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "11ff7a24e3e5bb749cbfd7ae95cc0bf2704b82c37eabaf637af09f139e80209b",
+          "reason": "Empty quoted COBOL literal or non-ASCII/oversize text is outside contract"
+        }
+      ],
+      "taskId": "HumanEval/17"
+    },
+    {
+      "candidateInterfaceEvidence": {
+        "14b": {
+          "expectedMethod": "countUpper",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": false,
+          "observedPublicMethods": [
+            "closestInteger"
+          ],
+          "solutionClassPresent": true,
+          "status": "JOIN_UNRESOLVED"
+        },
+        "7b": {
+          "expectedMethod": "countUpper",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "countUpper"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        }
+      },
+      "candidateJavaSha256": {
+        "14b": "930aaeddc4361904e0a7acdb68fa8008ea821e21c6b84a12ae4e6c880b3d34e1",
+        "7b": "629816f3a2aa5c6d26461a7cd596eac9ee82b6c3096595d5f5f3e7975250ae1b"
+      },
+      "canonicalJavaSha256": "a37c0f3ff41326cdfcd43d5dacbd05a1f65f1a8c75c246269ddef1d7715e4246",
+      "cases": [
+        {
+          "arguments": [
+            "10"
+          ],
+          "driverIndex": 0,
+          "driverSha256": "586c2bbbadbadc90a2da74545d161e900075301849bcbecc51baf5d4fa44c316",
+          "inputMapping": "numericStringUnresolved",
+          "logicalResultLength": null,
+          "mappingEligible": false,
+          "mappingLimitation": "Quoted alphanumeric MOVE into COMP-2 does not establish a shared numeric input; Java API takes String. Any observed difference remains a source/interface artifact, never an admitted semantic defect.",
+          "outputFile": "CLOSEST-INTEGER.TXT",
+          "sourceInputLiteral": "10"
+        },
+        {
+          "arguments": [
+            "14.5"
+          ],
+          "driverIndex": 1,
+          "driverSha256": "a47b2ee826db9476bc9bcd8e47ca3ce2cf45aa8a50b120cc12dbf2c8e959e4cb",
+          "inputMapping": "numericStringUnresolved",
+          "logicalResultLength": null,
+          "mappingEligible": false,
+          "mappingLimitation": "Quoted alphanumeric MOVE into COMP-2 does not establish a shared numeric input; Java API takes String. Any observed difference remains a source/interface artifact, never an admitted semantic defect.",
+          "outputFile": "CLOSEST-INTEGER.TXT",
+          "sourceInputLiteral": "14.5"
+        },
+        {
+          "arguments": [
+            "-15.5"
+          ],
+          "driverIndex": 2,
+          "driverSha256": "0470e6b55b2545e0c97f330e8ba428537f64b1db47611f34aa44cf20459095b3",
+          "inputMapping": "numericStringUnresolved",
+          "logicalResultLength": null,
+          "mappingEligible": false,
+          "mappingLimitation": "Quoted alphanumeric MOVE into COMP-2 does not establish a shared numeric input; Java API takes String. Any observed difference remains a source/interface artifact, never an admitted semantic defect.",
+          "outputFile": "CLOSEST-INTEGER.TXT",
+          "sourceInputLiteral": "-15.5"
+        },
+        {
+          "arguments": [
+            "15.3"
+          ],
+          "driverIndex": 3,
+          "driverSha256": "fd247f04c5b3fae26e7fa4b39df0ae1e3da57de659b23fa0cd67ac87a32763bc",
+          "inputMapping": "numericStringUnresolved",
+          "logicalResultLength": null,
+          "mappingEligible": false,
+          "mappingLimitation": "Quoted alphanumeric MOVE into COMP-2 does not establish a shared numeric input; Java API takes String. Any observed difference remains a source/interface artifact, never an admitted semantic defect.",
+          "outputFile": "CLOSEST-INTEGER.TXT",
+          "sourceInputLiteral": "15.3"
+        },
+        {
+          "arguments": [
+            "0"
+          ],
+          "driverIndex": 4,
+          "driverSha256": "f5aeb7d1fce5bfb6b843dcb8caddeff0ac0897e0aa85c5e3299d190563ed0f0d",
+          "inputMapping": "numericStringUnresolved",
+          "logicalResultLength": null,
+          "mappingEligible": false,
+          "mappingLimitation": "Quoted alphanumeric MOVE into COMP-2 does not establish a shared numeric input; Java API takes String. Any observed difference remains a source/interface artifact, never an admitted semantic defect.",
+          "outputFile": "CLOSEST-INTEGER.TXT",
+          "sourceInputLiteral": "0"
+        }
+      ],
+      "cobolSha256": "72fb6001df595cc9e3fc96badff587c6499f686bf1548a5b236e7365593477b5",
+      "contract": {
+        "input": "numericStringUnresolved",
+        "logicalOutput": "scalar integer, but quoted text MOVE to COMP-2 has unresolved correspondence to Java String API",
+        "method": "countUpper",
+        "program": "CLOSEST-INTEGER",
+        "result": "integer",
+        "sourceLayout": "05 L-VALUE COMP-2. 05 RESULT PIC S9(10)."
+      },
+      "probeSha256": "eb1af3ab36dde9f2dfc48a771d2555fdbb5cad78a19e4fc58047a3fb1a9d62db",
+      "rejectedCases": [],
+      "taskId": "HumanEval/99"
+    },
+    {
+      "candidateInterfaceEvidence": {
+        "14b": {
+          "expectedMethod": "byLength",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "byLength"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        },
+        "7b": {
+          "expectedMethod": "byLength",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "byLength"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        }
+      },
+      "candidateJavaSha256": {
+        "14b": "62ab937de54bfe53cb516f008dcffc6809ec0c1de2e23c0f91dff1196da4c399",
+        "7b": "5852be0bb90a86366b972b46bd4cf4292c660d70e20af5fb4c4442c315113ad6"
+      },
+      "canonicalJavaSha256": "723ead9b8ccc000c1e8cb68f022a44fe4316f76c28705062f82ad1ea416b8c1a",
+      "cases": [
+        {
+          "arguments": [
+            "2,1,1,4,5,8,2,3"
+          ],
+          "driverIndex": 0,
+          "driverSha256": "281189e67d149df1594aa8e4197e7a548eca82d79bdf75ad74b00a0ebb72cb49",
+          "inputMapping": "eightIntegers",
+          "logicalResultLength": 8,
+          "mappingEligible": true,
+          "numericInputs": [
+            [
+              2,
+              1,
+              1,
+              4,
+              5,
+              8,
+              2,
+              3
+            ]
+          ],
+          "outputFile": "BY-LENGTH.TXT"
+        }
+      ],
+      "cobolSha256": "737bfaa8c5422c97db27d04f2b515b076adde9d29a20c65886cec801e5306235",
+      "contract": {
+        "input": "eightIntegers",
+        "logicalOutput": "eight names for eight in-range digits; remaining 92 serialized slots must be blank",
+        "method": "byLength",
+        "program": "BY-LENGTH",
+        "result": "stringList",
+        "sourceLayout": "05 L-ARR OCCURS 8 TIMES INDEXED BY NI PIC S9(10). 05 RESULT OCCURS 100 TIMES INDEXED BY NJ PIC X(100)."
+      },
+      "probeSha256": "36ad530803caec02656f9f7dd28235e3e3b43615386053b577f59532adfad583",
+      "rejectedCases": [],
+      "taskId": "HumanEval/105"
+    },
+    {
+      "candidateInterfaceEvidence": {
+        "14b": {
+          "expectedMethod": "exchange",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "exchange"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        },
+        "7b": {
+          "expectedMethod": "exchange",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "exchange"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        }
+      },
+      "candidateJavaSha256": {
+        "14b": "0e5ac73fbc9f8401b91a6338f0230e083c0cb1b5629e517817898feed007c946",
+        "7b": "24ea71b064b56a1b90884fc23f9543d8dbd558702b23475efa542635b5d683f5"
+      },
+      "canonicalJavaSha256": "a7da67d3b92270ec8b9b774629b39c6b6dba5763ea425f04fbbff950d841f26a",
+      "cases": [
+        {
+          "arguments": [
+            "1,2,3,4",
+            "1,2,3,4"
+          ],
+          "driverIndex": 0,
+          "driverSha256": "a59fa58ecd39801fe681a6342322c2dced8a7f425a18f9b0c79e99ff58c9c835",
+          "inputMapping": "twoFourIntegerLists",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "numericInputs": [
+            [
+              1,
+              2,
+              3,
+              4
+            ],
+            [
+              1,
+              2,
+              3,
+              4
+            ]
+          ],
+          "outputFile": "EXCHANGE.TXT"
+        },
+        {
+          "arguments": [
+            "1,2,3,4",
+            "1,5,3,4"
+          ],
+          "driverIndex": 1,
+          "driverSha256": "86713ec903647618ff3d58ba3ac8ec63a4f2b46611e746a57694978449e16227",
+          "inputMapping": "twoFourIntegerLists",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "numericInputs": [
+            [
+              1,
+              2,
+              3,
+              4
+            ],
+            [
+              1,
+              5,
+              3,
+              4
+            ]
+          ],
+          "outputFile": "EXCHANGE.TXT"
+        },
+        {
+          "arguments": [
+            "1,2,3,4",
+            "2,1,4,3"
+          ],
+          "driverIndex": 2,
+          "driverSha256": "d8247eadd29231d1876bd33e8f8bfc0f8e033112bab373b8a6cf6862ad72d568",
+          "inputMapping": "twoFourIntegerLists",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "numericInputs": [
+            [
+              1,
+              2,
+              3,
+              4
+            ],
+            [
+              2,
+              1,
+              4,
+              3
+            ]
+          ],
+          "outputFile": "EXCHANGE.TXT"
+        }
+      ],
+      "cobolSha256": "7d5a52ed5580520910a889201e506af2c60a5624e6596211950a74b170e3f33f",
+      "contract": {
+        "input": "twoFourIntegerLists",
+        "logicalOutput": "one ASCII text record with COBOL right-space padding removed only",
+        "method": "exchange",
+        "program": "EXCHANGE",
+        "result": "string",
+        "sourceLayout": "05 L-LST1 OCCURS 4 TIMES INDEXED BY NI PIC S9(10). 05 L-LST2 OCCURS 4 TIMES INDEXED BY NJ PIC S9(10). 05 RESULT PIC X(100)."
+      },
+      "probeSha256": "8853633a81d1ff7c76554148ee52079592172b9e55002ed20befd132cc4bbc47",
+      "rejectedCases": [],
+      "taskId": "HumanEval/110"
+    },
+    {
+      "candidateInterfaceEvidence": {
+        "14b": {
+          "expectedMethod": "wordsInSentence",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "wordsInSentence"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        },
+        "7b": {
+          "expectedMethod": "wordsInSentence",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "wordsInSentence"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        }
+      },
+      "candidateJavaSha256": {
+        "14b": "d6439fa4d40e5e46dbcb05bf8c7965194b6212e2ec4bec165931d766c2d09579",
+        "7b": "fce7324466b8e8482d6a8df3ad29c2893e75a1fe8d28d9d3f55f684d60149f2f"
+      },
+      "canonicalJavaSha256": "3608292c2f393c779481ff6d45faa9bde27b54385914fa106e3ab16bc742b11d",
+      "cases": [
+        {
+          "arguments": [
+            "This is a test"
+          ],
+          "driverIndex": 0,
+          "driverSha256": "83fbdc95f4762aaa19979c38329673a9a0275c27678f93b45d297873b6ecae7c",
+          "inputMapping": "sentence",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "outputFile": "WORDS-IN-SENTENCE.TXT",
+          "sourceInputLiteral": "This is a test"
+        },
+        {
+          "arguments": [
+            "lets go for swimming"
+          ],
+          "driverIndex": 1,
+          "driverSha256": "c7ddd92030064510322abb04fbf12dae62ca32c72ef295533c20a8748e6cbb8f",
+          "inputMapping": "sentence",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "outputFile": "WORDS-IN-SENTENCE.TXT",
+          "sourceInputLiteral": "lets go for swimming"
+        },
+        {
+          "arguments": [
+            "there is no place available here"
+          ],
+          "driverIndex": 2,
+          "driverSha256": "f2e22330c5bc0ddc5aa74a22527262ce81dfe21cc983e6920ff087ad758fa984",
+          "inputMapping": "sentence",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "outputFile": "WORDS-IN-SENTENCE.TXT",
+          "sourceInputLiteral": "there is no place available here"
+        },
+        {
+          "arguments": [
+            "Hi I am Hussein"
+          ],
+          "driverIndex": 3,
+          "driverSha256": "ce13fcddf29088095223214194f632990df860a213d518fa7a6b60d9c87fa13a",
+          "inputMapping": "sentence",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "outputFile": "WORDS-IN-SENTENCE.TXT",
+          "sourceInputLiteral": "Hi I am Hussein"
+        },
+        {
+          "arguments": [
+            "go for it"
+          ],
+          "driverIndex": 4,
+          "driverSha256": "ee4ceb34f5b80abe54bb0042be48b6e3cd1868e8de7139bf542d3b321871bf29",
+          "inputMapping": "sentence",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "outputFile": "WORDS-IN-SENTENCE.TXT",
+          "sourceInputLiteral": "go for it"
+        },
+        {
+          "arguments": [
+            "here"
+          ],
+          "driverIndex": 5,
+          "driverSha256": "ebb975f9032e6601518bcbe8db941ffa194d9bbf818814d0316480f5a72624c2",
+          "inputMapping": "sentence",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "outputFile": "WORDS-IN-SENTENCE.TXT",
+          "sourceInputLiteral": "here"
+        },
+        {
+          "arguments": [
+            "here is"
+          ],
+          "driverIndex": 6,
+          "driverSha256": "746fb537f20d96a8a1da10555390e1cb1ae9ea1b69f882da40ff338723aa1f95",
+          "inputMapping": "sentence",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "outputFile": "WORDS-IN-SENTENCE.TXT",
+          "sourceInputLiteral": "here is"
+        }
+      ],
+      "cobolSha256": "53ab5588f293519095987a79ac6fb07d5d25d3c2cd7675827601d9d389bf8b41",
+      "contract": {
+        "input": "sentence",
+        "logicalOutput": "one ASCII text record with COBOL right-space padding removed only",
+        "method": "wordsInSentence",
+        "program": "WORDS-IN-SENTENCE",
+        "result": "string",
+        "sourceLayout": "05 L-SENTENCE PIC X(100). 05 RESULT PIC X(100)."
+      },
+      "probeSha256": "7697034b293d2b17a0938b6e1ee51ade2c970f5c1ac534bc4c04b87bb960ce13",
+      "rejectedCases": [],
+      "taskId": "HumanEval/143"
+    },
+    {
+      "candidateInterfaceEvidence": {
+        "14b": {
+          "expectedMethod": "orderByPoints",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "orderByPoints"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        },
+        "7b": {
+          "expectedMethod": "orderByPoints",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "orderByPoints"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        }
+      },
+      "candidateJavaSha256": {
+        "14b": "a1c77a80ec926c18b4261c66841945ef7a7db85f38ec4c42cc6d029d863d7297",
+        "7b": "06b208fc3a5861c722ace040018017f002d6351a22e85456689e3aed1c94a239"
+      },
+      "canonicalJavaSha256": "8dd9a824c6f233e5addcf720b25c0f8e7c638ba72d606acb8362398a16cabcad",
+      "cases": [
+        {
+          "arguments": [
+            "1,11,-1,-11,-12"
+          ],
+          "driverIndex": 0,
+          "driverSha256": "922548f0c83a1b88b3cdaa8327f3c87af2b2ecfb718e09e1ad31ab894b2fcf4b",
+          "inputMapping": "fiveIntegers",
+          "logicalResultLength": 5,
+          "mappingEligible": true,
+          "numericInputs": [
+            [
+              1,
+              11,
+              -1,
+              -11,
+              -12
+            ]
+          ],
+          "outputFile": "ORDER-BY-POINTS.TXT"
+        },
+        {
+          "arguments": [
+            "1,-11,-32,43,54"
+          ],
+          "driverIndex": 1,
+          "driverSha256": "2efffca567649a8ae53c0d979125f1fc7eb9bfbe310679383c239bd79d27dc56",
+          "inputMapping": "fiveIntegers",
+          "logicalResultLength": 5,
+          "mappingEligible": true,
+          "numericInputs": [
+            [
+              1,
+              -11,
+              -32,
+              43,
+              54
+            ]
+          ],
+          "outputFile": "ORDER-BY-POINTS.TXT"
+        },
+        {
+          "arguments": [
+            "7,8,9,10,11"
+          ],
+          "driverIndex": 2,
+          "driverSha256": "4bf1f2bd09869cb2d963618110e9477b2eb081777d314da30701de2c01fa4681",
+          "inputMapping": "fiveIntegers",
+          "logicalResultLength": 5,
+          "mappingEligible": true,
+          "numericInputs": [
+            [
+              7,
+              8,
+              9,
+              10,
+              11
+            ]
+          ],
+          "outputFile": "ORDER-BY-POINTS.TXT"
+        },
+        {
+          "arguments": [
+            "6,-76,-21,23,4"
+          ],
+          "driverIndex": 3,
+          "driverSha256": "b69e43900aa04218840993caffdbb36ff03636873d7471c20d8ae1b2d0e0ae15",
+          "inputMapping": "fiveIntegers",
+          "logicalResultLength": 5,
+          "mappingEligible": true,
+          "numericInputs": [
+            [
+              6,
+              -76,
+              -21,
+              23,
+              4
+            ]
+          ],
+          "outputFile": "ORDER-BY-POINTS.TXT"
+        }
+      ],
+      "cobolSha256": "f49dd2b960d7b7afb73e82b2c0737ca0355a05f7a7da11c44730c055f673fc22",
+      "contract": {
+        "driverLayout": "05 L-NUMS OCCURS 5 TIMES INDEXED BY NI PIC S9(10). 05 RESULT OCCURS 100 TIMES INDEXED BY NJ PIC S9(10).",
+        "input": "fiveIntegers",
+        "logicalOutput": "source declares five output elements; remaining 95 driver slots must be zero",
+        "method": "orderByPoints",
+        "program": "ORDER-BY-POINTS",
+        "result": "integerList",
+        "sourceLayout": "05 L-NUMS OCCURS 5 TIMES INDEXED BY NI PIC S9(10). 05 RESULT OCCURS 5 TIMES INDEXED BY NJ PIC S9(10)."
+      },
+      "probeSha256": "2d9e6e33e032c09ea306b1b54e815e1442799be8a17d45485c2966f010801a10",
+      "rejectedCases": [],
+      "taskId": "HumanEval/145"
+    },
+    {
+      "candidateInterfaceEvidence": {
+        "14b": {
+          "expectedMethod": "doubleTheDifference",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "doubleTheDifference"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        },
+        "7b": {
+          "expectedMethod": "doubleTheDifference",
+          "independentTaskIdPresentInOutput": false,
+          "methodAgreement": true,
+          "observedPublicMethods": [
+            "doubleTheDifference"
+          ],
+          "solutionClassPresent": true,
+          "status": "ORDINAL_WITH_METHOD_CLASS_AGREEMENT"
+        }
+      },
+      "candidateJavaSha256": {
+        "14b": "0748f1330c0e6774a6c8664f214c0aa0adad479a2d47e066484e23f73e1785d0",
+        "7b": "49e33b9f7c9b78f5ddf7c5fcd9629d163bdc71b02a6a7895bd47b79894a1571a"
+      },
+      "canonicalJavaSha256": "5a8dbe9473a8ec664d55c3918ee6d4a9804979db281f03fba02cc5f2128adc00",
+      "cases": [
+        {
+          "arguments": [
+            "0.1,0.2,0.3"
+          ],
+          "driverIndex": 0,
+          "driverSha256": "2a078ef3b1488a368d3f97a6831bcc5351f787bb7c7732c352e026bfa1882639",
+          "inputMapping": "threeDoubles",
+          "javaElementRuntimeType": "java.lang.Double for every COMP-2 field, regardless literal spelling",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "numericInputs": [
+            [
+              0.1,
+              0.2,
+              0.3
+            ]
+          ],
+          "outputFile": "DOUBLE-THE-DIFFERENCE.TXT",
+          "representationLimitation": "The supplied canonical Java uses Integer runtime tags despite COBOL COMP-2 inputs. A reference disagreement is quarantined as a representation-contract conflict."
+        },
+        {
+          "arguments": [
+            "-10,-20,-30"
+          ],
+          "driverIndex": 1,
+          "driverSha256": "61b950684af33a6a7e10f153e2c8783a1784fdb476ba4567b92fc387b2259aff",
+          "inputMapping": "threeDoubles",
+          "javaElementRuntimeType": "java.lang.Double for every COMP-2 field, regardless literal spelling",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "numericInputs": [
+            [
+              -10.0,
+              -20.0,
+              -30.0
+            ]
+          ],
+          "outputFile": "DOUBLE-THE-DIFFERENCE.TXT",
+          "representationLimitation": "The supplied canonical Java uses Integer runtime tags despite COBOL COMP-2 inputs. A reference disagreement is quarantined as a representation-contract conflict."
+        },
+        {
+          "arguments": [
+            "-1,-2,8"
+          ],
+          "driverIndex": 2,
+          "driverSha256": "42a44fd5baa7c862f6cabd49ecab453edccbf222166a450c7aef5a0cbfc468d2",
+          "inputMapping": "threeDoubles",
+          "javaElementRuntimeType": "java.lang.Double for every COMP-2 field, regardless literal spelling",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "numericInputs": [
+            [
+              -1.0,
+              -2.0,
+              8.0
+            ]
+          ],
+          "outputFile": "DOUBLE-THE-DIFFERENCE.TXT",
+          "representationLimitation": "The supplied canonical Java uses Integer runtime tags despite COBOL COMP-2 inputs. A reference disagreement is quarantined as a representation-contract conflict."
+        },
+        {
+          "arguments": [
+            "0.2,3,5"
+          ],
+          "driverIndex": 3,
+          "driverSha256": "5054e856eb66853518aade8b7763dd6e6f213bea55a12b9cbbbec5fb8da5296f",
+          "inputMapping": "threeDoubles",
+          "javaElementRuntimeType": "java.lang.Double for every COMP-2 field, regardless literal spelling",
+          "logicalResultLength": null,
+          "mappingEligible": true,
+          "numericInputs": [
+            [
+              0.2,
+              3.0,
+              5.0
+            ]
+          ],
+          "outputFile": "DOUBLE-THE-DIFFERENCE.TXT",
+          "representationLimitation": "The supplied canonical Java uses Integer runtime tags despite COBOL COMP-2 inputs. A reference disagreement is quarantined as a representation-contract conflict."
+        }
+      ],
+      "cobolSha256": "59662436793be4e34f4dcc5f7cce66337482b938935ff35f2a14f0888d5a1027",
+      "contract": {
+        "input": "threeDoubles",
+        "logicalOutput": "scalar integer; every COMP-2 input maps to Java Double, never inferred Integer boxing",
+        "method": "doubleTheDifference",
+        "program": "DOUBLE-THE-DIFFERENCE",
+        "result": "integer",
+        "sourceLayout": "05 L-LST OCCURS 3 TIMES INDEXED BY NI COMP-2. 05 RESULT PIC S9(10)."
+      },
+      "probeSha256": "d5589bc1cf10c0f60f4af54de4267332013d878fe2bce8e50c6598df19ef94c8",
+      "rejectedCases": [],
+      "taskId": "HumanEval/151"
+    }
+  ]
+}

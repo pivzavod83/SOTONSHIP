@@ -1,0 +1,1382 @@
+{
+  "schemaVersion": "expanded-numeric-b-contract-v1",
+  "status": "FROZEN_BEFORE_NEW_EXECUTION",
+  "preparedAtUtc": "2026-10-18T06:33:49.954991+00:00",
+  "selection": "All eight assigned unresolved development screen-flagged families, selected after earlier screening",
+  "artifacts": {
+    "data": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/data/COBOL-JavaTrans.jsonl",
+      "sha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+      "bytes": 1857161
+    },
+    "7b": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/output/translation_COBOL_to_Java_COBOL-Coder_7b.jsonl",
+      "sha256": "f2a640f57159d257de6d6c3fdbd5af970ef447ab4fb24a72b928e7f77b76dba6",
+      "bytes": 102732
+    },
+    "14b": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/output/translation_COBOL_to_Java_COBOL-Coder_14b.jsonl",
+      "sha256": "5282a929afc7b0e0775f2f2109805a19052f8885e8143d81f7736b24906f4c41",
+      "bytes": 115855
+    },
+    "license": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/LICENSE",
+      "sha256": "50e6751797c50dedd75ef1b8a0d9e42f5f8472e9fbce91f34718e9f97b0c780a",
+      "bytes": 11324
+    },
+    "generator": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/generate_cobol_javatrans.py",
+      "sha256": "ae23e080366a54bbdf427acd572d67091ed3ec68dc7548ac25e5d7a2bd548497",
+      "bytes": 7272
+    },
+    "evaluator": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/evaluate_translation_c2j.py",
+      "sha256": "c188f079d7f2152720fd8695328a26f6e844680dc8bf7a47bfbc314c1df0a4b8",
+      "bytes": 5365
+    },
+    "utils": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/utils.py",
+      "sha256": "273eb153d1045b26d104f0e73c4dcabf5b2f3a5cf020187223863b87019d85b8",
+      "bytes": 7915
+    }
+  },
+  "partitionSha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+  "scriptHashes": {
+    "adjudicate_c2j_numeric_arrays_b.py": "5e5547062b050665849e2dc327f0e360d5d6728b96eb5611d72927e68617dfba",
+    "audit_natural_c2j_candidates.py": "2bc1518b701f7f56ea58f4b14d74dd745336135908e792414879ff53cf6e4282",
+    "replay_scalar_c2j_witnesses.py": "a93cb91eaed6d728032639f4b2971a483c9d10773e440ac45b94e0fc0660ea74",
+    "audit_cobol_references.py": "04033f2be18f62c79ff3633389ea44a90db52ee06a46652321b84f7d641fb206",
+    "test_adjudicate_c2j_numeric_arrays_b.py": "88c5a92aadb9fac975936f968cd573c088f2d0bbf5f36d59e1313d633e3cd0e5"
+  },
+  "tasks": [
+    {
+      "taskId": "HumanEval/92",
+      "rowPosition": 81,
+      "contract": {
+        "method": "anyInt",
+        "fields": [
+          [
+            "L-X",
+            "COMP-2",
+            1
+          ],
+          [
+            "L-Y",
+            "COMP-2",
+            1
+          ],
+          [
+            "L-Z",
+            "COMP-2",
+            1
+          ]
+        ],
+        "output": "boolean",
+        "contract": "Three COBOL COMP-2 binary64 values map homogeneously to Java Double Objects. Integer literal spelling cannot recover a Java Integer type erased by COMP-2 storage."
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "48f2725a369067c492be0927025f04d9183284c673e972de642b043d8a3a3882",
+          "arguments": [
+            2.0,
+            3.0,
+            1.0
+          ],
+          "cobolStoredInputs": [
+            2.0,
+            3.0,
+            1.0
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ANY-INT.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "d3659e7e06fe5d3f85a9cebdcc3bbb1e44c0fbd596b31699fa13d6cea4f2ca05",
+          "arguments": [
+            2.5,
+            2.0,
+            3.0
+          ],
+          "cobolStoredInputs": [
+            2.5,
+            2.0,
+            3.0
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ANY-INT.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "acd4a08b8349ee9adbc83261b07d56cf412f3eb8e9ed9ac7f0bfe7c05a820a3f",
+          "arguments": [
+            1.5,
+            5.0,
+            3.5
+          ],
+          "cobolStoredInputs": [
+            1.5,
+            5.0,
+            3.5
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ANY-INT.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 3,
+          "driverSha256": "d02065621f59f8c08a4518ed50f5fbe0a3c96cf4183afe35e34c0fb7f8b21baf",
+          "arguments": [
+            2.0,
+            6.0,
+            2.0
+          ],
+          "cobolStoredInputs": [
+            2.0,
+            6.0,
+            2.0
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ANY-INT.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 4,
+          "driverSha256": "9b291bbc106f3f802202b16b3c63723544226e7d26460dc79d92c30231ed335f",
+          "arguments": [
+            4.0,
+            2.0,
+            2.0
+          ],
+          "cobolStoredInputs": [
+            4.0,
+            2.0,
+            2.0
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ANY-INT.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 5,
+          "driverSha256": "bd5efe71814403a4462e925abd463142414cc86a200763bbda68237b50680f91",
+          "arguments": [
+            2.2,
+            2.2,
+            2.2
+          ],
+          "cobolStoredInputs": [
+            2.2,
+            2.2,
+            2.2
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ANY-INT.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 6,
+          "driverSha256": "f973b26aca4e340d9c4d51888076007f58b8b7c1ec01256788aeb77f11363c1a",
+          "arguments": [
+            -4.0,
+            6.0,
+            2.0
+          ],
+          "cobolStoredInputs": [
+            -4.0,
+            6.0,
+            2.0
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ANY-INT.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 7,
+          "driverSha256": "74365b5b5566697588150c1557ff084457b3a3be8c64019fe6fab85ca6709740",
+          "arguments": [
+            2.0,
+            1.0,
+            1.0
+          ],
+          "cobolStoredInputs": [
+            2.0,
+            1.0,
+            1.0
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ANY-INT.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 8,
+          "driverSha256": "a0be5c457ca6d8ab54441825c82a6d08bcd08a50720415dc382ddd4ddb8beade",
+          "arguments": [
+            3.0,
+            4.0,
+            7.0
+          ],
+          "cobolStoredInputs": [
+            3.0,
+            4.0,
+            7.0
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ANY-INT.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 9,
+          "driverSha256": "d614134339481da43507a3126b3649818d41414b9b8b5fbe8085a7de1ba7ba4d",
+          "arguments": [
+            3.0,
+            4.0,
+            7.0
+          ],
+          "cobolStoredInputs": [
+            3.0,
+            4.0,
+            7.0
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ANY-INT.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        }
+      ],
+      "excludedDrivers": [],
+      "sourceHashes": {
+        "cobol": "c9946c5b4ff1bb43fa17e52a1c69cd5ab26f7c5193bdb145dd951c9fdc7ed2cb",
+        "canonical": "dec3815274e9e64df954a953a3fc52ab9afc9a69cbe34c5711cd9d2ce7abde02",
+        "7b": "2d88035951feef8ede83e18e283eea9519b0852021a627afbec2d75e6d5786e4",
+        "14b": "52104978acc6396b985b358eb99803e9b514a0cec46926ec0058b507dde2e4ab"
+      },
+      "probeSha256": "e581fbe6136aa29a2ec478097785ac71543a400592cb88c9c1198a7d918beb99"
+    },
+    {
+      "taskId": "HumanEval/103",
+      "rowPosition": 91,
+      "contract": {
+        "method": "roundedAvg",
+        "fields": [
+          [
+            "L-N",
+            "S9(10)",
+            1
+          ],
+          [
+            "L-M",
+            "S9(10)",
+            1
+          ]
+        ],
+        "output": "text100",
+        "contract": "Two signed integer inputs; Java Object return is observed as String.valueOf and represented as a PIC X(100) text field. Source input overwrites and malformed binary formatting remain unchanged."
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "1324c19c17f5e3ba48364c36d90e37fc58c9dcfb1a2343eeb7c2916544e44aa1",
+          "arguments": [
+            1,
+            5
+          ],
+          "cobolStoredInputs": [
+            1,
+            5
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ROUNDED-AVG.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "aaf9198782ead3de94d997c498443bda32232f851f2adbea720b08ca5db0a0ef",
+          "arguments": [
+            7,
+            13
+          ],
+          "cobolStoredInputs": [
+            7,
+            13
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ROUNDED-AVG.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "1671e84f985baa00c75f9600ca93e3ef4cc6fd9a71fcfb5537dc8a20d8438b8f",
+          "arguments": [
+            964,
+            977
+          ],
+          "cobolStoredInputs": [
+            964,
+            977
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ROUNDED-AVG.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 3,
+          "driverSha256": "047fa89da6a2f9b822d4d323080bb5574b471cbeb839af667be57815bf9f1e6c",
+          "arguments": [
+            996,
+            997
+          ],
+          "cobolStoredInputs": [
+            996,
+            997
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ROUNDED-AVG.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 4,
+          "driverSha256": "38d07f36b31c0c4831ee770f69ddeef6fca7419e7607066119db67345740d1a4",
+          "arguments": [
+            560,
+            851
+          ],
+          "cobolStoredInputs": [
+            560,
+            851
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ROUNDED-AVG.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 5,
+          "driverSha256": "9795b13d74ccb42bf6a122d1c68830c165b7178e555591f6b7f56d177884cc82",
+          "arguments": [
+            185,
+            546
+          ],
+          "cobolStoredInputs": [
+            185,
+            546
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ROUNDED-AVG.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 6,
+          "driverSha256": "5b5911c87de120e76cf6b8cede42e00ba834fa1aabe59207da6bafb0df7af016",
+          "arguments": [
+            362,
+            496
+          ],
+          "cobolStoredInputs": [
+            362,
+            496
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ROUNDED-AVG.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 7,
+          "driverSha256": "bfa8efc47645dc6211c5ad37cad57e0bf6b3027e66bb59e853dea9e77cbc0221",
+          "arguments": [
+            350,
+            902
+          ],
+          "cobolStoredInputs": [
+            350,
+            902
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ROUNDED-AVG.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 8,
+          "driverSha256": "87f0797358cb7baf2f4cf13ae44dfeae23bba7f338d1944ea8c5a60fc33441ea",
+          "arguments": [
+            197,
+            233
+          ],
+          "cobolStoredInputs": [
+            197,
+            233
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ROUNDED-AVG.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 9,
+          "driverSha256": "6c7ea484709decf310ffd71b4ca9f8716836079bed563ef47ca7329509270f00",
+          "arguments": [
+            7,
+            5
+          ],
+          "cobolStoredInputs": [
+            7,
+            5
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ROUNDED-AVG.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 10,
+          "driverSha256": "6d3d1cd16ad19b15f2e9db8a6276f68c750bffb0e7829cad988bccc139905593",
+          "arguments": [
+            5,
+            1
+          ],
+          "cobolStoredInputs": [
+            5,
+            1
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ROUNDED-AVG.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 11,
+          "driverSha256": "45dfe6951f0456e52f45aebe56f445452922790810a13f75cc094c590010948d",
+          "arguments": [
+            5,
+            5
+          ],
+          "cobolStoredInputs": [
+            5,
+            5
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "ROUNDED-AVG.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        }
+      ],
+      "excludedDrivers": [],
+      "sourceHashes": {
+        "cobol": "e1d5db91787e1a9ad2a9d49717dd7beb594375c99385095eba57ab3a58f17c07",
+        "canonical": "88edf8babc825cd704f4f49951e3632a8627fb847c24cabf9049d9a52f4f7b58",
+        "7b": "cf0f887a3fd25a9bcffad5881a9601e2cc0a4fd0f3248ddde469b9f88f8cf768",
+        "14b": "7d6dd64e3aa4c310561d5bd53f8f372e125a08181c30816f3d4037660eceaf7f"
+      },
+      "probeSha256": "48593b9e1505e8e0771d9b49bfa3bce1a0750707bdab9eb0fcb61454e0be14b9"
+    },
+    {
+      "taskId": "HumanEval/113",
+      "rowPosition": 99,
+      "contract": {
+        "method": "oddCount",
+        "fields": [
+          [
+            "L-LST",
+            "X(2)",
+            2
+          ]
+        ],
+        "output": "two-text100",
+        "contract": "Exactly two PIC X(2) input cells: original literal is truncated to width2, Java receives the truncated logical string, COBOL right-space-pads storage. Exactly two result cells are observable because the source loop writes NI=1..2. Full 100-character output cells are compared including internal padding; the other98 emitted storage records must remain blank. No expected-answer length is used."
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "2545aa47402b16938f0dec3a59092f68ed33ec0e6a91ee724bad1898658fa04b",
+          "arguments": [
+            [
+              "3",
+              "11"
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              "3 ",
+              "11"
+            ]
+          ],
+          "sourceDefinedInputTruncations": [
+            {
+              "field": "L-LST",
+              "index": 2,
+              "originalLiteral": "1111111",
+              "storedPrefix": "11",
+              "width": 2
+            }
+          ],
+          "outputFile": "ODD-COUNT.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": 2
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "61c3ec8896b0d60653061269675084022bbb9698bef6b6b8281d213428938cc4",
+          "arguments": [
+            [
+              "27",
+              "13"
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              "27",
+              "13"
+            ]
+          ],
+          "sourceDefinedInputTruncations": [
+            {
+              "field": "L-LST",
+              "index": 1,
+              "originalLiteral": "271",
+              "storedPrefix": "27",
+              "width": 2
+            },
+            {
+              "field": "L-LST",
+              "index": 2,
+              "originalLiteral": "137",
+              "storedPrefix": "13",
+              "width": 2
+            }
+          ],
+          "outputFile": "ODD-COUNT.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": 2
+        }
+      ],
+      "excludedDrivers": [],
+      "sourceHashes": {
+        "cobol": "41b39898cadeba90128616f5c516013492761bac4707976d652d2748d5d80457",
+        "canonical": "06cf825f1ac46181409aaaacb7c0d02acce50557af6593e34705629a11d4a111",
+        "7b": "8b170e345d4f3ae979933a743a19842325b2ef93bb8c82e53d42618eac718038",
+        "14b": "af9c7c6d937af191e89f217b1004fd48a014d02c04580781ed6b8b659269e26e"
+      },
+      "probeSha256": "e8458fb210f384d80bb01e5b6c7756f9f9a0f6317013fd269790f4f5f8b7ff50"
+    },
+    {
+      "taskId": "HumanEval/119",
+      "rowPosition": 104,
+      "contract": {
+        "method": "matchParens",
+        "fields": [
+          [
+            "L-LST",
+            "X(100)",
+            2
+          ]
+        ],
+        "output": "text100",
+        "contract": "Exactly two nonempty parentheses-only logical strings, each<=100 and combined<=100; COBOL right-pads PIC X(100), Java receives the same logical strings. Source concatenation and execution order remain unchanged."
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "5a2ccc2cd75bd51d4da6dad0ef3f01a9054f4d58851d1d4b96c6b4500ebbf2f2",
+          "arguments": [
+            [
+              "()(",
+              ")"
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              "()(                                                                                                 ",
+              ")                                                                                                   "
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MATCH-PARENS.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "4552c94be5d3230b1efad0e5f30049173989b58d025c5e52a4b6625d1199c9cc",
+          "arguments": [
+            [
+              ")",
+              ")"
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              ")                                                                                                   ",
+              ")                                                                                                   "
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MATCH-PARENS.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "598d45e187ad5491a13b7696fba0429c3860d31a9a3086cf66c022d395c96d19",
+          "arguments": [
+            [
+              "(()(())",
+              "())())"
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              "(()(())                                                                                             ",
+              "())())                                                                                              "
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MATCH-PARENS.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 3,
+          "driverSha256": "27176f62b96ba4af3cb02eb542ffe1bef7a2b74002ee4307caf0dc5be01d7b5b",
+          "arguments": [
+            [
+              ")())",
+              "(()()("
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              ")())                                                                                                ",
+              "(()()(                                                                                              "
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MATCH-PARENS.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 4,
+          "driverSha256": "48989b99c153acca76c04225d77612d15667462fb67ffe39d950ed8cce8f867e",
+          "arguments": [
+            [
+              "(())))",
+              "(()())(("
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              "(())))                                                                                              ",
+              "(()())((                                                                                            "
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MATCH-PARENS.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 5,
+          "driverSha256": "50ee467a761a18e3e57bc0dde5e8486f35e010e9dab92c6db137a8435be72963",
+          "arguments": [
+            [
+              "()",
+              "())"
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              "()                                                                                                  ",
+              "())                                                                                                 "
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MATCH-PARENS.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 6,
+          "driverSha256": "1effd9e03a0c7ad1fd3c88b94d90be522498f682bee4f7470a545bccb2959ca5",
+          "arguments": [
+            [
+              "(()(",
+              "()))()"
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              "(()(                                                                                                ",
+              "()))()                                                                                              "
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MATCH-PARENS.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 7,
+          "driverSha256": "94493a54ccfaa4f705339311c0e6caeb6aefe28de277aa7bbc781ebed9c1b7fd",
+          "arguments": [
+            [
+              "((((",
+              "((())"
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              "((((                                                                                                ",
+              "((())                                                                                               "
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MATCH-PARENS.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 8,
+          "driverSha256": "d4a325415b5b3ae8bd3ec1ff8a3cfdb4ecd3446cc638811954cd920aa237406c",
+          "arguments": [
+            [
+              ")(()",
+              "(()("
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              ")(()                                                                                                ",
+              "(()(                                                                                                "
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MATCH-PARENS.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 9,
+          "driverSha256": "b173973bb1d2e7bbf9a6db0edc99cf62cb9fea8c35c759e09c883f0da94739ea",
+          "arguments": [
+            [
+              ")(",
+              ")("
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              ")(                                                                                                  ",
+              ")(                                                                                                  "
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MATCH-PARENS.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 10,
+          "driverSha256": "64626a8ca5a7931fd6bb323a268e3aa26eff29fbdfbae0a63be488e368c3d723",
+          "arguments": [
+            [
+              "(",
+              ")"
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              "(                                                                                                   ",
+              ")                                                                                                   "
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MATCH-PARENS.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 11,
+          "driverSha256": "61039db722e2bbb820d6ea39759c49ace3674f33385bfb2bfbba831fb640a59b",
+          "arguments": [
+            [
+              ")",
+              "("
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              ")                                                                                                   ",
+              "(                                                                                                   "
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MATCH-PARENS.TXT",
+          "outputPic": "X(100)",
+          "logicalResultLength": null
+        }
+      ],
+      "excludedDrivers": [],
+      "sourceHashes": {
+        "cobol": "1a314331bef196c197c841584ba5dba3a6d18d94ca875b450df129fafb526f94",
+        "canonical": "6e27c3ee99331abcc1f0015cc96905b78be29466d535de9057a93360fc327132",
+        "7b": "e8ef5a0d76623f8b09ad45258b239997257128290f61deaa43efacfa86e10dbc",
+        "14b": "a026a10e68ab331f503a6a6ebb5ea0111e3b63f145fbb368bd0a960c71ddb175"
+      },
+      "probeSha256": "3ebf663aaa5a9f0e5c7ff06c0a62b7ce926539e5e51af2303156f96600bcc664"
+    },
+    {
+      "taskId": "HumanEval/120",
+      "rowPosition": 105,
+      "contract": {
+        "method": "maximum",
+        "fields": [
+          [
+            "L-ARR",
+            "S9(10)",
+            3
+          ],
+          [
+            "L-K",
+            "S9(10)",
+            1
+          ]
+        ],
+        "output": "k-integers",
+        "contract": "Exactly3 signed integers within[-1000,1000] and input k in0..3. Observable list length is input k, not expected-answer length. Java length must equal k; all100 serialized COBOL records are retained and the unused100-k records checked for zero."
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "f85eebe8c70811f6f0c50dab2997b0542d831e60e454b20a9fb3f68ef7d72996",
+          "arguments": [
+            [
+              -3,
+              -4,
+              5
+            ],
+            3
+          ],
+          "cobolStoredInputs": [
+            [
+              -3,
+              -4,
+              5
+            ],
+            3
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MAXIMUM.TXT",
+          "outputPic": "S9(10) SIGN LEADING",
+          "logicalResultLength": 3
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "51c1a69d402ddaa91ab800c57b658adfd66bc5899140cb89215e926add6b8068",
+          "arguments": [
+            [
+              4,
+              -4,
+              4
+            ],
+            2
+          ],
+          "cobolStoredInputs": [
+            [
+              4,
+              -4,
+              4
+            ],
+            2
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MAXIMUM.TXT",
+          "outputPic": "S9(10) SIGN LEADING",
+          "logicalResultLength": 2
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "301ce85ffd0f9a0528cc046f8aa86eaf17e84f8d44041fa52ec5761353be9f10",
+          "arguments": [
+            [
+              1,
+              2,
+              3
+            ],
+            1
+          ],
+          "cobolStoredInputs": [
+            [
+              1,
+              2,
+              3
+            ],
+            1
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "MAXIMUM.TXT",
+          "outputPic": "S9(10) SIGN LEADING",
+          "logicalResultLength": 1
+        }
+      ],
+      "excludedDrivers": [],
+      "sourceHashes": {
+        "cobol": "98a91965742634eeb97d34e904f2fdfa6aad92e794303b1e0a6a06ec659606f0",
+        "canonical": "fad3bd836bc7c6e533b96673edf449246c6e4b7c5158733cbad9d176c067ccc6",
+        "7b": "7dcc694ac51591bef0efa2f029db58358e8ad2ad263222d535ce8971eef3e002",
+        "14b": "cdc372ded69e3f565078f881a7bd2b233f7968d7abf591d3711b0fff71729052"
+      },
+      "probeSha256": "caaceb56a1fcfccab4ad7d93b094ad1702518f7ad87e4520b0a882440258de7c"
+    },
+    {
+      "taskId": "HumanEval/126",
+      "rowPosition": 110,
+      "contract": {
+        "method": "isSorted",
+        "fields": [
+          [
+            "L-LST",
+            "S9(10)",
+            5
+          ]
+        ],
+        "output": "boolean",
+        "contract": "Exactly5 nonnegative signed-display integers within Java int range. Source duplicate/order policy is preserved even when it conflicts with canonical Java's benchmark policy."
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "f532e18aaf055f1caf674a4d08c3de28d332d7a7c1ccd7388764d58e19c4c05b",
+          "arguments": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-SORTED.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "62e98959866ac52a8e0fd97d7b17ad246e58e68008c4b819728f6cb0cf5b7ffd",
+          "arguments": [
+            [
+              1,
+              3,
+              2,
+              4,
+              5
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              1,
+              3,
+              2,
+              4,
+              5
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-SORTED.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "dcf0e64cd0ef4bc5d8e7db95768fac6582b9788f50b640cd40e01fa8184227b0",
+          "arguments": [
+            [
+              1,
+              3,
+              4,
+              5,
+              6
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              1,
+              3,
+              4,
+              5,
+              6
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-SORTED.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 3,
+          "driverSha256": "a60b8169ae879584bdfd9b2faab2e08046234bb59ec7f6f25e7ee2c8df3e2916",
+          "arguments": [
+            [
+              1,
+              1,
+              3,
+              4,
+              5
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              1,
+              1,
+              3,
+              4,
+              5
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-SORTED.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        }
+      ],
+      "excludedDrivers": [],
+      "sourceHashes": {
+        "cobol": "a6e5cd0858d7070583078ae4bce2f809369e0049d6a4b5cf4954da5cdeb77735",
+        "canonical": "7a97e92b14e19abd2bcdf0a2d25b21cc02ac83a6517bb5341d8039d1eb4eb585",
+        "7b": "bf3d1f35772257b2b5479b45c6a8fb9bed2c806174a87e640f40e59589d1af4a",
+        "14b": "f4113a80a70cc64cd5a8444b38996857ce4514f8458124d977de5de90eadebb0"
+      },
+      "probeSha256": "597f64c6cd9dc201c62c73ae1ce24ecf2493e8238567edc322887ad3cd2c97b0"
+    },
+    {
+      "taskId": "HumanEval/128",
+      "rowPosition": 112,
+      "contract": {
+        "method": "prodSigns",
+        "fields": [
+          [
+            "L-ARR",
+            "S9(10)",
+            4
+          ]
+        ],
+        "output": "integer",
+        "contract": "Exactly4 signed integers bounded[-1000,1000]. Java Optional<Integer> is unwrapped; empty Optional remains null and cannot silently equal a COBOL integer. Empty arrays are outside the COBOL fixed-size interface."
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "9fc67aeb380c6a14bbae5813f384e15d666477e849d83ea344b3784953bd6f6e",
+          "arguments": [
+            [
+              1,
+              2,
+              2,
+              -4
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              1,
+              2,
+              2,
+              -4
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "PROD-SIGNS.TXT",
+          "outputPic": "S9(10) SIGN LEADING",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "3c1c7f2f81eaed3c92ec07d8d06b919394431611291ef5970698542327ca91c9",
+          "arguments": [
+            [
+              -1,
+              1,
+              -1,
+              1
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              -1,
+              1,
+              -1,
+              1
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "PROD-SIGNS.TXT",
+          "outputPic": "S9(10) SIGN LEADING",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "43a78636f7d0ce38e05bc7c9b986ef080969c067258a266c021a2c3b4dbb20a4",
+          "arguments": [
+            [
+              -1,
+              1,
+              1,
+              1
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              -1,
+              1,
+              1,
+              1
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "PROD-SIGNS.TXT",
+          "outputPic": "S9(10) SIGN LEADING",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 3,
+          "driverSha256": "9fc750c35affd2f30319d6c3f0f6cfd6944794815d8b5ae410d0541b55eb35b1",
+          "arguments": [
+            [
+              -1,
+              1,
+              1,
+              0
+            ]
+          ],
+          "cobolStoredInputs": [
+            [
+              -1,
+              1,
+              1,
+              0
+            ]
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "PROD-SIGNS.TXT",
+          "outputPic": "S9(10) SIGN LEADING",
+          "logicalResultLength": null
+        }
+      ],
+      "excludedDrivers": [],
+      "sourceHashes": {
+        "cobol": "0fd8c286f1c47732172472480a0cbe9c155c86220e09a4619cfb87a78fcf03f7",
+        "canonical": "231edb668d1a4632191f596c9f42ede682e3afbf0765c400eee75ec498f17056",
+        "7b": "8cc4f49cfe1dcd162fdbe82f9466a19da19fdbaf6f06cd72996a25b03af957bb",
+        "14b": "207e5c8eb3549c6801810ff27401fb022646aaa43faead6e3cc933ff2852377e"
+      },
+      "probeSha256": "be0b9f875e3168b99f69bab7e9dad907561b68ff6e9899307c03aa994e65c550"
+    },
+    {
+      "taskId": "HumanEval/134",
+      "rowPosition": 117,
+      "contract": {
+        "method": "checkIfLastCharIsALetter",
+        "fields": [
+          [
+            "L-TXT",
+            "X(100)",
+            1
+          ]
+        ],
+        "output": "boolean",
+        "contract": "One original ASCII logical string length0..100, with literal trailing spaces preserved. COBOL right-pads PIC X(100); Java receives the logical literal. COBOL's trailing-space scan remains authoritative and reference-policy conflicts are reported explicitly."
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "dbcb6d80d887cf91aeacac5f110e88077d9db5e7ec59d5219914dc70fc478607",
+          "arguments": [
+            "apple"
+          ],
+          "cobolStoredInputs": [
+            "apple                                                                                               "
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-LAST-CHAR-LETTER.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "9e8fbf83c26c59de2aed7bbb45c825e5e1efe77215e9070a4a61e5e5c0a2868c",
+          "arguments": [
+            "apple pi e"
+          ],
+          "cobolStoredInputs": [
+            "apple pi e                                                                                          "
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-LAST-CHAR-LETTER.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "25ac41f7e0beccd6a281b7005e4e080ed24ef8807312b11c333565cc75c6493c",
+          "arguments": [
+            "eeeee"
+          ],
+          "cobolStoredInputs": [
+            "eeeee                                                                                               "
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-LAST-CHAR-LETTER.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 3,
+          "driverSha256": "bc1f6edb95b118ebdfe4e6bd8d9198a259319ccdb4aa37bfab0e3d94d96818bf",
+          "arguments": [
+            "A"
+          ],
+          "cobolStoredInputs": [
+            "A                                                                                                   "
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-LAST-CHAR-LETTER.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 4,
+          "driverSha256": "7eb5bfe2e9de27a19c0311a7ee23a9e422337b71fa778d727d84b5178837901d",
+          "arguments": [
+            "Pumpkin pie "
+          ],
+          "cobolStoredInputs": [
+            "Pumpkin pie                                                                                         "
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-LAST-CHAR-LETTER.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 5,
+          "driverSha256": "0b0f394738bc7ccb71ee207b222d802f3d7ace705a3f2235a47b9d88b1ba68e2",
+          "arguments": [
+            "Pumpkin pie 1"
+          ],
+          "cobolStoredInputs": [
+            "Pumpkin pie 1                                                                                       "
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-LAST-CHAR-LETTER.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 6,
+          "driverSha256": "352c8a188cddfd7dcff05c20b5b3acfdb236bf4800a71e4c58af65d64e90d8ac",
+          "arguments": [
+            ""
+          ],
+          "cobolStoredInputs": [
+            "                                                                                                    "
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-LAST-CHAR-LETTER.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 7,
+          "driverSha256": "87a0b9eebacd85b84ecbfe40bdd02f2012932dc44254be9405427519d76dafa3",
+          "arguments": [
+            "eeeee e "
+          ],
+          "cobolStoredInputs": [
+            "eeeee e                                                                                             "
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-LAST-CHAR-LETTER.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 8,
+          "driverSha256": "2bb3eebd644d84423e688feb4aaef97468aadc03609163af4bc60a1946decea5",
+          "arguments": [
+            "apple pie"
+          ],
+          "cobolStoredInputs": [
+            "apple pie                                                                                           "
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-LAST-CHAR-LETTER.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        },
+        {
+          "driverIndex": 9,
+          "driverSha256": "99001dce6d1836fcf364c7e35931b0e79c254e1d2a59d78cc818500e044419db",
+          "arguments": [
+            "apple pi e "
+          ],
+          "cobolStoredInputs": [
+            "apple pi e                                                                                          "
+          ],
+          "sourceDefinedInputTruncations": [],
+          "outputFile": "IS-LAST-CHAR-LETTER.TXT",
+          "outputPic": "9",
+          "logicalResultLength": null
+        }
+      ],
+      "excludedDrivers": [],
+      "sourceHashes": {
+        "cobol": "35873425aacfa9bf3164321b00adc98fda76231ddd2f5ac4e9323c837f9aa97b",
+        "canonical": "1c790bebc9be02a88a738e4926f2877b9b9aed66f1fdeeb64511069a3ddbf78c",
+        "7b": "c06632a13c003f1bca816c391bf2890f7ebef92a60c783893d14135fec5ec124",
+        "14b": "c9243652d0329c4abc1aa9916d4444127cf699452522541b733e19e7988080e0"
+      },
+      "probeSha256": "315068f3cec2833622b39a0e0a881a77adddbaea110fd2a522dceaced9a58d1e"
+    }
+  ],
+  "taskCount": 8,
+  "driverCases": 57,
+  "expectedAnswerMetadataUsedAsOracle": false,
+  "expectedAnswerLengthUsed": false,
+  "humanReviews": 0,
+  "trainingPerformed": false,
+  "holdoutExecutionPermitted": false,
+  "reviewPolicy": "Actual-source fidelity and reference/benchmark-policy conflict are distinct. No automatic gold or human review; source disagreement is retained even if canonical Java disagrees too.",
+  "limitations": [
+    "Finite original driver inputs only; one fresh process per invocation.",
+    "Explicit logical-string/PIC storage representation relation; source-defined truncation and padding are retained.",
+    "Unused output storage is outside the declared logical result but all native serialized records are retained and checked.",
+    "Published outputs have ordinal rather than independent task-ID joins."
+  ]
+}

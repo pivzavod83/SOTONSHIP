@@ -1,0 +1,11 @@
+{
+  "runId": "paired-v4-candidates-ee8575e5e10c63c3",
+  "modelId": "paired-program-v4-graph_regularized",
+  "candidateId": "graph_regularized",
+  "modelSha256": "8ce9c4392fbdf84553fcc2b734e40e12cb1b819041d477a6627e761559bce055",
+  "memberSha256": "40b85499b4a63318bcc724f5cb2596ae31d7dbd134a992de47eee6df5ebd8306",
+  "membersChangedAfterFreeze": false,
+  "fullDevelopmentRefit": false,
+  "finalEvaluationReportSha256": "845efad622d5c43aa7f5719bdf4196d2614dcec2212f81ce07c17dce2f4a7cea",
+  "selectionSource": "development-only CV; frozen before final scoring"
+}

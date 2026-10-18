@@ -4,6 +4,7 @@ import { ApiClient, normalizeBackendUrl } from './api-client';
 import { isScopedEquivalent, proofMatchesSources, validateProofInputs, validateSource } from './contracts';
 import type { ProofInputs, VerificationCategory, VerificationRequest, VerificationResult } from './contracts';
 import type { MatchingRequest, MatchingResult, MatchingSourceFormat } from './matching-contracts';
+import { aiSourceHash, sameAiReviewBinding, validateAiReviewRequest, type AiReviewBinding, type AiReviewRequest, type AiReviewResult, type AiReviewSourceFormat } from './ai-review-contracts';
 import type { FileLabel, PanelState, WorkbenchMessage } from './panel-state';
 import { getWebviewHtml } from './webview';
 
@@ -18,6 +19,7 @@ interface MatchingSnapshot {
   cobol: DocumentSnapshot; candidates: { candidateId: string; document: DocumentSnapshot }[];
   backendUrl: string; sourceFormat: MatchingSourceFormat;
 }
+interface AiReviewSnapshot { cobol: DocumentSnapshot; java: DocumentSnapshot; binding: AiReviewBinding; request: AiReviewRequest; }
 const categories: VerificationCategory[] = ['FX_CONVERSION', 'INTEREST_CALC', 'REMITTANCE_FEE', 'EXTERNAL_LIMIT_CASE'];
 
 /** Desktop adapter only: proof decisions remain in the independent backend. */
@@ -31,6 +33,8 @@ export class WorkbenchController implements vscode.Disposable {
   private candidateSnapshot?: Snapshot;
   private matchingFiles: vscode.Uri[] = [];
   private matchingSnapshot?: MatchingSnapshot;
+  private aiReviewGeneration = 0;
+  private lastAiReviewQuestion?: { backendUrl: string; moduleName: string; cobolSourceFormat: AiReviewSourceFormat; analysisContext: string };
   private applying = false;
   private abort?: AbortController;
   private state: PanelState;
@@ -42,14 +46,15 @@ export class WorkbenchController implements vscode.Disposable {
     this.state = { backendUrl,
       busy: false, message: 'Choose a source pair or try the penny drift demo. Verification runs only when requested.',
       category: 'FX_CONVERSION', files: {}, proofInputsText: '', resultStale: false, candidateStale: false, canApply: false, applied: false,
-      matchingFiles: [], matchingSourceFormat: 'AUTO', matchingStale: false };
+      matchingFiles: [], matchingSourceFormat: 'AUTO', matchingStale: false,
+      aiReviewStale: false, aiReviewSourceFormat: 'AUTO', aiReviewContext: '' };
     this.subscriptions.push(this.diagnostics, this.output,
       vscode.workspace.onDidChangeTextDocument(event => {
         if (!event.contentChanges.length) return;
         const matchingAffected = this.files.cobol?.toString() === event.document.uri.toString()
           || this.matchingFiles.some(uri => uri.toString() === event.document.uri.toString());
         if (matchingAffected) this.invalidateMatching();
-        if (this.applying && event.document.uri.toString() === this.files.java?.toString()) { if (matchingAffected) this.publish(); return; }
+        if (this.applying && event.document.uri.toString() === this.files.java?.toString()) { this.invalidateAiReview(); this.publish(); return; }
         const affected = Object.entries(this.files).filter(([, uri]) => uri?.toString() === event.document.uri.toString()).map(([role]) => role);
         if (!affected.length) { if (matchingAffected) this.publish(); return; }
         if (affected.some(role => role !== 'candidate')) this.invalidate(true);
@@ -93,6 +98,13 @@ export class WorkbenchController implements vscode.Disposable {
         case 'chooseCandidate': await this.chooseFile('candidate'); break;
         case 'chooseMatchingFiles': await this.chooseMatchingFiles(); break;
         case 'matchPrograms': await this.matchPrograms(); break;
+        case 'analyzePairWithAi': await this.analyzePairWithAi(); break;
+        case 'setAiReviewSourceFormat':
+          if (!['AUTO', 'FREE', 'FIXED'].includes(message.value)) throw new Error('Unsupported AI review source format.');
+          this.state.aiReviewSourceFormat = message.value as AiReviewSourceFormat; this.invalidateAiReview(); break;
+        case 'updateAiReviewContext':
+          if (typeof message.value !== 'string' || message.value.length > 8000 || message.value.includes('\0')) throw new Error('AI review context must be under 8000 characters without NUL.');
+          this.state.aiReviewContext = message.value; this.invalidateAiReview(); break;
         case 'confirmMatch': if (typeof message.value === 'string') await this.confirmMatch(message.value); break;
         case 'setMatchingSourceFormat':
           if (['AUTO', 'FREE', 'FIXED'].includes(message.value)) {
@@ -137,6 +149,7 @@ export class WorkbenchController implements vscode.Disposable {
   }
 
   private invalidate(baseline: boolean): void {
+    if (baseline) this.invalidateAiReview();
     if (baseline && this.state.result) this.state.resultStale = true;
     if (this.state.candidateResult) this.state.candidateStale = true;
     this.state.canApply = false; this.state.applied = false;
@@ -144,6 +157,11 @@ export class WorkbenchController implements vscode.Disposable {
     else for (const [uri] of this.diagnostics) {
       if (uri.toString() !== this.files.java?.toString()) this.diagnostics.delete(uri);
     }
+  }
+
+  private invalidateAiReview(): void {
+    this.aiReviewGeneration++;
+    if (this.state.aiReviewResult) this.state.aiReviewStale = true;
   }
 
   private invalidateMatching(): void {
@@ -204,7 +222,10 @@ export class WorkbenchController implements vscode.Disposable {
     this.state = { ...this.state, category: demo.category, proofInputsText: JSON.stringify(validateProofInputs(demo.proofInputs), null, 2),
       result: undefined, candidateResult: undefined, resultStale: false, candidateStale: false, canApply: false, applied: false,
       matchingFiles: [], matchingResult: undefined, matchingStale: false, confirmedMatchId: undefined,
+      aiReviewResult: undefined, aiReviewStale: false, aiReviewSourceFormat: 'AUTO', aiReviewContext: '',
       message: 'Demo loaded into three unsaved editors. Verify the original pair to find the penny discrepancy; no code has been sent yet.' };
+    this.aiReviewGeneration++;
+    this.lastAiReviewQuestion = undefined;
     await vscode.window.showTextDocument(java, { viewColumn: vscode.ViewColumn.One, preview: false });
     this.open(); this.publish();
   }
@@ -238,6 +259,56 @@ export class WorkbenchController implements vscode.Disposable {
     this.files.cobol = input.cobol; this.matchingFiles = [...input.candidates]; this.state.backendUrl = backendUrl;
     if (input.sourceFormat) this.state.matchingSourceFormat = input.sourceFormat;
     this.invalidate(true); this.invalidateMatching(); this.publish();
+  }
+
+  /** Configuration alone never uploads source. No proof mapping or API key is needed in the client. */
+  public async configureAiReview(input: { cobol: vscode.Uri; java: vscode.Uri; backendUrl?: string; sourceFormat?: AiReviewSourceFormat; analysisContext?: string }): Promise<void> {
+    if (this.state.busy) throw new Error('Wait for the current analysis to finish.');
+    if (input.sourceFormat && !['AUTO', 'FREE', 'FIXED'].includes(input.sourceFormat)) throw new Error('Unsupported AI review source format.');
+    if (input.analysisContext !== undefined && (input.analysisContext.length > 8000 || input.analysisContext.includes('\0'))) throw new Error('AI review context must be under 8000 characters without NUL.');
+    const backendUrl = input.backendUrl ? normalizeBackendUrl(input.backendUrl) : this.state.backendUrl;
+    this.files.cobol = input.cobol; this.files.java = input.java; this.state.backendUrl = backendUrl;
+    if (input.sourceFormat) this.state.aiReviewSourceFormat = input.sourceFormat;
+    if (input.analysisContext !== undefined) this.state.aiReviewContext = input.analysisContext;
+    this.invalidate(true); this.invalidateMatching(); this.publish();
+  }
+
+  private aiBinding(cobol: DocumentSnapshot, java: DocumentSnapshot, generation = this.aiReviewGeneration): AiReviewBinding {
+    return { cobolUri: cobol.uri.toString(), javaUri: java.uri.toString(), cobolVersion: cobol.version, javaVersion: java.version,
+      backendUrl: this.state.backendUrl, sourceFormat: this.state.aiReviewSourceFormat, analysisContext: this.state.aiReviewContext,
+      cobolHash: aiSourceHash(cobol.text), javaHash: aiSourceHash(java.text), generation };
+  }
+
+  private async aiReviewUnchanged(snapshot: AiReviewSnapshot): Promise<boolean> {
+    try {
+      const [cobol, java] = await Promise.all([vscode.workspace.openTextDocument(snapshot.cobol.uri), vscode.workspace.openTextDocument(snapshot.java.uri)]);
+      if (this.files.cobol?.toString() !== snapshot.cobol.uri.toString() || this.files.java?.toString() !== snapshot.java.uri.toString()) return false;
+      return sameAiReviewBinding(snapshot.binding, this.aiBinding(
+        { uri: cobol.uri, text: cobol.getText(), version: cobol.version }, { uri: java.uri, text: java.getText(), version: java.version }));
+    } catch { return false; }
+  }
+
+  public async analyzePairWithAi(): Promise<AiReviewResult> {
+    return this.operation('Reviewing COBOL–Java defects with AI', async signal => {
+      this.invalidateAiReview();
+      const generation = this.aiReviewGeneration;
+      const backendUrl = normalizeBackendUrl(this.state.backendUrl);
+      const sourceFormat = this.state.aiReviewSourceFormat; const analysisContext = this.state.aiReviewContext;
+      const [cobol, java] = await Promise.all([this.document(this.files.cobol, 'COBOL source'), this.document(this.files.java, 'Java implementation')]);
+      const moduleName = basename(cobol.uri.path).replace(/[\x00-\x1f/\\]/g, '_').slice(0, 160) || 'Selected-COBOL.cbl';
+      const request = validateAiReviewRequest({ moduleName, cobolSource: cobol.text, javaSource: java.text, cobolSourceFormat: sourceFormat, analysisContext });
+      const snapshot: AiReviewSnapshot = { cobol, java, request, binding: { ...this.aiBinding(cobol, java, generation), backendUrl, sourceFormat, analysisContext } };
+      if (signal.aborted || !await this.aiReviewUnchanged(snapshot)) throw new Error('Sources or AI review settings changed before upload. Run AI analysis again.');
+      const result = await this.client({ backendUrl }).reviewPair(request, signal);
+      const current = !signal.aborted && await this.aiReviewUnchanged(snapshot);
+      this.lastAiReviewQuestion = { backendUrl, moduleName, cobolSourceFormat: sourceFormat, analysisContext };
+      this.state.aiReviewResult = result; this.state.aiReviewStale = !current;
+      this.state.message = !current ? 'Sources or AI review settings changed during analysis. AI findings are hidden; analyze the current pair again.'
+        : result.status === 'ANALYZED' ? `AI review produced ${result.findings.length} suspected defect(s). These are hypotheses; inspect the code and verify supported behavior separately.`
+          : `AI review ${result.status.toLowerCase().replace(/_/g, ' ')}: ${result.summary}`;
+      this.output.appendLine(`AI review: ${result.status}; source-bound hypotheses only; no candidate inputs executed.`);
+      this.publish(); return result;
+    });
   }
 
   private async matchingDocuments(snapshot: MatchingSnapshot): Promise<vscode.TextDocument[]> {
@@ -443,11 +514,13 @@ export class WorkbenchController implements vscode.Disposable {
   }
 
   private async exportReport(): Promise<void> {
-    if (!this.state.result && !this.state.candidateResult && !this.state.matchingResult) throw new Error('Run matching or verification before exporting evidence.');
+    if (!this.state.result && !this.state.candidateResult && !this.state.matchingResult && !this.state.aiReviewResult) throw new Error('Run AI review, matching or verification before exporting evidence.');
     const content = JSON.stringify({ exportedAt: new Date().toISOString(), backend: this.state.backendUrl,
       resultStale: this.state.resultStale, candidateStale: this.state.candidateStale,
       humanReviewStatus: 'PENDING', matching: this.state.matchingResult, matchingStale: this.state.matchingStale,
-      confirmedMatchId: this.state.confirmedMatchId, original: this.state.result, candidate: this.state.candidateResult }, null, 2);
+      confirmedMatchId: this.state.confirmedMatchId, aiReview: this.state.aiReviewResult, aiReviewStale: this.state.aiReviewStale,
+      aiReviewQuestion: this.lastAiReviewQuestion,
+      original: this.state.result, candidate: this.state.candidateResult }, null, 2);
     await vscode.window.showTextDocument(await vscode.workspace.openTextDocument({ language: 'json', content }), { preview: false });
   }
 
@@ -460,6 +533,11 @@ export function activate(context: vscode.ExtensionContext): WorkbenchController 
     vscode.commands.registerCommand('sotonship.openWorkbench', () => controller.open()),
     vscode.commands.registerCommand('sotonship.tryDemo', () => controller.safely(() => controller.loadDemo())),
     vscode.commands.registerCommand('sotonship.showFixDiff', () => controller.safely(() => controller.showDiff())),
+    vscode.commands.registerCommand('sotonship.analyzePairWithAi', () => controller.safely(async () => {
+      controller.open();
+      if (!await controller.chooseFile('cobol') || !await controller.chooseFile('java')) return;
+      await controller.analyzePairWithAi();
+    })),
     vscode.commands.registerCommand('sotonship.matchPrograms', () => controller.safely(async () => {
       controller.open();
       if (!await controller.chooseFile('cobol') || !await controller.chooseMatchingFiles()) return;

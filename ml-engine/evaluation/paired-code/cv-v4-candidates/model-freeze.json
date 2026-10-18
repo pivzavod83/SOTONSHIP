@@ -1,0 +1,51 @@
+{
+  "runId": "paired-v4-candidates-ee8575e5e10c63c3",
+  "frozenAt": "2026-10-18T04:27:48.173821+00:00",
+  "runPlanSha256": "27a9efb718b9ac8bc24a3eef503cccda8b2239176dd7f2cb3d70cc410c4a6214",
+  "sourceSha256": {
+    "scripts/train_paired_candidates.py": "56ae5143de82759a189df274e8b5289a1330f1ef3040b874de16082df023da12",
+    "scripts/train_paired_gnn_cv.py": "38fa40e409cb712a366bd7f3b361630726e2a9a7f861b1bba01f92d1c9326f5f",
+    "scripts/train_paired_gnn.py": "14953c909696ed76094faacfb8be8ea16993287b1a0ba26a4dea14b5598d5de0",
+    "scripts/partition_paired_dataset.py": "a432861232c1dba05eb60197c3e2257e514aa252893b67f2b5072feee3dca90c",
+    "ml_engine/code_graph.py": "bff04bf64896bec4aead98835857d65b14fb92dbd77f1e94608a26bb4dbfd369",
+    "ml_engine/cv_partition.py": "b1491886337ac9e81e4d3af9ab4475fb48c90e00efefe438c5452b4b9ca185f8",
+    "ml_engine/paired_gnn.py": "c5e20484e924f22103c3f3f4dfcf262d87bfffdd4de4c3f3591a6b42c85fcc80",
+    "ml_engine/candidate_gnn.py": "8903e6a98a31b6773342827f73294131a2a448bbf725a8dbba3f156f4e458505",
+    "ml_engine/structural_cca.py": "87cd0950707ddd844f0a33bfeda8e29a3d3e9f0499a3f152cc2fb2417e75768c",
+    "ml_engine/candidate_retrieval.py": "a059f81ecd4271017b1effc2be40461d497b46b95d03979b4df25cfa393cab62",
+    "ml_engine/matching.py": "7154c8decf305a401fc42d5d58746ae92eb369560ec2a21d3bfae8459e6fd4cb"
+  },
+  "partitionPlanSha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+  "files": {
+    "frozen-baseline.json": "b8f1c6296d63def40082bce7ca56cc0711aa986cbdc7914a92933288f7954556",
+    "frozen-structural_cca.json": "8e0394c134e9f577196ffc38938092127c18c95a6826868c08a883b8dd43f592",
+    "frozen-graph_regularized.json": "b86e7f5b31d562cccbe843238d097e50678c6fd1876778878ad9319c350d0f25",
+    "frozen-language_heads.json": "eb4b7e7734898989ef423af6f54618f987fc23a6dbd178044026df377a6728a4",
+    "frozen-count_readout.json": "74cefe5dfe01d84f862adc71b680468785e1eb9f0cab7d2d674a2c386b348b1f",
+    "cv-training-report.json": "886b9cb84a878597f456d68f37a3e705195a902662f7dc65eec09b38d16ef3a5"
+  },
+  "memberSha256": {
+    "baseline": "b08feae0754c24eef077f8cd747a6162cd2c88e4523d4ea62f17398e9f25de7a",
+    "structural_cca": "a124be1cdd6089460ea827c753b8d8e6bb1879bafec816210ef21c7109fd12b0",
+    "graph_regularized": "40b85499b4a63318bcc724f5cb2596ae31d7dbd134a992de47eee6df5ebd8306",
+    "language_heads": "5711eca689cd29ca664d3bd5ec1edc5df6a9292c05f4e976bf85497784cdbc0f",
+    "count_readout": "b9fb21bd8ddb821ac783b6cc4e63e729871a95236868ff05338c2e55cf1bf8bb"
+  },
+  "cvWinner": "graph_regularized",
+  "fullDevelopmentRefit": false,
+  "ensemble": {
+    "aggregation": "MEAN_COSINE",
+    "members": 5
+  },
+  "thresholds": {
+    "minimumSimilarity": 1.0,
+    "minimumMargin": 2.0,
+    "calibration": {
+      "enabled": false,
+      "reason": "Benchmark-only retrieval evidence; financial-domain reliability remains unvalidated. Every ranking requires explicit human review.",
+      "method": "Fixed before CV and final evaluation; no holdout threshold selection."
+    }
+  },
+  "finalLearnedEncodingOrScoringPerformed": false,
+  "freezeId": "paired-v4-freeze-0aa1c30ecd87b273"
+}

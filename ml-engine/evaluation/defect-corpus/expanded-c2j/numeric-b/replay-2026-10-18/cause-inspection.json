@@ -1,0 +1,51 @@
+{
+  "status": "AI_CAUSE_INSPECTION_PENDING_INDEPENDENT_HUMAN_REVIEW",
+  "replayReportSha256": "e84df0437290ced669585cdf0c7b08f850966656cf70413b1718aa7b7100ade0",
+  "families": [
+    {
+      "taskId": "HumanEval/92",
+      "interpretationType": "INPUT_OBJECT_TYPE_POLICY",
+      "analysis": "COBOL COMP-2 erases whether its MOVE literal was written 3 or 3.0. Both candidates preserve numeric-integrality behavior under homogeneous Java Double inputs. Canonical Java requires Integer objects instead and therefore disagrees on 6 inputs. This does not establish a candidate source-fidelity failure."
+    },
+    {
+      "taskId": "HumanEval/103",
+      "interpretationType": "SOURCE_FIDELITY_DIVERGENCE_WITH_REFERENCE_INTENT_CONFLICT",
+      "analysis": "The original COBOL overwrites both incoming integers with 1 and 6 and its in-place STRING operations serialize 11100 on every original driver. Both candidates compute binary results from supplied arguments, while canonical Java follows benchmark intent with different formatting. The observed Java/source differences are retained; independent review must decide whether preserving this faulty/hardcoded source behavior is the intended migration contract."
+    },
+    {
+      "taskId": "HumanEval/113",
+      "interpretationType": "SOURCE_STORAGE_FORMAT_DIVERGENCE_WITH_REFERENCE_INTENT_CONFLICT",
+      "analysis": "Original PIC X(2) input cells truncate longer digit literals. Both candidates receive the same stored-prefix logical inputs, so input truncation is not a hidden difference. The original STRING uses padded fixed-width constants and four-digit display counters and then truncates into 100-character result cells. Both Java candidates construct compact sentences. Full native cells differ; canonical Java also differs from source. Two result cells are defined by the source loop, and 98 unused serialized cells were verified blank."
+    },
+    {
+      "taskId": "HumanEval/119",
+      "interpretationType": "STRONG_COMMON_INPUT_CANDIDATE_RUNTIME_DISCREPANCY",
+      "analysis": "The source builds both concatenations WS-S1 and WS-S2 before walking their combined length. The 7B Java loops over the combined length but calls charAt on wsA or wsB separately, omitting concatenation. On 10 original common inputs this deterministically throws StringIndexOutOfBoundsException while COBOL, canonical Java and 14B terminate with matching results. Example original[\"()(\",\")\"] gives COBOL/controls Yes and 7B an exception. This is one candidate/source defect family with 10 witnesses, pending human review."
+    },
+    {
+      "taskId": "HumanEval/120",
+      "interpretationType": "JAVA_TEST_DOMAIN_EXCEEDS_COBOL_FIXED_INTERFACE",
+      "analysis": "Source and both translations use exactly 3 array slots. Both candidates match source on all 3 original drivers using k-derived output lengths. Longer variable-size Java benchmark arrays are outside this declared COBOL interface."
+    },
+    {
+      "taskId": "HumanEval/126",
+      "interpretationType": "SOURCE_ORDER_POLICY_PRESERVED",
+      "analysis": "Both candidates preserve the source duplicate/order algorithm on all 4 fixed 5-element arrays. Canonical Java differs on[1,1,3,4,5]: source/candidates reject a duplicate followed by an increase, while the reference permits it. A Java benchmark failure here is not evidence of mistranslating that source policy."
+    },
+    {
+      "taskId": "HumanEval/128",
+      "interpretationType": "JAVA_EMPTY_OR_SHORT_INPUT_OUTSIDE_COBOL_INTERFACE",
+      "analysis": "Both candidates match all 4 original fixed 4-element array inputs. Java benchmark empty/short lists do not satisfy the COBOL OCCURS 4 interface. Optional output is unwrapped explicitly and absence would remain unresolved rather than silently becoming zero."
+    },
+    {
+      "taskId": "HumanEval/134",
+      "interpretationType": "SOURCE_TRAILING_SPACE_POLICY_PRESERVED",
+      "analysis": "Both candidates preserve the source right-padding/trailing-space scan on all 10 original logical strings. Two strings with literal trailing spaces produce true from source/candidates but false from canonical Java, which treats trailing empty words as significant. This is a source/reference policy conflict, not a candidate source-fidelity failure."
+    }
+  ],
+  "sourceProgramOrDriverEdits": false,
+  "independentHumanReviews": 0,
+  "goldLocalizationLabels": 0,
+  "trainingPerformed": false,
+  "scope": "Only original inputs and frozen representation contracts. Source fidelity, benchmark intention, and source correctness are distinct questions. No universal equivalence or defect-prevalence claim."
+}

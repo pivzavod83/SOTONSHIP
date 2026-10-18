@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "canonical-control-health-summary-v1",
+  "measurementReport": "evaluation/defect-corpus/cobol-reference-audit/development-120-2026-10-18.json",
+  "measurementReportSha256": "72603eead613724dca6ece8a810261af859d66a590a5f611715e441322a30429",
+  "summary": {
+    "developmentTaskCount": 120,
+    "developmentDriverCount": 681,
+    "compiledDriverCount": 681,
+    "executedDriverCount": 681,
+    "declaredOracleCompatibleDriverCount": 648,
+    "declaredOracleMismatchDriverCount": 33,
+    "allDriversCompatibleTaskCount": 111,
+    "holdoutExecutedTaskCount": 0,
+    "trainingPerformed": false,
+    "expectedLengthProjectionDriverCount": 150
+  },
+  "mismatchesByTask": {
+    "HumanEval/103": 12,
+    "HumanEval/113": 2,
+    "HumanEval/12": 1,
+    "HumanEval/134": 2,
+    "HumanEval/139": 4,
+    "HumanEval/51": 1,
+    "HumanEval/66": 7,
+    "HumanEval/92": 1,
+    "HumanEval/99": 3
+  },
+  "reviewedIllustrations": [
+    {
+      "taskId": "HumanEval/12",
+      "driverIndex": 1,
+      "category": "CANONICAL_SOURCE_BEHAVIOR_DISAGREES_WITH_BENCHMARK",
+      "observed": "yyy",
+      "declaredExpected": "zzzz",
+      "canonicalSourceSha256": "516ccaf9b4f4ec2692eb12d7c122203070c082a29780e1b5a2ff388232dfa40a",
+      "driverSourceSha256": "8f5e67be6e4d865cff3e61dc0038d3e088b8af2b2747e5411bc49e770da23f47",
+      "outputSha256": "1499cbd9c847b3f1e9e73187f178d1c88e212c9e4fafc440dc896345357cff39",
+      "interpretation": "The unchanged COBOL moves TRIM(input) into PIC X(100) WS-TMP and then measures LENGTH(WS-TMP), which remains 100. The first input string is retained. This is a source-reference defect candidate, not evidence that a Java translation is defective.",
+      "reviewType": "AI source inspection supported by actual execution",
+      "independentHumanReviewPerformed": false
+    },
+    {
+      "taskId": "HumanEval/51",
+      "driverIndex": 1,
+      "category": "DRIVER_INPUT_ENCODING_DIFFERS_FROM_STATED_ANSWER",
+      "observed": "bcdf\\nghjklm",
+      "declaredExpected": "bcdf\nghjklm",
+      "canonicalSourceSha256": "715df519cb2413300aa9de1aac57503162380d7783e4deff9e12c509719f7f56",
+      "driverSourceSha256": "6f59758b130871be5247a261ed46bc8fcc6fd7dd2d5a876057b86c9735098ae2",
+      "outputSha256": "ef05a8ddf6b56c567665fe6d3dfbde3aa7505c2bff1ce4bbfe383fc2871851c2",
+      "interpretation": "The unchanged COBOL driver contains literal backslash+n in its input string; the Python-encoded benchmark answer expects an actual newline. This is an input-contract discrepancy, not evidence of a Java translation defect.",
+      "reviewType": "AI source inspection supported by actual execution",
+      "independentHumanReviewPerformed": false
+    }
+  ],
+  "interpretation": "These are canonical COBOL reference/oracle health results, not translated-Java defect labels or model accuracy. Remaining disagreements require cause review. Same-input differential execution and explicit numeric/string/list contracts are necessary before admitting translation labels. All passing results concern finite serialized outputs and do not establish universal equivalence.",
+  "checks": {
+    "auditParserGuardTestsPassed": 8,
+    "reservedTaskExecutionGuardManuallyVerified": true,
+    "allRawCompileRuntimeOutputHashesRechecked": true,
+    "sourceSnapshotHashVerified": true,
+    "gitDiffCheckPassed": true
+  }
+}

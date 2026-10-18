@@ -1,0 +1,323 @@
+{
+  "pairs": 8,
+  "correct": 1,
+  "accuracy": 0.125,
+  "precision": 0.2,
+  "recall": 0.25,
+  "f1": 0.22222222222222224,
+  "balancedAccuracy": 0.125,
+  "confusion": {
+    "truePositive": 1,
+    "trueNegative": 0,
+    "falsePositive": 4,
+    "falseNegative": 3
+  },
+  "perFamily": {
+    "F005": {
+      "pairs": 4,
+      "correct": 1,
+      "accuracy": 0.25,
+      "precision": 0.3333333333333333,
+      "recall": 0.5,
+      "f1": 0.4,
+      "balancedAccuracy": 0.25,
+      "confusion": {
+        "truePositive": 1,
+        "trueNegative": 0,
+        "falsePositive": 2,
+        "falseNegative": 1
+      }
+    },
+    "F010": {
+      "pairs": 4,
+      "correct": 0,
+      "accuracy": 0.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "balancedAccuracy": 0.0,
+      "confusion": {
+        "truePositive": 0,
+        "trueNegative": 0,
+        "falsePositive": 2,
+        "falseNegative": 2
+      }
+    }
+  },
+  "localization": {
+    "scope": "All labelled defective pairs, including missed classifications; AI-generated weak span annotations, exploratory only",
+    "defectivePairs": 4,
+    "hitAt1Count": 1,
+    "hitAt1": 0.25,
+    "hitAt3Count": 1,
+    "hitAt3": 0.25
+  },
+  "predictions": [
+    {
+      "familyId": "F005",
+      "variantId": "F005-V1",
+      "defectLabel": 0,
+      "score": 0.6105519674191826,
+      "predictedDefect": true,
+      "topLocations": [
+        {
+          "cobolLine": 25,
+          "javaLine": 14,
+          "score": 0.6652306474282285,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 21,
+          "javaLine": 13,
+          "score": 0.5180047425943646,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 23,
+          "javaLine": 11,
+          "score": 0.4281701437942707,
+          "matchesWeakAnnotation": false
+        }
+      ]
+    },
+    {
+      "familyId": "F005",
+      "variantId": "F005-V2",
+      "defectLabel": 0,
+      "score": 0.5020850266203518,
+      "predictedDefect": true,
+      "topLocations": [
+        {
+          "cobolLine": 25,
+          "javaLine": 10,
+          "score": 0.3897655347143279,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 24,
+          "javaLine": 9,
+          "score": 0.37731078647652544,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 24,
+          "javaLine": 10,
+          "score": 0.3232584374425378,
+          "matchesWeakAnnotation": false
+        }
+      ]
+    },
+    {
+      "familyId": "F005",
+      "variantId": "F005-V3",
+      "defectLabel": 1,
+      "score": 0.8355476429758778,
+      "predictedDefect": true,
+      "topLocations": [
+        {
+          "cobolLine": 23,
+          "javaLine": 11,
+          "score": 0.9971270224485135,
+          "matchesWeakAnnotation": true
+        },
+        {
+          "cobolLine": 25,
+          "javaLine": 14,
+          "score": 0.6652306474282285,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 21,
+          "javaLine": 13,
+          "score": 0.5180047425943646,
+          "matchesWeakAnnotation": false
+        }
+      ]
+    },
+    {
+      "familyId": "F005",
+      "variantId": "F005-V4",
+      "defectLabel": 1,
+      "score": 0.2525496362209591,
+      "predictedDefect": false,
+      "topLocations": [
+        {
+          "cobolLine": 25,
+          "javaLine": 10,
+          "score": 0.25011480744305653,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 24,
+          "javaLine": 9,
+          "score": 0.2151241981222938,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 24,
+          "javaLine": 10,
+          "score": 0.20234010305046676,
+          "matchesWeakAnnotation": false
+        }
+      ]
+    },
+    {
+      "familyId": "F010",
+      "variantId": "F010-V1",
+      "defectLabel": 0,
+      "score": 0.6599270302093639,
+      "predictedDefect": true,
+      "topLocations": [
+        {
+          "cobolLine": 21,
+          "javaLine": 7,
+          "score": 0.76903949984614,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 29,
+          "javaLine": 14,
+          "score": 0.6958647005432516,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 27,
+          "javaLine": 8,
+          "score": 0.6566834023015043,
+          "matchesWeakAnnotation": false
+        }
+      ]
+    },
+    {
+      "familyId": "F010",
+      "variantId": "F010-V2",
+      "defectLabel": 0,
+      "score": 0.6767873379350369,
+      "predictedDefect": true,
+      "topLocations": [
+        {
+          "cobolLine": null,
+          "javaLine": 9,
+          "score": 0.6481036623120682,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": null,
+          "javaLine": 8,
+          "score": 0.5998463103940046,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 23,
+          "javaLine": null,
+          "score": 0.41009931888955614,
+          "matchesWeakAnnotation": false
+        }
+      ]
+    },
+    {
+      "familyId": "F010",
+      "variantId": "F010-V3",
+      "defectLabel": 1,
+      "score": 0.4521354686811396,
+      "predictedDefect": false,
+      "topLocations": [
+        {
+          "cobolLine": 21,
+          "javaLine": 7,
+          "score": 0.7712797058039231,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 29,
+          "javaLine": 14,
+          "score": 0.7085627376982098,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 27,
+          "javaLine": 8,
+          "score": 0.6576880897022563,
+          "matchesWeakAnnotation": false
+        }
+      ]
+    },
+    {
+      "familyId": "F010",
+      "variantId": "F010-V4",
+      "defectLabel": 1,
+      "score": 0.42879865953038104,
+      "predictedDefect": false,
+      "topLocations": [
+        {
+          "cobolLine": null,
+          "javaLine": 9,
+          "score": 0.6481036623120682,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": null,
+          "javaLine": 8,
+          "score": 0.5998463103940046,
+          "matchesWeakAnnotation": false
+        },
+        {
+          "cobolLine": 23,
+          "javaLine": null,
+          "score": 0.41009931888955614,
+          "matchesWeakAnnotation": false
+        }
+      ]
+    }
+  ],
+  "status": "COMPLETED",
+  "modelSha256": "50d2fdbf7475ca36e5fd50c22696381dbc8c3db88bb47ab6bca15285083d444c",
+  "datasetSha256": "7d6f612855da2e75ee5f552ea0ebc9e0fd95e5f3399a28e6d982f10c194c9dcb",
+  "threshold": 0.5,
+  "modelFrozenBeforeAssessment": true,
+  "modelChangedAfterAssessment": false,
+  "testPairs": 8,
+  "testFamilies": [
+    "F005",
+    "F010"
+  ],
+  "baseline": {
+    "constantNoDefect": {
+      "pairs": 8,
+      "correct": 4,
+      "accuracy": 0.5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "balancedAccuracy": 0.5,
+      "confusion": {
+        "truePositive": 0,
+        "trueNegative": 4,
+        "falsePositive": 0,
+        "falseNegative": 4
+      }
+    },
+    "sourceGraphDistance": {
+      "pairs": 8,
+      "correct": 4,
+      "accuracy": 0.5,
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "balancedAccuracy": 0.5,
+      "confusion": {
+        "truePositive": 4,
+        "trueNegative": 0,
+        "falsePositive": 4,
+        "falseNegative": 0
+      }
+    }
+  },
+  "limitations": [
+    "Only two independent synthetic test algorithm families (8 pairs); no real-world accuracy claim.",
+    "Validation/test source and labels already inspected for generated-data quality; no model has been fitted or selected. Do not call this a pristine blind benchmark.",
+    "Defect witnesses are finite runtime evidence; intended-equivalent labels are not general equivalence proofs.",
+    "Span metrics use AI-generated weak annotations and are exploratory, not expert-reviewed localisation accuracy."
+  ],
+  "completedUtc": "2026-10-18T10:01:58.588997+00:00"
+}

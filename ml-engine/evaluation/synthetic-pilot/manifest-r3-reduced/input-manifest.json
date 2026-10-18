@@ -1,0 +1,457 @@
+{
+  "artifact": "manifest",
+  "manifestRevision": "synthetic-pilot-manifest-r3",
+  "datasetKind": "SYNTHETIC_AI_GENERATED",
+  "purpose": "Feasibility benchmark for correspondence and potential semantic defects in a supplied COBOL/Java pair. Synthetic proposed annotations are not production defect data, equivalence proofs, or measured model accuracy.",
+  "compilerProfile": {
+    "cobolCompiler": "GnuCOBOL 3.2",
+    "cobolSourceFormat": "FREE",
+    "javaVersion": "Java 21"
+  },
+  "allocation": {
+    "families": 20,
+    "javaVariantsPerFamily": 4,
+    "proposedEquivalentPerFamily": 2,
+    "proposedDefectivePerFamily": 2,
+    "candidatePairs": 80,
+    "familySplits": {
+      "train": 12,
+      "validation": 4,
+      "test": 4
+    },
+    "perCategory": {
+      "DECIMAL_ROUNDING_AND_SCALE": {
+        "families": 5,
+        "train": 3,
+        "validation": 1,
+        "test": 1
+      },
+      "NUMERIC_STORAGE_AND_SIGN": {
+        "families": 5,
+        "train": 3,
+        "validation": 1,
+        "test": 1
+      },
+      "CONTROL_FLOW_AND_BOUNDARIES": {
+        "families": 5,
+        "train": 3,
+        "validation": 1,
+        "test": 1
+      },
+      "INDEXING_AND_LOOP_BOUNDS": {
+        "families": 5,
+        "train": 3,
+        "validation": 1,
+        "test": 1
+      }
+    }
+  },
+  "scope": {
+    "programs": "Complete stdin/stdout COBOL and Java programs.",
+    "inputs": "Canonical bounded ASCII numeric inputs only, at most 20 characters per line; exact field formats belong to each contract.",
+    "output": "One scalar numeric output per program; normalize only as declared in its contract.",
+    "excludedTasks": ["Dates", "Strings", "Multiple outputs"],
+    "newEvaluatorIntroduced": false
+  },
+  "annotationDefaults": {
+    "labelStatus": "PROPOSED",
+    "executionStatus": "NOT_EXECUTED",
+    "executionEvidence": null
+  },
+  "splitPolicy": [
+    "All variants, tests, fragments, and derived artifacts inherit their family split.",
+    "Related templates and shared algorithmic helpers must stay in one split. Names and clone-group identifiers do not establish independence.",
+    "Proposed design rationales require source-level clone review before any independent held-out generalization claim.",
+    "No existing validation or test source is moved into training.",
+    "Exclude IDs, variant order, split and clone metadata, defect annotations, rationales, and test outputs from model features."
+  ],
+  "generationStatus": {
+    "existingAuditedIdentitiesPreserved": ["F001", "F002", "F003", "F004", "F006"],
+    "replacementSourceDelivered": ["F005-R2"],
+    "proposedSlotsOnly": [
+      "F007", "F008", "F009", "F010", "F011", "F012", "F013",
+      "F014", "F015", "F016", "F017", "F018", "F019", "F020"
+    ],
+    "F007OnwardGenerated": false,
+    "independenceClaim": "Twenty target algorithm families; cross-family independence is not certified by this manifest."
+  },
+  "provenance": {
+    "supersedesManifest": "synthetic-pilot-v2/family-plan-20.json",
+    "identityAuthority": "User-supplied audited identity facts in the plan-repair request.",
+    "originalBatch03Sha256": "87e181c46ba306d75373f36f37698a3de33b7dee836b8067839b922cd17ff502",
+    "archivedOldF005": {
+      "algorithm": "Two-period compounded interest",
+      "status": "ARCHIVED_EXCLUDED_FROM_ACTIVE_TEST_CLAIMS",
+      "relatedTemplateReviewGroup": "CG-F001-INVOICE-DISCOUNT-TAX",
+      "originalBytes": "provenance/input-batch-03.json",
+      "originalAudit": "provenance/batch-03-audit.txt"
+    },
+    "runtimeEvidencePolicy": "Original runtime evidence applies only to the original bytes; none is attributed to F005-R2."
+  },
+  "separateMetadataRepair": {
+    "repairId": "F004-V4-METADATA-R1",
+    "recordType": "SEPARATE_VERSIONED_METADATA_REPAIR",
+    "status": "PROPOSED_NOT_APPLIED_TO_UNSUPPLIED_SOURCE_RECORD",
+    "familyId": "F004",
+    "variantId": "F004-V4",
+    "set": {
+      "defectCategory": "ARITHMETIC_FORMULA",
+      "defectSubtype": "UNWEIGHTED_MEAN"
+    },
+    "rationale": "An unweighted mean replaces the required quantity-weighted quotient. That is a formula defect, not a rounding defect.",
+    "sourceChange": false,
+    "splitChange": false,
+    "labelStatus": "PROPOSED",
+    "executionStatus": "NOT_EXECUTED",
+    "executionEvidence": null
+  },
+  "families": [
+    {
+      "familyId": "F001",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "split": "train",
+      "sourceStatus": "EXISTING_AUDITED_IDENTITY_PRESERVED",
+      "algorithmDescription": "Invoice discount and tax: truncate subtotal*discount/100 to cents, subtract the discount, round tax on the net to cents, then ADD tax to the net.",
+      "contractPolicy": "Preserve the audited source contract; unspecified widths and domains are not inferred here.",
+      "cloneGroup": "CG-F001-INVOICE-DISCOUNT-TAX",
+      "cloneGroupRationale": "Two dependent percentage calculations with a net-balance intermediate. The archived old F005 belongs to this related-template review group and is excluded from the active test allocation."
+    },
+    {
+      "familyId": "F002",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "split": "train",
+      "sourceStatus": "EXISTING_AUDITED_IDENTITY_PRESERVED",
+      "algorithmDescription": "Pro-rata subscription charge: round annual fee/365 to FOUR fractional places, multiply by days and round gross to cents, apply gross PIC 9(5)V99 storage truncation modulo 100000.00 BEFORE subtracting promotional credit, then floor at zero.",
+      "contractPolicy": "Preserve the audited source contract; unspecified widths and domains are not inferred here.",
+      "cloneGroup": "CG-F002-PRO-RATA-STORAGE",
+      "cloneGroupRationale": "Daily-rate quantization, multiplication by days, receiving-field reduction, and credit floor form the pipeline. F007 also exercises receiving-field reduction but uses a different additive pipeline; both are in train."
+    },
+    {
+      "familyId": "F003",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "split": "train",
+      "sourceStatus": "EXISTING_AUDITED_IDENTITY_PRESERVED",
+      "algorithmDescription": "Triangulated FX: multiply base amount by the first four-decimal rate, truncate the intermediate to FOUR fractional places, multiply by the second rate, round settlement to cents, then subtract wire fee.",
+      "contractPolicy": "Preserve the audited source contract; unspecified widths and domains are not inferred here.",
+      "cloneGroup": "CG-F003-TRIANGULATED-FX",
+      "cloneGroupRationale": "Two rate multiplications with an intermediate scale-four storage boundary followed by settlement and a fee. F005-R2 has one rate multiplication and cash-denomination quantization; the common multiplication primitive alone does not establish independence."
+    },
+    {
+      "familyId": "F004",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "split": "validation",
+      "sourceStatus": "EXISTING_AUDITED_IDENTITY_PRESERVED",
+      "algorithmDescription": "Weighted inventory unit cost: sum each lot quantity*unit cost, divide by combined quantity, and round the final quotient to cents.",
+      "contractPolicy": "Preserve the audited source contract; unspecified widths and domains are not inferred here.",
+      "cloneGroup": "CG-F004-WEIGHTED-UNIT-COST",
+      "cloneGroupRationale": "Weighted numerator and quantity denominator differ from the three training pipelines. Its audited identity and validation assignment are preserved; V4 metadata is handled by the separate versioned record."
+    },
+    {
+      "familyId": "F005",
+      "familyRevision": "F005-R2",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "split": "test",
+      "sourceStatus": "PROPOSED_REPLACEMENT_WITH_SOURCE",
+      "algorithmDescription": "One FX conversion using a four-decimal rate, half-up cent rounding, then nearest-0.05 cash-denomination quantization.",
+      "validInputDomain": {
+        "amount": "Canonical ASCII decimal 0.00..50000.00, exactly 2 fractional digits.",
+        "rate": "Canonical ASCII decimal 0.0000..9.9999, exactly 4 fractional digits."
+      },
+      "outputMeaning": "One nonnegative scalar local-currency amount at scale two, a multiple of 0.05.",
+      "semanticFailureModes": [
+        "Truncating instead of half-up rounding at the cent boundary.",
+        "Using a 0.10 cash denomination instead of 0.05."
+      ],
+      "cloneGroup": "CG-F005-R2-CASH-QUANTIZATION",
+      "cloneGroupRationale": "Supplied source has a single conversion, scale-two rounding, rounded division by 0.05, and denomination reconstruction. It has neither F001's two percentages and net intermediate nor F003's second FX multiplication, scale-four intermediate, and fee subtraction. No shared FX algorithm helper is introduced.",
+      "independenceStatus": "SOURCE_STRUCTURE_RATIONALE_PROVIDED_NOT_CERTIFIED",
+      "replacementBatch": "batch-03-f005-r2.json",
+      "supersedes": "Archived batch-03 F005 compounded-interest revision only; original bytes and runtime evidence remain provenance."
+    },
+    {
+      "familyId": "F006",
+      "focusCategory": "NUMERIC_STORAGE_AND_SIGN",
+      "split": "train",
+      "sourceStatus": "EXISTING_AUDITED_IDENTITY_PRESERVED",
+      "algorithmDescription": "Add a signed adjustment to the opening balance, store in an unsigned intermediate so a negative result loses its sign, then subtract a signed fee into a signed final balance.",
+      "contractPolicy": "Preserve the audited source contract; unspecified widths and domains are not inferred here.",
+      "cloneGroup": "CG-F006-UNSIGNED-INTERMEDIATE",
+      "cloneGroupRationale": "The sign-removing receiving-field boundary followed by signed subtraction is the defining structure. F002 is a different audited algorithm and is not assigned to this group."
+    },
+    {
+      "familyId": "F007",
+      "focusCategory": "NUMERIC_STORAGE_AND_SIGN",
+      "split": "train",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Update a four-digit decimal odometer by adding an unsigned increment and storing only the low four decimal digits.",
+      "validInputDomain": {
+        "counter": "Integer 0..9999.",
+        "increment": "Integer 0..50000."
+      },
+      "outputMeaning": "One integer 0..9999: (counter+increment) modulo 10000.",
+      "semanticFailureModes": [
+        "Retaining a fifth digit instead of receiving-field truncation.",
+        "Saturating rather than wrapping.",
+        "Wrapping at 9999 rather than 10000."
+      ],
+      "cloneGroup": "CG-F007-ODOMETER-WRAP",
+      "cloneGroupRationale": "Add-and-wrap structure differs from F006 sign removal. Its storage-reduction operation is also present in F002; both remain in train and no shared helper crosses a split.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F008",
+      "focusCategory": "NUMERIC_STORAGE_AND_SIGN",
+      "split": "train",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Compute a normalized nonnegative remainder of a signed integer using truncation-toward-zero division, residual subtraction, and one negative-residual correction.",
+      "validInputDomain": {
+        "dividend": "Integer -99999..99999.",
+        "divisor": "Integer 1..99."
+      },
+      "outputMeaning": "One integer r in 0..divisor-1 congruent to dividend modulo divisor.",
+      "semanticFailureModes": [
+        "Using floor division and then applying an extra correction.",
+        "Omitting the negative-residual correction.",
+        "Making the dividend absolute before division."
+      ],
+      "cloneGroup": "CG-F008-SIGNED-REMAINDER-NORMALIZATION",
+      "cloneGroupRationale": "A single signed quotient/residual pipeline. F010 uses nonnegative Euclidean iteration after absolute-value normalization; it must not reuse this signed normalization helper.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F009",
+      "focusCategory": "NUMERIC_STORAGE_AND_SIGN",
+      "split": "validation",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Select the signed median of three integers with a fixed comparison-and-swap network using signed temporary storage.",
+      "validInputDomain": {
+        "values": "Exactly three canonical integers, each -99999..99999."
+      },
+      "outputMeaning": "One signed integer equal to the middle value in numeric order; duplicates are retained.",
+      "semanticFailureModes": [
+        "Using unsigned comparison or temporary storage.",
+        "Losing the sign during a swap.",
+        "Selecting the minimum or maximum instead of the median."
+      ],
+      "cloneGroup": "CG-F009-SIGNED-MEDIAN-NETWORK",
+      "cloneGroupRationale": "A fixed compare-and-swap network without a scan, arithmetic normalization, or shared sort helper. No other planned family sorts its input.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F010",
+      "focusCategory": "NUMERIC_STORAGE_AND_SIGN",
+      "split": "test",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Compute the greatest common divisor of two signed integers by taking their magnitudes and running the Euclidean remainder loop.",
+      "validInputDomain": {
+        "values": "Two integers -99999..99999, not both zero."
+      },
+      "outputMeaning": "One positive integer gcd(abs(a),abs(b)), at most 99999.",
+      "semanticFailureModes": [
+        "Returning a signed result.",
+        "Treating a zero operand as immediate zero output.",
+        "Overwriting an operand before using the old remainder divisor."
+      ],
+      "cloneGroup": "CG-F010-MAGNITUDE-EUCLIDEAN-GCD",
+      "cloneGroupRationale": "Repeated nonnegative Euclidean operand rotation differs from F008's single signed quotient and correction. Only primitive remainder arithmetic is common; no algorithmic helper may be shared across splits.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F011",
+      "focusCategory": "CONTROL_FLOW_AND_BOUNDARIES",
+      "split": "train",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Calculate a progressive marginal charge: first 100 units cost 1 each, next 400 cost 2 each, and remaining units cost 3 each.",
+      "validInputDomain": {
+        "units": "Integer 0..10000."
+      },
+      "outputMeaning": "One integer charge 0..29400.",
+      "semanticFailureModes": [
+        "Applying the highest reached rate to every unit.",
+        "Off-by-one tier boundaries.",
+        "Omitting the completed lower tiers."
+      ],
+      "cloneGroup": "CG-F011-PROGRESSIVE-TIER-SUM",
+      "cloneGroupRationale": "Marginal tier accumulation is confined to train. No validation or test slot reuses a threshold-tier or ordered-first-match template.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F012",
+      "focusCategory": "CONTROL_FLOW_AND_BOUNDARIES",
+      "split": "train",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Run a four-state numeric automaton over bounded numeric events: event 0 keeps the state, event 1 moves clockwise, and event 2 reflects state s to 3-s.",
+      "validInputDomain": {
+        "initialState": "Integer 0..3.",
+        "eventCount": "Integer 0..8 followed by that many event integers 0..2."
+      },
+      "outputMeaning": "One integer final state 0..3.",
+      "semanticFailureModes": [
+        "Wrong event dispatch.",
+        "Applying reflection as increment.",
+        "Failing to preserve state for event zero."
+      ],
+      "cloneGroup": "CG-F012-NUMERIC-AUTOMATON",
+      "cloneGroupRationale": "Finite event-driven state composition with explicit dispatch, not an ordered predicate classifier. No interpreter or transition helper is shared outside train.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F013",
+      "focusCategory": "CONTROL_FLOW_AND_BOUNDARIES",
+      "split": "train",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Apply a hysteresis deadband: values below -10 force state 0, values above 10 force state 1, and values in the closed interval [-10,10] preserve the previous state.",
+      "validInputDomain": {
+        "previousState": "Integer 0 or 1.",
+        "measurement": "Integer -1000..1000."
+      },
+      "outputMeaning": "One integer state 0 or 1.",
+      "semanticFailureModes": [
+        "Changing state at an inclusive deadband endpoint.",
+        "Resetting state inside the deadband.",
+        "Reversing the low and high actions."
+      ],
+      "cloneGroup": "CG-F013-HYSTERESIS-DEADBAND",
+      "cloneGroupRationale": "Two-sided state retention differs from F011 marginal summation and F012 event composition; all branch-template relatives would remain in train.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F014",
+      "focusCategory": "CONTROL_FLOW_AND_BOUNDARIES",
+      "split": "validation",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Use integer bisection to find the largest n in 0..10000 with n*n+3*n no greater than a supplied budget.",
+      "validInputDomain": {
+        "budget": "Integer 0..100030000."
+      },
+      "outputMeaning": "One integer n in 0..10000 satisfying the maximal affordable-lot condition.",
+      "semanticFailureModes": [
+        "Using a strict rather than inclusive affordability test.",
+        "Losing the last feasible midpoint.",
+        "Incorrect termination or midpoint bounds."
+      ],
+      "cloneGroup": "CG-F014-INTEGER-AFFORDABILITY-BISECTION",
+      "cloneGroupRationale": "Monotone bisection with a last-feasible invariant, not ordered first-match selection. No other slot uses binary search or its boundary helper.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F015",
+      "focusCategory": "CONTROL_FLOW_AND_BOUNDARIES",
+      "split": "test",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Compute the total length covered by the union of two half-open numeric intervals, accounting for disjoint, touching, overlapping, and contained intervals.",
+      "validInputDomain": {
+        "endpoints": "Four integers a,b,c,d in 0..100000 with a<=b and c<=d, representing [a,b) and [c,d)."
+      },
+      "outputMeaning": "One integer union length 0..100000.",
+      "semanticFailureModes": [
+        "Treating half-open endpoints as inclusive.",
+        "Counting overlap twice.",
+        "Treating touching endpoints as positive overlap.",
+        "Mishandling containment."
+      ],
+      "cloneGroup": "CG-F015-TWO-INTERVAL-UNION",
+      "cloneGroupRationale": "Geometric overlap length and inclusion-exclusion differ from tier charges, state dispatch, hysteresis, and bisection. No ordered first-match algorithm is reused.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F016",
+      "focusCategory": "INDEXING_AND_LOOP_BOUNDS",
+      "split": "train",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Stably compact nonzero values in a bounded list and return the position-weighted sum of the compacted list using one-based retained positions.",
+      "validInputDomain": {
+        "length": "Integer 0..8 followed by that many integers -999..999."
+      },
+      "outputMeaning": "One signed integer sum(i*retained[i]), bounded by -35964..35964.",
+      "semanticFailureModes": [
+        "Advancing the write index for discarded zeroes.",
+        "Using original rather than compacted positions.",
+        "Skipping the final input item."
+      ],
+      "cloneGroup": "CG-F016-STABLE-ZERO-COMPACTION",
+      "cloneGroupRationale": "Separate read/write indices with order-preserving compaction. No other proposed split uses a compaction or filtering helper.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F017",
+      "focusCategory": "INDEXING_AND_LOOP_BOUNDS",
+      "split": "train",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Read a bounded square numeric matrix in row-major order and return its main-diagonal trace.",
+      "validInputDomain": {
+        "dimension": "Integer 1..4 followed by dimension squared integers -999..999."
+      },
+      "outputMeaning": "One signed integer diagonal sum, bounded by -3996..3996.",
+      "semanticFailureModes": [
+        "Confusing row-major stride with the dimension minus one.",
+        "Selecting the anti-diagonal.",
+        "Missing the last diagonal cell."
+      ],
+      "cloneGroup": "CG-F017-ROW-MAJOR-MATRIX-TRACE",
+      "cloneGroupRationale": "Two-dimensional diagonal selection differs from compaction, Horner recurrence, circular windows, and triangular pair enumeration; no shared traversal helper is planned.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F018",
+      "focusCategory": "INDEXING_AND_LOOP_BOUNDS",
+      "split": "train",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Evaluate a degree-at-most-five polynomial with Horner recurrence, reading coefficients in descending-power order.",
+      "validInputDomain": {
+        "degree": "Integer 0..5.",
+        "x": "Integer -5..5.",
+        "coefficients": "degree+1 integers, each -9..9, highest power first."
+      },
+      "outputMeaning": "One signed integer polynomial value, bounded by -35154..35154.",
+      "semanticFailureModes": [
+        "Reading coefficients in reverse order.",
+        "Skipping the constant term.",
+        "Processing degree rather than degree+1 coefficients."
+      ],
+      "cloneGroup": "CG-F018-HORNER-POLYNOMIAL",
+      "cloneGroupRationale": "One accumulator multiply-add recurrence with coefficient indexing; no polynomial-evaluation helper or related template appears in validation or test.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F019",
+      "focusCategory": "INDEXING_AND_LOOP_BOUNDS",
+      "split": "validation",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Find the maximum sum among the exactly N circular windows of a fixed length K in a bounded list, updating a rolling sum as each window advances.",
+      "validInputDomain": {
+        "length": "Integer N in 1..8.",
+        "window": "Integer K in 1..N.",
+        "values": "N integers -99..99."
+      },
+      "outputMeaning": "One signed integer maximum window sum, bounded by -792..792.",
+      "semanticFailureModes": [
+        "Considering N-K+1 windows instead of N circular windows.",
+        "Wrong wrap index for incoming elements.",
+        "Initializing the maximum to zero for all-negative data."
+      ],
+      "cloneGroup": "CG-F019-CIRCULAR-WINDOW-MAX",
+      "cloneGroupRationale": "Sliding-window deletion/insertion with modular indexing, not compaction or polynomial recurrence. No circular-window helper is used in another split.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "familyId": "F020",
+      "focusCategory": "INDEXING_AND_LOOP_BOUNDS",
+      "split": "test",
+      "sourceStatus": "PROPOSED_SLOT_NO_SOURCE_GENERATED",
+      "algorithmDescription": "Count strict inversions in a bounded sequence by visiting each index pair i<j and counting a[i]>a[j].",
+      "validInputDomain": {
+        "length": "Integer 0..8 followed by that many integers -99..99."
+      },
+      "outputMeaning": "One integer inversion count 0..28; equal values are not inversions.",
+      "semanticFailureModes": [
+        "Counting equal values as inversions.",
+        "Omitting pairs involving the last element.",
+        "Counting reversed or duplicate pairs."
+      ],
+      "cloneGroup": "CG-F020-STRICT-INVERSION-COUNT",
+      "cloneGroupRationale": "Triangular pair enumeration with strict comparison differs from full-matrix diagonal selection and circular-window maintenance. It does not sort or reuse F009's compare-and-swap network.",
+      "independenceStatus": "DESIGN_ONLY_REQUIRES_SOURCE_REVIEW"
+    }
+  ]
+}

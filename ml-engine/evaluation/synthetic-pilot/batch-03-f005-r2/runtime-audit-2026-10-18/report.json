@@ -1,0 +1,1251 @@
+{
+  "schemaVersion": 1,
+  "checkedAtUtc": "2026-10-18T09:19:04.785379+00:00",
+  "datasetKind": "SYNTHETIC_AI_GENERATED",
+  "inputSha256": "340dea0c97b2abea74f2e92154954eff1606d68da74ae463d23ff165dc103c53",
+  "counts": {
+    "submittedFamilies": 1,
+    "candidatePairs": 4,
+    "suppliedReferenceRuns": 6,
+    "suppliedJavaRuns": 24,
+    "additionalReferenceRuns": 0,
+    "additionalJavaRuns": 0,
+    "referencePredictionErrors": 0,
+    "javaPredictionErrors": 0,
+    "suppliedMismatchFlagErrors": 0
+  },
+  "toolVersions": {
+    "cobol": "cobc (GnuCOBOL) 3.2.0",
+    "java": "java version \"21.0.10\" 2026-01-20 LTS",
+    "javac": "javac 21.0.10"
+  },
+  "caseOrigins": {
+    "SUPPLIED": 6
+  },
+  "variantSummary": [
+    {
+      "variantId": "F005-V1",
+      "proposedEquivalent": true,
+      "suppliedMismatches": 0,
+      "additionalMismatches": 0,
+      "witnessIds": [],
+      "assessment": "MATCHES_EXECUTED_INPUTS_ONLY"
+    },
+    {
+      "variantId": "F005-V2",
+      "proposedEquivalent": true,
+      "suppliedMismatches": 0,
+      "additionalMismatches": 0,
+      "witnessIds": [],
+      "assessment": "MATCHES_EXECUTED_INPUTS_ONLY"
+    },
+    {
+      "variantId": "F005-V3",
+      "proposedEquivalent": false,
+      "suppliedMismatches": 2,
+      "additionalMismatches": 0,
+      "witnessIds": [
+        "F005-R2-T2",
+        "F005-R2-T5"
+      ],
+      "assessment": "DEFECT_CONFIRMED_BY_RUNTIME_WITNESS"
+    },
+    {
+      "variantId": "F005-V4",
+      "proposedEquivalent": false,
+      "suppliedMismatches": 3,
+      "additionalMismatches": 0,
+      "witnessIds": [
+        "F005-R2-T2",
+        "F005-R2-T5",
+        "F005-R2-T6"
+      ],
+      "assessment": "DEFECT_CONFIRMED_BY_RUNTIME_WITNESS"
+    }
+  ],
+  "cases": [
+    {
+      "familyId": "F005",
+      "testId": "F005-R2-T1",
+      "origin": "SUPPLIED",
+      "stdin": "100.00\n1.2000\n",
+      "reason": "Unchanged supplied test",
+      "observedReferenceValue": "120.00",
+      "proposedReferenceValue": "120.00",
+      "referencePredictionMatches": true,
+      "referenceRun": {
+        "command": [
+          "<temporary>/F005"
+        ],
+        "stdin": "100.00\n1.2000\n",
+        "exitCode": 0,
+        "stdout": "000120.00\n",
+        "stderr": ""
+      },
+      "variants": [
+        {
+          "variantId": "F005-V1",
+          "expectedEquivalent": true,
+          "observedValue": "120.00",
+          "observedMismatch": false,
+          "proposedValue": "120.00",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V1",
+              "Program"
+            ],
+            "stdin": "100.00\n1.2000\n",
+            "exitCode": 0,
+            "stdout": "120.00\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V2",
+          "expectedEquivalent": true,
+          "observedValue": "120.00",
+          "observedMismatch": false,
+          "proposedValue": "120.00",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V2",
+              "Program"
+            ],
+            "stdin": "100.00\n1.2000\n",
+            "exitCode": 0,
+            "stdout": "120.00\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V3",
+          "expectedEquivalent": false,
+          "observedValue": "120.00",
+          "observedMismatch": false,
+          "proposedValue": "120.00",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V3",
+              "Program"
+            ],
+            "stdin": "100.00\n1.2000\n",
+            "exitCode": 0,
+            "stdout": "120.00\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V4",
+          "expectedEquivalent": false,
+          "observedValue": "120.00",
+          "observedMismatch": false,
+          "proposedValue": "120.00",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V4",
+              "Program"
+            ],
+            "stdin": "100.00\n1.2000\n",
+            "exitCode": 0,
+            "stdout": "120.00\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "familyId": "F005",
+      "testId": "F005-R2-T2",
+      "origin": "SUPPLIED",
+      "stdin": "12.34\n1.2500\n",
+      "reason": "Unchanged supplied test",
+      "observedReferenceValue": "15.45",
+      "proposedReferenceValue": "15.45",
+      "referencePredictionMatches": true,
+      "referenceRun": {
+        "command": [
+          "<temporary>/F005"
+        ],
+        "stdin": "12.34\n1.2500\n",
+        "exitCode": 0,
+        "stdout": "000015.45\n",
+        "stderr": ""
+      },
+      "variants": [
+        {
+          "variantId": "F005-V1",
+          "expectedEquivalent": true,
+          "observedValue": "15.45",
+          "observedMismatch": false,
+          "proposedValue": "15.45",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V1",
+              "Program"
+            ],
+            "stdin": "12.34\n1.2500\n",
+            "exitCode": 0,
+            "stdout": "15.45\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V2",
+          "expectedEquivalent": true,
+          "observedValue": "15.45",
+          "observedMismatch": false,
+          "proposedValue": "15.45",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V2",
+              "Program"
+            ],
+            "stdin": "12.34\n1.2500\n",
+            "exitCode": 0,
+            "stdout": "15.45\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V3",
+          "expectedEquivalent": false,
+          "observedValue": "15.40",
+          "observedMismatch": true,
+          "proposedValue": "15.40",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V3",
+              "Program"
+            ],
+            "stdin": "12.34\n1.2500\n",
+            "exitCode": 0,
+            "stdout": "15.40\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V4",
+          "expectedEquivalent": false,
+          "observedValue": "15.40",
+          "observedMismatch": true,
+          "proposedValue": "15.40",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V4",
+              "Program"
+            ],
+            "stdin": "12.34\n1.2500\n",
+            "exitCode": 0,
+            "stdout": "15.40\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "familyId": "F005",
+      "testId": "F005-R2-T3",
+      "origin": "SUPPLIED",
+      "stdin": "0.00\n0.0000\n",
+      "reason": "Unchanged supplied test",
+      "observedReferenceValue": "0.00",
+      "proposedReferenceValue": "0.00",
+      "referencePredictionMatches": true,
+      "referenceRun": {
+        "command": [
+          "<temporary>/F005"
+        ],
+        "stdin": "0.00\n0.0000\n",
+        "exitCode": 0,
+        "stdout": "000000.00\n",
+        "stderr": ""
+      },
+      "variants": [
+        {
+          "variantId": "F005-V1",
+          "expectedEquivalent": true,
+          "observedValue": "0.00",
+          "observedMismatch": false,
+          "proposedValue": "0.00",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V1",
+              "Program"
+            ],
+            "stdin": "0.00\n0.0000\n",
+            "exitCode": 0,
+            "stdout": "0.00\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V2",
+          "expectedEquivalent": true,
+          "observedValue": "0.00",
+          "observedMismatch": false,
+          "proposedValue": "0.00",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V2",
+              "Program"
+            ],
+            "stdin": "0.00\n0.0000\n",
+            "exitCode": 0,
+            "stdout": "0.00\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V3",
+          "expectedEquivalent": false,
+          "observedValue": "0.00",
+          "observedMismatch": false,
+          "proposedValue": "0.00",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V3",
+              "Program"
+            ],
+            "stdin": "0.00\n0.0000\n",
+            "exitCode": 0,
+            "stdout": "0.00\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V4",
+          "expectedEquivalent": false,
+          "observedValue": "0.00",
+          "observedMismatch": false,
+          "proposedValue": "0.00",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V4",
+              "Program"
+            ],
+            "stdin": "0.00\n0.0000\n",
+            "exitCode": 0,
+            "stdout": "0.00\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "familyId": "F005",
+      "testId": "F005-R2-T4",
+      "origin": "SUPPLIED",
+      "stdin": "50000.00\n9.9999\n",
+      "reason": "Unchanged supplied test",
+      "observedReferenceValue": "499995.00",
+      "proposedReferenceValue": "499995.00",
+      "referencePredictionMatches": true,
+      "referenceRun": {
+        "command": [
+          "<temporary>/F005"
+        ],
+        "stdin": "50000.00\n9.9999\n",
+        "exitCode": 0,
+        "stdout": "499995.00\n",
+        "stderr": ""
+      },
+      "variants": [
+        {
+          "variantId": "F005-V1",
+          "expectedEquivalent": true,
+          "observedValue": "499995.00",
+          "observedMismatch": false,
+          "proposedValue": "499995.00",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V1",
+              "Program"
+            ],
+            "stdin": "50000.00\n9.9999\n",
+            "exitCode": 0,
+            "stdout": "499995.00\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V2",
+          "expectedEquivalent": true,
+          "observedValue": "499995.00",
+          "observedMismatch": false,
+          "proposedValue": "499995.00",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V2",
+              "Program"
+            ],
+            "stdin": "50000.00\n9.9999\n",
+            "exitCode": 0,
+            "stdout": "499995.00\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V3",
+          "expectedEquivalent": false,
+          "observedValue": "499995.00",
+          "observedMismatch": false,
+          "proposedValue": "499995.00",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V3",
+              "Program"
+            ],
+            "stdin": "50000.00\n9.9999\n",
+            "exitCode": 0,
+            "stdout": "499995.00\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V4",
+          "expectedEquivalent": false,
+          "observedValue": "499995.00",
+          "observedMismatch": false,
+          "proposedValue": "499995.00",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V4",
+              "Program"
+            ],
+            "stdin": "50000.00\n9.9999\n",
+            "exitCode": 0,
+            "stdout": "499995.00\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "familyId": "F005",
+      "testId": "F005-R2-T5",
+      "origin": "SUPPLIED",
+      "stdin": "1.00\n1.2250\n",
+      "reason": "Unchanged supplied test",
+      "observedReferenceValue": "1.25",
+      "proposedReferenceValue": "1.25",
+      "referencePredictionMatches": true,
+      "referenceRun": {
+        "command": [
+          "<temporary>/F005"
+        ],
+        "stdin": "1.00\n1.2250\n",
+        "exitCode": 0,
+        "stdout": "000001.25\n",
+        "stderr": ""
+      },
+      "variants": [
+        {
+          "variantId": "F005-V1",
+          "expectedEquivalent": true,
+          "observedValue": "1.25",
+          "observedMismatch": false,
+          "proposedValue": "1.25",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V1",
+              "Program"
+            ],
+            "stdin": "1.00\n1.2250\n",
+            "exitCode": 0,
+            "stdout": "1.25\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V2",
+          "expectedEquivalent": true,
+          "observedValue": "1.25",
+          "observedMismatch": false,
+          "proposedValue": "1.25",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V2",
+              "Program"
+            ],
+            "stdin": "1.00\n1.2250\n",
+            "exitCode": 0,
+            "stdout": "1.25\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V3",
+          "expectedEquivalent": false,
+          "observedValue": "1.20",
+          "observedMismatch": true,
+          "proposedValue": "1.20",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V3",
+              "Program"
+            ],
+            "stdin": "1.00\n1.2250\n",
+            "exitCode": 0,
+            "stdout": "1.20\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V4",
+          "expectedEquivalent": false,
+          "observedValue": "1.20",
+          "observedMismatch": true,
+          "proposedValue": "1.20",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V4",
+              "Program"
+            ],
+            "stdin": "1.00\n1.2250\n",
+            "exitCode": 0,
+            "stdout": "1.20\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    {
+      "familyId": "F005",
+      "testId": "F005-R2-T6",
+      "origin": "SUPPLIED",
+      "stdin": "25.00\n1.2345\n",
+      "reason": "Unchanged supplied test",
+      "observedReferenceValue": "30.85",
+      "proposedReferenceValue": "30.85",
+      "referencePredictionMatches": true,
+      "referenceRun": {
+        "command": [
+          "<temporary>/F005"
+        ],
+        "stdin": "25.00\n1.2345\n",
+        "exitCode": 0,
+        "stdout": "000030.85\n",
+        "stderr": ""
+      },
+      "variants": [
+        {
+          "variantId": "F005-V1",
+          "expectedEquivalent": true,
+          "observedValue": "30.85",
+          "observedMismatch": false,
+          "proposedValue": "30.85",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V1",
+              "Program"
+            ],
+            "stdin": "25.00\n1.2345\n",
+            "exitCode": 0,
+            "stdout": "30.85\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V2",
+          "expectedEquivalent": true,
+          "observedValue": "30.85",
+          "observedMismatch": false,
+          "proposedValue": "30.85",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V2",
+              "Program"
+            ],
+            "stdin": "25.00\n1.2345\n",
+            "exitCode": 0,
+            "stdout": "30.85\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V3",
+          "expectedEquivalent": false,
+          "observedValue": "30.85",
+          "observedMismatch": false,
+          "proposedValue": "30.85",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V3",
+              "Program"
+            ],
+            "stdin": "25.00\n1.2345\n",
+            "exitCode": 0,
+            "stdout": "30.85\n",
+            "stderr": ""
+          }
+        },
+        {
+          "variantId": "F005-V4",
+          "expectedEquivalent": false,
+          "observedValue": "30.90",
+          "observedMismatch": true,
+          "proposedValue": "30.90",
+          "predictionMatches": true,
+          "mismatchFlagMatches": true,
+          "run": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-cp",
+              "<temporary>/F005-V4",
+              "Program"
+            ],
+            "stdin": "25.00\n1.2345\n",
+            "exitCode": 0,
+            "stdout": "30.90\n",
+            "stderr": ""
+          }
+        }
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "/private/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+        "-V"
+      ],
+      "stdin": "",
+      "exitCode": 0,
+      "stdout": "cobc (GnuCOBOL) 3.2.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nWritten by Keisuke Nishida, Roger While, Ron Norman, Simon Sobisch, Edward Hart\nBuilt     Oct 18 2026 07:13:57\nPackaged  Jul 28 2023 17:02:56 UTC\nC version \"Apple LLVM 17.0.0 (clang-1700.6.3.2)\"\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-version"
+      ],
+      "stdin": "",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "java version \"21.0.10\" 2026-01-20 LTS\nJava(TM) SE Runtime Environment (build 21.0.10+8-LTS-217)\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.10+8-LTS-217, mixed mode, sharing)\n"
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/javac",
+        "-version"
+      ],
+      "stdin": "",
+      "exitCode": 0,
+      "stdout": "javac 21.0.10\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/private/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+        "-x",
+        "-free",
+        "-Wall",
+        "-o",
+        "<temporary>/F005",
+        "F005.cbl"
+      ],
+      "stdin": "",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "F005.cbl:28: warning: line not terminated by a newline [-Wmissing-newline]\n   26 |     MOVE FINAL-LOCAL TO OUT-VAL\n   27 |     DISPLAY OUT-VAL\n   28 >     STOP RUN.<EOF>\n"
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/javac",
+        "-J-Xmx256m",
+        "-proc:none",
+        "-d",
+        "<temporary>/F005-V1",
+        "<temporary>/F005-V1/Program.java"
+      ],
+      "stdin": "",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/javac",
+        "-J-Xmx256m",
+        "-proc:none",
+        "-d",
+        "<temporary>/F005-V2",
+        "<temporary>/F005-V2/Program.java"
+      ],
+      "stdin": "",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/javac",
+        "-J-Xmx256m",
+        "-proc:none",
+        "-d",
+        "<temporary>/F005-V3",
+        "<temporary>/F005-V3/Program.java"
+      ],
+      "stdin": "",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/javac",
+        "-J-Xmx256m",
+        "-proc:none",
+        "-d",
+        "<temporary>/F005-V4",
+        "<temporary>/F005-V4/Program.java"
+      ],
+      "stdin": "",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "<temporary>/F005"
+      ],
+      "stdin": "100.00\n1.2000\n",
+      "exitCode": 0,
+      "stdout": "000120.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V1",
+        "Program"
+      ],
+      "stdin": "100.00\n1.2000\n",
+      "exitCode": 0,
+      "stdout": "120.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V2",
+        "Program"
+      ],
+      "stdin": "100.00\n1.2000\n",
+      "exitCode": 0,
+      "stdout": "120.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V3",
+        "Program"
+      ],
+      "stdin": "100.00\n1.2000\n",
+      "exitCode": 0,
+      "stdout": "120.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V4",
+        "Program"
+      ],
+      "stdin": "100.00\n1.2000\n",
+      "exitCode": 0,
+      "stdout": "120.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "<temporary>/F005"
+      ],
+      "stdin": "12.34\n1.2500\n",
+      "exitCode": 0,
+      "stdout": "000015.45\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V1",
+        "Program"
+      ],
+      "stdin": "12.34\n1.2500\n",
+      "exitCode": 0,
+      "stdout": "15.45\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V2",
+        "Program"
+      ],
+      "stdin": "12.34\n1.2500\n",
+      "exitCode": 0,
+      "stdout": "15.45\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V3",
+        "Program"
+      ],
+      "stdin": "12.34\n1.2500\n",
+      "exitCode": 0,
+      "stdout": "15.40\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V4",
+        "Program"
+      ],
+      "stdin": "12.34\n1.2500\n",
+      "exitCode": 0,
+      "stdout": "15.40\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "<temporary>/F005"
+      ],
+      "stdin": "0.00\n0.0000\n",
+      "exitCode": 0,
+      "stdout": "000000.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V1",
+        "Program"
+      ],
+      "stdin": "0.00\n0.0000\n",
+      "exitCode": 0,
+      "stdout": "0.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V2",
+        "Program"
+      ],
+      "stdin": "0.00\n0.0000\n",
+      "exitCode": 0,
+      "stdout": "0.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V3",
+        "Program"
+      ],
+      "stdin": "0.00\n0.0000\n",
+      "exitCode": 0,
+      "stdout": "0.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V4",
+        "Program"
+      ],
+      "stdin": "0.00\n0.0000\n",
+      "exitCode": 0,
+      "stdout": "0.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "<temporary>/F005"
+      ],
+      "stdin": "50000.00\n9.9999\n",
+      "exitCode": 0,
+      "stdout": "499995.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V1",
+        "Program"
+      ],
+      "stdin": "50000.00\n9.9999\n",
+      "exitCode": 0,
+      "stdout": "499995.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V2",
+        "Program"
+      ],
+      "stdin": "50000.00\n9.9999\n",
+      "exitCode": 0,
+      "stdout": "499995.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V3",
+        "Program"
+      ],
+      "stdin": "50000.00\n9.9999\n",
+      "exitCode": 0,
+      "stdout": "499995.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V4",
+        "Program"
+      ],
+      "stdin": "50000.00\n9.9999\n",
+      "exitCode": 0,
+      "stdout": "499995.00\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "<temporary>/F005"
+      ],
+      "stdin": "1.00\n1.2250\n",
+      "exitCode": 0,
+      "stdout": "000001.25\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V1",
+        "Program"
+      ],
+      "stdin": "1.00\n1.2250\n",
+      "exitCode": 0,
+      "stdout": "1.25\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V2",
+        "Program"
+      ],
+      "stdin": "1.00\n1.2250\n",
+      "exitCode": 0,
+      "stdout": "1.25\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V3",
+        "Program"
+      ],
+      "stdin": "1.00\n1.2250\n",
+      "exitCode": 0,
+      "stdout": "1.20\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V4",
+        "Program"
+      ],
+      "stdin": "1.00\n1.2250\n",
+      "exitCode": 0,
+      "stdout": "1.20\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "<temporary>/F005"
+      ],
+      "stdin": "25.00\n1.2345\n",
+      "exitCode": 0,
+      "stdout": "000030.85\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V1",
+        "Program"
+      ],
+      "stdin": "25.00\n1.2345\n",
+      "exitCode": 0,
+      "stdout": "30.85\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V2",
+        "Program"
+      ],
+      "stdin": "25.00\n1.2345\n",
+      "exitCode": 0,
+      "stdout": "30.85\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V3",
+        "Program"
+      ],
+      "stdin": "25.00\n1.2345\n",
+      "exitCode": 0,
+      "stdout": "30.85\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+        "-Xmx128m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "<temporary>/F005-V4",
+        "Program"
+      ],
+      "stdin": "25.00\n1.2345\n",
+      "exitCode": 0,
+      "stdout": "30.90\n",
+      "stderr": ""
+    }
+  ],
+  "modelTrained": false,
+  "trainingAdmission": "QUALITY_CHECKS_RECORDED_SPLIT_GROUP_REVIEW_REQUIRED",
+  "limitations": [
+    "Synthetic feasibility pilot; no production or unseen-data model performance established.",
+    "Finite runtime checks, not universal equivalence or Z3 proof.",
+    "Structural alignment annotations remain AI-proposed, not independent localization gold.",
+    "F005-R2 is test data. Supplied source/labels are inspected for data quality only; no model tuning or training.",
+    "Only the six supplied cases were executed; no additional test-family probes were generated.",
+    "Replacement data flow differs materially from archived F001/F003, but independence is not statistically certified.",
+    "Original F005 is excluded from the active reduced pilot; original evidence remains unchanged.",
+    "Variant IDs/order, split and defect annotations and expected outputs must not become model features."
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "collectedDate": "2026-10-18",
+  "status": "METADATA_AUDIT_ONLY",
+  "source": {
+    "record": "https://zenodo.org/records/10447705",
+    "download": "https://zenodo.org/api/records/10447705/files/artifacts.zip/content",
+    "archiveBytes": 39044868,
+    "publishedMd5": "af77884df386d1662d7f92a1cecc42d2",
+    "archiveSha256": "cdcb44e325ff41d4880f387d78fc7169d8736c3af793b0345d2c19dd76be7d2b",
+    "manualLabelsMember": "Artifacts/RQ2-Manual Labeling/manual labeling.xlsx",
+    "manualLabelsSha256": "ce9e9f24ffbcb23a55574688483c667c8aedec4dbc8bd45ff699be810ce359fe",
+    "datasetLicense": "CC-BY-4.0; preserve additional upstream source-code licences"
+  },
+  "allAnnotations": {
+    "annotationRows": 1748,
+    "distinctTranslationIds": 1558,
+    "sourceLanguageAnnotationCounts": {
+      "c": 139,
+      "go": 128,
+      "java": 532,
+      "python": 770,
+      "cpp": 179
+    },
+    "targetLanguageAnnotationCounts": {
+      "cpp": 282,
+      "go": 512,
+      "java": 293,
+      "python": 312,
+      "c": 349
+    },
+    "impactAnnotationCounts": {
+      "compilation error": 754,
+      "wrong output": 582,
+      "runtime error": 350,
+      "infinite loop": 29,
+      "no output": 31,
+      "others": 2
+    },
+    "distinctTranslationIdsByImpact": {
+      "compilation error": 697,
+      "infinite loop": 29,
+      "no output": 28,
+      "others": 2,
+      "runtime error": 308,
+      "wrong output": 552
+    },
+    "bugTypeAnnotationCounts": {
+      "C1: Incorrect data type": 201,
+      "A1: Violating target language requirements": 424,
+      "B3: Incorrect loop and conditional statements": 46,
+      "D: Model specific constraints": 115,
+      "C3: Output formatting": 69,
+      "C2: Incorrect input parsing": 316,
+      "A3: Mismatch of API behaviors in the source and target": 57,
+      "B4: Inclusion of logic not in the source": 59,
+      "B5: Removal of logic from source": 58,
+      "B1: Missing library imports": 151,
+      "B2: Missing definition": 42,
+      "E: Others": 90,
+      "A4: Incorrect use of operator": 11,
+      "A2: Duplicating source syntax to the target language": 42,
+      "B6: Mismatch of behavior after replacing API call": 67
+    },
+    "datasetAnnotationCounts": {
+      "CodeNet": 819,
+      "Avatar": 835,
+      "Click": 18,
+      "Apache CLI": 32,
+      "M": 1,
+      "Eval+": 43
+    }
+  },
+  "targetJava": {
+    "annotationRows": 293,
+    "distinctTranslationIds": 267,
+    "sourceLanguageAnnotationCounts": {
+      "c": 26,
+      "go": 28,
+      "python": 205,
+      "cpp": 34
+    },
+    "targetLanguageAnnotationCounts": {
+      "java": 293
+    },
+    "impactAnnotationCounts": {
+      "compilation error": 133,
+      "wrong output": 82,
+      "runtime error": 56,
+      "no output": 18,
+      "infinite loop": 4
+    },
+    "distinctTranslationIdsByImpact": {
+      "compilation error": 116,
+      "infinite loop": 4,
+      "no output": 15,
+      "runtime error": 56,
+      "wrong output": 81
+    },
+    "bugTypeAnnotationCounts": {
+      "D: Model specific constraints": 27,
+      "B5: Removal of logic from source": 13,
+      "A1: Violating target language requirements": 47,
+      "B1: Missing library imports": 48,
+      "B3: Incorrect loop and conditional statements": 3,
+      "B2: Missing definition": 7,
+      "C2: Incorrect input parsing": 28,
+      "B4: Inclusion of logic not in the source": 12,
+      "A4: Incorrect use of operator": 7,
+      "A2: Duplicating source syntax to the target language": 9,
+      "E: Others": 14,
+      "B6: Mismatch of behavior after replacing API call": 14,
+      "C3: Output formatting": 7,
+      "C1: Incorrect data type": 55,
+      "A3: Mismatch of API behaviors in the source and target": 2
+    },
+    "datasetAnnotationCounts": {
+      "CodeNet": 121,
+      "Avatar": 111,
+      "Click": 18,
+      "Eval+": 43
+    }
+  },
+  "cobolAnnotations": 0,
+  "executionPerformed": false,
+  "modelTrainingPerformed": false,
+  "labelsAdmittedForTraining": 0,
+  "limitations": [
+    "Multiple annotations can describe one translation. Translation IDs are not independent original problems or projects.",
+    "Impact-specific distinct counts overlap when one translation has multiple impact labels; do not sum them.",
+    "The authors reviewed naturally occurring model translation failures, not injected mutations; this is not a production human-migration corpus.",
+    "No local source-code joins, reproductions, fix validation, healthy controls or cross-corpus leakage checks have been completed.",
+    "Compilation, runtime, wrong-output, no-output and nontermination outcomes require separate study targets.",
+    "There are no COBOL annotations. Results on other languages cannot establish COBOL-to-Java defect accuracy."
+  ]
+}

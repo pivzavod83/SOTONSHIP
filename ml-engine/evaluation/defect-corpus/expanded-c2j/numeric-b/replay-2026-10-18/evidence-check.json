@@ -1,0 +1,86 @@
+{
+  "status": "ALL_RETAINED_EVIDENCE_CHECKED",
+  "reportSha256": "e84df0437290ced669585cdf0c7b08f850966656cf70413b1718aa7b7100ade0",
+  "frozenPlanSha256": "70a269ca345399660fb943bd8d9606e14942e6e0ece20ecfb20254f171569c66",
+  "frozenCurrentScriptAndTestHashesVerified": 5,
+  "toolchainBinaryHashesVerified": 3,
+  "unchangedProgramSourceFilesVerified": 32,
+  "unchangedOriginalDriverFilesVerified": 57,
+  "javaProbeHashesVerified": 24,
+  "recordedProcessStreamHashesVerified": 624,
+  "nativeCobolOutputHashesVerified": 57,
+  "candidateClassificationCounts": {
+    "SOURCE_AGREEMENT_WITH_REFERENCE_POLICY_CONFLICT": 18,
+    "SOURCE_AGREEMENT": 58,
+    "SOURCE_DIVERGENCE_WITH_REFERENCE_POLICY_CONFLICT": 28,
+    "CANDIDATE_RUNTIME_FAILURE_ON_COMMON_INPUT": 10
+  },
+  "canonicalReferencePolicyConflictCases": 23,
+  "candidateExceptionEvidence": [
+    {
+      "taskId": "HumanEval/119",
+      "variant": "7b",
+      "driverIndex": 0,
+      "type": "java.lang.StringIndexOutOfBoundsException"
+    },
+    {
+      "taskId": "HumanEval/119",
+      "variant": "7b",
+      "driverIndex": 2,
+      "type": "java.lang.StringIndexOutOfBoundsException"
+    },
+    {
+      "taskId": "HumanEval/119",
+      "variant": "7b",
+      "driverIndex": 3,
+      "type": "java.lang.StringIndexOutOfBoundsException"
+    },
+    {
+      "taskId": "HumanEval/119",
+      "variant": "7b",
+      "driverIndex": 4,
+      "type": "java.lang.StringIndexOutOfBoundsException"
+    },
+    {
+      "taskId": "HumanEval/119",
+      "variant": "7b",
+      "driverIndex": 5,
+      "type": "java.lang.StringIndexOutOfBoundsException"
+    },
+    {
+      "taskId": "HumanEval/119",
+      "variant": "7b",
+      "driverIndex": 6,
+      "type": "java.lang.StringIndexOutOfBoundsException"
+    },
+    {
+      "taskId": "HumanEval/119",
+      "variant": "7b",
+      "driverIndex": 7,
+      "type": "java.lang.StringIndexOutOfBoundsException"
+    },
+    {
+      "taskId": "HumanEval/119",
+      "variant": "7b",
+      "driverIndex": 8,
+      "type": "java.lang.StringIndexOutOfBoundsException"
+    },
+    {
+      "taskId": "HumanEval/119",
+      "variant": "7b",
+      "driverIndex": 10,
+      "type": "java.lang.StringIndexOutOfBoundsException"
+    },
+    {
+      "taskId": "HumanEval/119",
+      "variant": "7b",
+      "driverIndex": 11,
+      "type": "java.lang.StringIndexOutOfBoundsException"
+    }
+  ],
+  "listContract": "Two-string list length derives from fixed NI loop; maximum output list length derives from input k. Full100 serialized records and unused storage checked, never expected-answer length.",
+  "focusedTestsPassed": 9,
+  "independentHumanReview": false,
+  "heldoutExecutionPerformed": false,
+  "note": "This deterministic evidence consistency check and cause inspection are AI-generated, not independent human adjudication. exception topStackFrame denotes first matching unprefixed application frame; JDK module-prefixed frames can precede it in the raw stack trace."
+}

@@ -5,7 +5,9 @@
   const byId = id => document.getElementById(id);
   let state;
   let proofTimer;
+  let aiContextTimer;
   let pendingProof = false;
+  let pendingAiContext = false;
   const send = (type, value) => vscode.postMessage(value === undefined ? { type } : { type, value });
   const flushProof = () => {
     if (!pendingProof) return;
@@ -13,7 +15,12 @@
     pendingProof = false;
     send('updateProofInputs', byId('proof-inputs').value);
   };
-  const action = (id, type) => byId(id).addEventListener('click', () => { flushProof(); send(type); });
+  const flushAiContext = () => {
+    if (!pendingAiContext) return;
+    clearTimeout(aiContextTimer); pendingAiContext = false;
+    send('updateAiReviewContext', byId('ai-review-context').value);
+  };
+  const action = (id, type) => byId(id).addEventListener('click', () => { flushProof(); flushAiContext(); send(type); });
   [
     ['demo', 'demo'], ['choose-cobol', 'chooseCobol'], ['choose-java', 'chooseJava'],
     ['choose-candidate', 'chooseCandidate'], ['choose-contract', 'chooseContract'],
@@ -22,9 +29,20 @@
     ['apply-candidate', 'applyCandidate'], ['clear-candidate', 'clearCandidate'],
     ['export-report', 'exportReport'], ['open-settings', 'openSettings'],
     ['choose-matching-files', 'chooseMatchingFiles'], ['match-programs', 'matchPrograms'],
+    ['analyze-pair-ai', 'analyzePairWithAi'],
   ].forEach(([id, type]) => action(id, type));
   byId('category').addEventListener('change', event => { flushProof(); send('setCategory', event.target.value); });
   byId('matching-format').addEventListener('change', event => send('setMatchingSourceFormat', event.target.value));
+  byId('ai-review-format').addEventListener('change', event => {
+    flushAiContext(); send('setAiReviewSourceFormat', event.target.value);
+    if (state) renderAiReview({ ...state, aiReviewStale: !!state.aiReviewResult });
+  });
+  byId('ai-review-context').addEventListener('input', () => {
+    pendingAiContext = true; clearTimeout(aiContextTimer);
+    aiContextTimer = setTimeout(flushAiContext, 180);
+    if (state) renderAiReview({ ...state, aiReviewStale: !!state.aiReviewResult });
+  });
+  byId('ai-review-context').addEventListener('change', flushAiContext);
   byId('save-endpoint').addEventListener('click', () => send('setBackendUrl', byId('backend-url').value.trim()));
   byId('backend-url').addEventListener('keydown', event => {
     if (event.key === 'Enter') send('setBackendUrl', event.target.value.trim());
@@ -92,6 +110,46 @@
     container.append(card);
   }
 
+  function renderAiReview(next) {
+    const container = byId('ai-review-result'); container.replaceChildren();
+    const result = next.aiReviewResult;
+    if (!result) return;
+    const card = element('article', `result-card ai-review-card${next.aiReviewStale ? ' stale' : ''}`);
+    card.append(element('p', 'eyebrow', 'AI DEFECT REVIEW · HYPOTHESES'), element('h3', '', next.aiReviewStale ? 'AI review is stale' : ({
+      ANALYZED: `${result.findings.length} suspected defect${result.findings.length === 1 ? '' : 's'}`,
+      NOT_CONFIGURED: 'Configure the model on your backend', PROVIDER_ERROR: 'The model provider could not complete this review',
+      INVALID_MODEL_OUTPUT: 'The model response failed validation', REFUSED: 'The model declined this review',
+    })[result.status] || 'AI review unavailable'));
+    if (next.aiReviewStale) {
+      card.append(element('p', 'stale-banner', 'The sources, editor versions, context, source format or backend changed. Findings are hidden; analyze the current pair again.'));
+      container.append(card); return;
+    }
+    card.append(element('p', 'result-summary', result.summary));
+    card.append(element('p', 'muted', 'AI hypotheses can be wrong or incomplete. Source spans locate a suspected mismatch; they are not proven causes. No candidate inputs have been executed. Run supported Z3 verification separately.'));
+    if (result.status === 'ANALYZED' && !result.findings.length) card.append(element('p', 'unknown-reason', 'The model reported no suspected mismatch. This does not establish equivalence or safety.'));
+    result.findings.forEach(finding => {
+      const section = element('section', 'witness ai-finding');
+      section.append(element('p', 'eyebrow', `${finding.findingId} · ${finding.severity} · ${finding.category.replace(/_/g, ' ')} · AI HYPOTHESIS`), element('h4', '', finding.title));
+      section.append(element('p', 'result-explanation', finding.explanation));
+      [['COBOL', finding.cobolLines, finding.cobolExcerpt], ['Java', finding.javaLines, finding.javaExcerpt]].forEach(([language, lines, excerpt]) => {
+        if (!lines) return;
+        section.append(element('p', 'field-label', `${language} lines ${lines.start}–${lines.end}`), element('pre', 'json-output source-excerpt', excerpt));
+      });
+      section.append(element('h4', '', 'Suggested correction · engineer review'), element('p', '', finding.suggestedFix || 'No correction proposed.'));
+      finding.candidateInputs.forEach((candidate, index) => {
+        section.append(element('h4', '', `Proposed input ${index + 1} · NOT EXECUTED`), element('pre', 'json-output', candidate.inputsJson), element('p', 'muted', candidate.rationale));
+      });
+      card.append(section);
+    });
+    if (result.limitations.length) {
+      const limitations = element('ul', 'ai-limitations'); result.limitations.forEach(item => limitations.append(element('li', '', item)));
+      card.append(element('h4', '', 'Review limitations'), limitations);
+    }
+    detail(card, 'Provider, source hashes & AI evidence status', { provider: result.provider, sourceHashes: result.sourceHashes,
+      promptVersion: result.promptVersion, aiIsProof: result.aiIsProof, counterexamplesExecuted: result.counterexamplesExecuted });
+    container.append(card);
+  }
+
   function resultCard(result, label, stale) {
     const scope = object(result.proofScope);
     const provenance = object(result.provenanceJson);
@@ -150,7 +208,7 @@
   }
 
   function renderResults(next) {
-    byId('empty-state').hidden = !!(next.result || next.candidateResult);
+    byId('empty-state').hidden = !!(next.result || next.candidateResult || next.aiReviewResult);
     const original = byId('original-result');
     original.replaceChildren();
     if (next.result) original.append(resultCard(next.result, 'CURRENT JAVA', next.resultStale));
@@ -175,6 +233,8 @@
     if (!pendingProof && document.activeElement !== byId('proof-inputs')) byId('proof-inputs').value = next.proofInputsText || '';
     byId('category').value = next.category;
     byId('matching-format').value = next.matchingSourceFormat || 'AUTO';
+    byId('ai-review-format').value = next.aiReviewSourceFormat || 'AUTO';
+    if (!pendingAiContext && document.activeElement !== byId('ai-review-context')) byId('ai-review-context').value = next.aiReviewContext || '';
     const matchingFiles = byId('matching-files'); matchingFiles.replaceChildren();
     (next.matchingFiles || []).forEach(item => {
       const label = element('li', '', `${item.candidateId} · ${item.file.name}${item.file.dirty ? ' · unsaved' : ''}`);
@@ -183,18 +243,20 @@
     ['cobol', 'java', 'candidate'].forEach(kind => updateFile(kind, next.files[kind]));
     const paired = !!(next.files.cobol && next.files.java);
     const candidate = !!next.files.candidate;
-    ['demo', 'choose-cobol', 'choose-java', 'choose-candidate', 'choose-contract', 'choose-matching-files', 'matching-format', 'save-endpoint', 'open-settings', 'category', 'backend-url', 'proof-inputs'].forEach(id => { byId(id).disabled = busy; });
+    ['demo', 'choose-cobol', 'choose-java', 'choose-candidate', 'choose-contract', 'choose-matching-files', 'matching-format', 'ai-review-format', 'ai-review-context', 'save-endpoint', 'open-settings', 'category', 'backend-url', 'proof-inputs'].forEach(id => { byId(id).disabled = busy; });
     byId('match-programs').disabled = busy || !next.files.cobol || !next.matchingFiles?.length;
     byId('verify').disabled = busy || !paired;
     byId('verify').textContent = busy ? 'Working…' : 'Verify source pair';
+    byId('analyze-pair-ai').disabled = busy || !paired;
     byId('verify-candidate').disabled = busy || !paired || !candidate;
     byId('clear-candidate').disabled = busy || !candidate;
     byId('show-diff').disabled = busy || !next.files.java || !candidate;
     byId('apply-candidate').disabled = busy || !next.canApply || pendingProof;
-    byId('export-report').disabled = busy || !(next.result || next.candidateResult || next.matchingResult);
+    byId('export-report').disabled = busy || !(next.result || next.candidateResult || next.matchingResult || next.aiReviewResult);
     byId('applied-message').hidden = !next.applied;
     renderResults(next);
     renderMatching(next);
+    renderAiReview(pendingAiContext ? { ...next, aiReviewStale: !!next.aiReviewResult } : next);
   }
   window.addEventListener('message', event => {
     if (event.data && event.data.type === 'state' && event.data.state) render(event.data.state);

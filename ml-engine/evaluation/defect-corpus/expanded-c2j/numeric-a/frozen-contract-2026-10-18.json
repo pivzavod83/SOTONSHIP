@@ -1,0 +1,629 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-18T06:31:53.994314+00:00",
+  "status": "FROZEN_EXPLORATORY_NUMERIC_A_BEFORE_NEW_EXECUTION",
+  "artifacts": {
+    "data": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/data/COBOL-JavaTrans.jsonl",
+      "sha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+      "bytes": 1857161
+    },
+    "7b": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/output/translation_COBOL_to_Java_COBOL-Coder_7b.jsonl",
+      "sha256": "f2a640f57159d257de6d6c3fdbd5af970ef447ab4fb24a72b928e7f77b76dba6",
+      "bytes": 102732
+    },
+    "14b": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/output/translation_COBOL_to_Java_COBOL-Coder_14b.jsonl",
+      "sha256": "5282a929afc7b0e0775f2f2109805a19052f8885e8143d81f7736b24906f4c41",
+      "bytes": 115855
+    },
+    "license": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/LICENSE",
+      "sha256": "50e6751797c50dedd75ef1b8a0d9e42f5f8472e9fbce91f34718e9f97b0c780a",
+      "bytes": 11324
+    },
+    "generator": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/generate_cobol_javatrans.py",
+      "sha256": "ae23e080366a54bbdf427acd572d67091ed3ec68dc7548ac25e5d7a2bd548497",
+      "bytes": 7272
+    },
+    "evaluator": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/evaluate_translation_c2j.py",
+      "sha256": "c188f079d7f2152720fd8695328a26f6e844680dc8bf7a47bfbc314c1df0a4b8",
+      "bytes": 5365
+    },
+    "utils": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/utils.py",
+      "sha256": "273eb153d1045b26d104f0e73c4dcabf5b2f3a5cf020187223863b87019d85b8",
+      "bytes": 7915
+    }
+  },
+  "partitionSha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+  "scriptSha256": "81a04513c226b53b90baadd532d6eab634a70495e4c8259b476347aad99a8f72",
+  "helpers": {
+    "audit": {
+      "filename": "audit_natural_c2j_candidates.py",
+      "sha256": "2bc1518b701f7f56ea58f4b14d74dd745336135908e792414879ff53cf6e4282"
+    },
+    "scalar": {
+      "filename": "replay_scalar_c2j_witnesses.py",
+      "sha256": "a93cb91eaed6d728032639f4b2971a483c9d10773e440ac45b94e0fc0660ea74"
+    }
+  },
+  "selection": "Assigned eight development families after Java screening; no unbiased prevalence or detector-accuracy claim.",
+  "outputScope": "Returned scalar or explicit source-written list prefix only; input mutations and unassigned result tails are outside comparisons.",
+  "expectedResultMetadataUsed": false,
+  "generatedInputs": 0,
+  "reservedTasksExecuted": 0,
+  "tasks": [
+    {
+      "taskId": "HumanEval/35",
+      "rowOrdinalZeroBased": 30,
+      "contract": {
+        "input": "L-L",
+        "size": 3,
+        "method": "maxElement",
+        "kind": "int"
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "71fc925d1e88da52588a011a1a600e4e54f268a0c440263248c852e0f6cf0f47",
+          "outputFile": "MAX-ELEMENT.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            10,
+            2,
+            3
+          ],
+          "inputContract": "Exactly3 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "c64b940106955dbd629ef1c1d362fa6957e3e369f01c9830adb5c75736ad3b87",
+          "outputFile": "MAX-ELEMENT.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            124,
+            1,
+            -10
+          ],
+          "inputContract": "Exactly3 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        }
+      ],
+      "sourceHashes": {
+        "cobol": "adafd4322eab7ca707c7a791c419f778bb3b9dc1b60ad7ee5b566c212af15a5f",
+        "canonical": "5e3b921cacac0c4957f16c520d8701c3cba53772cbdc136d6eceadba665cdac2",
+        "7b": "f0a4f20bff278783347b8818bf39f91822d1d00dbd5492a470556307cdc540c9",
+        "14b": "e22736fe54c5aa24f7d99fd63c19f8a48f2ac88690c3bfda8318cf4556e13919"
+      },
+      "probeSha256": "846137f7b9fe08b2044e32dbbf4bd73f42601b10c9e044634dc90b0bc9f32516"
+    },
+    {
+      "taskId": "HumanEval/43",
+      "rowOrdinalZeroBased": 36,
+      "contract": {
+        "input": "L-L",
+        "size": 4,
+        "method": "pairsSumToZero",
+        "kind": "boolean"
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "4f709375cf16870e9f15a037cde8aafc8b0e9d0156735cb8e90d745abb02f416",
+          "outputFile": "PAIRS-SUM-TO-ZERO.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            1,
+            3,
+            5,
+            0
+          ],
+          "inputContract": "Exactly4 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "a00a221fb35740f933ab4f9fbba51612e8d263f29517b1cf360d1f26aced5859",
+          "outputFile": "PAIRS-SUM-TO-ZERO.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            1,
+            3,
+            -2,
+            1
+          ],
+          "inputContract": "Exactly4 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "73ef25693be1fc1574bb710020a1b9afe1d7c95c1fd91ea16a471aad33777082",
+          "outputFile": "PAIRS-SUM-TO-ZERO.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            1,
+            2,
+            3,
+            7
+          ],
+          "inputContract": "Exactly4 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 3,
+          "driverSha256": "42278ca76b3c04f96eff5837368c6638afc8019f8d3615a46d8a00964ceeac6b",
+          "outputFile": "PAIRS-SUM-TO-ZERO.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            -3,
+            9,
+            -1,
+            3
+          ],
+          "inputContract": "Exactly4 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        }
+      ],
+      "sourceHashes": {
+        "cobol": "84aed3d3ab794a954ccc0452dec4fb974ef1f3edeac8b6ef7df24f0b4f863db5",
+        "canonical": "5e2ab3b4578017320935c787aa3e316efee441b5e772fc502a6d623850ba1e8e",
+        "7b": "3ece2bd4e248fcff39268595e39ab00cbf52c48d613f814c805f6e9386027b90",
+        "14b": "b91db4bcdd7e71a3453db338cf41dbba24c5220db4bd8f8c11e78e5084956d9e"
+      },
+      "probeSha256": "a4e6171fdf025c8ca0023623064cb4ececb4cb3c971b2851eb24a7251b879cee"
+    },
+    {
+      "taskId": "HumanEval/47",
+      "rowOrdinalZeroBased": 40,
+      "contract": {
+        "input": "L-L",
+        "size": 5,
+        "method": "median",
+        "kind": "decimal"
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "fe033b5e24228fe0ac479c2c1705a124e256b293c4f7fbddf63850d486fe159a",
+          "outputFile": "MEDIAN.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            3,
+            1,
+            2,
+            4,
+            5
+          ],
+          "inputContract": "Exactly5 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "a07496169ca6dbc875e41803670e2ecad0ec0eba2ec841258a8e27401328eb18",
+          "outputFile": "MEDIAN.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            -10,
+            4,
+            6,
+            1000,
+            10
+          ],
+          "inputContract": "Exactly5 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "b881bfed16c723f393deb135c5aa9e5ede9a4ee297968bdf4de6177d09939b1f",
+          "outputFile": "MEDIAN.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            8,
+            1,
+            3,
+            9,
+            9
+          ],
+          "inputContract": "Exactly5 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        }
+      ],
+      "sourceHashes": {
+        "cobol": "e1b3d7cd13ba4e21ad92b332125838ef5c9f498ad0e0f9c812320287d829ce74",
+        "canonical": "a6677cdf6213fec2cf39ecc43076c8a7ca16c63a11c69a180ac6611389238642",
+        "7b": "7f3142c197c3d6ecf51bb7be7e48adf214cdd2056628d5742f4f5a777baeaa60",
+        "14b": "5a5d1363eed3a7f066e7f04b9a89fc67e6f099ae97476572f276dde832f77459"
+      },
+      "probeSha256": "2a52ea54ebb7dc48e00d0c47c75fb62a7a2576d138b0498600b2741e7924f0ec"
+    },
+    {
+      "taskId": "HumanEval/70",
+      "rowOrdinalZeroBased": 60,
+      "contract": {
+        "input": "L-LST",
+        "size": 4,
+        "method": "strangeSortList",
+        "kind": "list-int",
+        "outputPrefix": 4,
+        "projectionEvidence": "WS-REMAINING VALUE4 decrements once per RESULT write until0; only first4 RESULT occurrences are compared. Remaining96 records are retained as native evidence, outside the return projection."
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "c08bdafdafddbc826e5ab95a755725fb3b9fd352abab394d67967c96c5d0309b",
+          "outputFile": "STRANGE-SORT-LIST.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "inputContract": "Exactly4 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "f4b9994bf59970d4957d6a6da0e81a64bd74a7bfa915a063c307204b762e7244",
+          "outputFile": "STRANGE-SORT-LIST.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            5,
+            6,
+            8,
+            9
+          ],
+          "inputContract": "Exactly4 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "3e87ef65fde9f2cab96ce71ea60d4b0dc1cfe5688790641fd0aedb2f910c07c2",
+          "outputFile": "STRANGE-SORT-LIST.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            1,
+            2,
+            4,
+            5
+          ],
+          "inputContract": "Exactly4 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 3,
+          "driverSha256": "3729eb0e6ed11ed527b5386d604d4a53c4f7da58af814e857437b50860bf7cfe",
+          "outputFile": "STRANGE-SORT-LIST.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            5,
+            8,
+            9,
+            1
+          ],
+          "inputContract": "Exactly4 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 4,
+          "driverSha256": "11d4e2dca3992486c8e5cc80f493eaaf551ae560d6dfbc7b2b811fe9d8b3f9aa",
+          "outputFile": "STRANGE-SORT-LIST.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            5,
+            5,
+            5,
+            5
+          ],
+          "inputContract": "Exactly4 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        }
+      ],
+      "sourceHashes": {
+        "cobol": "7eff3457a33ed7cb7ddf10976b329b5244bf2401844df3b0dcd7d900b0572d52",
+        "canonical": "711b803ecc0467377983dc2789d1a6ce78513920bf18fae0d2c62e447f9bde0b",
+        "7b": "814e95e94e788f089c23e5663ccaf9648d97cecf1425729fbbfe64bb9d18205f",
+        "14b": "810721b49ac186a5992b2376ea3ae23248eb77197a6deb64291edea45d496f23"
+      },
+      "probeSha256": "b919ac9a7ce80540cd3686a721e282760d51bfa215166eaff6b0bf3c998f92c7"
+    },
+    {
+      "taskId": "HumanEval/73",
+      "rowOrdinalZeroBased": 63,
+      "contract": {
+        "input": "L-ARR",
+        "size": 7,
+        "method": "smallestChange",
+        "kind": "int"
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "20739c701c4b5277479e9ed8764aebd7c3d98316468c4ed92ed4c7666e03c7c0",
+          "outputFile": "SMALLEST-CHANGE.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            1,
+            2,
+            2,
+            4,
+            3,
+            2,
+            2
+          ],
+          "inputContract": "Exactly7 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "e406ce33afd4d298d696a4f63182901c7a47f39fe06ab8301f6451ee994ab6c1",
+          "outputFile": "SMALLEST-CHANGE.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            1,
+            2,
+            3,
+            3,
+            3,
+            2,
+            1
+          ],
+          "inputContract": "Exactly7 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        }
+      ],
+      "sourceHashes": {
+        "cobol": "cc84c556b503ee213701ce95e91b89a5d51888076c50f5f6d0fe83045a1c839f",
+        "canonical": "d707a98a299c2b66d6321387a10dd3c65e2a1771b45efd2fe788796760011527",
+        "7b": "5a65db72561ee5c0720da2c78cf0c9e2c6bbd745e3813324e7d8aa69f3f18980",
+        "14b": "6be5f8dd1dd88e2132c5d5756a4d9f84a44de40d00caa91d7aa9774542ecf25f"
+      },
+      "probeSha256": "f8846d4c7bc5c6f1f596b0f0c5a68495a6f470a59e9f6f2e8d5da126e1e01803"
+    },
+    {
+      "taskId": "HumanEval/74",
+      "rowOrdinalZeroBased": 64,
+      "contract": {
+        "kind": "string-lists",
+        "method": "totalMatch",
+        "inputTables": {
+          "L-LST1": 10,
+          "L-LST2": 10
+        },
+        "unsupportedReason": "Original drivers do not initialize all20 declared input string slots. No Java values or logical list lengths are inferred for uninitialized occurrences; RESULT has100 string slots without an explicit logical return length."
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "1a93293f6fa78a4659d766665414b55f25d3e36f4907ccf3a25af403614f7b84",
+          "outputFile": "TOTAL-MATCH.TXT",
+          "status": "UNSUPPORTED",
+          "reason": "Original drivers do not initialize all20 declared input string slots. No Java values or logical list lengths are inferred for uninitialized occurrences; RESULT has100 string slots without an explicit logical return length.",
+          "initializedStringSlots": [
+            {
+              "table": "L-LST1",
+              "position": 1,
+              "literal": "hi"
+            },
+            {
+              "table": "L-LST1",
+              "position": 2,
+              "literal": "admin"
+            },
+            {
+              "table": "L-LST2",
+              "position": 1,
+              "literal": "hi"
+            },
+            {
+              "table": "L-LST2",
+              "position": 2,
+              "literal": "hi"
+            },
+            {
+              "table": "L-LST2",
+              "position": 3,
+              "literal": "admin"
+            },
+            {
+              "table": "L-LST2",
+              "position": 4,
+              "literal": "project"
+            }
+          ],
+          "missingInputSlots": {
+            "L-LST1": [
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "L-LST2": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ]
+          }
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "a172b3b564b7a3f3105faeb2db2868023aafba9dc6fbe77eb1b890bfda70fc93",
+          "outputFile": "TOTAL-MATCH.TXT",
+          "status": "UNSUPPORTED",
+          "reason": "Original drivers do not initialize all20 declared input string slots. No Java values or logical list lengths are inferred for uninitialized occurrences; RESULT has100 string slots without an explicit logical return length.",
+          "initializedStringSlots": [
+            {
+              "table": "L-LST1",
+              "position": 1,
+              "literal": "4"
+            },
+            {
+              "table": "L-LST1",
+              "position": 2,
+              "literal": "5"
+            },
+            {
+              "table": "L-LST2",
+              "position": 1,
+              "literal": "1"
+            },
+            {
+              "table": "L-LST2",
+              "position": 2,
+              "literal": "2"
+            },
+            {
+              "table": "L-LST2",
+              "position": 3,
+              "literal": "3"
+            },
+            {
+              "table": "L-LST2",
+              "position": 4,
+              "literal": "4"
+            }
+          ],
+          "missingInputSlots": {
+            "L-LST1": [
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "L-LST2": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ]
+          }
+        }
+      ],
+      "sourceHashes": {
+        "cobol": "6efc15e6864c1cc7bb9a8dfc247b2079c36d481c1d5c01966754cc9aa031ecfa",
+        "canonical": "0f26b0f035c06ea4531591dee1213949ce6305e0bf62304dc48e0f2100f33a27",
+        "7b": "900526fb98446e7b66883cbca96b2c25a9c03ecfb68a4fe0bd6ecd6513b179be",
+        "14b": "f4f929b729c4c19484a3d3725aea125bcc068cefb00de9f49bb1d21dea5b54c5"
+      },
+      "probeSha256": null
+    },
+    {
+      "taskId": "HumanEval/85",
+      "rowOrdinalZeroBased": 75,
+      "contract": {
+        "input": "L-LST",
+        "size": 4,
+        "method": "add",
+        "kind": "int"
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "46ab03c226900f5620220b1a8f21a107402cb6817544a07fca56b787a371637f",
+          "outputFile": "ADD.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            4,
+            0,
+            6,
+            7
+          ],
+          "inputContract": "Exactly4 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "3330e704af583691b5fc65c7b5c6a8428989607cae84cc09d6a43ffd501e36ce",
+          "outputFile": "ADD.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            4,
+            4,
+            6,
+            8
+          ],
+          "inputContract": "Exactly4 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        }
+      ],
+      "sourceHashes": {
+        "cobol": "ff9e78c3a577630c99da2be95e8306f05e121b1b45e8cb9f9aac437c739d35a4",
+        "canonical": "dd6313104da1a6ef4cf866b95ec26c5ca5dcaffda6adf4ba04c6dd2774d1113e",
+        "7b": "d5742196cf44e244c0e9a86ef4bac7227dbbf5392f0f8901c5d1434f32dadc4c",
+        "14b": "3bc35c127dd21fd589f58286a4b460148a0479c7205b3941a4ded4e3d4a9df42"
+      },
+      "probeSha256": "1fb49c325e0733929c313d4a72ef61d93f6343ba617397236099e13f61c1b32d"
+    },
+    {
+      "taskId": "HumanEval/88",
+      "rowOrdinalZeroBased": 77,
+      "contract": {
+        "input": "L-ARRAY",
+        "size": 7,
+        "method": "sortArray",
+        "kind": "list-int",
+        "outputPrefix": 7,
+        "projectionEvidence": "WS-ARRAY-SIZE VALUE7 controls the loop copying exactly first7 input occurrences into RESULT; only these first7 records are compared. Remaining93 native records are outside the return projection."
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "dd46a5473582cfc4e62cb6b54695238f956014b8aad88e54c87b7a9fcfb66c92",
+          "outputFile": "SORT-ARRAY.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            2,
+            4,
+            3,
+            0,
+            1,
+            6,
+            5
+          ],
+          "inputContract": "Exactly7 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "f4d51ebc9c4e6974ded1beb4fcc7327846f73c4d5e4d98b86017625b8581f264",
+          "outputFile": "SORT-ARRAY.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            2,
+            4,
+            3,
+            0,
+            1,
+            5,
+            6
+          ],
+          "inputContract": "Exactly7 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "f26bda787b839844b613fcdff9ddc94db0eb2a96909ebb9827117f6d427c5d91",
+          "outputFile": "SORT-ARRAY.TXT",
+          "status": "SUPPORTED",
+          "arguments": [
+            15,
+            42,
+            87,
+            89,
+            32,
+            11,
+            0
+          ],
+          "inputContract": "Exactly7 fully initialized signed integer occurrences mapped to Java List<Integer> in original occurrence order."
+        }
+      ],
+      "sourceHashes": {
+        "cobol": "d3a25d0646ea150b9b2fed2728a5d6d8ebfaf73894f36129a7f52c328500eb2a",
+        "canonical": "25e7de015795c5957b79bd7528c6ffab5d580a7d552163bb18fbc4a438e104f1",
+        "7b": "c50de0706c6a6e41cdfb2c9450ae52d66442f2284a871fe671f6f51488904cc2",
+        "14b": "304eff4ea99f66c2c85c00b704957a57f910be8c34f37297458958a1f0b5c64b"
+      },
+      "probeSha256": "d0c244a6656eabcfc7e93be3bfa45db2f4536dd6877b5f892a4f43531872b137"
+    }
+  ],
+  "independentHumanReviewsPerformed": 0,
+  "admittedDefectLabels": 0
+}
