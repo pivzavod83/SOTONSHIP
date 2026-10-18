@@ -1,33 +1,54 @@
-# Financial verification engine
+# Paired-program matching and bounded financial verification
 
-This engine produces source-derived structural graphs, runs a small two-layer GCN and synthetic-calibrated XGBoost classifier, and asks Z3 to compare a deliberately restricted scalar COBOL/Java model. The graph model is a demonstration trained on generated examples. It does not establish real-corpus alignment accuracy or financial defect probabilities.
+The migration workflow has two independent engines: a relation-aware GNN learns whole-program COBOL/Java correspondence from actual source pairs; Z3 checks the supported financial arithmetic after an engineer confirms a pair and an explicit input contract. No LLM is connected. No defect-risk classifier or synthetic-feature training dataset is shipped.
+
+From this directory, install and check:
 
 ```sh
-python3.13 -m venv .venv
-.venv/bin/pip install -r requirements.txt
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m pytest -q
+```
+
+## Dataset and actual fitting
+
+The pinned COBOL-JavaTrans benchmark contains 143 small HumanEval-derived program pairs, not production banking modules. Sources and tests are upstream-created and reviewed according to the authors; we use their program correspondence labels, not a claim of unrestricted equivalence. Raw code remains outside Git in `evaluation/corpora/`. The manifest, licence attribution, split task IDs, model weights and measured report are versioned.
+
+```sh
+.venv/bin/python scripts/fetch_paired_dataset.py
+OPENBLAS_NUM_THREADS=1 .venv/bin/python scripts/train_paired_gnn.py
+```
+
+The task-grouped split contains 85 training, 29 validation and 29 test tasks. Near-duplicates stay together. Training uses a symmetric paired-source contrastive objective, two relation-aware message-passing layers and whole-program pooling. Checkpoint selection and retrieval gates use validation only. A corrected-model report records that an earlier implementation's test results were observed before code-review fixes; it does not claim a pristine unseen research benchmark.
+
+The measured GNN is an experimental pilot, not established as superior to name matching. See [evaluation/README.md](evaluation/README.md) and [the exact training report](evaluation/paired-code/training-report.json). The 143 task pairs do not provide statement correspondence, bug locations or faulty-to-correct patch labels. There is no automatic code generation, exact failure localization or trained risk probability.
+
+## Matching CLI
+
+```sh
+.venv/bin/python -m ml_engine.matching --stdin < matching-request.json
+```
+
+Input: `{ "cobolSource": "...", "cobolSourceFormat": "AUTO", "candidates": [{ "candidateId": "candidate-1", "moduleName": "Example.java", "javaSource": "..." }], "topK": 5 }`.
+
+Supply 1–20 Java candidates; each source is limited to 100,000 characters and 1,500 lines, the request to 2 MiB. `AUTO`/`FREE`/`FIXED` affects matching extraction only and makes no formal compiler claim. Output is one JSON object with source-bound ranked candidates, cosine similarities, model/dataset/evaluation provenance, `matchingIsProof: false`, `granularity: PROGRAM`, and `MATCH_SUGGESTED` or `REVIEW_REQUIRED`. A single candidate, insufficient graph structure or unsupported validation gate requires review. Even a suggested match needs engineer confirmation.
+
+`code_graph.py` extracts operation/type/literal features and approximate local data, control and sequence relations. This is a bounded heuristic, not a complete compiler AST/CFG. Identifier spelling, comments, declared method/program names and task IDs are excluded from learned numeric features. `paired_gnn.py` fits and evaluates portable NumPy weights; no native ML runtime, GPU, model API or OpenMP is required. Matching never executes submitted programs.
+
+## Verification CLI and fixture regeneration
+
+```sh
+.venv/bin/python -m ml_engine.verify --stdin < verification-request.json
 .venv/bin/python -m ml_engine.precompute
-.venv/bin/pytest -q
 ```
 
-Run these commands from `ml-engine/`. Source data and attribution live in `../data-sources/`; precomputation reads those checked-in snapshots without making network requests. It writes `data/seed-verifications.json` and readable source pairs under `data/fixtures/`. The backend's MikroORM seeder loads this artifact.
+Verification input contains `moduleName`, `category`, `cobolSource`, `javaSource`, optional `patchedJavaSource`, `proofInputs`, and reference-rate records. `proofInputs` declares the supported COBOL profile, source format, exact amount/rate/result fields, Java parameter names, cent bounds and reference-rate pair/source/collection date. Missing or mismatched inputs return `UNKNOWN`; matching does not invent or silently change this contract. Stdout is one JSON object; invalid protocols fail on stderr. Submitted programs are parsed as data, never executed by the API.
 
-The four seeded outcomes are two genuine solver-checked counterexamples, one bounded equivalence proof, and one explicit external-state limit. All three arithmetic patches are independently reverified before seed generation succeeds. The CICS example has no certified patch.
+The inspection graph in `cpg_builder.py` is separate from the learned matching graph. Verification records contain a program-level learned similarity only. `gnnBugRiskScore=0` is a deprecated numeric compatibility field: `provenanceJson.riskAssessment.status=NOT_ESTIMATED` explicitly says no risk was predicted. Clients must not show that zero as low risk. The legacy node-risk evaluator refuses to apply inappropriate labels to this model.
 
-## CLI protocol
+Four AI-authored financial fixtures remain as independent Z3 regression scenarios, **excluded from GNN training**. Precomputation produces two counterexamples, one bounded match and one external-state limit, and checks proposed arithmetic fixes. Reference rates and licences live in `../data-sources/`. The backend's idempotent MikroORM seeder preserves existing applied patches.
 
-```sh
-.venv/bin/python -m ml_engine.verify --stdin < request.json
-.venv/bin/python -m ml_engine.verify --id 529f05c9-2783-53b1-a89f-0aacc1b5a3fe
-.venv/bin/python -m ml_engine.verify --id 529f05c9-2783-53b1-a89f-0aacc1b5a3fe --persist
-```
-
-`--stdin` consumes one JSON object with `moduleName`, `category`, `cobolSource`, `javaSource`, optional `patchedJavaSource`, `proofInputs`, and `referenceFxRates`. Rates contain `currencyPair`, a decimal-string `rate`, `source`, `collectedDate`, optional `observationDate`, and optional `provenanceJson`. `proofInputs` identifies the declared COBOL scalar-subset profile, source format, field and parameter mapping, cent bounds, and exact reference-rate pair/source/collection date. Missing or mismatched proof inputs return `UNKNOWN_HALTED_LIMIT`; no unrelated rate is substituted. Analysis uses the current `javaSource`; supplying a patch does not imply its correctness.
-
-Stdout contains exactly one JSON analysis object. Protocol/input failures exit 2 and write a JSON error to stderr. Valid unsupported programs return `UNKNOWN_HALTED_LIMIT`. Requests are limited to 1 MiB and each source to 100,000 characters / 1,500 lines.
-
-The result includes alignment/risk/baseline scores, `formalProofStatus`, `bugCategory`, an English summary, graph JSON, witnesses, `isFailureLimitCase`, `proofScope`, and `provenanceJson`. `proofScope` retains input bounds, the exact rate and vintage, source SHA-256 hashes, solver version/result, the observation contract, and limitations. There is no compiler execution of submitted code.
-
-`--id` reads the same PostgreSQL tables as NestJS, using `DATABASE_URL` from the environment or root `.env`. It is read-only unless `--persist` is passed. Persistence checks the loaded version and source strings before updating analysis, rejecting stale writes after concurrent edits. `--persist` requires `--id`.
+The optional `verify --id UUID` CLI reads PostgreSQL with `DATABASE_URL`; `--persist` additionally updates analysis with version/source checks. Sources and database credentials are never sent to a model provider.
 
 ## Formal scope
 
@@ -43,26 +64,10 @@ For floating-point programs, the engine searches exact half-cent candidate amoun
 
 The FX witness at the collected BoE GBP/EUR rate `1.1830` is **GBP 45.00 → COBOL 53.24 / Java 53.23**, caused by `new BigDecimal(principal * quote)` preserving an inexact binary product. The originally proposed GBP 10,450.33 at rate 1.2941 yields 13523.77 under both decimal and binary cent rounding; it is not a valid penny-drift witness. Mortgage witnesses expose both the included `PERFORM THRU` intermediate paragraph and the five-digit result capacity. The fixed remittance example uses the historical World Bank provider rate 43.98 and fee 1.89 at GBP 120; its higher fee tier is an invented demo policy, with this limitation recorded in provenance. The generated COBOL uses free source format (`cobc -free` when compiling separately).
 
-## Graph model and reproducibility
+## Validation boundaries
 
-`cpg_builder.py` uses NetworkX `MultiDiGraph` to retain separate AST, CFG and type-use edges. It is a line-based structural approximation; its eight features include arithmetic/storage type, normalized scale, rounding, branches, external calls and a calculated PCA structural residual. The independent formal parser validates the complete source before any proof.
+Matching quality is measured as retrieval on the versioned paired-task split. It is not the same as proof coverage. Many benchmark programs are outside the financial parser; a retrieval result can coexist with `UNKNOWN` verification.
 
-`gnn_aligner.py` applies normalized adjacency message passing through saved `8→12→8` GCN weights. It aggregates over graph edges directly, keeping message-passing memory proportional to graph nodes and edges rather than allocating a dense node-by-node matrix. Cosine similarity links paragraph and method embeddings without name features. Saved XGBoost trees produce node scores, followed by Platt calibration fitted on held-out synthetic rows. Portable JSON inference requires NumPy and NetworkX, and does not import the native XGBoost runtime.
+Tests include real model metadata/source binding, extraction and renaming invariance, message passing and numerical gradients, split isolation, matching contracts, unchanged Z3 counterexamples and bounded proofs. Optional JVM tests execute only repository-owned educational fixtures to replay financial witnesses; they do not execute arbitrary uploaded code.
 
-Training is reproducible with a fixed seed:
-
-```sh
-.venv/bin/pip install -r requirements-training.txt
-.venv/bin/python scripts/train_demo_models.py
-.venv/bin/python -m ml_engine.precompute
-```
-
-On macOS, XGBoost training additionally needs the OpenMP runtime (`brew install libomp`); normal inference and tests do not. Artifacts include the source training script, GCN arrays, portable tree dump, original XGBoost JSON and synthetic train/calibration/test split plus metrics. These metrics apply only to generated feature rows. No measured 94% vs 18% alignment claim, real financial benchmark, production probability calibration or mathematical need for AI is asserted. An explicit mapping supplied by a human could also drive formal verification.
-
-The deterministic baseline actually computes normalized name overlap and one obvious unsafe-constructor regex rule. Its scores are not ground-truth alignment accuracy, so the API reports observational comparisons rather than claiming a proven model advantage. Model inference time is recorded for each run, not guaranteed to remain below 200 ms for arbitrary inputs. Sparse graph aggregation improves scaling with edge count; it does not improve the model's real-world accuracy or validate its synthetic risk probabilities.
-
-## Human-reviewed model evaluation
-
-The current model remains unvalidated on real migration data. The source-safe corpus schema, template, adjudication workflow, group-level holdout rules and evaluation command are in [`evaluation/README.md`](./evaluation/README.md). `evaluate_review_set.py` compares the saved model with exact-name and deterministic-risk baselines, reports misses as well as hits, and breaks metrics down by declared dialect profile and pattern. It does not train a model or change proof decisions. Do not put production source in this repository.
-
-The test suite checks source mutations, rounding signs/ties, overflow-compatible patches, external limits, invalid syntax and Java types, comments/string semantics, rate capacity, graph edges/message passing, name invariance, baseline behavior and CLI output. When a JDK is installed, independent JVM tests compile only the repository's generated fixtures and replay witnesses and patched boundary cases.
+Implementation, training code, generated financial fixtures and documentation are AI-assisted and require human review. Upstream benchmark code has separate authorship and licence notices.

@@ -3,6 +3,7 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import config from './mikro-orm.config';
 import { VerificationModule } from './modules/verification/verification.module';
 import { FxRatesModule } from './modules/fx-rates/fx-rates.module';
+import { MatchingModule } from './modules/matching/matching.module';
 
-@Module({ imports: [MikroOrmModule.forRoot(config), VerificationModule, FxRatesModule] })
+@Module({ imports: [MikroOrmModule.forRoot(config), VerificationModule, FxRatesModule, MatchingModule] })
 export class AppModule {}

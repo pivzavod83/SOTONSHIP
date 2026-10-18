@@ -60,7 +60,7 @@ def test_z3_sat_witnesses_match_actual_java(tmp_path):
         folder.mkdir()
         invoke = _runner(row["javaSource"], folder)
         for witness in row["counterexamplesJson"]:
-            observed = invoke(witness["inputAmountGbp"], witness["boeFxRate"])
+            observed = invoke(witness["inputAmountGbp"], witness["referenceRate"])
             assert observed == Decimal(witness["javaOutput"])
             expected = Decimal(witness["cobolOutput"])
             assert observed != expected

@@ -1,0 +1,18 @@
+COBOL-JavaTrans benchmark provenance
+
+Source: COBOL-Coder/COBOL-Coder, evaluation/data/COBOL-JavaTrans.jsonl
+Pinned repository commit: 2b14b7bf7e55556205654c6f7657fa60e36251fa
+Repository licence: Apache License 2.0; see LICENSE-COBOL-Coder.txt.
+Underlying HumanEval tasks: OpenAI, MIT; see LICENSE-HumanEval.txt,
+retrieved from HumanEval commit b9453e8f1865df0a0057a1383767caa400acfbcf.
+No assertion is made that upstream translations have been independently audited.
+
+The raw source programs remain in the ignored evaluation/corpora cache.
+The model artifact contains learned numeric weights, not copied source programs.
+Task IDs in task-splits.json document reproducible leakage-controlled partitions.
+Pairing labels indicate an upstream task correspondence, not proof of semantic
+or financial correctness. No synthetic feature records or invented defect labels
+are used by this paired-source model.
+
+Implementation, experiment scripts and this notice were AI assisted. Metrics in
+training-report.json were produced by actual CPU fitting and evaluation.

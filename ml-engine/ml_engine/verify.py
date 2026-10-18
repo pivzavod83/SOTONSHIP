@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 import re
@@ -12,7 +11,7 @@ from pathlib import Path
 from uuid import UUID
 
 from .cpg_builder import baseline, build_cpg, combined_graph_json
-from .gnn_aligner import MODEL_DIR, align
+from .gnn_aligner import align_sources
 from .z3_formal_prover import SAT, UNKNOWN, UNSAT, prove
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -79,7 +78,7 @@ def verify_request(request: dict) -> dict:
     graph_source_format = source_format if source_format in ("FREE", "FIXED") else "FREE"
     cobol = build_cpg(request["cobolSource"], "cobol", graph_source_format)
     java = build_cpg(request["javaSource"], "java")
-    alignment = align(cobol, java)
+    alignment = align_sources(request["cobolSource"], request["javaSource"], graph_source_format)
     baseline_score, baseline_caught = baseline(request["cobolSource"], request["javaSource"])
     proof_inputs = request.get("proofInputs")
     rate = select_rate(request["category"], rates, proof_inputs)
@@ -97,21 +96,25 @@ def verify_request(request: dict) -> dict:
                        "This is equivalence of the supported bounded scalar model.")
     else:
         explanation = f"Proof halted: {proof['proofScope'].get('reason', 'unsupported semantics')}. Human review is required."
-    summary = (f"Structural GCN alignment cosine {alignment['alignmentScore']:.3f}; synthetic-calibrated node risk "
-               f"{alignment['bugRiskScore']:.3f}. Factors: {', '.join(alignment['riskFactors'])}. {explanation}")
+    summary = (f"Paired-code GNN program cosine {alignment['cosineSimilarity']:.3f} (advisory matching, not equivalence). "
+               f"Defect risk is not estimated. {explanation}")
     return {"gnnAlignmentScore": alignment["alignmentScore"], "gnnBugRiskScore": alignment["bugRiskScore"],
             "baselineAlignmentScore": baseline_score, "baselineCaughtBug": baseline_caught,
             **proof, "fStringSummary": summary,
             "cpgGraphJson": combined_graph_json(cobol, java, alignment["links"]),
             "provenanceJson": {"engineVersion": "0.1.0", "model": alignment["modelProvenance"],
-                "modelSha256": hashlib.sha256((MODEL_DIR / "cobol_java_gnn_v1.json").read_bytes()).hexdigest(),
+                "modelSha256": alignment["modelSha256"],
                 "graphInferenceMs": alignment["inferenceMs"], "referenceRate": rate,
                 "alignmentIsProof": False, "measuredAlignmentBenchmark": None,
-                "mlValidation": {"status": "NOT_VALIDATED", "evidence": "synthetic demo data only", "humanReviewedCorpus": None},
+                "mlValidation": {"status": "BENCHMARK_PILOT", "evidence": alignment["modelProvenance"].get("evaluation", {}),
+                                 "productionBankingValidated": False},
+                "riskAssessment": alignment["riskAssessment"],
+                "matchingGranularity": "PROGRAM",
                 "sourceAuthorship": request.get("sourceAuthorship", "Caller-supplied sources; provenance not independently verified"),
-                "limitations": ["Structural graph extraction is a source-line approximation, separate from the closed formal parser.",
+                "limitations": ["The displayed inspection graph is a line approximation; matching uses a separate semantic-feature graph.",
+                                "Program-pair training does not supply statement correspondences or defect labels.",
                                 "GNN/model confidence is not proof and does not prune symbolic inputs.",
-                                "Synthetic model calibration does not establish financial defect accuracy."]}}
+                                "Small public benchmark retrieval results do not establish production migration reliability."]}}
 
 
 def _database_url() -> str:

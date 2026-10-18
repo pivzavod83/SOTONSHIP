@@ -61,7 +61,7 @@ def precompute(output: Path) -> dict:
         (fixture_dir / f"{stem}.java.txt").write_text(request["javaSource"])
         (fixture_dir / f"{stem}.patched.java.txt").write_text(request["patchedJavaSource"])
     artifact = {"formatVersion": 1, "generatedAt": timestamp,
-                "provenance": "AI-authored fixture sources and synthetic-trained demo model; recomputed actual Z3 results. Raw data provenance retained.",
+                "provenance": "AI-authored financial test fixtures, excluded from paired-code GNN training; recomputed independent Z3 results. Raw reference-data provenance retained.",
                 "referenceFxRates": rates, "verifications": rows}
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(artifact, indent=2, allow_nan=False) + "\n")

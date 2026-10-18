@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
 import { createServer } from 'node:http';
+import { createHash } from 'node:crypto';
 import * as vscode from 'vscode';
 import type { WorkbenchController } from '../src/extension';
 import type { ProofInputs, VerificationResult } from '../src/contracts';
+import type { MatchingRequest, MatchingResult } from '../src/matching-contracts';
 
 const backendUrl = process.env.LIVE_VERIFIER_URL ?? 'http://127.0.0.1:3002';
 let assertions = 0;
@@ -90,6 +92,30 @@ async function reached(requested: Promise<void>): Promise<void> {
   } finally { if (timer) clearTimeout(timer); }
 }
 
+/** Protocol fixture for editor workflow only; this does not measure learned model quality. */
+async function matchingGate(): Promise<{ url: string; requests: MatchingRequest[]; holdNext(): { requested: Promise<void>; release(): void }; close(): Promise<void> }> {
+  const requests: MatchingRequest[] = [];
+  let hold: { reached(): void; released: Promise<void> } | undefined;
+  const hash = (value: string) => createHash('sha256').update(value).digest('hex');
+  const server = createServer(async (req, res) => {
+    const chunks: Buffer[] = []; for await (const chunk of req) chunks.push(Buffer.from(chunk));
+    assert.equal(req.url, '/api/matches');
+    const input = JSON.parse(Buffer.concat(chunks).toString('utf8')) as MatchingRequest; requests.push(input);
+    const pending = hold; hold = undefined;
+    if (pending) { pending.reached(); await pending.released; }
+    const result: MatchingResult = { status: 'REVIEW_REQUIRED', reason: 'Protocol fixture: engineer review required.', matchingIsProof: false, granularity: 'PROGRAM',
+      model: { id: 'native-host-protocol-fixture', sha256: 'b'.repeat(64), trainingDataset: 'COBOL-JavaTrans', evaluation: { purpose: 'Editor integration fixture, not a model quality measurement.' } },
+      cobolSourceSha256: hash(input.cobolSource), candidates: input.candidates.map((item, index) => ({ candidateId: item.candidateId, moduleName: item.moduleName,
+        javaSourceSha256: hash(item.javaSource), rank: index + 1, similarity: 0.8 - index * 0.1 })), thresholds: { minimumSimilarity: 0.85, minimumMargin: 0.1 } };
+    res.writeHead(201, { 'Content-Type': 'application/json' }); res.end(JSON.stringify(result));
+  });
+  server.listen(0, '127.0.0.1'); await once(server, 'listening'); const address = server.address(); assert.ok(address && typeof address !== 'string');
+  return { url: `http://127.0.0.1:${address.port}`, requests,
+    holdNext() { let reached!: () => void; let release!: () => void; const requested = new Promise<void>(resolve => { reached = resolve; });
+      hold = { reached, released: new Promise<void>(resolve => { release = resolve; }) }; return { requested, release }; },
+    async close() { server.closeAllConnections(); await new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve())); } };
+}
+
 /** Called by the real VS Code Extension Development Host, not by node --test. */
 export async function run(): Promise<void> {
   console.log(`SOTONSHIP native Extension Host integration suite; live engine: ${backendUrl}`);
@@ -98,7 +124,7 @@ export async function run(): Promise<void> {
   const controller = await extension.activate();
   ok(extension.isActive);
   const commands = await vscode.commands.getCommands(true);
-  for (const command of ['sotonship.openWorkbench', 'sotonship.verifyFiles', 'sotonship.tryDemo', 'sotonship.showFixDiff', 'vscode.diff']) {
+  for (const command of ['sotonship.openWorkbench', 'sotonship.verifyFiles', 'sotonship.matchPrograms', 'sotonship.tryDemo', 'sotonship.showFixDiff', 'vscode.diff']) {
     ok(commands.includes(command), `${command} must be registered in the native host.`);
   }
   await vscode.commands.executeCommand('sotonship.openWorkbench');
@@ -191,6 +217,87 @@ export async function run(): Promise<void> {
   passed('unsupported semantics remain UNKNOWN and cannot authorize an edit');
 
   await replace(candidate, corrected);
+  const rankingGate = await matchingGate();
+  try {
+    const priorMapping = controller.getState().proofInputsText;
+    await controller.configureMatching({ cobol: cobol.uri, candidates: [java.uri, candidate.uri], backendUrl: rankingGate.url, sourceFormat: 'FREE' });
+    equal(rankingGate.requests.length, 0, 'Selecting matching files must not upload code.');
+    const ranking = await controller.matchPrograms();
+    equal(ranking.matchingIsProof, false); equal(ranking.status, 'REVIEW_REQUIRED');
+    equal(rankingGate.requests.length, 1);
+    equal(rankingGate.requests[0].cobolSource, cobol.getText());
+    equal(rankingGate.requests[0].candidates[0].javaSource, original);
+    equal(rankingGate.requests[0].candidates[1].javaSource, corrected);
+    equal(rankingGate.requests[0].topK, 2, 'Request every selected candidate instead of relying on backend topK defaults.');
+    equal(controller.getState().files.java?.path, java.uri.toString(), 'Ranking must not silently choose a Java implementation.');
+    equal(controller.getState().proofInputsText, priorMapping, 'Matching must not infer or modify financial proof inputs.');
+    equal(controller.getState().matchingStale, false);
+    await controller.confirmMatch('candidate-2');
+    equal(controller.getState().files.java?.path, candidate.uri.toString());
+    equal(controller.getState().confirmedMatchId, 'candidate-2');
+    equal(controller.getState().proofInputsText, priorMapping);
+    equal(controller.getState().canApply, false);
+    equal(controller.getState().resultStale, true);
+    equal(rankingGate.requests.length, 1, 'Engineer confirmation only selects a URI; it does not establish a proof or silently send more sources.');
+    equal(java.getText(), original); equal(candidate.getText(), corrected);
+    passed('matching sends unsaved source snapshots and requires explicit candidate confirmation without changing proof inputs or source text');
+
+    await replace(candidate, `${corrected}\n// Change after learned ranking.\n`);
+    equal(controller.getState().matchingStale, true);
+    equal(controller.getState().confirmedMatchId, undefined);
+    await rejects(controller.confirmMatch('candidate-1'), /current sources|changed/iu);
+    equal(controller.getState().files.java?.path, candidate.uri.toString(), 'Stale confirmation must preserve the current Java selection.');
+    await replace(candidate, corrected);
+    passed('editing a ranked candidate invalidates matching evidence and prevents stale selection');
+
+    await controller.configureMatching({ cobol: cobol.uri, candidates: [java.uri, candidate.uri], backendUrl: rankingGate.url, sourceFormat: 'FREE' });
+    const delayedRanking = rankingGate.holdNext(); const inFlight = controller.matchPrograms();
+    equal(controller.getState().busy, true);
+    await rejects(controller.matchPrograms(), /already running/iu);
+    await rejects(controller.configureMatching({ cobol: cobol.uri, candidates: [java.uri] }), /current verification/iu);
+    await rejects(controller.confirmMatch('candidate-1'), /already running/iu);
+    await reached(delayedRanking.requested);
+    await replace(java, `${original}\n// Unsaved during matching.\n`);
+    delayedRanking.release(); await inFlight;
+    equal(controller.getState().matchingStale, true);
+    equal(controller.getState().busy, false);
+    await rejects(controller.confirmMatch('candidate-1'), /current sources|changed/iu);
+    await replace(java, original);
+    passed('matching is busy before snapshots, blocks overlapping operations and rejects evidence changed in flight');
+  } finally { await rankingGate.close(); }
+
+  if (process.env.LIVE_MATCHING_URL) {
+    const bytes = await vscode.workspace.fs.readFile(vscode.Uri.joinPath(extension.extensionUri, '..', 'ml-engine', 'data', 'seed-verifications.json'));
+    const fixtures = (JSON.parse(Buffer.from(bytes).toString('utf8')) as { verifications: VerificationResult[] }).verifications;
+    const extra: vscode.TextDocument[] = [];
+    for (const category of ['INTEREST_CALC', 'REMITTANCE_FEE']) {
+      const fixture = fixtures.find(item => item.category === category); ok(fixture);
+      extra.push(await vscode.workspace.openTextDocument({ language: 'java', content: fixture.javaSource }));
+    }
+    await configure(process.env.LIVE_MATCHING_URL);
+    await controller.configureMatching({ cobol: cobol.uri, candidates: [java.uri, ...extra.map(document => document.uri)],
+      backendUrl: process.env.LIVE_MATCHING_URL, sourceFormat: 'FREE' });
+    const priorMapping = controller.getState().proofInputsText;
+    const learnedRanking = await controller.matchPrograms();
+    equal(learnedRanking.matchingIsProof, false); equal(learnedRanking.granularity, 'PROGRAM');
+    equal(learnedRanking.candidates.length, 3);
+    ok(learnedRanking.model.id.length > 0); equal(learnedRanking.model.sha256.length, 64);
+    ok(learnedRanking.model.trainingDataset.length > 0);
+    equal(controller.getState().matchingStale, false);
+    equal(learnedRanking.cobolSourceSha256, createHash('sha256').update(cobol.getText()).digest('hex'));
+    // The model's financial-domain accuracy is not asserted: the engineer chooses the known FX program even if another ranks higher.
+    const fx = learnedRanking.candidates.find(item => item.candidateId === 'candidate-1'); ok(fx);
+    equal(fx.javaSourceSha256, createHash('sha256').update(original).digest('hex'));
+    await controller.confirmMatch(fx.candidateId);
+    equal(controller.getState().files.java?.path, java.uri.toString());
+    equal(controller.getState().proofInputsText, priorMapping);
+    const afterMatching = await controller.verify(false);
+    equal(afterMatching.formalProofStatus, 'SAT_COUNTEREXAMPLE_FOUND');
+    equal(controller.getState().canApply, false);
+    for (const document of extra) equal(document.uri.scheme, 'untitled');
+    passed('real learned ranking is source-bound; engineer chooses known FX counterpart and independent Z3 still finds its discrepancy');
+  } else console.log('  - Real learned ranking integration skipped; set LIVE_MATCHING_URL to exercise the trained matching backend.');
+
   const gate = await evidenceGate(verifiedCandidate);
   try {
     await configure(gate.url);

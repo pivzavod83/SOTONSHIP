@@ -1,135 +1,51 @@
-"""Two-layer GCN with saved synthetic-demo weights and calibrated XGBoost risk.
+"""Program matching from a model trained on paired source programs.
 
-Portable JSON tree inference avoids importing libomp/XGBoost in the request path.
-Scores are exploratory synthetic-demo model outputs, never proof obligations.
+This adapter preserves the verification response contract. There is no defect
+risk model or learned statement correspondence. The independent formal parser,
+not this model, defines every proof obligation.
 """
 from __future__ import annotations
 
-import json
-import math
-from collections import Counter
-from functools import lru_cache
-from pathlib import Path
 from time import perf_counter
 
 import networkx as nx
 import numpy as np
 
-MODEL_DIR = Path(__file__).parent / "models"
+from .paired_gnn import MODEL_PATH, encode_source, load_model, model_metadata
+
+MODEL_DIR = MODEL_PATH.parent
 
 
-@lru_cache(maxsize=1)
-def load_model():
-    return json.loads((MODEL_DIR / "cobol_java_gnn_v1.json").read_text())
-
-
-def embeddings(graph: nx.DiGraph, model: dict) -> tuple[list[str], np.ndarray]:
-    """Run the saved GCN using sparse edge aggregation.
-
-    The old implementation materialized an N x N dense adjacency matrix. The
-    source graph is sparse, so that wasted O(N^2) memory and compute on mostly
-    zero entries. This builds the same symmetrized, self-looped, normalized
-    adjacency as before, then aggregates only over existing edges.
-    """
-    nodes = list(graph)
-    indices = {node: index for index, node in enumerate(nodes)}
-    directed_counts = Counter((indices[source], indices[target]) for source, target in graph.edges())
-    undirected_weights: dict[tuple[int, int], int] = {}
-    for source, target in directed_counts:
-        left, right = sorted((source, target))
-        if left == right:
-            undirected_weights[(left, right)] = directed_counts[(left, right)] + 1
-        else:
-            undirected_weights[(left, right)] = max(
-                directed_counts[(left, right)], directed_counts[(right, left)])
-
-    rows: list[int] = []
-    columns: list[int] = []
-    weights: list[float] = []
-    for (left, right), weight in undirected_weights.items():
-        rows.append(left)
-        columns.append(right)
-        weights.append(float(weight))
-        if left != right:
-            rows.append(right)
-            columns.append(left)
-            weights.append(float(weight))
-    # Include a self-loop for every isolated node, matching A + I.
-    for index in range(len(nodes)):
-        if (index, index) not in undirected_weights:
-            rows.append(index)
-            columns.append(index)
-            weights.append(1.0)
-
-    row_indices = np.asarray(rows, dtype=np.intp)
-    column_indices = np.asarray(columns, dtype=np.intp)
-    edge_weights = np.asarray(weights, dtype=float)
-    degree = np.bincount(row_indices, weights=edge_weights, minlength=len(nodes))
-    normalized_weights = edge_weights / np.sqrt(degree[row_indices] * degree[column_indices])
-    values = np.asarray([graph.nodes[node]["features"] for node in nodes])
-
-    def aggregate(features: np.ndarray) -> np.ndarray:
-        result = np.zeros_like(features, dtype=float)
-        np.add.at(result, row_indices,
-                  features[column_indices] * normalized_weights[:, None])
-        return result
-
-    first = np.maximum(aggregate(values) @ np.asarray(model["W1"]), 0)
-    second = aggregate(first) @ np.asarray(model["W2"])
-    second /= np.maximum(np.linalg.norm(second, axis=1, keepdims=True), 1e-12)
-    return nodes, second
-
-
-def _tree_value(tree: dict, values: list[float]) -> float:
-    while "leaf" not in tree:
-        feature = tree["split"]
-        index = int(feature[1:]) if feature.startswith("f") else int(feature)
-        target = tree["yes"] if values[index] < tree["split_condition"] else tree["no"]
-        tree = next(child for child in tree["children"] if child["nodeid"] == target)
-    return float(tree["leaf"])
-
-
-def node_risk(features: list[float], embedding: np.ndarray, model: dict) -> float:
-    classifier = model["riskClassifier"]
-    values = features + embedding.tolist()
-    margin = classifier["baseMargin"] + sum(_tree_value(tree, values) for tree in classifier["trees"])
-    calibration = classifier["calibration"]
-    score = 1 / (1 + math.exp(-max(-50, min(50, calibration["slope"] * margin + calibration["intercept"]))))
-    return round(score, 6)
+def align_sources(cobol_source: str, java_source: str, source_format: str = "AUTO") -> dict:
+    started = perf_counter()
+    model = load_model()
+    cobol_vector = encode_source(cobol_source, "cobol", source_format, model=model)
+    java_vector = encode_source(java_source, "java", model=model)
+    cosine = float(np.clip(cobol_vector @ java_vector, -1.0, 1.0))
+    metadata = model_metadata()
+    return {
+        # Existing verification storage constrains this legacy field to [0, 1].
+        # The retrieval API returns the full cosine, including negative values.
+        "alignmentScore": round(max(0.0, cosine), 6),
+        "cosineSimilarity": round(cosine, 6),
+        "bugRiskScore": 0.0,
+        "riskAssessment": {
+            "status": "NOT_ESTIMATED",
+            "reason": "The synthetic risk classifier was removed. Paired-program labels do not identify defects.",
+            "legacyNumericField": "gnnBugRiskScore=0 is unused compatibility data, not evidence of low risk.",
+        },
+        "links": [{"source": "cobol:root", "target": "java:root", "kind": "GNN_ALIGNMENT",
+                   "granularity": "PROGRAM", "similarity": round(cosine, 6), "matchingIsProof": False}],
+        "riskFactors": [],
+        "inferenceMs": round((perf_counter() - started) * 1000, 3),
+        "modelProvenance": metadata,
+        "modelSha256": metadata["sha256"],
+    }
 
 
 def align(cobol: nx.DiGraph, java: nx.DiGraph) -> dict:
-    started = perf_counter()
-    model = load_model()
-    c_nodes, c_vectors = embeddings(cobol, model)
-    j_nodes, j_vectors = embeddings(java, model)
-    for graph, nodes, vectors in ((cobol, c_nodes, c_vectors), (java, j_nodes, j_vectors)):
-        for node, vector in zip(nodes, vectors, strict=True):
-            graph.nodes[node]["riskScore"] = node_risk(graph.nodes[node]["features"], vector, model)
-    source = [index for index, node in enumerate(c_nodes) if cobol.nodes[node]["kind"] == "paragraph"]
-    target = [index for index, node in enumerate(j_nodes) if java.nodes[node]["kind"] == "method"]
-    if not source:
-        source = [0]
-    if not target:
-        target = [0]
-    links = []
-    for index in source:
-        candidate = max(target, key=lambda other: float(c_vectors[index] @ j_vectors[other]))
-        score = max(0.0, min(1.0, float(c_vectors[index] @ j_vectors[candidate])))
-        links.append({"source": c_nodes[index], "target": j_nodes[candidate], "kind": "GNN_ALIGNMENT",
-                      "confidence": round(score, 6)})
-    maximum_risk = max(graph.nodes[node]["riskScore"] for graph in (cobol, java) for node in graph)
-    factors = []
-    all_features = [attributes["features"] for graph in (cobol, java) for _, attributes in graph.nodes(data=True)]
-    if any(item[0] for item in all_features) and any(item[1] for item in all_features):
-        factors.append("packed fixed-point to IEEE754 type boundary")
-    if any(item[5] for item in all_features):
-        factors.append("branch or PERFORM range control flow")
-    if any(item[6] for item in all_features):
-        factors.append("external state or aliased storage")
-    if not factors:
-        factors.append("explicit decimal scale and rounding")
-    return {"alignmentScore": round(sum(link["confidence"] for link in links) / len(links), 6),
-            "bugRiskScore": maximum_risk, "links": links, "riskFactors": factors,
-            "inferenceMs": round((perf_counter() - started) * 1000, 3),
-            "modelProvenance": model["provenance"]}
+    """Compatibility entry point for inspection graphs, not a node model."""
+    if "sourceText" not in cobol.graph or "sourceText" not in java.graph:
+        raise ValueError("Program matching needs exact original sources; line labels are insufficient")
+    return align_sources(cobol.graph["sourceText"], java.graph["sourceText"],
+                         cobol.graph.get("sourceFormat", "AUTO"))

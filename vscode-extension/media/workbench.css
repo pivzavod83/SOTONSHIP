@@ -91,6 +91,14 @@ h4 { font-size: 12px; font-weight: 600; }
 .details summary { cursor: pointer; font-size: 11px; color: var(--vscode-textLink-foreground); line-height: 1.7; padding: 3px 0; }
 .json-output { background: var(--vscode-editor-background); color: var(--vscode-editor-foreground); font-family: var(--vscode-editor-font-family, monospace); font-size: 10px; line-height: 1.65; white-space: pre-wrap; word-break: break-word; overflow: auto; max-height: 380px; padding: 12px; border: 1px solid var(--line); border-radius: 3px; margin: 10px 0 0; }
 .graph-body { padding-top: 9px; }
+.matching-setup { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 14px; }
+.matching-setup h3 { font-size: 13px; margin-bottom: 5px; }
+.matching-setup select { margin: 6px 0 12px; }
+.matching-files { padding-left: 18px; font-size: 11px; overflow-wrap: anywhere; }
+.matching-ranking { padding: 0; list-style: none; margin: 18px 0; }
+.matching-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); padding: 12px 0; }
+.matching-row strong { font-size: 12px; overflow-wrap: anywhere; }
+.matching-row button { white-space: normal; }
 .graph-metrics { margin-top: 15px; }
 .evidence-footer { color: var(--muted); font-size: 10px; line-height: 1.8; margin: 19px 2px 0; max-width: 690px; }
 @keyframes pulse { from { opacity: .4; } to { opacity: 1; } }

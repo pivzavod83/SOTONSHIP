@@ -15,3 +15,7 @@ python3 data-sources/collect.py --collected-date YYYY-MM-DD
 ```
 
 The collector intentionally pins source revision and requested FX window for repeatable evidence. Review and update those parameters deliberately when collecting a new vintage. It does not overwrite the manually checked World Bank row. `provenance.json` describes every source and `checksums.sha256` covers the delivered local evidence. No source endorses this verifier.
+
+## Paired-code learning corpus
+
+The [paired-code source inventory](paired-code/README.md) records the separately collected 143-task COBOL-JavaTrans training/evaluation benchmark, commit, hash, notices and provenance. It is used for whole-program correspondence, not financial rates or Z3 proof obligations.

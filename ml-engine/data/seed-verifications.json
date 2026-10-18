@@ -1,7 +1,7 @@
 {
   "formatVersion": 1,
-  "generatedAt": "2026-10-17T16:13:22.453318+00:00",
-  "provenance": "AI-authored fixture sources and synthetic-trained demo model; recomputed actual Z3 results. Raw data provenance retained.",
+  "generatedAt": "2026-10-18T03:05:36.762454+00:00",
+  "provenance": "AI-authored financial test fixtures, excluded from paired-code GNN training; recomputed independent Z3 results. Raw reference-data provenance retained.",
   "referenceFxRates": [
     {
       "currencyPair": "GBP/EUR",
@@ -161,8 +161,8 @@
       "cobolSource": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. FX-WIRE-CALC.\n       DATA DIVISION.\n       WORKING-STORAGE SECTION.\n       01 INPUT-AMOUNT PIC S9(7)V99 COMP-3 VALUE 0.\n       01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.\n       01 SETTLEMENT-RESULT PIC S9(7)V99 COMP-3 VALUE 0.\n       PROCEDURE DIVISION.\n       MAIN.\n           COMPUTE SETTLEMENT-RESULT ROUNDED = INPUT-AMOUNT * REFERENCE-RATE.\n           GOBACK.\n",
       "javaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class FxWireService {\n    public BigDecimal calculate(double principal, double quote) {\n        return new BigDecimal(principal * quote).setScale(2, RoundingMode.HALF_UP);\n    }\n}\n",
       "patchedJavaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class FxWireService {\n    public BigDecimal calculate(BigDecimal principal, BigDecimal quote) {\n        return principal.multiply(quote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));\n    }\n}\n",
-      "gnnAlignmentScore": 0.959789,
-      "gnnBugRiskScore": 0.527145,
+      "gnnAlignmentScore": 0.636735,
+      "gnnBugRiskScore": 0.0,
       "baselineAlignmentScore": 0.0,
       "baselineCaughtBug": false,
       "formalProofStatus": "SAT_COUNTEREXAMPLE_FOUND",
@@ -170,7 +170,7 @@
       "counterexamplesJson": [
         {
           "inputAmountGbp": "45.00",
-          "boeFxRate": "1.183",
+          "referenceRate": "1.183",
           "cobolOutput": "53.24",
           "javaOutput": "53.23",
           "pennyDrift": "-0.01",
@@ -226,6 +226,20 @@
           },
           "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
         },
+        "proofInputs": {
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+          "cobolSourceFormat": "FREE",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "principal",
+          "javaRateParameter": "quote",
+          "amountMinCents": -999999999,
+          "amountMaxCents": 999999999,
+          "referenceCurrencyPair": "GBP/EUR",
+          "referenceSource": "Bank of England Daily Spot Rate",
+          "referenceCollectedDate": "2026-10-17"
+        },
         "semantics": "restricted COBOL/Java scalar arithmetic v1",
         "outputObservation": "monetary values rounded HALF_UP to integer cents",
         "sourceSha256": {
@@ -244,23 +258,9 @@
           "version": "4.15.3",
           "result": "sat",
           "timeoutMs": 5000
-        },
-        "proofInputs": {
-          "cobolSourceFormat": "FREE",
-          "amountField": "INPUT-AMOUNT",
-          "rateField": "REFERENCE-RATE",
-          "resultField": "SETTLEMENT-RESULT",
-          "javaAmountParameter": "principal",
-          "javaRateParameter": "quote",
-          "amountMinCents": -999999999,
-          "amountMaxCents": 999999999,
-          "referenceCurrencyPair": "GBP/EUR",
-          "referenceSource": "Bank of England Daily Spot Rate",
-          "referenceCollectedDate": "2026-10-17",
-          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"
         }
       },
-      "fStringSummary": "Structural GCN alignment cosine 0.960; synthetic-calibrated node risk 0.527. Factors: packed fixed-point to IEEE754 type boundary. Z3 found amount 45.00 GBP: COBOL 53.24, Java 53.23, drift -0.01 output units. Rate 1.183 (Bank of England Daily Spot Rate; observed 2026-10-15).",
+      "fStringSummary": "Paired-code GNN program cosine 0.637 (advisory matching, not equivalence). Defect risk is not estimated. Z3 found amount 45.00 GBP: COBOL 53.24, Java 53.23, drift -0.01 output units. Rate 1.183 (Bank of England Daily Spot Rate; observed 2026-10-15).",
       "cpgGraphJson": {
         "featureNames": [
           "is_fixed_point_comp3",
@@ -290,7 +290,7 @@
               0.0,
               0.12071151691710735
             ],
-            "riskScore": 0.022851
+            "riskScore": 0.0
           },
           {
             "id": "cobol:1",
@@ -309,7 +309,7 @@
               0.0,
               0.014839822731102122
             ],
-            "riskScore": 0.038245
+            "riskScore": 0.0
           },
           {
             "id": "cobol:2",
@@ -328,7 +328,7 @@
               0.0,
               0.21756736930526793
             ],
-            "riskScore": 0.047443
+            "riskScore": 0.0
           },
           {
             "id": "cobol:3",
@@ -347,7 +347,7 @@
               0.0,
               0.21756736930526793
             ],
-            "riskScore": 0.038245
+            "riskScore": 0.0
           },
           {
             "id": "cobol:4",
@@ -366,7 +366,7 @@
               0.0,
               0.18469322994430323
             ],
-            "riskScore": 0.043865
+            "riskScore": 0.0
           },
           {
             "id": "cobol:5",
@@ -385,7 +385,7 @@
               0.0,
               0.014839822731102145
             ],
-            "riskScore": 0.039891
+            "riskScore": 0.0
           },
           {
             "id": "cobol:6",
@@ -404,7 +404,7 @@
               0.0,
               0.014839822731102145
             ],
-            "riskScore": 0.043865
+            "riskScore": 0.0
           },
           {
             "id": "cobol:7",
@@ -423,7 +423,7 @@
               0.0,
               0.34195844156759103
             ],
-            "riskScore": 0.043865
+            "riskScore": 0.0
           },
           {
             "id": "cobol:8",
@@ -442,7 +442,7 @@
               0.0,
               0.37814004667627693
             ],
-            "riskScore": 0.04316
+            "riskScore": 0.0
           },
           {
             "id": "cobol:9",
@@ -461,7 +461,7 @@
               0.0,
               0.09377737678107642
             ],
-            "riskScore": 0.043865
+            "riskScore": 0.0
           },
           {
             "id": "cobol:10",
@@ -480,7 +480,7 @@
               0.0,
               0.15320741300112106
             ],
-            "riskScore": 0.022851
+            "riskScore": 0.0
           },
           {
             "id": "cobol:11",
@@ -499,7 +499,7 @@
               0.0,
               0.18469322994430323
             ],
-            "riskScore": 0.047443
+            "riskScore": 0.0
           },
           {
             "id": "java:root",
@@ -517,7 +517,7 @@
               0.0,
               0.04488734085955027
             ],
-            "riskScore": 0.300069
+            "riskScore": 0.0
           },
           {
             "id": "java:1",
@@ -536,7 +536,7 @@
               0.0,
               0.2058212364641698
             ],
-            "riskScore": 0.04316
+            "riskScore": 0.0
           },
           {
             "id": "java:2",
@@ -555,7 +555,7 @@
               0.0,
               0.07281113463305214
             ],
-            "riskScore": 0.022851
+            "riskScore": 0.0
           },
           {
             "id": "java:3",
@@ -574,7 +574,7 @@
               0.0,
               0.02305159149830646
             ],
-            "riskScore": 0.04012
+            "riskScore": 0.0
           },
           {
             "id": "java:4",
@@ -593,7 +593,7 @@
               0.0,
               0.28992582379773363
             ],
-            "riskScore": 0.527145
+            "riskScore": 0.0
           },
           {
             "id": "java:5",
@@ -612,7 +612,7 @@
               0.0,
               0.09264504597803619
             ],
-            "riskScore": 0.022851
+            "riskScore": 0.0
           },
           {
             "id": "java:6",
@@ -631,7 +631,7 @@
               0.0,
               0.07281113463305211
             ],
-            "riskScore": 0.04012
+            "riskScore": 0.0
           },
           {
             "id": "java:7",
@@ -650,7 +650,7 @@
               0.0,
               0.02305159149830646
             ],
-            "riskScore": 0.04012
+            "riskScore": 0.0
           }
         ],
         "edges": [
@@ -825,46 +825,106 @@
             "kind": "CFG"
           },
           {
-            "source": "cobol:9",
+            "source": "cobol:root",
             "target": "java:root",
             "kind": "GNN_ALIGNMENT",
-            "confidence": 0.955486
-          },
-          {
-            "source": "cobol:11",
-            "target": "java:root",
-            "kind": "GNN_ALIGNMENT",
-            "confidence": 0.964093
+            "granularity": "PROGRAM",
+            "similarity": 0.636735,
+            "matchingIsProof": false
           }
         ]
       },
       "provenanceJson": {
         "engineVersion": "0.1.0",
         "model": {
-          "modelId": "cobol_java_gnn_v1",
-          "status": "AI-authored synthetic demonstration model",
-          "trainingSeed": 411,
-          "syntheticRows": 2400,
-          "gnnTrainingEpochs": 600,
-          "gnnObjective": "synthetic neighborhood structural/type projection MSE",
-          "classificationLabels": "sampled from documented generated risk policy, not real defects",
-          "split": {
-            "training": 1600,
-            "calibration": 400,
-            "test": 400
-          },
-          "syntheticTestMetrics": {
-            "brierScore": 0.12333049687594436,
-            "rocAuc": 0.91338104588673
+          "id": "paired-program-gnn-v1",
+          "sha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+          "trainingDataset": "COBOL-JavaTrans (143 original source pairs)",
+          "evaluation": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
           },
           "limitations": [
-            "No labelled real COBOL/Java alignment corpus; cosine is not an accuracy measure.",
-            "Node scores are calibrated on synthetic data only and are not validated production probabilities.",
-            "No measured 94% vs 18% alignment claim."
+            "143 small HumanEval-derived pairs, not banking migrations",
+            "Pair labels are upstream correspondence, not independent correctness proofs",
+            "Heuristic graph extraction, not full compiler AST/CFG",
+            "Names excluded from model; name baseline may be stronger on named benchmark",
+            "Cosine scores are not calibrated probabilities",
+            "No financial-domain generalization claim",
+            "No defect prediction or code generation"
           ]
         },
-        "modelSha256": "8e9e34ca0eb79ceb17ea7cfa88e2e12fe35884625a46c2a7f022bef28c996fb9",
-        "graphInferenceMs": 1.168,
+        "modelSha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+        "graphInferenceMs": 9.298,
         "referenceRate": {
           "currencyPair": "GBP/EUR",
           "rate": "1.183",
@@ -901,6 +961,89 @@
         },
         "alignmentIsProof": false,
         "measuredAlignmentBenchmark": null,
+        "mlValidation": {
+          "status": "BENCHMARK_PILOT",
+          "evidence": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+          },
+          "productionBankingValidated": false
+        },
+        "riskAssessment": {
+          "status": "NOT_ESTIMATED",
+          "reason": "The synthetic risk classifier was removed. Paired-program labels do not identify defects.",
+          "legacyNumericField": "gnnBugRiskScore=0 is unused compatibility data, not evidence of low risk."
+        },
+        "matchingGranularity": "PROGRAM",
         "sourceAuthorship": {
           "aiGenerated": true,
           "description": "AI-authored executable scalar COBOL/Java banking demonstration",
@@ -909,9 +1052,10 @@
           "remittancePolicy": "Historical World Bank GBP120 fee1.89 plus AI-generated >GBP120 tier at1%; not a real provider tariff"
         },
         "limitations": [
-          "Structural graph extraction is a source-line approximation, separate from the closed formal parser.",
+          "The displayed inspection graph is a line approximation; matching uses a separate semantic-feature graph.",
+          "Program-pair training does not supply statement correspondences or defect labels.",
           "GNN/model confidence is not proof and does not prune symbolic inputs.",
-          "Synthetic model calibration does not establish financial defect accuracy."
+          "Small public benchmark retrieval results do not establish production migration reliability."
         ],
         "patchVerification": {
           "status": "UNSAT_PROVEN_SAFE",
@@ -957,6 +1101,20 @@
               },
               "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
             },
+            "proofInputs": {
+              "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+              "cobolSourceFormat": "FREE",
+              "amountField": "INPUT-AMOUNT",
+              "rateField": "REFERENCE-RATE",
+              "resultField": "SETTLEMENT-RESULT",
+              "javaAmountParameter": "principal",
+              "javaRateParameter": "quote",
+              "amountMinCents": -999999999,
+              "amountMaxCents": 999999999,
+              "referenceCurrencyPair": "GBP/EUR",
+              "referenceSource": "Bank of England Daily Spot Rate",
+              "referenceCollectedDate": "2026-10-17"
+            },
             "semantics": "restricted COBOL/Java scalar arithmetic v1",
             "outputObservation": "monetary values rounded HALF_UP to integer cents",
             "sourceSha256": {
@@ -976,15 +1134,10 @@
               "timeoutMs": 5000
             }
           }
-        },
-        "mlValidation": {
-          "status": "NOT_VALIDATED",
-          "evidence": "synthetic demo data only",
-          "humanReviewedCorpus": null
         }
       },
-      "createdAt": "2026-10-17T16:13:22.453318+00:00",
-      "updatedAt": "2026-10-17T16:13:22.453318+00:00"
+      "createdAt": "2026-10-18T03:05:36.762454+00:00",
+      "updatedAt": "2026-10-18T03:05:36.762454+00:00"
     },
     {
       "id": "3b0f8f5b-6c24-503e-8711-12ae3fc6a0c1",
@@ -993,26 +1146,26 @@
       "cobolSource": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. MORTGAGE-INT-CALC.\n       DATA DIVISION.\n       WORKING-STORAGE SECTION.\n       01 INPUT-AMOUNT PIC 9(7)V99 COMP-3 VALUE 0.\n       01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.\n       01 SETTLEMENT-RESULT PIC 9(5) COMP-3 VALUE 0.\n       PROCEDURE DIVISION.\n       MAIN.\n           PERFORM CALC-TIER THRU CALC-EXIT.\n           GOBACK.\n       CALC-TIER.\n           COMPUTE SETTLEMENT-RESULT = INPUT-AMOUNT * 0.05.\n       APPLY-PREMIUM.\n           COMPUTE SETTLEMENT-RESULT = SETTLEMENT-RESULT + 1.\n       CALC-EXIT.\n           EXIT.\n",
       "javaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class MortgageInterestCalculator {\n    public BigDecimal calculate(BigDecimal balance, BigDecimal unusedReference) {\n        return balance.multiply(new BigDecimal(\"0.05\"));\n    }\n}\n",
       "patchedJavaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class MortgageInterestCalculator {\n    public BigDecimal calculate(BigDecimal balance, BigDecimal unusedReference) {\n        BigDecimal tier = balance.multiply(new BigDecimal(\"0.05\")).setScale(0, RoundingMode.DOWN).remainder(new BigDecimal(\"100000\"));\n        return tier.add(BigDecimal.ONE).setScale(0, RoundingMode.DOWN).remainder(new BigDecimal(\"100000\"));\n    }\n}\n",
-      "gnnAlignmentScore": 0.854543,
-      "gnnBugRiskScore": 0.092715,
+      "gnnAlignmentScore": 0.721929,
+      "gnnBugRiskScore": 0.0,
       "baselineAlignmentScore": 0.0,
       "baselineCaughtBug": false,
       "formalProofStatus": "SAT_COUNTEREXAMPLE_FOUND",
       "bugCategory": "PERFORM_THRU_FALLTHROUGH",
       "counterexamplesJson": [
         {
-          "inputAmountGbp": "2000000.00",
-          "boeFxRate": "1.183",
+          "inputAmountGbp": "0.10",
+          "referenceRate": "1.183",
           "cobolOutput": "1.00",
-          "javaOutput": "100000.00",
-          "pennyDrift": "99999.00",
+          "javaOutput": "0.01",
+          "pennyDrift": "-0.99",
           "dataSource": "Bank of England Daily Spot Rate",
           "collectedDate": "2026-10-17",
           "observationDate": "2026-10-15",
           "solverGenerated": true,
           "witnessStrategy": "unconstrained bounded Z3 model",
           "cobolOutputEur": "1.00",
-          "javaOutputEur": "100000.00"
+          "javaOutputEur": "0.01"
         }
       ],
       "isFailureLimitCase": false,
@@ -1058,6 +1211,20 @@
           },
           "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
         },
+        "proofInputs": {
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+          "cobolSourceFormat": "FREE",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "balance",
+          "javaRateParameter": "unusedReference",
+          "amountMinCents": 0,
+          "amountMaxCents": 999999999,
+          "referenceCurrencyPair": "GBP/EUR",
+          "referenceSource": "Bank of England Daily Spot Rate",
+          "referenceCollectedDate": "2026-10-17"
+        },
         "semantics": "restricted COBOL/Java scalar arithmetic v1",
         "outputObservation": "monetary values rounded HALF_UP to integer cents",
         "sourceSha256": {
@@ -1075,23 +1242,9 @@
           "version": "4.15.3",
           "result": "sat",
           "timeoutMs": 5000
-        },
-        "proofInputs": {
-          "cobolSourceFormat": "FREE",
-          "amountField": "INPUT-AMOUNT",
-          "rateField": "REFERENCE-RATE",
-          "resultField": "SETTLEMENT-RESULT",
-          "javaAmountParameter": "balance",
-          "javaRateParameter": "unusedReference",
-          "amountMinCents": 0,
-          "amountMaxCents": 999999999,
-          "referenceCurrencyPair": "GBP/EUR",
-          "referenceSource": "Bank of England Daily Spot Rate",
-          "referenceCollectedDate": "2026-10-17",
-          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"
         }
       },
-      "fStringSummary": "Structural GCN alignment cosine 0.855; synthetic-calibrated node risk 0.093. Factors: branch or PERFORM range control flow. Z3 found amount 2000000.00 GBP: COBOL 1.00, Java 100000.00, drift 99999.00 output units. Rate 1.183 (Bank of England Daily Spot Rate; observed 2026-10-15).",
+      "fStringSummary": "Paired-code GNN program cosine 0.722 (advisory matching, not equivalence). Defect risk is not estimated. Z3 found amount 0.10 GBP: COBOL 1.00, Java 0.01, drift -0.99 output units. Rate 1.183 (Bank of England Daily Spot Rate; observed 2026-10-15).",
       "cpgGraphJson": {
         "featureNames": [
           "is_fixed_point_comp3",
@@ -1121,7 +1274,7 @@
               0.0,
               0.2609118973558751
             ],
-            "riskScore": 0.092715
+            "riskScore": 0.0
           },
           {
             "id": "cobol:1",
@@ -1140,7 +1293,7 @@
               0.0,
               0.07151650640922676
             ],
-            "riskScore": 0.071024
+            "riskScore": 0.0
           },
           {
             "id": "cobol:2",
@@ -1159,7 +1312,7 @@
               0.0,
               0.296443847256956
             ],
-            "riskScore": 0.071024
+            "riskScore": 0.0
           },
           {
             "id": "cobol:3",
@@ -1178,7 +1331,7 @@
               0.0,
               0.296443847256956
             ],
-            "riskScore": 0.071024
+            "riskScore": 0.0
           },
           {
             "id": "cobol:4",
@@ -1197,7 +1350,7 @@
               0.0,
               0.14722677571814746
             ],
-            "riskScore": 0.066698
+            "riskScore": 0.0
           },
           {
             "id": "cobol:5",
@@ -1216,7 +1369,7 @@
               0.0,
               0.07151650640922673
             ],
-            "riskScore": 0.066698
+            "riskScore": 0.0
           },
           {
             "id": "cobol:6",
@@ -1235,7 +1388,7 @@
               0.0,
               0.401563269476376
             ],
-            "riskScore": 0.054245
+            "riskScore": 0.0
           },
           {
             "id": "cobol:7",
@@ -1254,7 +1407,7 @@
               0.0,
               0.5262831468274068
             ],
-            "riskScore": 0.066698
+            "riskScore": 0.0
           },
           {
             "id": "cobol:8",
@@ -1273,7 +1426,7 @@
               0.0,
               0.2917513506351188
             ],
-            "riskScore": 0.071024
+            "riskScore": 0.0
           },
           {
             "id": "cobol:9",
@@ -1292,7 +1445,7 @@
               0.0,
               0.1540205764423485
             ],
-            "riskScore": 0.071316
+            "riskScore": 0.0
           },
           {
             "id": "cobol:10",
@@ -1311,7 +1464,7 @@
               0.0,
               0.2917513506351188
             ],
-            "riskScore": 0.064287
+            "riskScore": 0.0
           },
           {
             "id": "cobol:11",
@@ -1330,7 +1483,7 @@
               0.0,
               0.2917513506351188
             ],
-            "riskScore": 0.071024
+            "riskScore": 0.0
           },
           {
             "id": "cobol:12",
@@ -1349,7 +1502,7 @@
               0.0,
               0.1540205764423485
             ],
-            "riskScore": 0.066698
+            "riskScore": 0.0
           },
           {
             "id": "cobol:13",
@@ -1368,7 +1521,7 @@
               0.0,
               0.3690126983071602
             ],
-            "riskScore": 0.066698
+            "riskScore": 0.0
           },
           {
             "id": "cobol:14",
@@ -1387,7 +1540,7 @@
               0.0,
               0.1540205764423485
             ],
-            "riskScore": 0.066698
+            "riskScore": 0.0
           },
           {
             "id": "cobol:15",
@@ -1406,7 +1559,7 @@
               0.0,
               0.07956448850452615
             ],
-            "riskScore": 0.066698
+            "riskScore": 0.0
           },
           {
             "id": "cobol:16",
@@ -1425,7 +1578,7 @@
               0.0,
               0.2917513506351188
             ],
-            "riskScore": 0.066698
+            "riskScore": 0.0
           },
           {
             "id": "cobol:17",
@@ -1444,7 +1597,7 @@
               0.0,
               0.14722677571814746
             ],
-            "riskScore": 0.071024
+            "riskScore": 0.0
           },
           {
             "id": "java:root",
@@ -1462,7 +1615,7 @@
               0.0,
               0.04488734085955027
             ],
-            "riskScore": 0.022851
+            "riskScore": 0.0
           },
           {
             "id": "java:1",
@@ -1481,7 +1634,7 @@
               0.0,
               0.2058212364641698
             ],
-            "riskScore": 0.04316
+            "riskScore": 0.0
           },
           {
             "id": "java:2",
@@ -1500,7 +1653,7 @@
               0.0,
               0.07281113463305214
             ],
-            "riskScore": 0.022851
+            "riskScore": 0.0
           },
           {
             "id": "java:3",
@@ -1519,7 +1672,7 @@
               0.0,
               0.02305159149830646
             ],
-            "riskScore": 0.04316
+            "riskScore": 0.0
           },
           {
             "id": "java:4",
@@ -1538,7 +1691,7 @@
               0.0,
               0.28992582379773363
             ],
-            "riskScore": 0.039891
+            "riskScore": 0.0
           },
           {
             "id": "java:5",
@@ -1557,7 +1710,7 @@
               0.0,
               0.09264504597803619
             ],
-            "riskScore": 0.039891
+            "riskScore": 0.0
           },
           {
             "id": "java:6",
@@ -1576,7 +1729,7 @@
               0.0,
               0.07281113463305211
             ],
-            "riskScore": 0.034762
+            "riskScore": 0.0
           },
           {
             "id": "java:7",
@@ -1595,7 +1748,7 @@
               0.0,
               0.02305159149830646
             ],
-            "riskScore": 0.04316
+            "riskScore": 0.0
           }
         ],
         "edges": [
@@ -1830,70 +1983,106 @@
             "kind": "CFG"
           },
           {
-            "source": "cobol:9",
+            "source": "cobol:root",
             "target": "java:root",
             "kind": "GNN_ALIGNMENT",
-            "confidence": 0.801759
-          },
-          {
-            "source": "cobol:11",
-            "target": "java:root",
-            "kind": "GNN_ALIGNMENT",
-            "confidence": 0.800753
-          },
-          {
-            "source": "cobol:12",
-            "target": "java:root",
-            "kind": "GNN_ALIGNMENT",
-            "confidence": 0.885491
-          },
-          {
-            "source": "cobol:14",
-            "target": "java:root",
-            "kind": "GNN_ALIGNMENT",
-            "confidence": 0.893451
-          },
-          {
-            "source": "cobol:16",
-            "target": "java:root",
-            "kind": "GNN_ALIGNMENT",
-            "confidence": 0.876802
-          },
-          {
-            "source": "cobol:17",
-            "target": "java:root",
-            "kind": "GNN_ALIGNMENT",
-            "confidence": 0.869003
+            "granularity": "PROGRAM",
+            "similarity": 0.721929,
+            "matchingIsProof": false
           }
         ]
       },
       "provenanceJson": {
         "engineVersion": "0.1.0",
         "model": {
-          "modelId": "cobol_java_gnn_v1",
-          "status": "AI-authored synthetic demonstration model",
-          "trainingSeed": 411,
-          "syntheticRows": 2400,
-          "gnnTrainingEpochs": 600,
-          "gnnObjective": "synthetic neighborhood structural/type projection MSE",
-          "classificationLabels": "sampled from documented generated risk policy, not real defects",
-          "split": {
-            "training": 1600,
-            "calibration": 400,
-            "test": 400
-          },
-          "syntheticTestMetrics": {
-            "brierScore": 0.12333049687594436,
-            "rocAuc": 0.91338104588673
+          "id": "paired-program-gnn-v1",
+          "sha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+          "trainingDataset": "COBOL-JavaTrans (143 original source pairs)",
+          "evaluation": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
           },
           "limitations": [
-            "No labelled real COBOL/Java alignment corpus; cosine is not an accuracy measure.",
-            "Node scores are calibrated on synthetic data only and are not validated production probabilities.",
-            "No measured 94% vs 18% alignment claim."
+            "143 small HumanEval-derived pairs, not banking migrations",
+            "Pair labels are upstream correspondence, not independent correctness proofs",
+            "Heuristic graph extraction, not full compiler AST/CFG",
+            "Names excluded from model; name baseline may be stronger on named benchmark",
+            "Cosine scores are not calibrated probabilities",
+            "No financial-domain generalization claim",
+            "No defect prediction or code generation"
           ]
         },
-        "modelSha256": "8e9e34ca0eb79ceb17ea7cfa88e2e12fe35884625a46c2a7f022bef28c996fb9",
-        "graphInferenceMs": 0.84,
+        "modelSha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+        "graphInferenceMs": 1.102,
         "referenceRate": {
           "currencyPair": "GBP/EUR",
           "rate": "1.183",
@@ -1930,6 +2119,89 @@
         },
         "alignmentIsProof": false,
         "measuredAlignmentBenchmark": null,
+        "mlValidation": {
+          "status": "BENCHMARK_PILOT",
+          "evidence": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+          },
+          "productionBankingValidated": false
+        },
+        "riskAssessment": {
+          "status": "NOT_ESTIMATED",
+          "reason": "The synthetic risk classifier was removed. Paired-program labels do not identify defects.",
+          "legacyNumericField": "gnnBugRiskScore=0 is unused compatibility data, not evidence of low risk."
+        },
+        "matchingGranularity": "PROGRAM",
         "sourceAuthorship": {
           "aiGenerated": true,
           "description": "AI-authored executable scalar COBOL/Java banking demonstration",
@@ -1938,9 +2210,10 @@
           "remittancePolicy": "Historical World Bank GBP120 fee1.89 plus AI-generated >GBP120 tier at1%; not a real provider tariff"
         },
         "limitations": [
-          "Structural graph extraction is a source-line approximation, separate from the closed formal parser.",
+          "The displayed inspection graph is a line approximation; matching uses a separate semantic-feature graph.",
+          "Program-pair training does not supply statement correspondences or defect labels.",
           "GNN/model confidence is not proof and does not prune symbolic inputs.",
-          "Synthetic model calibration does not establish financial defect accuracy."
+          "Small public benchmark retrieval results do not establish production migration reliability."
         ],
         "patchVerification": {
           "status": "UNSAT_PROVEN_SAFE",
@@ -1986,6 +2259,20 @@
               },
               "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
             },
+            "proofInputs": {
+              "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+              "cobolSourceFormat": "FREE",
+              "amountField": "INPUT-AMOUNT",
+              "rateField": "REFERENCE-RATE",
+              "resultField": "SETTLEMENT-RESULT",
+              "javaAmountParameter": "balance",
+              "javaRateParameter": "unusedReference",
+              "amountMinCents": 0,
+              "amountMaxCents": 999999999,
+              "referenceCurrencyPair": "GBP/EUR",
+              "referenceSource": "Bank of England Daily Spot Rate",
+              "referenceCollectedDate": "2026-10-17"
+            },
             "semantics": "restricted COBOL/Java scalar arithmetic v1",
             "outputObservation": "monetary values rounded HALF_UP to integer cents",
             "sourceSha256": {
@@ -2005,15 +2292,10 @@
               "timeoutMs": 5000
             }
           }
-        },
-        "mlValidation": {
-          "status": "NOT_VALIDATED",
-          "evidence": "synthetic demo data only",
-          "humanReviewedCorpus": null
         }
       },
-      "createdAt": "2026-10-17T16:13:22.453318+00:00",
-      "updatedAt": "2026-10-17T16:13:22.453318+00:00"
+      "createdAt": "2026-10-18T03:05:36.762454+00:00",
+      "updatedAt": "2026-10-18T03:05:36.762454+00:00"
     },
     {
       "id": "214a9ead-ee96-599d-93f8-9037dee2ab7b",
@@ -2022,8 +2304,8 @@
       "cobolSource": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. REMIT-TIER-FEE.\n       DATA DIVISION.\n       WORKING-STORAGE SECTION.\n       01 INPUT-AMOUNT PIC S9(7)V99 COMP-3 VALUE 0.\n       01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.\n       01 SETTLEMENT-RESULT PIC S9(7)V99 COMP-3 VALUE 0.\n       PROCEDURE DIVISION.\n       MAIN.\n           IF INPUT-AMOUNT <= 120\n               COMPUTE SETTLEMENT-RESULT ROUNDED = 1.89 * REFERENCE-RATE\n           ELSE\n               COMPUTE SETTLEMENT-RESULT ROUNDED = INPUT-AMOUNT * 0.01 * REFERENCE-RATE\n           END-IF.\n           GOBACK.\n",
       "javaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class RemittanceFeeEngine {\n    public BigDecimal calculate(BigDecimal transfer, BigDecimal bahtQuote) {\n        if (transfer.compareTo(new BigDecimal(\"120\")) <= 0) {\n            return new BigDecimal(\"1.89\").multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));\n        } else {\n            return transfer.multiply(new BigDecimal(\"0.01\")).multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));\n        }\n    }\n}\n",
       "patchedJavaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class RemittanceFeeEngine {\n    public BigDecimal calculate(BigDecimal transfer, BigDecimal bahtQuote) {\n        if (transfer.compareTo(new BigDecimal(\"120\")) <= 0) {\n            return new BigDecimal(\"1.89\").multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));\n        } else {\n            return transfer.multiply(new BigDecimal(\"0.01\")).multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));\n        }\n    }\n}\n",
-      "gnnAlignmentScore": 0.947944,
-      "gnnBugRiskScore": 0.091708,
+      "gnnAlignmentScore": 0.047353,
+      "gnnBugRiskScore": 0.0,
       "baselineAlignmentScore": 0.0,
       "baselineCaughtBug": false,
       "formalProofStatus": "UNSAT_PROVEN_SAFE",
@@ -2085,6 +2367,20 @@
           },
           "id": "49864c0b-8862-5dd9-8d4d-f0de6100664f"
         },
+        "proofInputs": {
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+          "cobolSourceFormat": "FREE",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "transfer",
+          "javaRateParameter": "bahtQuote",
+          "amountMinCents": -999999999,
+          "amountMaxCents": 999999999,
+          "referenceCurrencyPair": "GBP/THB",
+          "referenceSource": "World Bank Remittance Prices Worldwide",
+          "referenceCollectedDate": "2026-10-17"
+        },
         "semantics": "restricted COBOL/Java scalar arithmetic v1",
         "outputObservation": "monetary values rounded HALF_UP to integer cents",
         "sourceSha256": {
@@ -2102,23 +2398,9 @@
           "version": "4.15.3",
           "result": "unsat",
           "timeoutMs": 5000
-        },
-        "proofInputs": {
-          "cobolSourceFormat": "FREE",
-          "amountField": "INPUT-AMOUNT",
-          "rateField": "REFERENCE-RATE",
-          "resultField": "SETTLEMENT-RESULT",
-          "javaAmountParameter": "transfer",
-          "javaRateParameter": "bahtQuote",
-          "amountMinCents": -999999999,
-          "amountMaxCents": 999999999,
-          "referenceCurrencyPair": "GBP/THB",
-          "referenceSource": "World Bank Remittance Prices Worldwide",
-          "referenceCollectedDate": "2026-10-17",
-          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"
         }
       },
-      "fStringSummary": "Structural GCN alignment cosine 0.948; synthetic-calibrated node risk 0.092. Factors: branch or PERFORM range control flow. Z3 UNSAT: no differing cent-observable outputs for integer cents in [-999999999, 999999999] with exact rate 43.98. This is equivalence of the supported bounded scalar model.",
+      "fStringSummary": "Paired-code GNN program cosine 0.047 (advisory matching, not equivalence). Defect risk is not estimated. Z3 UNSAT: no differing cent-observable outputs for integer cents in [-999999999, 999999999] with exact rate 43.98. This is equivalence of the supported bounded scalar model.",
       "cpgGraphJson": {
         "featureNames": [
           "is_fixed_point_comp3",
@@ -2148,7 +2430,7 @@
               0.0,
               0.4871584642665716
             ],
-            "riskScore": 0.025257
+            "riskScore": 0.0
           },
           {
             "id": "cobol:1",
@@ -2167,7 +2449,7 @@
               0.0,
               0.09014762241928949
             ],
-            "riskScore": 0.046784
+            "riskScore": 0.0
           },
           {
             "id": "cobol:2",
@@ -2186,7 +2468,7 @@
               0.0,
               0.08131172949751422
             ],
-            "riskScore": 0.046784
+            "riskScore": 0.0
           },
           {
             "id": "cobol:3",
@@ -2205,7 +2487,7 @@
               0.0,
               0.08131172949751422
             ],
-            "riskScore": 0.046784
+            "riskScore": 0.0
           },
           {
             "id": "cobol:4",
@@ -2224,7 +2506,7 @@
               0.0,
               0.27408081044431054
             ],
-            "riskScore": 0.046784
+            "riskScore": 0.0
           },
           {
             "id": "cobol:5",
@@ -2243,7 +2525,7 @@
               0.0,
               0.2684673153099499
             ],
-            "riskScore": 0.046784
+            "riskScore": 0.0
           },
           {
             "id": "cobol:6",
@@ -2262,7 +2544,7 @@
               0.0,
               0.2684673153099499
             ],
-            "riskScore": 0.043865
+            "riskScore": 0.0
           },
           {
             "id": "cobol:7",
@@ -2281,7 +2563,7 @@
               0.0,
               0.45446567727424597
             ],
-            "riskScore": 0.054071
+            "riskScore": 0.0
           },
           {
             "id": "cobol:8",
@@ -2300,7 +2582,7 @@
               0.0,
               0.4440802573745377
             ],
-            "riskScore": 0.047443
+            "riskScore": 0.0
           },
           {
             "id": "cobol:9",
@@ -2319,7 +2601,7 @@
               0.0,
               0.5158483288020794
             ],
-            "riskScore": 0.054071
+            "riskScore": 0.0
           },
           {
             "id": "cobol:10",
@@ -2338,7 +2620,7 @@
               0.0,
               0.21636015142922274
             ],
-            "riskScore": 0.053803
+            "riskScore": 0.0
           },
           {
             "id": "cobol:11",
@@ -2357,7 +2639,7 @@
               0.0,
               0.31679257033627856
             ],
-            "riskScore": 0.022851
+            "riskScore": 0.0
           },
           {
             "id": "cobol:12",
@@ -2376,7 +2658,7 @@
               0.0,
               0.08131172949751422
             ],
-            "riskScore": 0.050588
+            "riskScore": 0.0
           },
           {
             "id": "cobol:13",
@@ -2395,7 +2677,7 @@
               0.0,
               0.19097588335809754
             ],
-            "riskScore": 0.027517
+            "riskScore": 0.0
           },
           {
             "id": "cobol:14",
@@ -2414,7 +2696,7 @@
               0.0,
               0.4440802573745377
             ],
-            "riskScore": 0.061563
+            "riskScore": 0.0
           },
           {
             "id": "cobol:15",
@@ -2433,7 +2715,7 @@
               0.0,
               0.27408081044431054
             ],
-            "riskScore": 0.091708
+            "riskScore": 0.0
           },
           {
             "id": "java:root",
@@ -2451,7 +2733,7 @@
               0.0,
               0.06764778030880411
             ],
-            "riskScore": 0.027517
+            "riskScore": 0.0
           },
           {
             "id": "java:1",
@@ -2470,7 +2752,7 @@
               0.0,
               0.15875628788088592
             ],
-            "riskScore": 0.04316
+            "riskScore": 0.0
           },
           {
             "id": "java:2",
@@ -2489,7 +2771,7 @@
               0.0,
               0.05596816248581816
             ],
-            "riskScore": 0.022851
+            "riskScore": 0.0
           },
           {
             "id": "java:3",
@@ -2508,7 +2790,7 @@
               0.0,
               0.011246834424402385
             ],
-            "riskScore": 0.04316
+            "riskScore": 0.0
           },
           {
             "id": "java:4",
@@ -2527,7 +2809,7 @@
               0.0,
               0.305635683358512
             ],
-            "riskScore": 0.034762
+            "riskScore": 0.0
           },
           {
             "id": "java:5",
@@ -2546,7 +2828,7 @@
               0.0,
               0.06554592553149778
             ],
-            "riskScore": 0.028134
+            "riskScore": 0.0
           },
           {
             "id": "java:6",
@@ -2565,7 +2847,7 @@
               0.0,
               0.05596816248581816
             ],
-            "riskScore": 0.022851
+            "riskScore": 0.0
           },
           {
             "id": "java:7",
@@ -2584,7 +2866,7 @@
               0.0,
               0.05596816248581816
             ],
-            "riskScore": 0.04316
+            "riskScore": 0.0
           },
           {
             "id": "java:8",
@@ -2603,7 +2885,7 @@
               0.0,
               0.06554592553149778
             ],
-            "riskScore": 0.022851
+            "riskScore": 0.0
           },
           {
             "id": "java:9",
@@ -2622,7 +2904,7 @@
               0.0,
               0.05596816248581816
             ],
-            "riskScore": 0.04316
+            "riskScore": 0.0
           },
           {
             "id": "java:10",
@@ -2641,7 +2923,7 @@
               0.0,
               0.05596816248581816
             ],
-            "riskScore": 0.050588
+            "riskScore": 0.0
           },
           {
             "id": "java:11",
@@ -2660,7 +2942,7 @@
               0.0,
               0.011246834424402385
             ],
-            "riskScore": 0.050588
+            "riskScore": 0.0
           }
         ],
         "edges": [
@@ -2935,52 +3217,106 @@
             "kind": "CFG"
           },
           {
-            "source": "cobol:9",
+            "source": "cobol:root",
             "target": "java:root",
             "kind": "GNN_ALIGNMENT",
-            "confidence": 0.963071
-          },
-          {
-            "source": "cobol:14",
-            "target": "java:root",
-            "kind": "GNN_ALIGNMENT",
-            "confidence": 0.947508
-          },
-          {
-            "source": "cobol:15",
-            "target": "java:root",
-            "kind": "GNN_ALIGNMENT",
-            "confidence": 0.933253
+            "granularity": "PROGRAM",
+            "similarity": 0.047353,
+            "matchingIsProof": false
           }
         ]
       },
       "provenanceJson": {
         "engineVersion": "0.1.0",
         "model": {
-          "modelId": "cobol_java_gnn_v1",
-          "status": "AI-authored synthetic demonstration model",
-          "trainingSeed": 411,
-          "syntheticRows": 2400,
-          "gnnTrainingEpochs": 600,
-          "gnnObjective": "synthetic neighborhood structural/type projection MSE",
-          "classificationLabels": "sampled from documented generated risk policy, not real defects",
-          "split": {
-            "training": 1600,
-            "calibration": 400,
-            "test": 400
-          },
-          "syntheticTestMetrics": {
-            "brierScore": 0.12333049687594436,
-            "rocAuc": 0.91338104588673
+          "id": "paired-program-gnn-v1",
+          "sha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+          "trainingDataset": "COBOL-JavaTrans (143 original source pairs)",
+          "evaluation": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
           },
           "limitations": [
-            "No labelled real COBOL/Java alignment corpus; cosine is not an accuracy measure.",
-            "Node scores are calibrated on synthetic data only and are not validated production probabilities.",
-            "No measured 94% vs 18% alignment claim."
+            "143 small HumanEval-derived pairs, not banking migrations",
+            "Pair labels are upstream correspondence, not independent correctness proofs",
+            "Heuristic graph extraction, not full compiler AST/CFG",
+            "Names excluded from model; name baseline may be stronger on named benchmark",
+            "Cosine scores are not calibrated probabilities",
+            "No financial-domain generalization claim",
+            "No defect prediction or code generation"
           ]
         },
-        "modelSha256": "8e9e34ca0eb79ceb17ea7cfa88e2e12fe35884625a46c2a7f022bef28c996fb9",
-        "graphInferenceMs": 0.806,
+        "modelSha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+        "graphInferenceMs": 1.163,
         "referenceRate": {
           "currencyPair": "GBP/THB",
           "rate": "43.98",
@@ -3030,6 +3366,89 @@
         },
         "alignmentIsProof": false,
         "measuredAlignmentBenchmark": null,
+        "mlValidation": {
+          "status": "BENCHMARK_PILOT",
+          "evidence": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+          },
+          "productionBankingValidated": false
+        },
+        "riskAssessment": {
+          "status": "NOT_ESTIMATED",
+          "reason": "The synthetic risk classifier was removed. Paired-program labels do not identify defects.",
+          "legacyNumericField": "gnnBugRiskScore=0 is unused compatibility data, not evidence of low risk."
+        },
+        "matchingGranularity": "PROGRAM",
         "sourceAuthorship": {
           "aiGenerated": true,
           "description": "AI-authored executable scalar COBOL/Java banking demonstration",
@@ -3038,9 +3457,10 @@
           "remittancePolicy": "Historical World Bank GBP120 fee1.89 plus AI-generated >GBP120 tier at1%; not a real provider tariff"
         },
         "limitations": [
-          "Structural graph extraction is a source-line approximation, separate from the closed formal parser.",
+          "The displayed inspection graph is a line approximation; matching uses a separate semantic-feature graph.",
+          "Program-pair training does not supply statement correspondences or defect labels.",
           "GNN/model confidence is not proof and does not prune symbolic inputs.",
-          "Synthetic model calibration does not establish financial defect accuracy."
+          "Small public benchmark retrieval results do not establish production migration reliability."
         ],
         "patchVerification": {
           "status": "UNSAT_PROVEN_SAFE",
@@ -3099,6 +3519,20 @@
               },
               "id": "49864c0b-8862-5dd9-8d4d-f0de6100664f"
             },
+            "proofInputs": {
+              "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+              "cobolSourceFormat": "FREE",
+              "amountField": "INPUT-AMOUNT",
+              "rateField": "REFERENCE-RATE",
+              "resultField": "SETTLEMENT-RESULT",
+              "javaAmountParameter": "transfer",
+              "javaRateParameter": "bahtQuote",
+              "amountMinCents": -999999999,
+              "amountMaxCents": 999999999,
+              "referenceCurrencyPair": "GBP/THB",
+              "referenceSource": "World Bank Remittance Prices Worldwide",
+              "referenceCollectedDate": "2026-10-17"
+            },
             "semantics": "restricted COBOL/Java scalar arithmetic v1",
             "outputObservation": "monetary values rounded HALF_UP to integer cents",
             "sourceSha256": {
@@ -3118,15 +3552,10 @@
               "timeoutMs": 5000
             }
           }
-        },
-        "mlValidation": {
-          "status": "NOT_VALIDATED",
-          "evidence": "synthetic demo data only",
-          "humanReviewedCorpus": null
         }
       },
-      "createdAt": "2026-10-17T16:13:22.453318+00:00",
-      "updatedAt": "2026-10-17T16:13:22.453318+00:00"
+      "createdAt": "2026-10-18T03:05:36.762454+00:00",
+      "updatedAt": "2026-10-18T03:05:36.762454+00:00"
     },
     {
       "id": "fa28af67-d28d-5eb2-adf5-834fc76e8eaa",
@@ -3135,8 +3564,8 @@
       "cobolSource": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. CICS-TERMINAL-IO.\n       DATA DIVISION.\n       WORKING-STORAGE SECTION.\n       01 TERMINAL-BUFFER PIC X(80).\n       01 ACCOUNT-VIEW REDEFINES TERMINAL-BUFFER.\n           05 ACCOUNT-ID PIC 9(10).\n       PROCEDURE DIVISION.\n       MAIN.\n           EXEC CICS RECEIVE MAP('WIREMAP')\n               INTO(TERMINAL-BUFFER) END-EXEC.\n           GOBACK.\n",
       "javaSource": "public final class TerminalSessionHandler {\n    public void receiveMap(TerminalGateway gateway) {\n        gateway.receiveMap(\"WIREMAP\");\n    }\n}\n",
       "patchedJavaSource": "public final class TerminalSessionHandler {\n    public void receiveMap(TerminalGateway gateway) {\n        gateway.receiveMap(\"WIREMAP\");\n    }\n}\n",
-      "gnnAlignmentScore": 0.994352,
-      "gnnBugRiskScore": 0.257018,
+      "gnnAlignmentScore": 0.832993,
+      "gnnBugRiskScore": 0.0,
       "baselineAlignmentScore": 0.045455,
       "baselineCaughtBug": false,
       "formalProofStatus": "UNKNOWN_HALTED_LIMIT",
@@ -3185,6 +3614,20 @@
           },
           "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
         },
+        "proofInputs": {
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+          "cobolSourceFormat": "FREE",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "amount",
+          "javaRateParameter": "rate",
+          "amountMinCents": 0,
+          "amountMaxCents": 999999999,
+          "referenceCurrencyPair": "GBP/EUR",
+          "referenceSource": "Bank of England Daily Spot Rate",
+          "referenceCollectedDate": "2026-10-17"
+        },
         "semantics": "restricted COBOL/Java scalar arithmetic v1",
         "outputObservation": "monetary values rounded HALF_UP to integer cents",
         "sourceSha256": {
@@ -3197,23 +3640,9 @@
           "UNSAT covers only the explicit finite input domain, never arbitrary whole programs.",
           "GNN alignments guide inspection and do not authorize a proof."
         ],
-        "reason": "External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly.",
-        "proofInputs": {
-          "cobolSourceFormat": "FREE",
-          "amountField": "INPUT-AMOUNT",
-          "rateField": "REFERENCE-RATE",
-          "resultField": "SETTLEMENT-RESULT",
-          "javaAmountParameter": "amount",
-          "javaRateParameter": "rate",
-          "amountMinCents": -999999999,
-          "amountMaxCents": 999999999,
-          "referenceCurrencyPair": "GBP/EUR",
-          "referenceSource": "Bank of England Daily Spot Rate",
-          "referenceCollectedDate": "2026-10-17",
-          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"
-        }
+        "reason": "External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly."
       },
-      "fStringSummary": "Structural GCN alignment cosine 0.994; synthetic-calibrated node risk 0.257. Factors: external state or aliased storage. Proof halted: External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly.. Human review is required.",
+      "fStringSummary": "Paired-code GNN program cosine 0.833 (advisory matching, not equivalence). Defect risk is not estimated. Proof halted: External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly.. Human review is required.",
       "cpgGraphJson": {
         "featureNames": [
           "is_fixed_point_comp3",
@@ -3243,7 +3672,7 @@
               1.0,
               0.01999056310746392
             ],
-            "riskScore": 0.257018
+            "riskScore": 0.0
           },
           {
             "id": "cobol:1",
@@ -3262,7 +3691,7 @@
               0.0,
               0.051761683002963604
             ],
-            "riskScore": 0.050952
+            "riskScore": 0.0
           },
           {
             "id": "cobol:2",
@@ -3281,7 +3710,7 @@
               0.0,
               0.1862338114559763
             ],
-            "riskScore": 0.050952
+            "riskScore": 0.0
           },
           {
             "id": "cobol:3",
@@ -3300,7 +3729,7 @@
               0.0,
               0.1862338114559763
             ],
-            "riskScore": 0.050952
+            "riskScore": 0.0
           },
           {
             "id": "cobol:4",
@@ -3319,7 +3748,7 @@
               0.0,
               0.0538980405460623
             ],
-            "riskScore": 0.050952
+            "riskScore": 0.0
           },
           {
             "id": "cobol:5",
@@ -3338,7 +3767,7 @@
               0.0,
               0.1653741861102431
             ],
-            "riskScore": 0.050952
+            "riskScore": 0.0
           },
           {
             "id": "cobol:6",
@@ -3357,7 +3786,7 @@
               1.0,
               0.28730318960455814
             ],
-            "riskScore": 0.257018
+            "riskScore": 0.0
           },
           {
             "id": "cobol:7",
@@ -3376,7 +3805,7 @@
               0.0,
               0.1862338114559763
             ],
-            "riskScore": 0.050952
+            "riskScore": 0.0
           },
           {
             "id": "cobol:8",
@@ -3395,7 +3824,7 @@
               0.0,
               0.3732451594435223
             ],
-            "riskScore": 0.050952
+            "riskScore": 0.0
           },
           {
             "id": "cobol:9",
@@ -3414,7 +3843,7 @@
               0.0,
               0.023318006445285568
             ],
-            "riskScore": 0.050952
+            "riskScore": 0.0
           },
           {
             "id": "cobol:10",
@@ -3433,7 +3862,7 @@
               1.0,
               0.1862338114559763
             ],
-            "riskScore": 0.257018
+            "riskScore": 0.0
           },
           {
             "id": "cobol:11",
@@ -3452,7 +3881,7 @@
               0.0,
               0.29639560029565987
             ],
-            "riskScore": 0.050952
+            "riskScore": 0.0
           },
           {
             "id": "cobol:12",
@@ -3471,7 +3900,7 @@
               0.0,
               0.0538980405460623
             ],
-            "riskScore": 0.050952
+            "riskScore": 0.0
           },
           {
             "id": "java:root",
@@ -3489,7 +3918,7 @@
               1.0,
               0.15207995555319884
             ],
-            "riskScore": 0.257018
+            "riskScore": 0.0
           },
           {
             "id": "java:1",
@@ -3508,7 +3937,7 @@
               0.0,
               0.2334090445000042
             ],
-            "riskScore": 0.041175
+            "riskScore": 0.0
           },
           {
             "id": "java:2",
@@ -3527,7 +3956,7 @@
               1.0,
               0.0955178163076842
             ],
-            "riskScore": 0.257018
+            "riskScore": 0.0
           },
           {
             "id": "java:3",
@@ -3546,7 +3975,7 @@
               1.0,
               0.11801057868731486
             ],
-            "riskScore": 0.257018
+            "riskScore": 0.0
           },
           {
             "id": "java:4",
@@ -3565,7 +3994,7 @@
               0.0,
               0.11801057868731486
             ],
-            "riskScore": 0.041175
+            "riskScore": 0.0
           },
           {
             "id": "java:5",
@@ -3584,7 +4013,7 @@
               0.0,
               0.03556429410908022
             ],
-            "riskScore": 0.041175
+            "riskScore": 0.0
           }
         ],
         "edges": [
@@ -3754,46 +4183,106 @@
             "kind": "CFG"
           },
           {
-            "source": "cobol:9",
-            "target": "java:2",
+            "source": "cobol:root",
+            "target": "java:root",
             "kind": "GNN_ALIGNMENT",
-            "confidence": 0.995789
-          },
-          {
-            "source": "cobol:12",
-            "target": "java:2",
-            "kind": "GNN_ALIGNMENT",
-            "confidence": 0.992916
+            "granularity": "PROGRAM",
+            "similarity": 0.832993,
+            "matchingIsProof": false
           }
         ]
       },
       "provenanceJson": {
         "engineVersion": "0.1.0",
         "model": {
-          "modelId": "cobol_java_gnn_v1",
-          "status": "AI-authored synthetic demonstration model",
-          "trainingSeed": 411,
-          "syntheticRows": 2400,
-          "gnnTrainingEpochs": 600,
-          "gnnObjective": "synthetic neighborhood structural/type projection MSE",
-          "classificationLabels": "sampled from documented generated risk policy, not real defects",
-          "split": {
-            "training": 1600,
-            "calibration": 400,
-            "test": 400
-          },
-          "syntheticTestMetrics": {
-            "brierScore": 0.12333049687594436,
-            "rocAuc": 0.91338104588673
+          "id": "paired-program-gnn-v1",
+          "sha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+          "trainingDataset": "COBOL-JavaTrans (143 original source pairs)",
+          "evaluation": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
           },
           "limitations": [
-            "No labelled real COBOL/Java alignment corpus; cosine is not an accuracy measure.",
-            "Node scores are calibrated on synthetic data only and are not validated production probabilities.",
-            "No measured 94% vs 18% alignment claim."
+            "143 small HumanEval-derived pairs, not banking migrations",
+            "Pair labels are upstream correspondence, not independent correctness proofs",
+            "Heuristic graph extraction, not full compiler AST/CFG",
+            "Names excluded from model; name baseline may be stronger on named benchmark",
+            "Cosine scores are not calibrated probabilities",
+            "No financial-domain generalization claim",
+            "No defect prediction or code generation"
           ]
         },
-        "modelSha256": "8e9e34ca0eb79ceb17ea7cfa88e2e12fe35884625a46c2a7f022bef28c996fb9",
-        "graphInferenceMs": 0.647,
+        "modelSha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+        "graphInferenceMs": 0.828,
         "referenceRate": {
           "currencyPair": "GBP/EUR",
           "rate": "1.183",
@@ -3830,6 +4319,89 @@
         },
         "alignmentIsProof": false,
         "measuredAlignmentBenchmark": null,
+        "mlValidation": {
+          "status": "BENCHMARK_PILOT",
+          "evidence": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+          },
+          "productionBankingValidated": false
+        },
+        "riskAssessment": {
+          "status": "NOT_ESTIMATED",
+          "reason": "The synthetic risk classifier was removed. Paired-program labels do not identify defects.",
+          "legacyNumericField": "gnnBugRiskScore=0 is unused compatibility data, not evidence of low risk."
+        },
+        "matchingGranularity": "PROGRAM",
         "sourceAuthorship": {
           "aiGenerated": true,
           "description": "AI-authored executable scalar COBOL/Java banking demonstration",
@@ -3838,9 +4410,10 @@
           "remittancePolicy": "Historical World Bank GBP120 fee1.89 plus AI-generated >GBP120 tier at1%; not a real provider tariff"
         },
         "limitations": [
-          "Structural graph extraction is a source-line approximation, separate from the closed formal parser.",
+          "The displayed inspection graph is a line approximation; matching uses a separate semantic-feature graph.",
+          "Program-pair training does not supply statement correspondences or defect labels.",
           "GNN/model confidence is not proof and does not prune symbolic inputs.",
-          "Synthetic model calibration does not establish financial defect accuracy."
+          "Small public benchmark retrieval results do not establish production migration reliability."
         ],
         "patchVerification": {
           "status": "UNKNOWN_HALTED_LIMIT",
@@ -3886,6 +4459,20 @@
               },
               "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
             },
+            "proofInputs": {
+              "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+              "cobolSourceFormat": "FREE",
+              "amountField": "INPUT-AMOUNT",
+              "rateField": "REFERENCE-RATE",
+              "resultField": "SETTLEMENT-RESULT",
+              "javaAmountParameter": "amount",
+              "javaRateParameter": "rate",
+              "amountMinCents": 0,
+              "amountMaxCents": 999999999,
+              "referenceCurrencyPair": "GBP/EUR",
+              "referenceSource": "Bank of England Daily Spot Rate",
+              "referenceCollectedDate": "2026-10-17"
+            },
             "semantics": "restricted COBOL/Java scalar arithmetic v1",
             "outputObservation": "monetary values rounded HALF_UP to integer cents",
             "sourceSha256": {
@@ -3900,15 +4487,10 @@
             ],
             "reason": "External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly."
           }
-        },
-        "mlValidation": {
-          "status": "NOT_VALIDATED",
-          "evidence": "synthetic demo data only",
-          "humanReviewedCorpus": null
         }
       },
-      "createdAt": "2026-10-17T16:13:22.453318+00:00",
-      "updatedAt": "2026-10-17T16:13:22.453318+00:00"
+      "createdAt": "2026-10-18T03:05:36.762454+00:00",
+      "updatedAt": "2026-10-18T03:05:36.762454+00:00"
     }
   ]
 }

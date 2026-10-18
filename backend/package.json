@@ -11,7 +11,8 @@
     "db:seed": "mikro-orm seeder:run --class InitialVerificationSeeder",
     "setup": "npm run db:migrate && npm run db:seed",
     "test": "jest --runInBand",
-    "test:smoke": "node test/api.smoke.mjs"
+    "test:smoke": "node test/api.smoke.mjs",
+    "test:matching": "node test/matching.smoke.mjs"
   },
   "engines": { "node": ">=22" },
   "dependencies": {

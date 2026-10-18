@@ -1,4 +1,5 @@
 import { parseVerificationResult, proofMatchesSources, validateVerificationRequest, type VerificationRequest, type VerificationResult } from './contracts';
+import { parseMatchingResult, validateMatchingRequest, type MatchingRequest, type MatchingResult } from './matching-contracts';
 
 const MAX_REQUEST_BYTES = 1_048_576;
 const MAX_RESPONSE_BYTES = 16 * 1_048_576;
@@ -62,6 +63,38 @@ export class ApiClient {
     this.baseUrl = normalizeBackendUrl(baseUrl);
     if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 600_000) throw new Error('Request timeout must be between 1 and 600000 milliseconds.');
     this.timeoutMs = timeoutMs;
+  }
+
+  async match(request: MatchingRequest, signal?: AbortSignal): Promise<MatchingResult> {
+    if (signal?.aborted) throw new Error('Program matching was cancelled.');
+    const validated = validateMatchingRequest(request);
+    const body = JSON.stringify(validated);
+    if (Buffer.byteLength(body, 'utf8') > 2 * MAX_REQUEST_BYTES) throw new Error('The matching request exceeds the 2 MiB payload limit.');
+    const controller = new AbortController();
+    let timedOut = false;
+    const cancel = () => controller.abort();
+    signal?.addEventListener('abort', cancel, { once: true });
+    const timer = setTimeout(() => { timedOut = true; controller.abort(); }, this.timeoutMs);
+    try {
+      const response = await fetch(`${this.baseUrl}/api/matches`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body, signal: controller.signal, redirect: 'error',
+      });
+      if (!response.ok) {
+        await response.body?.cancel();
+        throw new Error(`Program matching failed (HTTP ${response.status}). Check the local backend, model availability and source limits.`);
+      }
+      const result = parseMatchingResult(await responseJson(response), validated);
+      if (signal?.aborted) throw new Error('Program matching was cancelled.');
+      return result;
+    } catch (error) {
+      if (timedOut) throw new Error(`Program matching timed out after ${Math.round(this.timeoutMs / 1000)} seconds.`);
+      if (signal?.aborted) throw new Error('Program matching was cancelled.');
+      if (error instanceof TypeError) throw new Error(`Could not reach local matching at ${this.baseUrl}. Start the backend and check its address. Redirects are not followed.`);
+      throw error;
+    } finally {
+      clearTimeout(timer); signal?.removeEventListener('abort', cancel);
+    }
   }
 
   async verify(request: VerificationRequest, signal?: AbortSignal): Promise<VerificationResult> {

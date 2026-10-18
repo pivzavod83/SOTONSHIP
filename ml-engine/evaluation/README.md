@@ -1,68 +1,40 @@
-# Human-reviewed evaluation set
+# Paired-program training and evaluation
 
-The saved graph model and risk classifier were trained on generated data. Do not retrain or describe the scores as validated until an authorized, representative, human-reviewed corpus has been assembled and a held-out evaluation has been reported. This workflow evaluates the current model only; it never trains or modifies a model.
+The active model learns whole-program COBOL/Java correspondence from the pinned **143-pair COBOL-JavaTrans** benchmark. The random-feature trainer and XGBoost risk classifier were removed. Nothing in this training uses the four generated financial regression fixtures or the old synthetic risk labels.
 
-## Protecting source code
+## Reproduce
 
-Keep real COBOL and Java outside Git, in an approved access-controlled location. Obtain authorization for evaluation and ML use, follow the code owner's retention and deletion requirements, and remove secrets and customer data only through an approved process. Do not copy production source into this repository. The corpus JSON references source files by relative path and SHA-256 so reviewers and reports can identify exact versions without embedding their contents in the manifest.
-
-No approved corpus is included with the repository. The JSON template is deliberately incomplete: its source files, hashes, reviewer identities, and adjudications must be replaced with authorized real review data before evaluation can run. Do not run the example command with the literal `path/to/approved-corpus.json` string.
-
-Keep the completed manifest and its source files together in the approved access-controlled location. For JSONL datasets, the preparation command can create an **unreviewed draft**. It defaults every case to the test split and rejects output inside this repository. It supports generic paired JSONL and CodeTransOcean NicheTrans rows (`id`, `name`, `COBOL`, `Java`). Example for the CodeTransOcean COBOL-to-Java slice:
+From `ml-engine/`:
 
 ```sh
-.venv/bin/python -m ml_engine.prepare_review_corpus /path/to/niche_test.json \
-  --input-format codetransocean-niche \
-  --output-dir /approved/storage/cobol-java-review \
-  --dataset-id codetransocean-niche-cobol-java-test \
-  --dialect-profile GNUCOBOL_3_2_COMPATIBILITY_CANDIDATE_UNCONFIRMED \
-  --source-format AUTO \
-  --source-url https://huggingface.co/datasets/WeixiangYan/CodeTransOcean/tree/8985d0851100f08e94735b2f2556a795ba8c69bb/CodeTrans%20Datasets/NicheTrans \
-  --source-license "Apache-2.0; CodeTransOcean dataset metadata"
+.venv/bin/python scripts/fetch_paired_dataset.py
+OPENBLAS_NUM_THREADS=1 .venv/bin/python scripts/train_paired_gnn.py
 ```
 
-The command copies each source file and hashes its exact bytes. `AUTO` gives only a weak per-file `FIXED_CANDIDATE` or `FREE_CANDIDATE` layout hint; the manifest tags the dialect and source format as needing review. It labels every record `PENDING`, leaves reviewer votes empty, adds no proof inputs, and marks the manifest `UNREVIEWED`. Confirm dialect, format, task grouping, and applicability before assigning labels. You can also start manually from `review-corpus.template.json`. Validate the completed manifest against `review-corpus.schema.json`. A case records:
+The fetcher pins upstream commit `2b14b7bf7e55556205654c6f7657fa60e36251fa`, records the SHA-256 and licence attribution, and puts raw code under ignored `evaluation/corpora/cobol-javatrans/`. Do not add source code to Git or represent it as production bank code. Repository terms are Apache-2.0 with underlying HumanEval MIT attribution; retained notices are linked from `data-sources/paired-code/`.
 
-When using CodeTransOcean, cite Yan et al. (2023):
+## Objective and split
 
-```bibtex
-@article{yan2023codetransocean,
-  title={CodeTransOcean: A Comprehensive Multilingual Benchmark for Code Translation},
-  author={Yan, Weixiang and Tian, Yuchen and Li, Yunzhe and Chen, Qian and Wang, Wen},
-  journal={arXiv preprint arXiv:2310.04951},
-  year={2023}
-}
-```
+`paired-code/task-splits.json` assigns whole original tasks and transitive near-duplicate groups before fitting. There are **85 train / 29 validation / 29 test** tasks. All fragments, renamed versions or other derivatives of a task must remain in its original split. No identifier spelling, comments, task IDs or declared method/program names are model features.
 
-- `groupId`: the application/system boundary used to keep related programs together in one split;
-- `dialectProfile` and `patternTags`: compiler profile and features such as `COMP-3`, `PERFORM_THRU`, `ROUNDED`, `COPY`, or `CICS`;
-- source file paths and hashes; include `request.proofInputs` when testing the formal checker, but it is optional for model-only alignment/risk evaluation;
-- independent `reviewVotes` from at least two qualified reviewers, including each reviewer's defect decision and matched graph-node pairs;
-- a final `adjudication` with reviewer identity, rationale, resolved defect decision and resolved matches.
+The encoder uses two relation-aware message-passing layers over operation/type/literal graphs with approximate data/control/sequence edges. A contrastive objective rewards paired COBOL/Java programs; selected other tasks act as negatives. Different tasks are not assumed formally inequivalent. This is correspondence learning, not a correctness oracle.
 
-Record disagreements rather than overwriting them. A qualified adjudicator reviews each disagreement, documents the rationale, and supplies the final labels. The report counts how often initial votes differed from adjudication. Cases with `PENDING` adjudication or fewer than two independent reviewer votes cannot be evaluated. The schema permits an empty vote list for an unreviewed draft; the evaluator enforces the stronger review requirement.
+Validation selects checkpoints and the similarity/margin gate. The final test is for reporting, not parameter or threshold selection. The report also discloses prior observed-test results from an implementation reviewed for feature leakage; code-review corrections were made without selecting changes by test score. Treat this as an exploratory pilot, not a pristine external validation study.
 
-For pair labels, use the node IDs in the exact output graph for that source hash (for example, `cobol:12` and `java:18`). The current graph builder is line-based; these IDs are graph node identifiers, not promised compiler source maps. Keep this limitation visible when reviewing mappings.
+## What is reported
 
-The evaluator currently shares the verifier's 100,000-character / 1,500-line source limit and line-based graph extractor. It is suitable for bounded modules and pilot examples, not yet for arbitrary large enterprise portfolios. When a program is outside the formal proof profile, its proof result can remain `UNKNOWN`; its AI alignment/risk outputs can still be measured separately.
+Read [training-report.json](paired-code/training-report.json) for actual Top-1/Top-3/Top-5 retrieval and mean reciprocal rank, query counts, candidate counts, model and dataset hashes, training history, selected epochs, thresholds and limitations. Baselines include normalized-name matching, semantic feature histograms and a separately trained encoder of comparable capacity without message passing.
 
-## Split and evaluate
+The current GNN does not establish superiority to name matching on the original named benchmark. Numerical cosine similarity is not a bug probability or proof. Small validation samples may fail to support a suggestion gate; the API then deliberately returns `REVIEW_REQUIRED` while still displaying ranked candidates. Financial-domain reliability is unvalidated.
 
-Assign all modules from one application/system group to exactly one of `train`, `calibration`, or `test`. Never split individual source lines or near-duplicate modules across those groups. Use the calibration split to choose a risk threshold and freeze that threshold before inspecting test results. Keep the final test split untouched until the model and threshold are fixed.
+## Separate future work
 
-From `ml-engine/`, evaluate the frozen test split:
+The old [reviewed node/defect workflow](reviewed-risk-workflow.md), schema and importer are retained for future labelled studies. They are not the active trainer, and the current model does not predict their risk or statement labels. The historically documented 88-pair CodeTransOcean test corpus is separate, is not included in this training, and is not available in this checkout. Do not silently turn reserved test data into training examples.
 
-```sh
-.venv/bin/python -m ml_engine.evaluate_review_set path/to/approved-corpus.json \
-  --split test --risk-threshold 0.5 --output evaluation-report.json
-```
+Exact fault localization, risk classification and patch generation require additional labelled work. Z3 proofs remain independent and limited to their recorded financial scope.
 
-Replace both example paths with actual paths, for example `/approved/storage/review-corpus.json` and `/approved/storage/evaluation-report.json`. Choose the risk threshold using the calibration split before evaluating the test split; `0.5` is only an example value, not a validated operating threshold.
+## Frozen renamed-code stress test
 
-The report records the corpus hash, saved model ID/hash, split, threshold, and resolved reviewer disagreements. It reports mapping precision/recall/F1 against an exact normalized-name baseline; defect-risk precision/recall/F1 and false negatives against the existing deterministic baseline; and risk/mapping results by dialect and pattern. A false negative is a reviewed defective case the model fails to flag. Group sizes and class balance must be read alongside every metric. Empty/small subgroups are not evidence of reliable performance.
+Run `.venv/bin/python scripts/evaluate_paired_gnn.py` to evaluate the same stored model and same 29 test tasks after anonymizing Java declaration names. [rename-stress-report.json](paired-code/rename-stress-report.json) preserves both original and anonymized results and the exact candidate order. It does not retrain or retune thresholds. This controlled removal of name information is not a new independent holdout or an estimate of production performance.
 
-The score threshold is not automatically optimized. Select it on the calibration set for an agreed review capacity and acceptable miss rate; then run the test report once with that frozen threshold. Do not choose a threshold after looking at test results. Preserve reports, corpus hash, model hash, code revision, reviewer protocol, and threshold decision together in the approved evidence store.
-
-## Retraining gate
-
-Retrain only after the labels and split policy are approved and the current model has a baseline report. Any new model version must record its source corpus hash, training/calibration split hashes, hyperparameters, random seed, evaluation protocol, and artifact hash. Compare it to the current model and baselines on the same untouched test groups, including false negatives by dialect and pattern. A model change affects advisory ranking only. It must never turn `UNKNOWN` into a proof, authorize a patch, or alter the formal solver's result.
+Current measured test results: GNN Top-1 11/29 (37.93%), Top-5 20/29 (68.97%), no-message Top-1 8/29 (27.59%), original-name baseline Top-1 27/29 (93.10%). Under controlled declaration anonymization the GNN scores are unchanged and name-only Top-1 is 1/29 (3.45%). The validation gate did not establish reliable suggestions, so the shipped model deliberately requires manual review.

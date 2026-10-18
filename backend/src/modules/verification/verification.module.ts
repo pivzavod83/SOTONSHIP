@@ -13,9 +13,10 @@ import { GetBaselineComparisonMetricsHandler } from './application/queries/handl
 import { RunVerificationHandler } from './application/commands/handlers/run-verification.handler';
 import { ApplyVerifiedPatchHandler } from './application/commands/handlers/apply-verified-patch.handler';
 import { FxRatesModule } from '../fx-rates/fx-rates.module';
+import { PythonWorkerModule } from '../../common/infrastructure/python/python-worker.module';
 
 @Module({
-  imports: [CqrsModule, FxRatesModule, MikroOrmModule.forFeature([VerificationEntity])],
+  imports: [CqrsModule, FxRatesModule, PythonWorkerModule, MikroOrmModule.forFeature([VerificationEntity])],
   controllers: [VerificationController],
   providers: [
     { provide: VERIFICATION_REPOSITORY, useClass: MikroOrmVerificationRepository },

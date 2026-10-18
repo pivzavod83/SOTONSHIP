@@ -21,8 +21,10 @@
     ['verify', 'verify'], ['verify-candidate', 'verifyCandidate'], ['show-diff', 'showDiff'],
     ['apply-candidate', 'applyCandidate'], ['clear-candidate', 'clearCandidate'],
     ['export-report', 'exportReport'], ['open-settings', 'openSettings'],
+    ['choose-matching-files', 'chooseMatchingFiles'], ['match-programs', 'matchPrograms'],
   ].forEach(([id, type]) => action(id, type));
   byId('category').addEventListener('change', event => { flushProof(); send('setCategory', event.target.value); });
+  byId('matching-format').addEventListener('change', event => send('setMatchingSourceFormat', event.target.value));
   byId('save-endpoint').addEventListener('click', () => send('setBackendUrl', byId('backend-url').value.trim()));
   byId('backend-url').addEventListener('keydown', event => {
     if (event.key === 'Enter') send('setBackendUrl', event.target.value.trim());
@@ -61,7 +63,34 @@
     block.append(element('dt', '', label), element('dd', '', value));
     parent.append(block);
   }
-  function percent(value) { return typeof value === 'number' && Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : 'Unavailable'; }
+
+  function renderMatching(next) {
+    const container = byId('matching-result'); container.replaceChildren();
+    const result = next.matchingResult;
+    if (!result) return;
+    const card = element('article', `result-card matching-card${next.matchingStale ? ' stale' : ''}`);
+    card.append(element('p', 'eyebrow', 'LEARNED PROGRAM MATCHING'), element('h3', '', result.status === 'MATCH_SUGGESTED' ? 'A candidate match is suggested' : 'Ranking requires engineer review'));
+    card.append(element('p', 'result-explanation', result.reason));
+    card.append(element('p', 'muted', 'Cosine similarity is an advisory ranking score, not a confidence percentage or equivalence proof. Every candidate requires your review. Matching does not infer proof mappings or identify exact faulty operations.'));
+    if (next.matchingStale) card.append(element('p', 'stale-banner', 'The COBOL, Java candidates, format or backend changed. Rank the current candidates again before confirming.'));
+    const list = element('ol', 'matching-ranking');
+    result.candidates.forEach(candidate => {
+      const row = element('li', 'matching-row');
+      const heading = element('div');
+      heading.append(element('strong', '', `${candidate.rank}. ${candidate.moduleName}`), element('p', 'muted', `Cosine similarity ${candidate.similarity.toFixed(4)}`));
+      const selectedFile = next.matchingFiles?.find(item => item.candidateId === candidate.candidateId)?.file;
+      if (selectedFile) heading.append(element('p', 'file-path', selectedFile.path));
+      const button = element('button', 'secondary', next.confirmedMatchId === candidate.candidateId ? 'Selected by engineer' : 'Confirm this Java candidate');
+      button.disabled = !!next.busy || !!next.matchingStale || next.confirmedMatchId === candidate.candidateId;
+      button.addEventListener('click', () => { flushProof(); send('confirmMatch', candidate.candidateId); });
+      row.append(heading, button); list.append(row);
+    });
+    card.append(list);
+    if (next.confirmedMatchId) card.append(element('p', 'muted', 'The confirmed Java file is selected below. Review the explicit proof contract before running verification.'));
+    detail(card, 'Model, training dataset & held-out evaluation', result.model);
+    detail(card, 'Ranking thresholds & exact source hashes', { thresholds: result.thresholds, cobolSourceSha256: result.cobolSourceSha256, candidates: result.candidates });
+    container.append(card);
+  }
 
   function resultCard(result, label, stale) {
     const scope = object(result.proofScope);
@@ -104,14 +133,12 @@
     card.append(scopeSummary);
     detail(card, 'Exact proof scope, assumptions & source hashes', scope);
     const graphDetails = element('details', 'details');
-    graphDetails.append(element('summary', '', 'Graph inspection & experimental neural scores'));
+    graphDetails.append(element('summary', '', 'Graph inspection'));
     const graphBody = element('div', 'graph-body');
-    graphBody.append(element('p', 'muted', 'These scores assist inspection. They do not establish equivalence, authorize a fix, or measure validated defect accuracy.'));
+    graphBody.append(element('p', 'muted', 'Program matching is shown separately above. Defect risk is not estimated; no synthetic risk model is used.'));
     const graphMetrics = element('dl', 'graph-metrics');
     metric(graphMetrics, 'Graph nodes', Array.isArray(graph.nodes) ? graph.nodes.length : 'Unavailable');
     metric(graphMetrics, 'Graph edges', Array.isArray(graph.edges) ? graph.edges.length : 'Unavailable');
-    metric(graphMetrics, 'Alignment · experimental', percent(result.gnnAlignmentScore));
-    metric(graphMetrics, 'Risk · unvalidated', percent(result.gnnBugRiskScore));
     graphBody.append(graphMetrics);
     if (graph.semanticExtraction) graphBody.append(element('pre', 'json-output', pretty(graph.semanticExtraction)));
     if (graph.deterministicDiagnostics) detail(graphBody, 'Deterministic graph diagnostics', graph.deterministicDiagnostics);
@@ -147,19 +174,27 @@
     if (document.activeElement !== byId('backend-url')) byId('backend-url').value = next.backendUrl;
     if (!pendingProof && document.activeElement !== byId('proof-inputs')) byId('proof-inputs').value = next.proofInputsText || '';
     byId('category').value = next.category;
+    byId('matching-format').value = next.matchingSourceFormat || 'AUTO';
+    const matchingFiles = byId('matching-files'); matchingFiles.replaceChildren();
+    (next.matchingFiles || []).forEach(item => {
+      const label = element('li', '', `${item.candidateId} · ${item.file.name}${item.file.dirty ? ' · unsaved' : ''}`);
+      label.title = item.file.path; matchingFiles.append(label);
+    });
     ['cobol', 'java', 'candidate'].forEach(kind => updateFile(kind, next.files[kind]));
     const paired = !!(next.files.cobol && next.files.java);
     const candidate = !!next.files.candidate;
-    ['demo', 'choose-cobol', 'choose-java', 'choose-candidate', 'choose-contract', 'save-endpoint', 'open-settings', 'category', 'backend-url', 'proof-inputs'].forEach(id => { byId(id).disabled = busy; });
+    ['demo', 'choose-cobol', 'choose-java', 'choose-candidate', 'choose-contract', 'choose-matching-files', 'matching-format', 'save-endpoint', 'open-settings', 'category', 'backend-url', 'proof-inputs'].forEach(id => { byId(id).disabled = busy; });
+    byId('match-programs').disabled = busy || !next.files.cobol || !next.matchingFiles?.length;
     byId('verify').disabled = busy || !paired;
     byId('verify').textContent = busy ? 'Working…' : 'Verify source pair';
     byId('verify-candidate').disabled = busy || !paired || !candidate;
     byId('clear-candidate').disabled = busy || !candidate;
     byId('show-diff').disabled = busy || !next.files.java || !candidate;
     byId('apply-candidate').disabled = busy || !next.canApply || pendingProof;
-    byId('export-report').disabled = busy || !(next.result || next.candidateResult);
+    byId('export-report').disabled = busy || !(next.result || next.candidateResult || next.matchingResult);
     byId('applied-message').hidden = !next.applied;
     renderResults(next);
+    renderMatching(next);
   }
   window.addEventListener('message', event => {
     if (event.data && event.data.type === 'state' && event.data.state) render(event.data.state);

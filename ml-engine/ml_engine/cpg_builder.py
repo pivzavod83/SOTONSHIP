@@ -29,7 +29,8 @@ def features(text: str, language: str) -> list[float]:
 def build_cpg(source: str, language: str, source_format: str = "FREE") -> nx.DiGraph:
     if language not in ("cobol", "java"):
         raise ValueError("language must be cobol or java")
-    graph = nx.MultiDiGraph(language=language, extractor="restricted-source-cpg-v1")
+    graph = nx.MultiDiGraph(language=language, extractor="restricted-source-cpg-v1",
+                           sourceText=source, sourceFormat=source_format)
     text = normalize_cobol_source(source, source_format) if language == "cobol" else strip_comments(source, language)
     root = f"{language}:root"
     graph.add_node(root, label=language.upper(), kind="program", language=language,

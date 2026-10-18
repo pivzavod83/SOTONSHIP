@@ -1,0 +1,13 @@
+{
+  "evaluatedAt": "2026-10-18T03:12:05.135299+00:00",
+  "datasetPairs": 143,
+  "graphsCompared": 286,
+  "graphChanges": 0,
+  "comparison": "Exact numeric feature array shape/bytes and every relation edge-array shape/bytes before and after package-private Java declaration masking and unqualified/this helper-call normalization.",
+  "beforeGraphsSha256": "fda4e1da130ed06a532239fbbea73f4f5b3f62d0472664b1577d5c669518bcc1",
+  "afterGraphsSha256": "fda4e1da130ed06a532239fbbea73f4f5b3f62d0472664b1577d5c669518bcc1",
+  "frozenModelSha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+  "retrained": false,
+  "conclusion": "All original corpus graphs are unchanged, so stored fitted weights, validation thresholds and reported retrieval metrics remain applicable.",
+  "limitation": "Heuristic API classification does not resolve arbitrary qualified method calls against full Java types."
+}

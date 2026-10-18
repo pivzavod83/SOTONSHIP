@@ -8,14 +8,15 @@ import { GlobalExceptionFilter } from './common/exceptions/global-exception.filt
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, { bodyParser: false });
-  app.use(json({ limit: '1mb' }));
+  // Multi-candidate matching also enforces a normalized 2 MiB domain limit.
+  app.use(json({ limit: '3mb' }));
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.enableShutdownHooks();
   const swagger = new DocumentBuilder()
     .setTitle('Neuro-Symbolic COBOL-to-Java Financial Verifier')
-    .setDescription('Layered DDD + CQRS + MikroORM. SAT supplies counterexamples; UNSAT applies only within explicit proofScope; unsupported programs remain UNKNOWN.')
+    .setDescription('Layered DDD + CQRS + MikroORM. Paired-source GNN matching suggests program correspondence for human confirmation, never proof. SAT supplies counterexamples; UNSAT applies only within explicit proofScope; unsupported programs remain UNKNOWN.')
     .setVersion('1.0.0').build();
   if (process.env.SWAGGER_ENABLED === 'true' && process.env.NODE_ENV !== 'production') {
     SwaggerModule.setup('api/docs', app, SwaggerModule.createDocument(app, swagger));

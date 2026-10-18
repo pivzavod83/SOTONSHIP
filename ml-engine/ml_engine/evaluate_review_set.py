@@ -12,7 +12,7 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from .gnn_aligner import MODEL_DIR, load_model
+from .paired_gnn import MODEL_PATH, load_model
 from .verify import verify_request
 
 
@@ -119,6 +119,12 @@ def _case_result(case: dict, base: Path, risk_threshold: float) -> dict:
 
 
 def evaluate(corpus_path: Path, split: str, risk_threshold: float = 0.5) -> dict:
+    if load_model().get("task") != "NODE_ALIGNMENT_AND_DEFECT_RISK":
+        raise ValueError(
+            "This legacy evaluator needs a node-alignment/defect-risk model. The paired-program GNN "
+            "does not predict those labels. Use evaluation/paired-code/training-report.json and "
+            "scripts/train_paired_gnn.py for program-retrieval evaluation; do not report zero risk as accuracy."
+        )
     if not 0 <= risk_threshold <= 1:
         raise ValueError("Risk threshold must be between 0 and 1")
     if not corpus_path.is_file():
@@ -150,7 +156,7 @@ def evaluate(corpus_path: Path, split: str, risk_threshold: float = 0.5) -> dict
               "riskThreshold": risk_threshold,
               "model": {"modelId": load_model().get("provenance", {}).get("modelId", "unknown"),
                         "provenance": "advisory only; no training performed",
-                        "sha256": _sha256((MODEL_DIR / "cobol_java_gnn_v1.json").read_bytes())},
+                        "sha256": _sha256(MODEL_PATH.read_bytes())},
               "risk": {"model": _confusion(actual, [row["modelDefect"] for row in rows]),
                        "baseline": _confusion(actual, [row["baselineDefect"] for row in rows])},
               "alignment": {"model": _aggregate_pair_metrics(rows, "modelPairs"),

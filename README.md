@@ -1,48 +1,42 @@
-# SOTONSHIP — Neuro-Symbolic Financial Verifier
+# SOTONSHIP — Learned COBOL-to-Java Matching and Financial Verification
 
-A runnable backend and ML prototype for comparing selected COBOL banking arithmetic with migrated Java. It extracts code property graphs, aligns structural features, scores financial risks and asks Z3 for counterexamples or equivalence within an explicit arithmetic model. There is no frontend; `frontend/` contains only `.gitkeep`.
+An ML-led migration workbench for engineers comparing legacy COBOL with candidate Java implementations. A relation-aware Graph Neural Network ranks which Java programs correspond to a COBOL program. An engineer confirms the pairing and explicit input contract; an independent Z3 checker then looks for financial discrepancies in a supported bounded arithmetic subset.
 
-The API uses **NestJS, strict Layered DDD, CQRS, MikroORM and PostgreSQL**. Python uses NetworkX, NumPy graph message passing, demo XGBoost risk scoring and `z3-solver`. Four precomputed analyses are loaded by an idempotent MikroORM seeder.
+The API uses **NestJS, strict Layered DDD, CQRS, MikroORM and PostgreSQL**. The Python engine uses NumPy for actual paired-source GNN training/inference and `z3-solver` for formal checks. The VS Code extension provides candidate ranking, manual confirmation, counterexamples, a native Java diff and fresh verification before an undoable editor change. `frontend/` contains only `.gitkeep`.
 
-## Project background and design goals
+## MVP workflow
 
-The proposed compiler profiles, initial conversion boundary, evidence gates, and open enterprise controls are documented in [docs/conversion-scope.md](./docs/conversion-scope.md).
+1. Select a COBOL program and up to 20 candidate Java implementations in VS Code.
+2. The GNN ranks whole-program correspondences using source-derived operation/type/dependency graphs. Names, comments and task IDs are excluded from learned numeric features. Cosine scores are similarities, not correctness probabilities.
+3. Inspect the ranked candidates and explicitly confirm one. A low-confidence or unsupported retrieval remains `REVIEW_REQUIRED`; the model does not approve migrations.
+4. Supply the input/output mapping, financial bounds and exact reference-rate identity. Z3 independently returns a concrete counterexample, bounded equivalence evidence or `UNKNOWN`.
+5. Supply a corrected Java candidate, inspect its diff and reverify. Applying it requires a fresh supported proof bound to the current source and contract.
 
-This overview records the project motivation and design goals. The implementation described below uses an explicit bounded scalar model and verifies caller-supplied patch candidates.
+**No LLM or external translation API is connected.** Candidate Java is supplied by the engineer. LLM generation/repair is planned; the implemented ML capability is program matching, not Java generation or exact fault localization.
 
-### The problem
+## What the model has actually learned
 
-Banks are modernising decades-old COBOL systems into Java, including software that calculates payments, interest, fees, and foreign-exchange conversions. A migration can compile, pass conventional tests, and still change the financial meaning of the original program.
+The previous random-feature trainer, synthetic-risk XGBoost classifier and their model assets have been removed. The current GNN is fitted on a task-grouped subset of **143 COBOL-JavaTrans source pairs**, with separate validation and test tasks. These are small HumanEval-derived benchmark programs, not production banking migrations. Paired labels identify corresponding tasks; they do not certify unrestricted equivalence or identify faulty statements.
 
-For example, COBOL `COMP-3` values use fixed-point decimal arithmetic. Translating them into Java `double` values introduces binary floating-point behaviour, where common decimal values such as `0.1` cannot be represented exactly. Differences in scale, rounding order, digit truncation, or control flow can therefore create small discrepancies that are difficult to detect but significant across millions of transactions.
+Training selects weights using validation retrieval results, then compares test retrieval against name matching, semantic-feature histograms and an independently trained model without message passing. The small GNN has **not established an advantage over the baselines**. Read the exact measured results, exclusions, split IDs and evaluation history in [the training report](ml-engine/evaluation/paired-code/training-report.json) and [model/evaluation guide](ml-engine/evaluation/README.md). Review is always required before verification; production reliability and financial-domain matching remain unvalidated.
 
-This is a real operational risk, not only a theoretical concern. In 2018, TSB's migration to a new banking platform caused widespread disruption, affected a significant proportion of its 5.2 million customers, led to £32.7 million in customer redress, and resulted in £48.65 million in regulatory fines. The incident was broader than a COBOL-to-Java conversion, but it demonstrates the cost of insufficient assurance during complex banking-system migrations. At the language level, [IBM documents `COMP-3` as fixed-point packed decimal](https://www.ibm.com/docs/en/cobol-linux-x86/1.2.0?topic=arithmetic-formats-numeric-data), while [Oracle documents the exact representation error produced from a Java `double`](https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/math/BigDecimal.html). These semantic differences cannot be addressed reliably through compilation and ordinary test cases alone.
+Measured retrieval on the same 29 test tasks (29 Java candidates per query):
 
-### Our solution
+| Method | Correct first match | Correct match in top five |
+| --- | --- | --- |
+| Paired-program GNN | 11/29 (37.93%) | 20/29 (68.97%) |
+| Learned encoder without message passing | 8/29 (27.59%) | 18/29 (62.07%) |
+| Normalized-name baseline | 27/29 (93.10%) | 27/29 (93.10%) |
 
-We are building a verification layer that determines whether a migrated Java module preserves the financial behaviour of its COBOL source. Rather than trusting the translation process, the system combines machine learning with formal verification to identify risky changes and prove—or disprove—financial equivalence.
+In a separately labelled controlled stress test on these same tasks, anonymizing Java declaration names leaves GNN scores unchanged while the name baseline falls to 1/29 Top-1. That removes the name baseline's input signal by design; it is not a new independent evaluation or production accuracy estimate. See [the stress report](ml-engine/evaluation/paired-code/rename-stress-report.json).
 
-#### How it works
-
-1. **Program modelling:** The COBOL and Java programs are converted into Code Property Graphs that capture syntax, data flow, control flow, types, and financial operations.
-2. **Cross-language alignment:** A Graph Neural Network aligns equivalent COBOL paragraphs, variables, and operations with their Java counterparts, even when the code has been renamed or restructured. It assigns risk scores to suspicious mappings such as `COMP-3` to `double`, changed rounding rules, truncation, or altered loop behaviour.
-3. **Focused formal verification:** The highest-risk aligned subgraphs are translated into mathematical constraints and checked with the Z3 theorem prover. Relevant Bank of England exchange rates and World Bank remittance-fee data provide realistic financial scenarios.
-4. **Proof or counterexample:** If no differing result is possible within the defined model, the module is reported as mathematically equivalent. If a discrepancy exists, the verifier returns the exact input and the differing COBOL and Java outputs—for example, the transaction on which the Java implementation loses one penny.
-5. **Verified remediation:** For supported decimal and rounding defects, the system proposes a Java `BigDecimal` correction and reruns the proof. Code that depends on unbounded external state, such as an unstubbed `EXEC CICS` call, is explicitly marked unverifiable and referred for human review.
-
-### Why this solves the problem
-
-Traditional compilers and linters check syntax and local rules; tests examine only selected examples. Our approach checks semantic behaviour across languages. The GNN makes verification practical by locating equivalent and high-risk logic after refactoring, while Z3 provides mathematical evidence and reproducible counterexamples. Together, they give migration teams a clear basis for approving safe modules, correcting unsafe ones, and refusing to make unsupported claims when verification is not possible.
-
-### Evidence
-
-- [FCA: TSB fined £48.65m for operational resilience failings](https://www.fca.org.uk/news/press-releases/tsb-fined-48m-operational-resilience-failings)
-- [IBM: COBOL numeric data formats](https://www.ibm.com/docs/en/cobol-linux-x86/1.2.0?topic=arithmetic-formats-numeric-data)
-- [Oracle: Java `BigDecimal` documentation](https://docs.oracle.com/en/java/javase/18/docs/api/java.base/java/math/BigDecimal.html)
+Compiler profiles and future conversion boundaries are documented in [docs/conversion-scope.md](docs/conversion-scope.md).
 
 ## Run locally
 
 An optional [VS Code extension](vscode-extension/README.md) adds an editor workflow on top of this backend: select COBOL and Java documents, supply an explicit proof-input contract, inspect counterexamples in the workbench and Problems panel, compare a proposed fix in a native diff, and apply it only after fresh verification of the exact current source. Unsaved changes are included in verification; applying a fix remains undoable and does not save the file automatically. This client uses the same local API and bounded proof model. It does not generate Java or bundle PostgreSQL/Python.
+
+For program matching, run **SOTONSHIP: Find Java Program Matches with GNN** and explicitly confirm a ranked candidate before providing the proof contract.
 
 After starting the services below, run `npm ci`, `npm test` and `npm run package` from `vscode-extension/`, then install the resulting VSIX in VS Code and run **SOTONSHIP: Try the Penny Drift Demo**. Its default API address is `http://127.0.0.1:3001`; change `sotonship.backendUrl` when using another local port. See the extension README for custom files, proof mappings and native editor tests.
 
@@ -116,28 +110,27 @@ The verification aggregate stores COBOL, Java and proposed patched Java; graph/a
 | `POST /api/verifications` | `RunVerificationCommand` | `VerificationDetailRto` |
 | `POST /api/verifications/:id/apply-patch` | `ApplyVerifiedPatchCommand` | `VerificationDetailRto` |
 | `GET /api/fx-rates` | FX list query | Reference FX RTOs |
+| `POST /api/matches` | Read-only program-matching query | Ranked, source-bound candidate correspondences; no proof |
 
 Use Swagger for request schemas. A run accepts `moduleName`, `category`, `cobolSource`, `javaSource`, and optional `patchedJavaSource`. Positive proof status also requires `proofInputs`: the declared `IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1` profile, source format, amount/rate/result fields, Java parameter names, cent bounds, and exact reference-rate currency pair/source/collection date. This is a verifier grammar label, not evidence that IBM compiled the source or that all compiler options are modeled. Missing or mismatched inputs return `UNKNOWN_HALTED_LIMIT`; no unrelated FX row is substituted. Supported COBOL source formats are `FREE` and a restricted fixed-format normalizer; continuation/debug lines and unsupported language features still halt proof. Categories are `FX_CONVERSION`, `INTEREST_CALC`, `REMITTANCE_FEE` and `EXTERNAL_LIMIT_CASE`. UUIDs, source length and DTO fields are validated. Submitted source is parsed as data; the bridge does not execute submitted COBOL or Java.
 
-## ML and formal pipeline
+## ML matching and independent proof
 
-`ml-engine/ml_engine/` separates three stages:
+`ml-engine/ml_engine/code_graph.py` extracts bounded, heuristic semantic-feature graphs with operations, types, literals and approximate data/control/sequence relationships. It is a retrieval representation, not a complete compiler or proof parser. `paired_gnn.py` applies two learned relation-specific message-passing layers, pools whole-program representations and scores candidates by cosine similarity. A paired-source contrastive objective teaches corresponding program vectors to approach each other; validation selects the checkpoint and suggestion gate.
 
-1. `cpg_builder.py` extracts AST, control-flow and type-flow nodes/edges, including `PIC`, `COMP-3`, paragraph flow, Java arithmetic and external nodes. Node features are fixed-point, IEEE754, BigDecimal, scale, rounding, branching, external calls and structural residual.
-2. `gnn_aligner.py` runs two graph message-passing layers with saved demo weights, cosine subgraph alignment and node risk classification. The deterministic baseline matches names/regexes. Graph JSON includes cross-language links and node scores; an f-string explanation identifies structural/type risks and the proof outcome.
-3. `z3_formal_prover.py` parses a closed source grammar, models scaled integers/rationals, storage-width truncation and the supported Java arithmetic, and asserts unequal results. The exact source programs, actual rate and input bounds determine the constraints. Neural scores do not establish formal safety.
+`POST /api/matches` is a read-only CQRS query. It accepts `cobolSource`, optional `cobolSourceFormat` (`AUTO`, `FREE`, `FIXED`), `candidates: [{ candidateId, moduleName, javaSource }]` and optional `topK` (1–20, default 5). Responses include ranked candidate IDs and exact source hashes, model/dataset/evaluation provenance, similarity thresholds and `matchingIsProof: false`. This MVP does not persist match queries or assemble whole enterprise projects. Clients must explicitly confirm a candidate and provide a separate proof contract.
 
-The scalar proof input contract maps the first two COBOL fields to amount and rate, and the two Java method parameters to the same roles. COBOL storage declarations require explicit `VALUE 0`; the harness supplies the two inputs. Supported grammar, bounds and exclusions are recorded with each result. Unknown statements, external state or unsupported semantics halt proof. These are deliberately small programs, not a complete COBOL compiler, Java frontend or general program equivalence system.
+The source-inspection `cpg_builder.py` retains a line-oriented NetworkX graph for the verification report. The compatibility adapter emits only a program-to-program learned link, not inferred paragraph/method ground truth. No defect-risk classifier is shipped: `provenanceJson.riskAssessment.status` is `NOT_ESTIMATED`. The legacy numeric `gnnBugRiskScore` remains zero for storage/API compatibility and must not be interpreted as low risk.
+
+`z3_formal_prover.py` independently parses a closed source grammar, models scaled integers/rationals, supported floating arithmetic and COBOL storage-width behavior, and asks whether outputs can differ. Learned scores never alter proof bounds, constraints or patch authorization. A successful proof is conditional on the recorded parser/model/input assumptions.
 
 | Status | Meaning |
 | --- | --- |
-| `SAT_COUNTEREXAMPLE_FOUND` | Z3 found a concrete input for which modeled outputs differ. The stored witness includes exact decimal inputs/outputs and drift. |
-| `UNSAT_PROVEN_SAFE` | No unequal outputs exist **within the recorded model, bounds, input contract and fixed reference rate**. This does not prove unrestricted whole-language or production banking equivalence. |
-| `UNKNOWN_HALTED_LIMIT` | Unsupported code, external CICS/JCL state, unmodeled aliases, solver limits or insufficient modeling prevents a claim. Human review is required. |
+| `SAT_COUNTEREXAMPLE_FOUND` | Concrete inputs produce different modeled outputs. |
+| `UNSAT_PROVEN_SAFE` | No differing observed outputs exist within the recorded supported model, bounds and fixed rate. |
+| `UNKNOWN_HALTED_LIMIT` | Unsupported code, external state, missing contracts or solver/model limits prevent a conclusion. |
 
-AI helps prioritize structurally similar, renamed code and highlight risk; it is not mathematically required to solve every equivalence problem. The shipped model is trained/calibrated on synthetic demo data. Each analysis now marks ML validation as `NOT_VALIDATED` until a representative, human-reviewed corpus is supplied. Its confidence scores are not established real-world bug probabilities. There is no independently measured claim of **94% vs 18% accuracy**, and warm inference timing must be distinguished from Python startup, model loading and SMT proof time.
-
-The authorized-corpus schema, reviewer adjudication workflow, codebase-level holdout policy and baseline comparison tool are documented in [ml-engine/evaluation/README.md](./ml-engine/evaluation/README.md). The tool evaluates a frozen model and records misses; it does not train or change proof decisions. Production source must remain in an approved access-controlled corpus, outside this repository.
+The proof grammar is deliberately narrow. It does not verify every program in the 143-task matching benchmark. Retrieval evaluation and supported financial proof scenarios measure different capabilities. Neither is production banking certification.
 
 ## Four seed scenarios
 
@@ -154,17 +147,18 @@ The supplied numerical example needed correction: `10450.33 × 1.2941 = 13523.77
 
 ## Data sources, dates and licences
 
-Collection date for this build: **17 October 2026** (Europe/London client date). Collection time and observation vintage are separate fields. Snapshot hashes and exact URLs are preserved in `data-sources/`; engine fixture provenance links to those records.
+Financial-reference collection date: **17 October 2026** (Europe/London client date). Collection time and observation vintage are separate fields. Snapshot hashes and exact URLs are preserved in `data-sources/`; engine fixture provenance links to those records.
 
 | Source | Included material and dates | Licence / attribution |
 | --- | --- | --- |
+| [COBOL-JavaTrans](https://github.com/COBOL-Coder/COBOL-Coder) | 143 HumanEval-derived COBOL/Java task pairs at commit `2b14b7bf7e55556205654c6f7657fa60e36251fa`, collected **18 October 2026**. Used for paired matching, with task-grouped train/validation/test separation. | Repository Apache-2.0; underlying HumanEval task attribution MIT. Preserve upstream notices; see the [dataset manifest](ml-engine/evaluation/paired-code/dataset-manifest.json). |
 | [IBM Bank of Z](https://github.com/IBM/Bank-of-Z) | Open-source banking COBOL reference samples at a pinned commit; retrieved 17 October 2026. These references are distinct from the generated four-case fixtures. | Apache License 2.0; retained upstream licence and source attribution. |
 | [Bank of England IADB](https://www.bankofengland.co.uk/boeapps/database/) | Daily sterling exchange rates. Latest observation in the retrieved response requested through 17 October 2026 is **15 October 2026**: GBP/EUR **1.1830**, GBP/USD **1.3253**, GBP/THB **44.4158**. | [Open Government Licence v3.0](https://www.bankofengland.co.uk/legal), with Bank of England attribution; see the captured primary-source licence record. These are indicative published rates, not execution quotes. |
 | [World Bank Remittance Prices Worldwide](https://remittanceprices.worldbank.org/corridor/United-Kingdom/Thailand) | Historical GBP→THB Wise Internet survey row for sending GBP120, surveyed **8–22 August 2025**: sender fee **GBP1.89**, displayed provider rate **43.98 THB/GBP**. Verified numeric extract collected 17 October 2026; direct download returned HTTP 403, recorded in the manifest. | [World Bank dataset licence CC BY 4.0](https://datacatalog.worldbank.org/search/dataset/0037898/remittance-prices-worldwide), subject to the recorded dataset terms and third-party exceptions. Attribution: The World Bank, Remittance Prices Worldwide. |
 
 World Bank remittance fees, total costs and provider FX quotes describe a specific corridor/provider/quarter. Total cost percentages are not interchangeable with central-bank spot FX rates. A Bank of England GBP/THB spot rate retains BoE attribution even when used in a remittance example. Neither the fixture fee schedule nor a provider quote is described as a current universal remittance tariff. If a requested corridor is absent from a retrieved release, that absence must be reported rather than filled with invented observations.
 
-The four COBOL/Java source pairs are **AI-generated educational fixtures**, inspired by banking patterns. They are not represented as extracted production bank programs. Upstream COBOL references and downloaded financial observations are attributed separately. All newly introduced application code, parsers, model generation/training code, tests, proof summaries and documentation were AI-generated during this task and require human review. No pretrained production banking GNN, independently validated accuracy, or whole-program certification is claimed.
+The four COBOL/Java source pairs are **AI-generated educational fixtures**, inspired by banking patterns. They are not represented as extracted production bank programs. Upstream COBOL references and downloaded financial observations are attributed separately. All newly introduced application code, parsers, model generation/training code, tests, proof summaries and documentation were AI-generated during this task and require human review. No production banking GNN, validated financial defect probabilities, or unrestricted program certification is claimed. The paired-code benchmark has its separate measured retrieval results.
 
 ## Reproduce and test
 
@@ -190,6 +184,14 @@ npm run test:smoke
 
 The stdin JSON contract is `{ moduleName, category, cobolSource, javaSource, patchedJavaSource, referenceFxRates }`, where FX rates are decimal strings with currency pair, source and collection date. The response includes graph data, scores, baseline, proof status, witnesses, proof scope and provenance. Stdout is reserved for machine-readable JSON; diagnostics go to stderr.
 
-Saved model inference uses a portable evaluator for the trained XGBoost trees, so it needs no native XGBoost/OpenMP library. To regenerate the synthetic demonstration model, install `ml-engine/requirements-training.txt` and run `python scripts/train_demo_models.py` from `ml-engine/` (XGBoost training on macOS also requires `libomp`). The model JSON records training seed, synthetic sample split, calibration and limitations. Reported synthetic classification metrics measure that generated task; they do not measure real cross-language alignment accuracy.
+Paired-model training and inference are portable NumPy; XGBoost, PyTorch, native OpenMP and external model APIs are not needed. From `ml-engine/`, reproduce the pinned corpus and training with:
+
+```sh
+.venv/bin/python scripts/fetch_paired_dataset.py
+OPENBLAS_NUM_THREADS=1 .venv/bin/python scripts/train_paired_gnn.py
+.venv/bin/python -m ml_engine.precompute
+```
+
+Raw benchmark sources are cached under ignored `ml-engine/evaluation/corpora/`. Commit-pinned URLs, collection date, SHA-256, licence notices, task-grouped splits and reports are retained separately. See [the evaluation guide](ml-engine/evaluation/README.md). The old node-risk evaluator refuses to misreport program-retrieval outputs as defect accuracy.
 
 Tests cover supported arithmetic/counterexamples, safe patches, negative rounding, renamed identifiers and rejection of unsupported programs, plus domain rules, CQRS orchestration and layer boundaries. The HTTP smoke check exercises Swagger, validation, seeded reads, real Python/Z3 analysis, safe-patch persistence and limit-case rejection against PostgreSQL. See the engine model metadata and individual run `proofScope` for the exact guarantees and exclusions.

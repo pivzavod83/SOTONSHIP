@@ -5,7 +5,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import numpy as np
 import pytest
 import z3
 
@@ -13,7 +12,7 @@ from ml_engine.cpg_builder import baseline, build_cpg, combined_graph_json, feat
 from ml_engine.fixtures import (CICS_COBOL, CICS_JAVA, FX_COBOL, FX_JAVA, FX_PATCH,
                                 MORTGAGE_COBOL, MORTGAGE_JAVA, MORTGAGE_PATCH,
                                 REMIT_COBOL, REMIT_JAVA, cobol, demo_requests)
-from ml_engine.gnn_aligner import align, embeddings, load_model
+from ml_engine.gnn_aligner import align
 from ml_engine.semantics import parse_cobol, parse_java, strip_comments
 from ml_engine.verify import load_reference_rates, verify_request
 from ml_engine.z3_formal_prover import SAT, UNKNOWN, UNSAT, half_up, prove, trunc
@@ -141,18 +140,28 @@ def test_graph_has_source_derived_features_and_all_edge_types():
     result = align(graph, java)
     serialized = combined_graph_json(graph, java, result["links"])
     assert any(edge["kind"] == "GNN_ALIGNMENT" for edge in serialized["edges"])
-    assert 0 <= result["bugRiskScore"] <= 1
+    assert result["bugRiskScore"] == 0
+    assert result["riskAssessment"]["status"] == "NOT_ESTIMATED"
+    assert all(link["granularity"] == "PROGRAM" for link in result["links"])
 
 
-def test_graph_embedding_is_name_invariant_and_message_passing_sensitive():
-    first = build_cpg(FX_JAVA, "java")
-    second = build_cpg(FX_JAVA.replace("principal", "zzzz").replace("quote", "aaaa"), "java")
-    _, a = embeddings(first, load_model())
-    _, b = embeddings(second, load_model())
-    np.testing.assert_allclose(a, b)
-    first.remove_edges_from(list(first.edges(keys=True)))
-    _, changed = embeddings(first, load_model())
-    assert not np.allclose(a, changed)
+def test_program_similarity_cannot_change_the_formal_verdict(monkeypatch):
+    import importlib
+    verification = importlib.import_module("ml_engine.verify")
+    request = {**demo_requests()[0], "referenceFxRates": [RATE]}
+    actual = verification.verify_request(request)
+    original = verification.align_sources
+
+    def misleading_match(*args, **kwargs):
+        result = original(*args, **kwargs)
+        result.update(alignmentScore=1.0, cosineSimilarity=1.0)
+        return result
+
+    monkeypatch.setattr(verification, "align_sources", misleading_match)
+    high_similarity = verification.verify_request(request)
+    assert actual["formalProofStatus"] == high_similarity["formalProofStatus"] == SAT
+    assert actual["counterexamplesJson"] == high_similarity["counterexamplesJson"]
+    assert actual["proofScope"] == high_similarity["proofScope"]
 
 
 def test_baseline_is_computed_and_can_catch_explicit_bad_api():
@@ -189,3 +198,9 @@ def test_optional_patch_is_not_required_for_analysis():
     assert verify_request(request)["formalProofStatus"] == SAT
     request["patchedJavaSource"] = ""
     assert verify_request(request)["formalProofStatus"] == SAT
+
+
+def test_legacy_review_cannot_report_program_matching_as_defect_accuracy(tmp_path):
+    from ml_engine.evaluate_review_set import evaluate
+    with pytest.raises(ValueError, match="does not predict those labels"):
+        evaluate(tmp_path / "review.json", "test")

@@ -3,6 +3,7 @@ import { basename } from 'node:path';
 import { ApiClient, normalizeBackendUrl } from './api-client';
 import { isScopedEquivalent, proofMatchesSources, validateProofInputs, validateSource } from './contracts';
 import type { ProofInputs, VerificationCategory, VerificationRequest, VerificationResult } from './contracts';
+import type { MatchingRequest, MatchingResult, MatchingSourceFormat } from './matching-contracts';
 import type { FileLabel, PanelState, WorkbenchMessage } from './panel-state';
 import { getWebviewHtml } from './webview';
 
@@ -13,6 +14,10 @@ interface Snapshot {
   proofInputsText: string; proofInputs: ProofInputs; category: VerificationCategory; backendUrl: string;
 }
 type OpenedDocuments = Partial<Record<Role, vscode.TextDocument>>;
+interface MatchingSnapshot {
+  cobol: DocumentSnapshot; candidates: { candidateId: string; document: DocumentSnapshot }[];
+  backendUrl: string; sourceFormat: MatchingSourceFormat;
+}
 const categories: VerificationCategory[] = ['FX_CONVERSION', 'INTEREST_CALC', 'REMITTANCE_FEE', 'EXTERNAL_LIMIT_CASE'];
 
 /** Desktop adapter only: proof decisions remain in the independent backend. */
@@ -24,6 +29,8 @@ export class WorkbenchController implements vscode.Disposable {
   private files: Partial<Record<Role, vscode.Uri>> = {};
   private baselineSnapshot?: Snapshot;
   private candidateSnapshot?: Snapshot;
+  private matchingFiles: vscode.Uri[] = [];
+  private matchingSnapshot?: MatchingSnapshot;
   private applying = false;
   private abort?: AbortController;
   private state: PanelState;
@@ -34,12 +41,17 @@ export class WorkbenchController implements vscode.Disposable {
     try { backendUrl = normalizeBackendUrl(configuredUrl); } catch { /* Keep the invalid setting editable in the workbench. */ }
     this.state = { backendUrl,
       busy: false, message: 'Choose a source pair or try the penny drift demo. Verification runs only when requested.',
-      category: 'FX_CONVERSION', files: {}, proofInputsText: '', resultStale: false, candidateStale: false, canApply: false, applied: false };
+      category: 'FX_CONVERSION', files: {}, proofInputsText: '', resultStale: false, candidateStale: false, canApply: false, applied: false,
+      matchingFiles: [], matchingSourceFormat: 'AUTO', matchingStale: false };
     this.subscriptions.push(this.diagnostics, this.output,
       vscode.workspace.onDidChangeTextDocument(event => {
-        if (!event.contentChanges.length || (this.applying && event.document.uri.toString() === this.files.java?.toString())) return;
+        if (!event.contentChanges.length) return;
+        const matchingAffected = this.files.cobol?.toString() === event.document.uri.toString()
+          || this.matchingFiles.some(uri => uri.toString() === event.document.uri.toString());
+        if (matchingAffected) this.invalidateMatching();
+        if (this.applying && event.document.uri.toString() === this.files.java?.toString()) { if (matchingAffected) this.publish(); return; }
         const affected = Object.entries(this.files).filter(([, uri]) => uri?.toString() === event.document.uri.toString()).map(([role]) => role);
-        if (!affected.length) return;
+        if (!affected.length) { if (matchingAffected) this.publish(); return; }
         if (affected.some(role => role !== 'candidate')) this.invalidate(true);
         else this.invalidate(false);
         this.state.message = 'Selected source changed. Run verification again before relying on its result.';
@@ -49,10 +61,10 @@ export class WorkbenchController implements vscode.Disposable {
         if (!event.affectsConfiguration('sotonship.backendUrl')) return;
         const configured = vscode.workspace.getConfiguration('sotonship').get<string>('backendUrl', 'http://127.0.0.1:3001');
         try { this.state.backendUrl = normalizeBackendUrl(configured); } catch { this.state.backendUrl = configured; }
-        this.invalidate(true); this.publish();
+        this.invalidate(true); this.invalidateMatching(); this.publish();
       }),
       vscode.workspace.onDidSaveTextDocument(document => {
-        if (Object.values(this.files).some(uri => uri?.toString() === document.uri.toString())) this.publish();
+        if ([...Object.values(this.files), ...this.matchingFiles].some(uri => uri?.toString() === document.uri.toString())) this.publish();
       }));
   }
 
@@ -79,6 +91,14 @@ export class WorkbenchController implements vscode.Disposable {
         case 'chooseCobol': await this.chooseFile('cobol'); break;
         case 'chooseJava': await this.chooseFile('java'); break;
         case 'chooseCandidate': await this.chooseFile('candidate'); break;
+        case 'chooseMatchingFiles': await this.chooseMatchingFiles(); break;
+        case 'matchPrograms': await this.matchPrograms(); break;
+        case 'confirmMatch': if (typeof message.value === 'string') await this.confirmMatch(message.value); break;
+        case 'setMatchingSourceFormat':
+          if (['AUTO', 'FREE', 'FIXED'].includes(message.value)) {
+            this.state.matchingSourceFormat = message.value as MatchingSourceFormat; this.invalidateMatching();
+          }
+          break;
         case 'chooseContract': await this.chooseContract(); break;
         case 'demo': await this.loadDemo(); break;
         case 'verify': await this.verify(false); break;
@@ -96,7 +116,7 @@ export class WorkbenchController implements vscode.Disposable {
           this.state.proofInputsText = message.value; this.invalidate(true); break;
         case 'setBackendUrl':
           if (typeof message.value !== 'string') return;
-          this.state.backendUrl = normalizeBackendUrl(message.value); this.invalidate(true);
+          this.state.backendUrl = normalizeBackendUrl(message.value); this.invalidate(true); this.invalidateMatching();
           this.state.message = `Backend set for this session: ${this.state.backendUrl}`; break;
         case 'setCategory':
           if (typeof message.value !== 'string' || !categories.includes(message.value as VerificationCategory)) return;
@@ -126,6 +146,11 @@ export class WorkbenchController implements vscode.Disposable {
     }
   }
 
+  private invalidateMatching(): void {
+    if (this.state.matchingResult) this.state.matchingStale = true;
+    this.state.confirmedMatchId = undefined;
+  }
+
   private label(uri: vscode.Uri | undefined): FileLabel | undefined {
     if (!uri) return undefined;
     const document = vscode.workspace.textDocuments.find(doc => doc.uri.toString() === uri.toString());
@@ -134,15 +159,20 @@ export class WorkbenchController implements vscode.Disposable {
 
   private publish(): void {
     this.state.files = { cobol: this.label(this.files.cobol), java: this.label(this.files.java), candidate: this.label(this.files.candidate) };
+    this.state.matchingFiles = this.matchingFiles.map((uri, index) => ({ candidateId: `candidate-${index + 1}`, file: this.label(uri)! }));
     void this.panel?.webview.postMessage({ type: 'state', state: this.getState() });
   }
 
   public async chooseFile(role: Role): Promise<boolean> {
+    if (this.state.busy) throw new Error('Wait for the current verification to finish.');
     const chosen = await vscode.window.showOpenDialog({ canSelectMany: false, canSelectFolders: false,
       title: role === 'cobol' ? 'Choose original COBOL source' : role === 'java' ? 'Choose Java implementation' : 'Choose proposed Java fix',
       filters: role === 'cobol' ? { 'COBOL source': ['cbl', 'cob', 'cobol'], 'All files': ['*'] } : { 'Java source': ['java', 'txt'], 'All files': ['*'] } });
     if (!chosen?.[0]) return false;
+    if (this.state.busy) throw new Error('Wait for the current verification to finish.');
     this.files[role] = chosen[0]; this.invalidate(role !== 'candidate');
+    if (role === 'cobol') this.invalidateMatching();
+    if (role === 'java') this.state.confirmedMatchId = undefined;
     await this.openFile(role); this.publish(); return true;
   }
 
@@ -170,8 +200,10 @@ export class WorkbenchController implements vscode.Disposable {
     const java = await vscode.workspace.openTextDocument({ language: 'java', content: demo.javaSource });
     const candidate = await vscode.workspace.openTextDocument({ language: 'java', content: demo.patchedJavaSource ?? '' });
     this.files = { cobol: cobol.uri, java: java.uri, candidate: candidate.uri };
+    this.matchingFiles = []; this.matchingSnapshot = undefined;
     this.state = { ...this.state, category: demo.category, proofInputsText: JSON.stringify(validateProofInputs(demo.proofInputs), null, 2),
       result: undefined, candidateResult: undefined, resultStale: false, candidateStale: false, canApply: false, applied: false,
+      matchingFiles: [], matchingResult: undefined, matchingStale: false, confirmedMatchId: undefined,
       message: 'Demo loaded into three unsaved editors. Verify the original pair to find the penny discrepancy; no code has been sent yet.' };
     await vscode.window.showTextDocument(java, { viewColumn: vscode.ViewColumn.One, preview: false });
     this.open(); this.publish();
@@ -184,7 +216,74 @@ export class WorkbenchController implements vscode.Disposable {
     this.state.proofInputsText = JSON.stringify(validateProofInputs(input.proofInputs), null, 2);
     if (input.backendUrl) this.state.backendUrl = normalizeBackendUrl(input.backendUrl);
     if (input.category) this.state.category = input.category;
-    this.invalidate(true); this.publish();
+    this.invalidate(true); this.invalidateMatching(); this.publish();
+  }
+
+  public async chooseMatchingFiles(): Promise<boolean> {
+    if (this.state.busy) throw new Error('Wait for the current verification to finish.');
+    const chosen = await vscode.window.showOpenDialog({ canSelectMany: true, canSelectFolders: false,
+      title: 'Choose up to 20 candidate Java implementations for GNN matching', filters: { 'Java source': ['java', 'txt'], 'All files': ['*'] } });
+    if (!chosen?.length) return false;
+    if (this.state.busy) throw new Error('Wait for the current verification to finish.');
+    if (chosen.length > 20) throw new Error('Choose between 1 and 20 Java candidates.');
+    this.matchingFiles = [...chosen]; this.invalidateMatching(); this.publish(); return true;
+  }
+
+  /** Selection never uploads code or infers financial proof inputs. */
+  public async configureMatching(input: { cobol: vscode.Uri; candidates: vscode.Uri[]; backendUrl?: string; sourceFormat?: MatchingSourceFormat }): Promise<void> {
+    if (this.state.busy) throw new Error('Wait for the current verification to finish.');
+    if (!input.candidates.length || input.candidates.length > 20 || new Set(input.candidates.map(uri => uri.toString())).size !== input.candidates.length) throw new Error('Choose between 1 and 20 distinct Java candidates.');
+    if (input.sourceFormat && !['AUTO', 'FREE', 'FIXED'].includes(input.sourceFormat)) throw new Error('Unsupported matching source format.');
+    const backendUrl = input.backendUrl ? normalizeBackendUrl(input.backendUrl) : this.state.backendUrl;
+    this.files.cobol = input.cobol; this.matchingFiles = [...input.candidates]; this.state.backendUrl = backendUrl;
+    if (input.sourceFormat) this.state.matchingSourceFormat = input.sourceFormat;
+    this.invalidate(true); this.invalidateMatching(); this.publish();
+  }
+
+  private async matchingDocuments(snapshot: MatchingSnapshot): Promise<vscode.TextDocument[]> {
+    return Promise.all([snapshot.cobol, ...snapshot.candidates.map(item => item.document)].map(item => vscode.workspace.openTextDocument(item.uri)));
+  }
+
+  private matchingUnchanged(snapshot: MatchingSnapshot, documents: vscode.TextDocument[]): boolean {
+    if (this.files.cobol?.toString() !== snapshot.cobol.uri.toString() || this.state.backendUrl !== snapshot.backendUrl
+      || this.state.matchingSourceFormat !== snapshot.sourceFormat || this.matchingFiles.length !== snapshot.candidates.length) return false;
+    if (documents[0]?.getText() !== snapshot.cobol.text) return false;
+    return snapshot.candidates.every((item, index) => item.document.uri.toString() === this.matchingFiles[index]?.toString() && documents[index + 1]?.getText() === item.document.text);
+  }
+
+  public async matchPrograms(): Promise<MatchingResult> {
+    return this.operation('Matching COBOL with Java candidates', async signal => {
+      const cobolUri = this.files.cobol; const candidates = [...this.matchingFiles];
+      const backendUrl = normalizeBackendUrl(this.state.backendUrl); const sourceFormat = this.state.matchingSourceFormat;
+      if (!candidates.length) throw new Error('Choose Java candidates for program matching first.');
+      this.invalidateMatching();
+      const [cobol, ...java] = await Promise.all([this.document(cobolUri, 'COBOL source'), ...candidates.map(uri => this.document(uri, 'Java candidate'))]);
+      const snapshot: MatchingSnapshot = { cobol, candidates: java.map((document, index) => ({ candidateId: `candidate-${index + 1}`, document })), backendUrl, sourceFormat };
+      const request: MatchingRequest = { cobolSource: cobol.text, cobolSourceFormat: sourceFormat,
+        candidates: snapshot.candidates.map(item => ({ candidateId: item.candidateId, moduleName: basename(item.document.uri.path).replace(/[\x00-\x1f/\\]/g, '_').slice(0, 160) || item.candidateId, javaSource: item.document.text })), topK: java.length };
+      const result = await this.client(snapshot).match(request, signal);
+      const current = this.matchingUnchanged(snapshot, await this.matchingDocuments(snapshot)) && !signal.aborted;
+      this.matchingSnapshot = snapshot; this.state.matchingResult = result; this.state.matchingStale = !current;
+      this.state.message = current ? 'Program matching completed. Inspect the advisory ranking and confirm a candidate; proof inputs still require your review.'
+        : 'Matching sources or backend changed during analysis. Run program matching again.';
+      this.publish(); return result;
+    });
+  }
+
+  public async confirmMatch(candidateId: string): Promise<void> {
+    await this.operation('Confirming selected program match', async signal => {
+      const snapshot = this.matchingSnapshot; const result = this.state.matchingResult;
+      if (!snapshot || !result || this.state.matchingStale || !result.candidates.some(item => item.candidateId === candidateId)) throw new Error('Run matching on the current sources before confirming a candidate.');
+      const selected = snapshot.candidates.find(item => item.candidateId === candidateId);
+      const documents = await this.matchingDocuments(snapshot);
+      if (!selected || signal.aborted || !this.matchingUnchanged(snapshot, documents)) {
+        this.invalidateMatching(); throw new Error('Matching sources or backend changed. Run matching again before selecting Java.');
+      }
+      // No await between the current-source check and selecting the confirmed URI.
+      this.files.java = selected.document.uri; this.invalidate(true); this.state.confirmedMatchId = candidateId;
+      this.state.message = 'Java candidate selected by engineer review. Review or supply the explicit proof inputs, then verify this pair. Matching is not equivalence proof.';
+      this.publish();
+    });
   }
 
   private async document(uri: vscode.Uri | undefined, name: string): Promise<DocumentSnapshot> {
@@ -253,7 +352,7 @@ export class WorkbenchController implements vscode.Disposable {
     } finally { this.abort = undefined; this.state.busy = false; this.publish(); }
   }
 
-  private client(snapshot: Snapshot): ApiClient {
+  private client(snapshot: { backendUrl: string }): ApiClient {
     return new ApiClient(snapshot.backendUrl, vscode.workspace.getConfiguration('sotonship').get<number>('requestTimeoutMs', 120000));
   }
 
@@ -344,10 +443,11 @@ export class WorkbenchController implements vscode.Disposable {
   }
 
   private async exportReport(): Promise<void> {
-    if (!this.state.result && !this.state.candidateResult) throw new Error('Run a verification before exporting evidence.');
+    if (!this.state.result && !this.state.candidateResult && !this.state.matchingResult) throw new Error('Run matching or verification before exporting evidence.');
     const content = JSON.stringify({ exportedAt: new Date().toISOString(), backend: this.state.backendUrl,
       resultStale: this.state.resultStale, candidateStale: this.state.candidateStale,
-      humanReviewStatus: 'PENDING', original: this.state.result, candidate: this.state.candidateResult }, null, 2);
+      humanReviewStatus: 'PENDING', matching: this.state.matchingResult, matchingStale: this.state.matchingStale,
+      confirmedMatchId: this.state.confirmedMatchId, original: this.state.result, candidate: this.state.candidateResult }, null, 2);
     await vscode.window.showTextDocument(await vscode.workspace.openTextDocument({ language: 'json', content }), { preview: false });
   }
 
@@ -360,6 +460,11 @@ export function activate(context: vscode.ExtensionContext): WorkbenchController 
     vscode.commands.registerCommand('sotonship.openWorkbench', () => controller.open()),
     vscode.commands.registerCommand('sotonship.tryDemo', () => controller.safely(() => controller.loadDemo())),
     vscode.commands.registerCommand('sotonship.showFixDiff', () => controller.safely(() => controller.showDiff())),
+    vscode.commands.registerCommand('sotonship.matchPrograms', () => controller.safely(async () => {
+      controller.open();
+      if (!await controller.chooseFile('cobol') || !await controller.chooseMatchingFiles()) return;
+      await controller.matchPrograms();
+    })),
     vscode.commands.registerCommand('sotonship.verifyFiles', () => controller.safely(async () => {
       controller.open();
       if (!await controller.chooseFile('cobol') || !await controller.chooseFile('java') || !await controller.chooseContract()) return;
