@@ -1,0 +1,14 @@
+{
+  "cobolSourceFormat": "FREE",
+  "amountField": "INPUT-AMOUNT",
+  "rateField": "REFERENCE-RATE",
+  "resultField": "SETTLEMENT-RESULT",
+  "javaAmountParameter": "principal",
+  "javaRateParameter": "quote",
+  "amountMinCents": -999999999,
+  "amountMaxCents": 999999999,
+  "referenceCurrencyPair": "GBP/EUR",
+  "referenceSource": "Bank of England Daily Spot Rate",
+  "referenceCollectedDate": "2026-10-17",
+  "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"
+}

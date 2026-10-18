@@ -1,6 +1,6 @@
 # Repository instructions
 
-This project is a bounded neuro-symbolic COBOL-to-Java financial verification prototype. Work only in `backend/` and `ml-engine/`, plus root documentation/configuration and provenance records in `data-sources/`. Keep `frontend/` empty except for `.gitkeep`.
+This project is a bounded neuro-symbolic COBOL-to-Java financial verification prototype. Work in `backend/`, `ml-engine/` and the optional `vscode-extension/` client, plus root documentation/configuration and provenance records in `data-sources/`. Keep `frontend/` empty except for `.gitkeep`.
 
 ## Required architecture
 
@@ -54,5 +54,9 @@ Use Bank of England published daily FX data with its actual observation date; do
 Record newly collected external data with its real collection date and source vintage. Preserve the distinction between the user/client date `2026-10-17` and a provider's available observations. Never invent future data or licences. Do not copy upstream code without preserving its licence and provenance. All application code, demo banking source pairs, model construction/training code, tests, precomputed proof explanations and documentation introduced in this task were AI-generated and require human review; upstream source/data retain their separate attribution.
 
 ## Validation
+
+The VS Code extension is a thin desktop client for the existing local API. It reads only explicitly selected editor documents, including unsaved text; sends code only on a requested verification; and never starts an LLM or executes submitted source. Keep its webview passive, use a strict CSP, and render response/source text as text. Proof-input mappings and source SHA-256 hashes bind a result to a precise question. Editing source, mappings or the endpoint invalidates previous results and diagnostics. Applying a candidate requires a fresh supported, bounded UNSAT result for the exact current documents, followed by a version-aware native editor edit. Leave the edit unsaved and undoable. Diagnostics identify program-level findings; do not claim that a first-line report anchor identifies the defect location. The extension has its own unit and native-host tests; the server architecture rules remain unchanged.
+
+From `vscode-extension/`: run `npm ci`, `npm test`, and `npm run package` to build the local VSIX. With the backend running, `npm run test:host` runs native VS Code integration checks in a separate temporary profile. `LIVE_VERIFIER_URL` selects the local API for these checks. Keep generated VSIX files, dependency installs, extension-host profiles and compiled output out of Git. The extension package is not a Marketplace publication.
 
 From `backend/`: install with `npm ci`, run `npm run build` and `npm test`. With PostgreSQL running, run migrations, seed and `node test/api.smoke.mjs` against a disposable database. From `ml-engine/`: create a Python 3.11–3.13 virtualenv, install `requirements.txt`, and run `python -m pytest`. Regenerate seed results with the documented precompute command after changing supported source semantics or reference data. Check actual solver results and witnesses, patch re-verification, unsupported-code rejection and import boundaries. Keep secrets, virtualenvs, installed dependencies and generated build output out of Git.

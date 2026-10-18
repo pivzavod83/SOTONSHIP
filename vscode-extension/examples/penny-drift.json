@@ -1,0 +1,21 @@
+{
+  "moduleName": "FX-WIRE-CALC.cbl",
+  "category": "FX_CONVERSION",
+  "cobolSource": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. FX-WIRE-CALC.\n       DATA DIVISION.\n       WORKING-STORAGE SECTION.\n       01 INPUT-AMOUNT PIC S9(7)V99 COMP-3 VALUE 0.\n       01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.\n       01 SETTLEMENT-RESULT PIC S9(7)V99 COMP-3 VALUE 0.\n       PROCEDURE DIVISION.\n       MAIN.\n           COMPUTE SETTLEMENT-RESULT ROUNDED = INPUT-AMOUNT * REFERENCE-RATE.\n           GOBACK.\n",
+  "javaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class FxWireService {\n    public BigDecimal calculate(double principal, double quote) {\n        return new BigDecimal(principal * quote).setScale(2, RoundingMode.HALF_UP);\n    }\n}\n",
+  "patchedJavaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class FxWireService {\n    public BigDecimal calculate(BigDecimal principal, BigDecimal quote) {\n        return principal.multiply(quote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));\n    }\n}\n",
+  "proofInputs": {
+    "cobolSourceFormat": "FREE",
+    "amountField": "INPUT-AMOUNT",
+    "rateField": "REFERENCE-RATE",
+    "resultField": "SETTLEMENT-RESULT",
+    "javaAmountParameter": "principal",
+    "javaRateParameter": "quote",
+    "amountMinCents": -999999999,
+    "amountMaxCents": 999999999,
+    "referenceCurrencyPair": "GBP/EUR",
+    "referenceSource": "Bank of England Daily Spot Rate",
+    "referenceCollectedDate": "2026-10-17",
+    "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"
+  }
+}

@@ -42,6 +42,10 @@ Traditional compilers and linters check syntax and local rules; tests examine on
 
 ## Run locally
 
+An optional [VS Code extension](vscode-extension/README.md) adds an editor workflow on top of this backend: select COBOL and Java documents, supply an explicit proof-input contract, inspect counterexamples in the workbench and Problems panel, compare a proposed fix in a native diff, and apply it only after fresh verification of the exact current source. Unsaved changes are included in verification; applying a fix remains undoable and does not save the file automatically. This client uses the same local API and bounded proof model. It does not generate Java or bundle PostgreSQL/Python.
+
+After starting the services below, run `npm ci`, `npm test` and `npm run package` from `vscode-extension/`, then install the resulting VSIX in VS Code and run **SOTONSHIP: Try the Penny Drift Demo**. Its default API address is `http://127.0.0.1:3001`; change `sotonship.backendUrl` when using another local port. See the extension README for custom files, proof mappings and native editor tests.
+
 Requires Node.js 22+, Python 3.11–3.13, and Docker Compose (or an existing PostgreSQL database). Run commands from the repository root unless shown otherwise.
 
 ```sh
