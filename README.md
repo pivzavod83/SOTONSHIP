@@ -58,14 +58,14 @@ npm run setup
 npm run start
 ```
 
-`setup` runs migrations and seeds the four stored analyses and reference FX rows. It preserves existing verification rows, including applied patches. The API listens on **http://localhost:3001/api/verifications**. Swagger is available on local nonproduction runs only when `SWAGGER_ENABLED=true`. API routes require an RS256 Bearer token matching `AUTH_JWT_ISSUER`, `AUTH_JWT_AUDIENCE`, and `AUTH_JWT_PUBLIC_KEY`. Read routes require `verifications:read`; run and patch routes require `verifications:write`. Replace the example identity settings with an approved identity-provider configuration before use. `npm run start:dev` runs TypeScript directly. Database credentials, port, Python executable, worker limits and engine path are configured in the root `.env`; `backend/.env` can override them. With an existing database, set `DATABASE_URL` and skip the Docker command.
+`setup` runs migrations and seeds the four stored analyses and reference FX rows. It preserves existing verification rows, including applied patches. The API listens on **http://localhost:3001/api/verifications**. Swagger is available on local nonproduction runs only when `SWAGGER_ENABLED=true`. API routes are available without credentials. `npm run start:dev` runs TypeScript directly. Database credentials, port, Python executable, worker limits and engine path are configured in the root `.env`; `backend/.env` can override them. With an existing database, set `DATABASE_URL` and skip the Docker command.
 
 The committed seed JSON is available immediately, so no upload or model training is required. Python dependencies are required for new analyses and patch re-verification. A missing engine or solver error produces an infrastructure error, never a successful proof.
 
 ```sh
-curl -H "Authorization: Bearer $API_BEARER_TOKEN" 'http://localhost:3001/api/verifications?page=1&pageSize=50'
-curl -H "Authorization: Bearer $API_BEARER_TOKEN" http://localhost:3001/api/verifications/baseline-comparison
-curl -H "Authorization: Bearer $API_BEARER_TOKEN" http://localhost:3001/api/fx-rates
+curl 'http://localhost:3001/api/verifications?page=1&pageSize=50'
+curl http://localhost:3001/api/verifications/baseline-comparison
+curl http://localhost:3001/api/fx-rates
 ```
 
 Stop PostgreSQL with `docker compose down`. Its named volume retains local data. Rebuilding the database is unnecessary for normal restarts.

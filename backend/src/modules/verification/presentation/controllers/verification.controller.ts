@@ -13,7 +13,6 @@ import { BaselineComparisonRto } from '../rto/baseline-comparison.rto';
 import { ErrorRto } from '../../../../common/rto/error.rto';
 import { VerificationPageDto } from '../dto/verification-page.dto';
 import { VerificationPageRto } from '../rto/verification-page.rto';
-import { Roles } from '../../../../common/auth/roles.decorator';
 
 @ApiTags('Verifications')
 @ApiBadRequestResponse({ type: ErrorRto })
@@ -22,19 +21,16 @@ export class VerificationController {
   constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
 
   @Get()
-  @Roles('verifications:read')
   @ApiOkResponse({ type: VerificationPageRto })
   list(@Query() query: VerificationPageDto): Promise<VerificationPageRto> {
     return this.queryBus.execute(new GetVerificationsListQuery(query.page, query.pageSize));
   }
 
   @Get('baseline-comparison')
-  @Roles('verifications:read')
   @ApiOkResponse({ type: BaselineComparisonRto })
   metrics(): Promise<BaselineComparisonRto> { return this.queryBus.execute(new GetBaselineComparisonMetricsQuery()); }
 
   @Get(':id')
-  @Roles('verifications:read')
   @ApiOkResponse({ type: VerificationDetailRto })
   @ApiNotFoundResponse({ type: ErrorRto })
   detail(@Param() params: VerificationIdDto): Promise<VerificationDetailRto> {
@@ -42,13 +38,11 @@ export class VerificationController {
   }
 
   @Post()
-  @Roles('verifications:write')
   @ApiOperation({ summary: 'Analyse restricted COBOL/Java source; unsupported semantics return UNKNOWN.' })
   @ApiCreatedResponse({ type: VerificationDetailRto })
   run(@Body() dto: RunVerificationDto): Promise<VerificationDetailRto> { return this.commandBus.execute(new RunVerificationCommand(dto)); }
 
   @Post(':id/apply-patch')
-  @Roles('verifications:write')
   @ApiOperation({ summary: 'Re-prove the candidate and replace Java source only for supported, bounded UNSAT.' })
   @ApiCreatedResponse({ type: VerificationDetailRto })
   @ApiNotFoundResponse({ type: ErrorRto })

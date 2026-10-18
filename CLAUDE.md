@@ -39,7 +39,7 @@ Neural alignment guides candidate matching; it is not a proof premise and is not
 
 External stdin/API verification requires explicit `proofInputs`: COBOL source format, amount/rate/result field names, Java parameter names, cent bounds, and exact reference-rate pair/source/collection date. Missing or mismatched inputs must return `UNKNOWN_HALTED_LIMIT`; never substitute another rate. `FREE` and a restricted fixed-reference normalizer are supported; continuation/debug lines and other compiler features remain unsupported. Seed proof scopes retain the explicit input contract.
 
-API routes require configured RS256 Bearer authentication and role claims (`verifications:read` / `verifications:write`). Analysis uses a bounded in-process asynchronous queue; it is not durable. List reads are paginated. Do not describe the queue as restart-safe or access as tenant-isolated until durable job persistence and tenant/portfolio row scoping are implemented.
+API routes are available without credentials or role checks. Analysis uses a bounded in-process asynchronous queue; it is not durable. List reads are paginated. Do not describe the queue as restart-safe until durable job persistence is implemented.
 
 `UNSAT_PROVEN_SAFE` means equivalence **only for the recorded `proofScope`**, including input bounds, arithmetic/rounding semantics, supported operations and fixed reference rates. It does not establish full COBOL/Java language equivalence or production banking safety. `SAT_COUNTEREXAMPLE_FOUND` requires a concrete reproducible witness. `UNKNOWN_HALTED_LIMIT` is a normal honest result. Proposed fixes must preserve the modeled COBOL behavior, including width truncation and paragraph fall-through when present.
 

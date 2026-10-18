@@ -4,10 +4,9 @@ import assert from 'node:assert/strict';
 const base = (process.env.API_URL ?? 'http://localhost:3001').replace(/\/$/, '');
 let checks = 0;
 async function request(path, { status = 200, body, method = body ? 'POST' : 'GET' } = {}) {
-  if (!process.env.API_BEARER_TOKEN) throw new Error('Set API_BEARER_TOKEN to a signed token with the required verifier role.');
   const response = await fetch(`${base}${path}`, {
     method,
-    headers: { authorization: `Bearer ${process.env.API_BEARER_TOKEN}`, ...(body ? { 'content-type': 'application/json' } : {}) },
+    headers: body ? { 'content-type': 'application/json' } : {},
     body: body ? JSON.stringify(body) : undefined,
     signal: AbortSignal.timeout(90_000),
   });

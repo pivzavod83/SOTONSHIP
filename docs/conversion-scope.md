@@ -43,7 +43,7 @@ The graph extractor remains a line-based approximation; its node identifiers are
 
 ## Security and operations baseline
 
-Treat source and derived graphs as confidential bank intellectual property. This repository now checks RS256 Bearer tokens against configured issuer, audience, and public key, and applies `verifications:read` / `verifications:write` roles. Analysis subprocesses now run behind a bounded in-process asynchronous worker queue; queued work is not durable across process restarts. Production still needs a JPMC-approved issuer and key-rotation strategy, tenant/portfolio row scoping, durable job state, audit export, transport/storage encryption, retention/deletion policy, and isolated worker containers. The demo's local database credentials are not a deployment configuration.
+Treat source and derived graphs as confidential bank intellectual property. API routes are available without credentials. Analysis subprocesses run behind a bounded in-process asynchronous worker queue; queued work is not durable across process restarts. Production still needs durable job state, audit export, transport/storage encryption, retention/deletion policy, and isolated worker containers. The demo's local database credentials are not a deployment configuration.
 
 ## Primary references
 
