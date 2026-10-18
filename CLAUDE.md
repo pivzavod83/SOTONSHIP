@@ -70,7 +70,7 @@ The follow-up in `ml-engine/evaluation/defect-corpus/expanded-c2j/` gives all 23
 
 The paired-training manifest, source/licence notices, split IDs and measured reports live in `ml-engine/evaluation/paired-code/`; raw benchmark sources stay in the ignored corpus cache and are fetched by commit-pinned URL. Actual runtime GNN weights are versioned. Do not fabricate reviewer votes or relabel upstream correspondence as formal correctness.
 
-The authoritative financial-reference inventory is `data-sources/` (source URLs, observation and collection dates, licence notices and snapshot hashes); the reproducible four-case fixture and computed results are in `ml-engine/data/`. Consult the root README's source table before changing fixture rates or corridor values.
+The authoritative financial-reference inventory is `data-sources/` (source URLs, observation and collection dates, licence notices and snapshot hashes); the reproducible four-case fixture and computed results are in `ml-engine/data/`. Consult the root TECHNICAL.md source table before changing fixture rates or corridor values.
 
 Use Bank of England published daily FX data with its actual observation date; do not label the illustrative `1.2941` as a BoE observation on `2026-10-16` unless the provider confirms it. World Bank Remittance Prices Worldwide describes corridor/provider costs and quoted FX data; total remittance cost is not a central-bank spot rate. Open-source COBOL reference samples retain their upstream licences. Generated demo COBOL/Java is not authentic production bank code.
 
