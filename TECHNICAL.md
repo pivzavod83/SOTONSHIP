@@ -1,4 +1,4 @@
-# Omul — Technical Guide
+# Parity — Technical Guide
 
 A migration workbench for engineers comparing legacy COBOL with its translated Java. The browser can run a **locally trained graph-feature defect classifier and source-location ranker**, with no API key. Findings mark the actual submitted source lines and remain hypotheses requiring review. An optional coding LLM provides a separate review. Independent runtime evidence and the bounded Z3 checker remain separate from both models. The existing GNN is an optional program-matching tool.
 
