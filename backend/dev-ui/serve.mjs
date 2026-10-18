@@ -105,5 +105,5 @@ export function createWorkbenchServer({ backendOrigin = process.env.BACKEND_ORIG
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const port = Number(process.env.UI_PORT ?? 3000);
   if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('UI_PORT must be a valid port.');
-  createWorkbenchServer().listen(port, '127.0.0.1', () => process.stdout.write(`Parity local workbench: http://127.0.0.1:${port}\n`));
+  createWorkbenchServer().listen(port, '127.0.0.1', () => process.stdout.write(`Omul local workbench: http://127.0.0.1:${port}\n`));
 }
