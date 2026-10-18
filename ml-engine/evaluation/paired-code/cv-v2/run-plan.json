@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "modelId": "paired-program-gnn-v2-cv",
+  "createdAt": "2026-10-18T03:51:37.602390+00:00",
+  "datasetSha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+  "partitionPlanSha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+  "sourceSha256": {
+    "scripts/train_paired_gnn_cv.py": "38fa40e409cb712a366bd7f3b361630726e2a9a7f861b1bba01f92d1c9326f5f",
+    "ml_engine/code_graph.py": "bff04bf64896bec4aead98835857d65b14fb92dbd77f1e94608a26bb4dbfd369",
+    "ml_engine/paired_gnn.py": "b4d6164bf2900ad0148759ff7463e6e5cc1f577f27619d14fa2990b93f09ab6a",
+    "scripts/train_paired_gnn.py": "14953c909696ed76094faacfb8be8ea16993287b1a0ba26a4dea14b5598d5de0",
+    "ml_engine/cv_partition.py": "b1491886337ac9e81e4d3af9ab4475fb48c90e00efefe438c5452b4b9ca185f8",
+    "scripts/partition_paired_dataset.py": "a432861232c1dba05eb60197c3e2257e514aa252893b67f2b5072feee3dca90c"
+  },
+  "numpyVersion": "2.3.4",
+  "previousModel": {
+    "id": "paired-program-gnn-v1",
+    "sha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+    "path": "ml_engine/models/paired_program_gnn_v1.json",
+    "purpose": "Frozen descriptive baseline on the exact same final 23-task gallery; never used for selection."
+  },
+  "configuration": {
+    "seed": 431,
+    "epochsBudget": 250,
+    "checkpointEpochs": [
+      1,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      90,
+      100,
+      110,
+      120,
+      130,
+      140,
+      150,
+      160,
+      170,
+      180,
+      190,
+      200,
+      210,
+      220,
+      230,
+      240,
+      250
+    ],
+    "foldCount": 5,
+    "developmentTasks": 120,
+    "finalHoldoutTasks": 23,
+    "foldTrainingTasks": 96,
+    "foldValidationTasks": 24,
+    "initialization": "Fresh parameters and fresh Adam state per fold, ablation, and final full-development fit; same declared seed.",
+    "architecture": "Unchanged two-layer relation-aware GNN; hidden/output 24; shared COBOL/Java encoder.",
+    "optimizer": {
+      "name": "Adam",
+      "learningRate": 0.004,
+      "beta1": 0.9,
+      "beta2": 0.999,
+      "epsilon": 1e-08,
+      "weightDecay": 0.0001,
+      "gradientClip": 5
+    },
+    "objective": "Symmetric paired-source InfoNCE, temperature 0.12; in-batch negatives only from current fitting fold.",
+    "selection": "Pooled 120 out-of-fold reciprocal ranks (MRR), then query-weighted validation loss, then earliest checkpoint epoch. No test-based tuning.",
+    "ablation": "No-message model has identical capacity, initialization seed, optimizer, epoch budget, folds, and its own identical CV epoch-selection rule.",
+    "thresholds": {
+      "minimumSimilarity": 1.0,
+      "minimumMargin": 2.0,
+      "calibration": {
+        "enabled": false,
+        "reason": "Benchmark-only retrieval evidence; financial-domain reliability remains unvalidated. Every ranking requires explicit human review.",
+        "method": "Fixed before CV and final evaluation; no holdout threshold selection."
+      }
+    },
+    "ties": "Stable candidate order saved in the partition plan; equal scores retain that order.",
+    "finalProtocol": "Freeze both full-development checkpoints, selected epochs, gate, and CV report before any learned encoding/scoring of the 23 final-holdout tasks. Deterministic graph partitioning may inspect all tasks before fitting. One final evaluation per frozen run.",
+    "prohibited": [
+      "No final-holdout graphs/embeddings/loss/negative-gallery in CV or fitting.",
+      "No augmentation, architecture change, threshold search or test-driven hyperparameter search."
+    ]
+  },
+  "priorExposure": {
+    "previousModelId": "paired-program-gnn-v1",
+    "all143SourcesPreviouslyProcessed": true,
+    "finalHoldoutTaskPriorMembership": {
+      "HumanEval/1": "test",
+      "HumanEval/2": "test",
+      "HumanEval/9": "test",
+      "HumanEval/13": "test",
+      "HumanEval/15": "test",
+      "HumanEval/21": "test",
+      "HumanEval/41": "test",
+      "HumanEval/54": "test",
+      "HumanEval/68": "test",
+      "HumanEval/69": "test",
+      "HumanEval/72": "test",
+      "HumanEval/76": "test",
+      "HumanEval/81": "test",
+      "HumanEval/84": "test",
+      "HumanEval/90": "test",
+      "HumanEval/102": "test",
+      "HumanEval/118": "test",
+      "HumanEval/124": "test",
+      "HumanEval/146": "test",
+      "HumanEval/147": "test",
+      "HumanEval/149": "test",
+      "HumanEval/155": "test",
+      "HumanEval/160": "test"
+    },
+    "priorMembershipCounts": {
+      "train": 0,
+      "validation": 0,
+      "test": 23
+    },
+    "previouslyEvaluatedFinalHoldoutTasks": 23,
+    "limitation": "The final 23 are held out from all new fitting/CV/gate choices, but were previously evaluated in v1. They cannot honestly be called pristine unforeseen data. New independently collected tasks are needed for that claim.",
+    "priorSplitSha256": "82854f09344f90b7dcf0cd237cce902d4446f179538e333936ed35cd679f259e",
+    "priorReportSha256": "b399b8723701e6a51b03b13c25f03908846d6d27e88a3a3d28eb230418200346"
+  },
+  "limitations": [
+    "143 small HumanEval-derived source pairs, not banking migrations.",
+    "Pair labels express upstream correspondence, not formal equivalence or defect locations.",
+    "Heuristic operation graphs are not full compiler ASTs or control-flow graphs.",
+    "Names are excluded from the model; the name-matching baseline can outperform it.",
+    "Cosine similarities are not calibrated correctness probabilities.",
+    "Final holdout is excluded from this fit and CV, but all 23 tasks were previously evaluated by v1; it is not pristine unseen or external data.",
+    "Financial-domain generalization, repair, and defect prediction remain unvalidated.",
+    "The selected-epoch out-of-fold results were used for epoch selection; they are exploratory selection evidence, not an unbiased nested-CV generalization estimate.",
+    "CV galleries contain 24 candidates; final evaluation contains 23. Metrics from different gallery sizes or earlier 29-task reports are not directly comparable."
+  ],
+  "runId": "paired-cv-v2-dd00a1038de20a04"
+}

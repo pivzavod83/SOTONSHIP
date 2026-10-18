@@ -1,0 +1,65 @@
+{
+  "$comment": "Private template only. Keep licensed source files outside Git and within this corpus directory.",
+  "schemaVersion": 1,
+  "datasetId": "replace-with-approved-corpus-id",
+  "cases": [
+    {
+      "caseId": "replace-with-stable-case-id",
+      "groupId": "replace-with-application-or-system-group",
+      "split": "test",
+      "dialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_VERSION_TO_CONFIRM",
+      "patternTags": ["COMP-3", "ROUNDED"],
+      "request": {
+        "moduleName": "reviewed-module",
+        "category": "FX_CONVERSION",
+        "cobolSource": {
+          "path": "sources/reviewed-module.cbl",
+          "sha256": "replace-with-64-character-lowercase-sha256"
+        },
+        "javaSource": {
+          "path": "sources/reviewed-module.java",
+          "sha256": "replace-with-64-character-lowercase-sha256"
+        },
+        "proofInputs": {
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+          "cobolSourceFormat": "FIXED",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "principal",
+          "javaRateParameter": "quote",
+          "amountMinCents": 0,
+          "amountMaxCents": 100000,
+          "referenceCurrencyPair": "GBP/EUR",
+          "referenceSource": "approved-reference-source",
+          "referenceCollectedDate": "2026-10-17"
+        }
+      },
+      "reviewVotes": [
+        {
+          "reviewerId": "reviewer-1",
+          "qualification": "COBOL and financial arithmetic reviewer",
+          "hasDefect": false,
+          "mappings": [
+            {"cobolNodeId": "cobol:12", "javaNodeId": "java:18"}
+          ]
+        },
+        {
+          "reviewerId": "reviewer-2",
+          "qualification": "Java migration reviewer",
+          "hasDefect": false,
+          "mappings": [
+            {"cobolNodeId": "cobol:12", "javaNodeId": "java:18"}
+          ]
+        }
+      ],
+      "adjudication": {
+        "status": "PENDING",
+        "adjudicatorId": "",
+        "rationale": "",
+        "hasDefect": false,
+        "mappings": []
+      }
+    }
+  ]
+}

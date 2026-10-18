@@ -1,0 +1,27 @@
+{
+  "actualCobolExecutions": 118,
+  "actualJavaExecutions": 347,
+  "admittedDefectLabels": 0,
+  "candidateBehaviorMismatchesObserved": 0,
+  "candidateCompilationFailures": {
+    "14b": [],
+    "7b": [
+      "HumanEval/63"
+    ]
+  },
+  "canonicalControlAgreements": 118,
+  "frozenContractSha256": "66b4416756e4b0cb8f4f556834660231ec0f2b6dcdca5ac3eec2e6ad2b914a9d",
+  "humanReviewPerformed": false,
+  "interpretation": "This deliberately bounded scalar cohort supplies finite test-compatible observations and one Java compilation failure. It is not an independent-defect corpus, an accuracy estimate, or evidence of universal equivalence. The repeated HumanEval/31 argument 11 is not a new independent input. No further task contracts were selected from this replay outcome.",
+  "rawCandidateAgreements": {
+    "14b": 118,
+    "7b": 111
+  },
+  "rawDriverCaseCount": 118,
+  "replayReportSha256": "14f8e2adb12cc1b69612388e1aed12161f2ec9ea957eb8495d1a6609678eaab1",
+  "schemaVersion": "scalar-c2j-replay-evidence-check-v1",
+  "sourceTaskFamilies": 17,
+  "trainingPerformed": false,
+  "uniqueSourceTaskInputTuples": 117,
+  "verifiedRawEvidenceChecks": 702
+}

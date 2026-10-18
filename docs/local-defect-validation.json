@@ -1,0 +1,95 @@
+{
+  "checkedAtUtc": "2026-10-18T10:14:46.370572+00:00",
+  "scope": "Implementation and integration checks. Final benchmark results are read from the immutable once-only evaluation, not reassessed here.",
+  "modelSha256": "50d2fdbf7475ca36e5fd50c22696381dbc8c3db88bb47ab6bca15285083d444c",
+  "datasetSha256": "7d6f612855da2e75ee5f552ea0ebc9e0fd95e5f3399a28e6d982f10c194c9dcb",
+  "finalReportSha256": "6e4f49d42b612f38abcc7b720344a8070468f4ac770809169cde14b818bd0696",
+  "finalTest": {
+    "pairs": 8,
+    "correct": 1,
+    "accuracy": 0.125,
+    "precision": 0.2,
+    "recall": 0.25,
+    "f1": 0.22222222222222224,
+    "confusion": {
+      "truePositive": 1,
+      "trueNegative": 0,
+      "falsePositive": 4,
+      "falseNegative": 3
+    }
+  },
+  "tests": [
+    {
+      "directory": "ml-engine",
+      "command": ".venv/bin/python -m pytest -q",
+      "passed": 414,
+      "failed": 0
+    },
+    {
+      "directory": "backend",
+      "command": "npm test -- --silent",
+      "passed": 165,
+      "failed": 0
+    },
+    {
+      "directory": "backend",
+      "command": "node --test test/dev-ui.test.mjs",
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "directory": "backend",
+      "command": "npm run build",
+      "status": "PASS"
+    },
+    {
+      "directory": "repository root",
+      "command": "node backend/test/local-defect.live.mjs",
+      "status": "PASS"
+    }
+  ],
+  "liveModelDemo": {
+    "family": "F006",
+    "disclosure": "Training family, not held-out evaluation.",
+    "defectiveScore": 0.9677174343567586,
+    "correctControlScore": 0.39110272935170354,
+    "threshold": 0.5,
+    "learnedTopJavaLine": 10,
+    "learnedTopCobolLine": 23,
+    "sourceHashesAndExactExcerptsVerified": true,
+    "moduleNameInvarianceVerified": true,
+    "editedSourceReceivesNewHash": true
+  },
+  "browserChecks": [
+    "Local model action returns actual endpoint inference and selected Java10/Cobol23 spans.",
+    "Syntax-colored code, line numbers, confirmed red marker and model amber markers render.",
+    "Finding click selects exact source text and scrolls to the code workspace.",
+    "Correct control scores below threshold and shows matching recorded -100 output without claiming proof.",
+    "Editing source clears stale model/proof/replay evidence and selects custom source state.",
+    "Hash-matched final failure metrics are prominent, with training-example disclosure.",
+    "FX example independently returns SAT_COUNTEREXAMPLE_FOUND; reviewed correction returns UNSAT_PROVEN_SAFE within recorded scope.",
+    "No browser console errors during tested flows; optional external cloud action was not called."
+  ],
+  "runtime": {
+    "ui": "http://127.0.0.1:3000",
+    "api": "http://127.0.0.1:3003",
+    "llmApiKeyRequired": false,
+    "submittedCodeExecutedByDetector": false
+  },
+  "unchanged": {
+    "frozenModelAfterFinalTest": true,
+    "frozenDatasetAndSplits": true,
+    "originalMatchingModelAnd23SamplePartition": true,
+    "frontendContainsOnlyGitkeep": true
+  },
+  "screenshot": "docs/screenshots/local-defect-workbench.png",
+  "independentAudit": {
+    "scope": "Read-only inspection of labels, stored predictions, metrics, fold fitting and frozen hashes; no inference or final evaluation rerun.",
+    "result": "No obvious label inversion, scoring-sign error, metric arithmetic error or split leakage found.",
+    "limitations": [
+      "398 classifier features per 16-pair fold",
+      "Weak localization annotations and very few independent algorithm families",
+      "Heuristic parser blind spots including some COBOL FUNCTION ABS/MOD features and Java statement formatting"
+    ]
+  }
+}

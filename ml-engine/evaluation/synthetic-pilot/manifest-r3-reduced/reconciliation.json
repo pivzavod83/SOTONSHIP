@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "inputSha256": "8946714b17d74d5b0c6be431980c70397035b3651f7bb32e4870d9a6e1e0c442",
+  "status": "MANIFEST_CORRECTED_TO_REDUCED_SCOPE_SOURCES_PENDING",
+  "submittedCounts": {
+    "families": 20,
+    "candidatePairs": 80,
+    "splits": {
+      "train": 12,
+      "validation": 4,
+      "test": 4
+    }
+  },
+  "derivedCounts": {
+    "families": 10,
+    "javaVariantsPerFamily": 4,
+    "proposedEquivalentPerFamily": 2,
+    "proposedDefectivePerFamily": 2,
+    "candidatePairs": 40,
+    "familySplits": {
+      "train": 6,
+      "validation": 2,
+      "test": 2
+    },
+    "candidatePairSplits": {
+      "train": 24,
+      "validation": 8,
+      "test": 8
+    },
+    "perCategory": {
+      "DECIMAL_ROUNDING_AND_SCALE": {
+        "families": 5,
+        "train": 3,
+        "validation": 1,
+        "test": 1
+      },
+      "NUMERIC_STORAGE_AND_SIGN": {
+        "families": 5,
+        "train": 3,
+        "validation": 1,
+        "test": 1
+      }
+    }
+  },
+  "existingAuditedIdentitiesMatch": true,
+  "sourceBindings": [
+    {
+      "familyId": "F001",
+      "split": "train",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "sourceArchive": "ml-engine/evaluation/synthetic-pilot/batch-01-refined/input-batch.json",
+      "sourceArchiveSha256": "640b04fcd1c4e2368aa37994826d6d4fa625b52cf1dae34a50af70fc6adaab9d",
+      "cobolSourceSha256": "444ccd83da615d73f56bea7fe866a447ccdeca8ecd79a7d86b62e31ab728811a"
+    },
+    {
+      "familyId": "F002",
+      "split": "train",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "sourceArchive": "ml-engine/evaluation/synthetic-pilot/batch-01-refined/input-batch.json",
+      "sourceArchiveSha256": "640b04fcd1c4e2368aa37994826d6d4fa625b52cf1dae34a50af70fc6adaab9d",
+      "cobolSourceSha256": "b1b71511e5864baac1dbdac08827a18dc6ed8831d1eaa7a29ce7879155d4e73f"
+    },
+    {
+      "familyId": "F003",
+      "split": "train",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "sourceArchive": "ml-engine/evaluation/synthetic-pilot/batch-02/input-batch.json",
+      "sourceArchiveSha256": "f08dc2a1dffeb19ef75e4ac0750c8942b1cd30da3c5086269d9137e6f91507b9",
+      "cobolSourceSha256": "127478a35d2d12684b1b66c06d90ca463775bed437b851070553f6a31c4ea2b0"
+    },
+    {
+      "familyId": "F004",
+      "split": "validation",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "sourceArchive": "ml-engine/evaluation/synthetic-pilot/batch-02/input-batch.json",
+      "sourceArchiveSha256": "f08dc2a1dffeb19ef75e4ac0750c8942b1cd30da3c5086269d9137e6f91507b9",
+      "cobolSourceSha256": "d6737294eba9794350a8b795399b451f97eb5c3c8a29fd4515c8244e432af876"
+    },
+    {
+      "familyId": "F006",
+      "split": "train",
+      "focusCategory": "NUMERIC_STORAGE_AND_SIGN",
+      "sourceArchive": "ml-engine/evaluation/synthetic-pilot/batch-03/input-batch.json",
+      "sourceArchiveSha256": "87e181c46ba306d75373f36f37698a3de33b7dee836b8067839b922cd17ff502",
+      "cobolSourceSha256": "e7b750149a5b29fb17dd5048f0748a2e98053ecbe9de601db0eb08f36989ff3e"
+    }
+  ],
+  "issues": [
+    {
+      "id": "STALE_SCOPE",
+      "correction": "Derived plan retains only F001-F010 and two categories; allocation changed from20/80/12-4-4 to10/40/6-2-2. F011-F020 are deferred without any source or existing split edits."
+    },
+    {
+      "id": "UNSUPPORTED_SOURCE_DELIVERY_CLAIM",
+      "familyId": "F005",
+      "correction": "Source arrays, variants, mappings and cases absent from attachment. F005-R2 is source-pending, not delivered or executed."
+    },
+    {
+      "id": "UNRESOLVED_PROVENANCE_PATHS",
+      "submittedPaths": [
+        "synthetic-pilot-v2/family-plan-20.json",
+        "provenance/input-batch-03.json",
+        "provenance/batch-03-audit.txt",
+        "batch-03-f005-r2.json"
+      ],
+      "correction": "Existing proposal/batch03 references resolved to actual archived local files in derived manifest. Missing replacement batch set null."
+    },
+    {
+      "id": "DESIGN_LABELS_ARE_NOT_BEHAVIOR_LABELS",
+      "familyId": "F008",
+      "reason": "Using floor rather than truncation division can still yield identical normalized remainder if the correction is conditional. A technique name does not establish a defect; future variants require actual differing-output witnesses."
+    }
+  ],
+  "replacementSourceReceived": false,
+  "programsCompiledOrExecuted": false,
+  "trainingPerformed": false,
+  "originalAttachmentEdited": false,
+  "existingSourceOrSplitFilesEdited": false,
+  "modelArtifactsChanged": false,
+  "reviewScope": "Strict JSON/allocation, actual archived identity/split consistency and provenance reconciliation. New slot independence remains unverified until code exists."
+}

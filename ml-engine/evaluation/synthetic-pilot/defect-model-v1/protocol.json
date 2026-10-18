@@ -1,0 +1,90 @@
+{
+  "engineVersion": "paired-defect-v1",
+  "datasetSha256": "7d6f612855da2e75ee5f552ea0ebc9e0fd95e5f3399a28e6d982f10c194c9dcb",
+  "splitPlanSha256": "8a4a35515b5fd6f3f320d9425f91b1816742238877116a863dc86da81d571bfe",
+  "trainingFamilies": [
+    "F001",
+    "F002",
+    "F003",
+    "F006",
+    "F007",
+    "F008"
+  ],
+  "validationFamilies": [
+    "F004",
+    "F009"
+  ],
+  "finalTestFamilies": [
+    "F005",
+    "F010"
+  ],
+  "foldHeldOutFamilies": [
+    [
+      "F001",
+      "F006"
+    ],
+    [
+      "F002",
+      "F007"
+    ],
+    [
+      "F003",
+      "F008"
+    ]
+  ],
+  "candidates": [
+    {
+      "C": 0.1,
+      "architecture": "graph-and-localizer",
+      "classifier": "balanced L2 logistic regression",
+      "localizer": "balanced L2 logistic regression"
+    },
+    {
+      "C": 1.0,
+      "architecture": "graph-and-localizer",
+      "classifier": "balanced L2 logistic regression",
+      "localizer": "balanced L2 logistic regression"
+    },
+    {
+      "C": 10.0,
+      "architecture": "graph-and-localizer",
+      "classifier": "balanced L2 logistic regression",
+      "localizer": "balanced L2 logistic regression"
+    },
+    {
+      "C": 0.1,
+      "architecture": "localizer-pooling",
+      "classifier": "balanced L2 logistic regression",
+      "localizer": "balanced L2 logistic regression"
+    },
+    {
+      "C": 1.0,
+      "architecture": "localizer-pooling",
+      "classifier": "balanced L2 logistic regression",
+      "localizer": "balanced L2 logistic regression"
+    },
+    {
+      "C": 10.0,
+      "architecture": "localizer-pooling",
+      "classifier": "balanced L2 logistic regression",
+      "localizer": "balanced L2 logistic regression"
+    }
+  ],
+  "candidateSelection": "Highest grouped OOF balanced accuracy at 0.5, then F1, then smaller C; exact ties prefer fewer classifier features",
+  "thresholdSelection": "Validation balanced accuracy, then F1, then closest to 0.5; coarse predeclared thresholds only",
+  "thresholdCandidates": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "pretestExploration": "Initial graph-only experiment and unrestricted threshold results are preserved in pretest-exploration-initial. Compact learned pooling and coarse thresholds were added before any final test assessment. Validation was inspected during this development and is not a blind estimate.",
+  "deployment": "Mean probability of three fold checkpoints; no full-training refit",
+  "features": "Source-only heuristic statement graphs with def/use edges, operator/type/storage/rounding comparisons; no labels, IDs, test outcomes, provided alignments, rationale or variant order",
+  "localizationSupervision": "Training-only synthetic defect segment annotations; candidate correspondence source-derived",
+  "testPolicy": "Freeze artifact and SHA256 first; separate explicit command; final-test marker refuses repeated assessment",
+  "baseline": "Constant no-defect and training-only selected source graph distance threshold",
+  "dataQualityDisclosure": "Validation/test source and labels already inspected for generated-data quality; no model has been fitted or selected. Do not call this a pristine blind benchmark.",
+  "createdUtc": "2026-10-18T10:01:41.596211+00:00",
+  "sklearnVersion": "1.7.2",
+  "numpyVersion": "2.3.4"
+}

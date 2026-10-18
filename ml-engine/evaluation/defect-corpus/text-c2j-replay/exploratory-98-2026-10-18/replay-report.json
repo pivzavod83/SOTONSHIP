@@ -1,0 +1,724 @@
+{
+  "taskId": "HumanEval/98",
+  "selection": "EXPLORATORY_SELECTED_AFTER_DEVELOPMENT_JAVA_SCREENING",
+  "frozenPlanSha256": "9edb5e2ea5b322852cdb03c682371eaba38097fb07c0b98232ee42fbdd89bf00",
+  "sourceHashes": {
+    "cobolSourceSha256": "01e8b7b5d44bee3038432a992db9f5ab72f53c6362066d9cb9b57416cc18c2d7",
+    "canonicalJavaSha256": "91b2df4dafeeff5b9f1015385f9798c425b5fce71c726278051c90d4b0f7f543",
+    "candidateJavaSha256": {
+      "7b": "8c8410ac1bb622b423faa4849998049cd46f333b4b423394914d59ca8d11c196",
+      "14b": "feb27f21a6dea5a2c00ed1993778ce1ecc6d5043b836a8a8ca637170c2f9de6b"
+    }
+  },
+  "toolchainVersions": {
+    "cobc": "cobc (GnuCOBOL) 3.2.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nWritten by Keisuke Nishida, Roger While, Ron Norman, Simon Sobisch, Edward Hart\nBuilt     Oct 18 2026 07:13:57\nPackaged  Jul 28 2023 17:02:56 UTC\nC version \"Apple LLVM 17.0.0 (clang-1700.6.3.2)\"\n",
+    "java": "java version \"21.0.10\" 2026-01-20 LTS\nJava(TM) SE Runtime Environment (build 21.0.10+8-LTS-217)\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.10+8-LTS-217, mixed mode, sharing)\n"
+  },
+  "cobcSha256": "f4a65024353d389ec1c3d93ab3d53226bab61aca66e62f3783c1f79b1f07b1ef",
+  "javaSha256": "ba7e7438c1fcf51fab5b1654d3605063826613ebae17759b10224316a81ce104",
+  "rawEvidencePath": "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18",
+  "records": [
+    {
+      "driverIndex": 0,
+      "input": "aBCdEf",
+      "driverSha256": "f430e2ddaf71e617c695cbaeacce714f8ac31995a69258c81b7e579c66bb285a",
+      "status": "SHARED_INPUT_REPLAY",
+      "java": {
+        "reference": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/reference",
+              "TextReplay",
+              "aBCdEf"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0387,
+            "stdoutSha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 1,
+          "agreesWithCobol": true
+        },
+        "7b": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/7b",
+              "TextReplay",
+              "aBCdEf"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.041,
+            "stdoutSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 0,
+          "agreesWithCobol": false
+        },
+        "14b": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/14b",
+              "TextReplay",
+              "aBCdEf"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.037,
+            "stdoutSha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 1,
+          "agreesWithCobol": true
+        }
+      },
+      "cobolCompilation": {
+        "command": [
+          "/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+          "-w",
+          "-fformat=variable",
+          "-x",
+          "-o",
+          "driver",
+          "driver.cbl",
+          "source.cbl"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.1308,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolExecution": {
+        "command": [
+          "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/cobol-0/driver"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.2936,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolOutputSha256": "f106f9b345c8968371ea0c167961e26d40c2262cddb2e3daf91d8f9744da80d2",
+      "cobolResult": 1
+    },
+    {
+      "driverIndex": 1,
+      "input": "abcdefg",
+      "driverSha256": "d95b675aaec22eb1cbba0662ce27dc99e460c1a3ea7941677f6b042656e0e86b",
+      "status": "SHARED_INPUT_REPLAY",
+      "java": {
+        "reference": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/reference",
+              "TextReplay",
+              "abcdefg"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0448,
+            "stdoutSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 0,
+          "agreesWithCobol": true
+        },
+        "7b": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/7b",
+              "TextReplay",
+              "abcdefg"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0406,
+            "stdoutSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 0,
+          "agreesWithCobol": true
+        },
+        "14b": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/14b",
+              "TextReplay",
+              "abcdefg"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0408,
+            "stdoutSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 0,
+          "agreesWithCobol": true
+        }
+      },
+      "cobolCompilation": {
+        "command": [
+          "/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+          "-w",
+          "-fformat=variable",
+          "-x",
+          "-o",
+          "driver",
+          "driver.cbl",
+          "source.cbl"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.133,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolExecution": {
+        "command": [
+          "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/cobol-1/driver"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.2975,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolOutputSha256": "6f92601344e16851316e7cda90d053c0ad234e047ccf81ce6fe89e78bbdb111e",
+      "cobolResult": 0
+    },
+    {
+      "driverIndex": 2,
+      "input": "dBBE",
+      "driverSha256": "96e007241bc4042e453e3fcc045f4c46e46e428d3ade374ff4c6b0c54806affa",
+      "status": "SHARED_INPUT_REPLAY",
+      "java": {
+        "reference": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/reference",
+              "TextReplay",
+              "dBBE"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0421,
+            "stdoutSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 0,
+          "agreesWithCobol": true
+        },
+        "7b": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/7b",
+              "TextReplay",
+              "dBBE"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0413,
+            "stdoutSha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 1,
+          "agreesWithCobol": false
+        },
+        "14b": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/14b",
+              "TextReplay",
+              "dBBE"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.041,
+            "stdoutSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 0,
+          "agreesWithCobol": true
+        }
+      },
+      "cobolCompilation": {
+        "command": [
+          "/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+          "-w",
+          "-fformat=variable",
+          "-x",
+          "-o",
+          "driver",
+          "driver.cbl",
+          "source.cbl"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.1314,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolExecution": {
+        "command": [
+          "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/cobol-2/driver"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.2983,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolOutputSha256": "6f92601344e16851316e7cda90d053c0ad234e047ccf81ce6fe89e78bbdb111e",
+      "cobolResult": 0
+    },
+    {
+      "driverIndex": 3,
+      "input": "B",
+      "driverSha256": "402d1e26abaf244158e0a57d1ea46d64d000b4dd8d92899a7bf41671bbe755db",
+      "status": "SHARED_INPUT_REPLAY",
+      "java": {
+        "reference": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/reference",
+              "TextReplay",
+              "B"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.046,
+            "stdoutSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 0,
+          "agreesWithCobol": true
+        },
+        "7b": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/7b",
+              "TextReplay",
+              "B"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0374,
+            "stdoutSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 0,
+          "agreesWithCobol": true
+        },
+        "14b": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/14b",
+              "TextReplay",
+              "B"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0405,
+            "stdoutSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 0,
+          "agreesWithCobol": true
+        }
+      },
+      "cobolCompilation": {
+        "command": [
+          "/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+          "-w",
+          "-fformat=variable",
+          "-x",
+          "-o",
+          "driver",
+          "driver.cbl",
+          "source.cbl"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.1308,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolExecution": {
+        "command": [
+          "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/cobol-3/driver"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.2978,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolOutputSha256": "6f92601344e16851316e7cda90d053c0ad234e047ccf81ce6fe89e78bbdb111e",
+      "cobolResult": 0
+    },
+    {
+      "driverIndex": 4,
+      "input": "U",
+      "driverSha256": "2671021c1c94bfb2e9bb8cc8c40fcdbae834ca7b64e6f4cd33ac780376e05420",
+      "status": "SHARED_INPUT_REPLAY",
+      "java": {
+        "reference": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/reference",
+              "TextReplay",
+              "U"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0439,
+            "stdoutSha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 1,
+          "agreesWithCobol": true
+        },
+        "7b": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/7b",
+              "TextReplay",
+              "U"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0398,
+            "stdoutSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 0,
+          "agreesWithCobol": false
+        },
+        "14b": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/14b",
+              "TextReplay",
+              "U"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0411,
+            "stdoutSha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 1,
+          "agreesWithCobol": true
+        }
+      },
+      "cobolCompilation": {
+        "command": [
+          "/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+          "-w",
+          "-fformat=variable",
+          "-x",
+          "-o",
+          "driver",
+          "driver.cbl",
+          "source.cbl"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.1297,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolExecution": {
+        "command": [
+          "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/cobol-4/driver"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.2959,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolOutputSha256": "f106f9b345c8968371ea0c167961e26d40c2262cddb2e3daf91d8f9744da80d2",
+      "cobolResult": 1
+    },
+    {
+      "driverIndex": 6,
+      "input": "EEEE",
+      "driverSha256": "cfc800e8905ac5e23bd823f8eee13f018b80fb946a00c06b325ad25f9ca06986",
+      "status": "SHARED_INPUT_REPLAY",
+      "java": {
+        "reference": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/reference",
+              "TextReplay",
+              "EEEE"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0466,
+            "stdoutSha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 2,
+          "agreesWithCobol": true
+        },
+        "7b": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/7b",
+              "TextReplay",
+              "EEEE"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0413,
+            "stdoutSha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 2,
+          "agreesWithCobol": true
+        },
+        "14b": {
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/14b",
+              "TextReplay",
+              "EEEE"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0412,
+            "stdoutSha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "status": "OBSERVED",
+          "result": 2,
+          "agreesWithCobol": true
+        }
+      },
+      "cobolCompilation": {
+        "command": [
+          "/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+          "-w",
+          "-fformat=variable",
+          "-x",
+          "-o",
+          "driver",
+          "driver.cbl",
+          "source.cbl"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.1328,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolExecution": {
+        "command": [
+          "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/text-replay/exploratory-98-2026-10-18/cobol-6/driver"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.2975,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolOutputSha256": "194ac618b8bfcb8e1ae7e58d0eeaf0f4f0afb1add29edf460b68794966f333bd",
+      "cobolResult": 2
+    }
+  ],
+  "summary": {
+    "7b": {
+      "comparedCases": 6,
+      "agreementCases": 3,
+      "disagreementCases": 3
+    },
+    "14b": {
+      "comparedCases": 6,
+      "agreementCases": 6,
+      "disagreementCases": 0
+    }
+  },
+  "caseStatusCounts": {
+    "SHARED_INPUT_REPLAY": 6
+  },
+  "newTrainingLabelsAdmitted": 0,
+  "independentHumanReviews": 0,
+  "modelTrainingPerformed": false,
+  "holdoutTasksExecuted": 0,
+  "limitations": [
+    "AI-curated exploratory cases, pending independent adjudication.",
+    "Only these original inputs and this ASCII contract are measured; no universal equivalence proof.",
+    "Runtime/helper semantics are pinned to this host, GnuCOBOL3.2 and Java21."
+  ]
+}

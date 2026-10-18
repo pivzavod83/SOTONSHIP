@@ -1,0 +1,1021 @@
+{
+  "selectedC": 1.0,
+  "selectedArchitecture": "graph-and-localizer",
+  "selectionUsedFinalTest": false,
+  "candidates": [
+    {
+      "C": 0.1,
+      "architecture": "graph-and-localizer",
+      "metrics": {
+        "pairs": 24,
+        "correct": 15,
+        "accuracy": 0.625,
+        "precision": 0.6153846153846154,
+        "recall": 0.6666666666666666,
+        "f1": 0.64,
+        "balancedAccuracy": 0.625,
+        "confusion": {
+          "truePositive": 8,
+          "trueNegative": 7,
+          "falsePositive": 5,
+          "falseNegative": 4
+        }
+      },
+      "oofPredictions": [
+        {
+          "familyId": "F001",
+          "variantId": "F001-V1",
+          "label": 0,
+          "score": 0.5948549663479971
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V2",
+          "label": 0,
+          "score": 0.1477470506797416
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V3",
+          "label": 1,
+          "score": 0.8458459043176793
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V4",
+          "label": 1,
+          "score": 0.9152197881375493
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V1",
+          "label": 0,
+          "score": 0.11408023108811005
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V2",
+          "label": 0,
+          "score": 0.033651264453938984
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V3",
+          "label": 1,
+          "score": 0.10151829312115523
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V4",
+          "label": 1,
+          "score": 0.3828941634666407
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V1",
+          "label": 0,
+          "score": 0.8000275852811005
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V2",
+          "label": 0,
+          "score": 0.04437671869877844
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V3",
+          "label": 1,
+          "score": 0.9517006953087086
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V4",
+          "label": 1,
+          "score": 0.9755507407862811
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V1",
+          "label": 0,
+          "score": 0.9758324189044985
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V2",
+          "label": 0,
+          "score": 0.9622856276856449
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V3",
+          "label": 1,
+          "score": 0.5604707618325299
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V4",
+          "label": 1,
+          "score": 0.9987902357061115
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V1",
+          "label": 0,
+          "score": 0.34052803541724863
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V2",
+          "label": 0,
+          "score": 0.05063785951707455
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V3",
+          "label": 1,
+          "score": 0.5072173982133406
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V4",
+          "label": 1,
+          "score": 0.06501390419317285
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V1",
+          "label": 0,
+          "score": 0.5156113592812276
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V2",
+          "label": 0,
+          "score": 0.41410894166115436
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V3",
+          "label": 1,
+          "score": 0.692175722859263
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V4",
+          "label": 1,
+          "score": 0.37575738114461954
+        }
+      ],
+      "oofLocalizationHitAt1": {
+        "hits": 6,
+        "defectivePairs": 12
+      }
+    },
+    {
+      "C": 1.0,
+      "architecture": "graph-and-localizer",
+      "metrics": {
+        "pairs": 24,
+        "correct": 16,
+        "accuracy": 0.6666666666666666,
+        "precision": 0.7,
+        "recall": 0.5833333333333334,
+        "f1": 0.6363636363636365,
+        "balancedAccuracy": 0.6666666666666667,
+        "confusion": {
+          "truePositive": 7,
+          "trueNegative": 9,
+          "falsePositive": 3,
+          "falseNegative": 5
+        }
+      },
+      "oofPredictions": [
+        {
+          "familyId": "F001",
+          "variantId": "F001-V1",
+          "label": 0,
+          "score": 0.4773352706048918
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V2",
+          "label": 0,
+          "score": 0.044333483289905266
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V3",
+          "label": 1,
+          "score": 0.9752638326963791
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V4",
+          "label": 1,
+          "score": 0.9926645095293436
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V1",
+          "label": 0,
+          "score": 0.010470722634515569
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V2",
+          "label": 0,
+          "score": 0.005844190600329116
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V3",
+          "label": 1,
+          "score": 0.005676341629483129
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V4",
+          "label": 1,
+          "score": 0.2323578132504239
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V1",
+          "label": 0,
+          "score": 0.9703168683504755
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V2",
+          "label": 0,
+          "score": 0.004536991004762866
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V3",
+          "label": 1,
+          "score": 0.9995769897115039
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V4",
+          "label": 1,
+          "score": 0.9991572723990523
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V1",
+          "label": 0,
+          "score": 0.9995804790350294
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V2",
+          "label": 0,
+          "score": 0.9980799666016044
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V3",
+          "label": 1,
+          "score": 0.4759273551134228
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V4",
+          "label": 1,
+          "score": 0.9999982772940018
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V1",
+          "label": 0,
+          "score": 0.32586899787550855
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V2",
+          "label": 0,
+          "score": 0.002480901527968869
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V3",
+          "label": 1,
+          "score": 0.6332208774116709
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V4",
+          "label": 1,
+          "score": 0.004085762040588393
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V1",
+          "label": 0,
+          "score": 0.3905433633171611
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V2",
+          "label": 0,
+          "score": 0.1866779651445161
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V3",
+          "label": 1,
+          "score": 0.6337388989136513
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V4",
+          "label": 1,
+          "score": 0.27591114042902226
+        }
+      ],
+      "oofLocalizationHitAt1": {
+        "hits": 4,
+        "defectivePairs": 12
+      }
+    },
+    {
+      "C": 10.0,
+      "architecture": "graph-and-localizer",
+      "metrics": {
+        "pairs": 24,
+        "correct": 15,
+        "accuracy": 0.625,
+        "precision": 0.6666666666666666,
+        "recall": 0.5,
+        "f1": 0.5714285714285715,
+        "balancedAccuracy": 0.625,
+        "confusion": {
+          "truePositive": 6,
+          "trueNegative": 9,
+          "falsePositive": 3,
+          "falseNegative": 6
+        }
+      },
+      "oofPredictions": [
+        {
+          "familyId": "F001",
+          "variantId": "F001-V1",
+          "label": 0,
+          "score": 0.31218022899767234
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V2",
+          "label": 0,
+          "score": 0.019674545190331162
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V3",
+          "label": 1,
+          "score": 0.9976063685105055
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V4",
+          "label": 1,
+          "score": 0.9996294363173203
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V1",
+          "label": 0,
+          "score": 0.0003512342011111028
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V2",
+          "label": 0,
+          "score": 0.00036450240115910946
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V3",
+          "label": 1,
+          "score": 0.00011604867200274602
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V4",
+          "label": 1,
+          "score": 0.07674986230623357
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V1",
+          "label": 0,
+          "score": 0.9984093326806137
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V2",
+          "label": 0,
+          "score": 0.0005564834677059018
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V3",
+          "label": 1,
+          "score": 0.9999983250245921
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V4",
+          "label": 1,
+          "score": 0.9999715794204327
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V1",
+          "label": 0,
+          "score": 0.999995903811451
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V2",
+          "label": 0,
+          "score": 0.9999302800353566
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V3",
+          "label": 1,
+          "score": 0.41029220453801346
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V4",
+          "label": 1,
+          "score": 0.9999999986953123
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V1",
+          "label": 0,
+          "score": 0.37746611301977506
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V2",
+          "label": 0,
+          "score": 9.426796807212139e-05
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V3",
+          "label": 1,
+          "score": 0.8271399929468602
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V4",
+          "label": 1,
+          "score": 0.000220860454030309
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V1",
+          "label": 0,
+          "score": 0.2672550965703229
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V2",
+          "label": 0,
+          "score": 0.0673825800202314
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V3",
+          "label": 1,
+          "score": 0.43744099969629546
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V4",
+          "label": 1,
+          "score": 0.10669979977635831
+        }
+      ],
+      "oofLocalizationHitAt1": {
+        "hits": 6,
+        "defectivePairs": 12
+      }
+    },
+    {
+      "C": 0.1,
+      "architecture": "localizer-pooling",
+      "metrics": {
+        "pairs": 24,
+        "correct": 15,
+        "accuracy": 0.625,
+        "precision": 0.6363636363636364,
+        "recall": 0.5833333333333334,
+        "f1": 0.6086956521739131,
+        "balancedAccuracy": 0.625,
+        "confusion": {
+          "truePositive": 7,
+          "trueNegative": 8,
+          "falsePositive": 4,
+          "falseNegative": 5
+        }
+      },
+      "oofPredictions": [
+        {
+          "familyId": "F001",
+          "variantId": "F001-V1",
+          "label": 0,
+          "score": 0.34247679143607357
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V2",
+          "label": 0,
+          "score": 0.12447505327719892
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V3",
+          "label": 1,
+          "score": 0.5518476355113787
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V4",
+          "label": 1,
+          "score": 0.5486383867217618
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V1",
+          "label": 0,
+          "score": 0.5439912598563441
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V2",
+          "label": 0,
+          "score": 0.3958918346768074
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V3",
+          "label": 1,
+          "score": 0.4526679879963137
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V4",
+          "label": 1,
+          "score": 0.6098846442315572
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V1",
+          "label": 0,
+          "score": 0.6231817480758105
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V2",
+          "label": 0,
+          "score": 0.22671202439128432
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V3",
+          "label": 1,
+          "score": 0.7104647564952656
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V4",
+          "label": 1,
+          "score": 0.6548188094019121
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V1",
+          "label": 0,
+          "score": 0.747620297274958
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V2",
+          "label": 0,
+          "score": 0.8093159250922869
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V3",
+          "label": 1,
+          "score": 0.4205353036901775
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V4",
+          "label": 1,
+          "score": 0.8690394409425344
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V1",
+          "label": 0,
+          "score": 0.4697936236048938
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V2",
+          "label": 0,
+          "score": 0.29556711951237435
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V3",
+          "label": 1,
+          "score": 0.48769620942175607
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V4",
+          "label": 1,
+          "score": 0.2961005745367093
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V1",
+          "label": 0,
+          "score": 0.4581849975834362
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V2",
+          "label": 0,
+          "score": 0.4097045791503354
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V3",
+          "label": 1,
+          "score": 0.45761238366864576
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V4",
+          "label": 1,
+          "score": 0.5174593164041876
+        }
+      ],
+      "oofLocalizationHitAt1": {
+        "hits": 6,
+        "defectivePairs": 12
+      }
+    },
+    {
+      "C": 1.0,
+      "architecture": "localizer-pooling",
+      "metrics": {
+        "pairs": 24,
+        "correct": 14,
+        "accuracy": 0.5833333333333334,
+        "precision": 0.5833333333333334,
+        "recall": 0.5833333333333334,
+        "f1": 0.5833333333333334,
+        "balancedAccuracy": 0.5833333333333334,
+        "confusion": {
+          "truePositive": 7,
+          "trueNegative": 7,
+          "falsePositive": 5,
+          "falseNegative": 5
+        }
+      },
+      "oofPredictions": [
+        {
+          "familyId": "F001",
+          "variantId": "F001-V1",
+          "label": 0,
+          "score": 0.07757667247502485
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V2",
+          "label": 0,
+          "score": 0.015555249559441145
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V3",
+          "label": 1,
+          "score": 0.5511605762947991
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V4",
+          "label": 1,
+          "score": 0.654195594428603
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V1",
+          "label": 0,
+          "score": 0.5453737628638712
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V2",
+          "label": 0,
+          "score": 0.23652046068302893
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V3",
+          "label": 1,
+          "score": 0.27507267979560296
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V4",
+          "label": 1,
+          "score": 0.6654375273775253
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V1",
+          "label": 0,
+          "score": 0.9769548103127235
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V2",
+          "label": 0,
+          "score": 0.03463040323715492
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V3",
+          "label": 1,
+          "score": 0.995442347971058
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V4",
+          "label": 1,
+          "score": 0.885256269183215
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V1",
+          "label": 0,
+          "score": 0.9276879417734484
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V2",
+          "label": 0,
+          "score": 0.972298534874778
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V3",
+          "label": 1,
+          "score": 0.06605997099335664
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V4",
+          "label": 1,
+          "score": 0.9962464656643869
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V1",
+          "label": 0,
+          "score": 0.5630731321695217
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V2",
+          "label": 0,
+          "score": 0.047446891631044964
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V3",
+          "label": 1,
+          "score": 0.6280599473720377
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V4",
+          "label": 1,
+          "score": 0.04746516859507907
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V1",
+          "label": 0,
+          "score": 0.0952834741172001
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V2",
+          "label": 0,
+          "score": 0.06190933984067521
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V3",
+          "label": 1,
+          "score": 0.04425247250409607
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V4",
+          "label": 1,
+          "score": 0.34845480095788284
+        }
+      ],
+      "oofLocalizationHitAt1": {
+        "hits": 4,
+        "defectivePairs": 12
+      }
+    },
+    {
+      "C": 10.0,
+      "architecture": "localizer-pooling",
+      "metrics": {
+        "pairs": 24,
+        "correct": 15,
+        "accuracy": 0.625,
+        "precision": 0.6363636363636364,
+        "recall": 0.5833333333333334,
+        "f1": 0.6086956521739131,
+        "balancedAccuracy": 0.625,
+        "confusion": {
+          "truePositive": 7,
+          "trueNegative": 8,
+          "falsePositive": 4,
+          "falseNegative": 5
+        }
+      },
+      "oofPredictions": [
+        {
+          "familyId": "F001",
+          "variantId": "F001-V1",
+          "label": 0,
+          "score": 0.0032999535995866377
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V2",
+          "label": 0,
+          "score": 0.002022958731801254
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V3",
+          "label": 1,
+          "score": 0.5847424046165073
+        },
+        {
+          "familyId": "F001",
+          "variantId": "F001-V4",
+          "label": 1,
+          "score": 0.8091759816620983
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V1",
+          "label": 0,
+          "score": 0.17841371556092878
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V2",
+          "label": 0,
+          "score": 0.019716941156009398
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V3",
+          "label": 1,
+          "score": 0.023612584563724694
+        },
+        {
+          "familyId": "F002",
+          "variantId": "F002-V4",
+          "label": 1,
+          "score": 0.5425948124396374
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V1",
+          "label": 0,
+          "score": 0.9999853150191177
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V2",
+          "label": 0,
+          "score": 0.00357715559744144
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V3",
+          "label": 1,
+          "score": 0.9999994354281269
+        },
+        {
+          "familyId": "F003",
+          "variantId": "F003-V4",
+          "label": 1,
+          "score": 0.9929078525608407
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V1",
+          "label": 0,
+          "score": 0.9816893147056471
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V2",
+          "label": 0,
+          "score": 0.9977174319052093
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V3",
+          "label": 1,
+          "score": 0.0038655416966083835
+        },
+        {
+          "familyId": "F006",
+          "variantId": "F006-V4",
+          "label": 1,
+          "score": 0.9999839500910297
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V1",
+          "label": 0,
+          "score": 0.875022390591946
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V2",
+          "label": 0,
+          "score": 0.0007931822623067701
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V3",
+          "label": 1,
+          "score": 0.9464065516785786
+        },
+        {
+          "familyId": "F007",
+          "variantId": "F007-V4",
+          "label": 1,
+          "score": 0.0007931869797967856
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V1",
+          "label": 0,
+          "score": 0.03283651623330504
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V2",
+          "label": 0,
+          "score": 0.020227797373255942
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V3",
+          "label": 1,
+          "score": 0.0020019409429934045
+        },
+        {
+          "familyId": "F008",
+          "variantId": "F008-V4",
+          "label": 1,
+          "score": 0.13313328219076073
+        }
+      ],
+      "oofLocalizationHitAt1": {
+        "hits": 6,
+        "defectivePairs": 12
+      }
+    }
+  ]
+}

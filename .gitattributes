@@ -1,0 +1,2 @@
+# Preserve archived response bytes and avoid text diffs of raw provider evidence.
+data-sources/snapshots/* -text -diff

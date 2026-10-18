@@ -1,0 +1,877 @@
+{
+  "schemaVersion": 1,
+  "status": "PENDING_INDEPENDENT_REVIEW",
+  "evidence": {
+    "plan": {
+      "path": "ml-engine/evaluation/defect-corpus/expanded-c2j/run-plan-2026-10-18.json",
+      "sha256": "3543a6b77558a9d330e1e2d39c6d3f7cebe2a05e5834a70462ab4612c4df0469"
+    },
+    "previous": {
+      "path": "ml-engine/evaluation/defect-corpus/natural-c2j-audit-summary-2026-10-18.json",
+      "sha256": "95a088d71ceae68196c08a19a2394904f4ac2d3921e54b2b8d3184555a54180e"
+    },
+    "numericA": {
+      "path": "ml-engine/evaluation/defect-corpus/expanded-c2j/numeric-a/adjudication-2026-10-18.json",
+      "sha256": "66ddeb081dad65c6c6d867628b33038d925d4a6b47690fad7cf93e8bc56075c9"
+    },
+    "numericAFamilies": {
+      "path": "ml-engine/evaluation/defect-corpus/expanded-c2j/numeric-a/family-dispositions.json",
+      "sha256": "61682a8b0056d6bdc1c073c670effa04253b334c916c49981509cfd81d8c63dc"
+    },
+    "numericB": {
+      "path": "ml-engine/evaluation/defect-corpus/expanded-c2j/numeric-b/replay-2026-10-18/replay-report.json",
+      "sha256": "e84df0437290ced669585cdf0c7b08f850966656cf70413b1718aa7b7100ade0"
+    },
+    "text": {
+      "path": "ml-engine/evaluation/defect-corpus/expanded-c2j/text/replay-report.json",
+      "sha256": "a81d774d64c5c3c469d1c175d0e7c1b13453789e6d67e9fdcd4e67a227440c9a"
+    },
+    "oldText": {
+      "path": "ml-engine/evaluation/defect-corpus/text-c2j-replay/exploratory-98-2026-10-18/replay-report.json",
+      "sha256": "5cd7d9b014c84a7dd1fda9b40c6fbd7316ff50188ee01cb0075764dedfad73f3"
+    },
+    "oldArray": {
+      "path": "ml-engine/evaluation/defect-corpus/array-c2j-replay/replay-2026-10-18.json",
+      "sha256": "e8d24265bbcba5877d93b66730753bec2e8a907fc86ebd449a7ecc31c15077bd"
+    }
+  },
+  "reviewInstructions": [
+    "Read the exact source/candidate, frozen contract and raw replay evidence linked by each witness.",
+    "Check shared input representation, observable output scope and whether the behavior change is an intentional migration policy.",
+    "Record an actual reviewer identity, decision and reason in a new versioned artifact; do not fabricate approval.",
+    "Only validated fault spans are localization labels. Candidate source/model names, test outcomes and reference Java are not static-detector features."
+  ],
+  "trainingPerformed": false,
+  "cases": [
+    {
+      "reviewId": "26e6610575b2aadd93625525",
+      "taskId": "HumanEval/17",
+      "variant": "14b",
+      "splitGroupTaskIds": [
+        "HumanEval/17"
+      ],
+      "cobolSourceSha256": "ae5711154ed6009a3583809372adda6000643868724784208e9bf9d716fda70e",
+      "candidateJavaSha256": "d1f76ae833621471bde46c530491522c41d6cb062e5fb3a96cf4ffcc78f1629a",
+      "canonicalJavaSha256": "f7ca7addf3888a694782c7e43fde33d0abd22f4f51a8a50e6f9a40d9f53ebc5e",
+      "machineStatus": "REPRODUCED_DISCREPANCY_PENDING_INDEPENDENT_REVIEW",
+      "humanReview": {
+        "decision": "PENDING",
+        "reviewer": null,
+        "reviewedAt": null,
+        "reason": null,
+        "validatedFaultSpans": []
+      },
+      "trainingEligible": false,
+      "witnesses": [
+        {
+          "driverIndex": 1,
+          "driverSha256": "74cde2c2e8c5e3f92fd456f84ecc3474a371158eb35ce0d9279c816c5a6fbe65",
+          "input": [
+            "o o o o"
+          ],
+          "cobolResult": [
+            4,
+            4,
+            4,
+            4
+          ],
+          "cobolOutputSha256": "6e07f5b05cdfec4eafaf795e54628cc88170e3d669bdf3319f8514b9e1cde856",
+          "javaResult": [
+            4,
+            4,
+            4
+          ],
+          "exceptionType": null,
+          "exceptionMessage": null,
+          "javaStdoutSha256": "88e8eb6020cab402b6f112149a02441fc3da9587ede3f67657db282a8abb8009",
+          "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "contract": {
+            "input": "music",
+            "logicalOutput": "one integer per original grammar token; all remaining serialized slots must be zero",
+            "method": "parseMusic",
+            "program": "PARSE-MUSIC",
+            "result": "integerList",
+            "sourceLayout": "05 L-MUSIC-STRING PIC X(100). 05 RESULT OCCURS 100 TIMES INDEXED BY NI PIC S9(10)."
+          },
+          "sourceReport": "expanded-c2j/text/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 3,
+          "driverSha256": "47d240924f95f1d3b3e1d86650844392156f0a96997204fadc1473412bea6471",
+          "input": [
+            "o| o| .| .| o o o o"
+          ],
+          "cobolResult": [
+            2,
+            2,
+            1,
+            1,
+            4,
+            4,
+            4,
+            4
+          ],
+          "cobolOutputSha256": "cce7243297cd7f679cb17c20e53fbf4050447f8fdd36ebedf2bb57858b47fb00",
+          "javaResult": [
+            2,
+            2,
+            1,
+            1,
+            4,
+            4,
+            4
+          ],
+          "exceptionType": null,
+          "exceptionMessage": null,
+          "javaStdoutSha256": "640d36a6930349671bcaec41da11cb1a97706eb1e62c8f16ffa3f3ed6766c5b0",
+          "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "contract": {
+            "input": "music",
+            "logicalOutput": "one integer per original grammar token; all remaining serialized slots must be zero",
+            "method": "parseMusic",
+            "program": "PARSE-MUSIC",
+            "result": "integerList",
+            "sourceLayout": "05 L-MUSIC-STRING PIC X(100). 05 RESULT OCCURS 100 TIMES INDEXED BY NI PIC S9(10)."
+          },
+          "sourceReport": "expanded-c2j/text/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        }
+      ]
+    },
+    {
+      "reviewId": "31426711419009d2695a6af6",
+      "taskId": "HumanEval/47",
+      "variant": "7b",
+      "splitGroupTaskIds": [
+        "HumanEval/47"
+      ],
+      "cobolSourceSha256": "e1b3d7cd13ba4e21ad92b332125838ef5c9f498ad0e0f9c812320287d829ce74",
+      "candidateJavaSha256": "7f3142c197c3d6ecf51bb7be7e48adf214cdd2056628d5742f4f5a777baeaa60",
+      "canonicalJavaSha256": "a6677cdf6213fec2cf39ecc43076c8a7ca16c63a11c69a180ac6611389238642",
+      "machineStatus": "REPRODUCED_DISCREPANCY_PENDING_INDEPENDENT_REVIEW",
+      "humanReview": {
+        "decision": "PENDING",
+        "reviewer": null,
+        "reviewedAt": null,
+        "reason": null,
+        "validatedFaultSpans": []
+      },
+      "trainingEligible": false,
+      "witnesses": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "fe033b5e24228fe0ac479c2c1705a124e256b293c4f7fbddf63850d486fe159a",
+          "input": [
+            3,
+            1,
+            2,
+            4,
+            5
+          ],
+          "cobolResult": "3.00000",
+          "cobolOutputSha256": "b8ccdf325223cce7fbeb4dd801b5934bf9fbb461e2e24ff8a7b64a9792258a9d",
+          "javaResult": "4.0",
+          "exceptionType": null,
+          "exceptionMessage": null,
+          "javaStdoutSha256": "fbd04e1aae9ce0b11a8946e2c9ac2619f7428a64d32d01eff61d809dcb70ee8e",
+          "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "contract": {
+            "input": "L-L",
+            "size": 5,
+            "method": "median",
+            "kind": "decimal"
+          },
+          "sourceReport": "expanded-c2j/numeric-a/adjudication-2026-10-18.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "a07496169ca6dbc875e41803670e2ecad0ec0eba2ec841258a8e27401328eb18",
+          "input": [
+            -10,
+            4,
+            6,
+            1000,
+            10
+          ],
+          "cobolResult": "6.00000",
+          "cobolOutputSha256": "14751c82bc2676cdae46012a123342bae941feffba4f59358e257d2155cd8a6d",
+          "javaResult": "10.0",
+          "exceptionType": null,
+          "exceptionMessage": null,
+          "javaStdoutSha256": "f1e42019aecc858ffbcca7fddec511b761b474916fde37b1a6ff321a9b459330",
+          "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "contract": {
+            "input": "L-L",
+            "size": 5,
+            "method": "median",
+            "kind": "decimal"
+          },
+          "sourceReport": "expanded-c2j/numeric-a/adjudication-2026-10-18.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "b881bfed16c723f393deb135c5aa9e5ede9a4ee297968bdf4de6177d09939b1f",
+          "input": [
+            8,
+            1,
+            3,
+            9,
+            9
+          ],
+          "cobolResult": "8.00000",
+          "cobolOutputSha256": "194a3d844e923fa221459f616fa39c32811539ec131588f32ba73bab1909d43a",
+          "javaResult": "9.0",
+          "exceptionType": null,
+          "exceptionMessage": null,
+          "javaStdoutSha256": "b7edbb1d306a68faf170673ebef76f1dfef2045c0c190bdc1bb37837e37504a4",
+          "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "contract": {
+            "input": "L-L",
+            "size": 5,
+            "method": "median",
+            "kind": "decimal"
+          },
+          "sourceReport": "expanded-c2j/numeric-a/adjudication-2026-10-18.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        }
+      ]
+    },
+    {
+      "reviewId": "b01d48be19215d73bae10da5",
+      "taskId": "HumanEval/94",
+      "variant": "14b",
+      "splitGroupTaskIds": [
+        "HumanEval/94"
+      ],
+      "cobolSourceSha256": "3f8dbb4a63d6d88341745557d62ec1df65a9767c72fcf80320fc39907c8dba39",
+      "candidateJavaSha256": "2216261ea16a1b3c3bd610f068ac74ca3c9482b615ff51647356863378714d87",
+      "canonicalJavaSha256": "d3885c65b61f638a1b6202ee06efd85c95990e801df82f24bdcb59b7fff1ec94",
+      "machineStatus": "REPRODUCED_DISCREPANCY_PENDING_INDEPENDENT_REVIEW",
+      "humanReview": {
+        "decision": "PENDING",
+        "reviewer": null,
+        "reviewedAt": null,
+        "reason": null,
+        "validatedFaultSpans": []
+      },
+      "trainingEligible": false,
+      "witnesses": [
+        {
+          "driverIndex": 1,
+          "driverSha256": "862889fa17f0a3b1071ed63a43269e0aa3c4a327cedf27a484eee469310801f9",
+          "input": [
+            0,
+            8,
+            1,
+            2,
+            1,
+            7
+          ],
+          "cobolResult": 7,
+          "cobolOutputSha256": "7b56074ee0debc6dbf1d54af0b649df9314419f10a173dac42dd2e017c9517a3",
+          "javaResult": 8,
+          "exceptionType": null,
+          "exceptionMessage": null,
+          "javaStdoutSha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+          "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "contract": "Frozen six-integer array94 contract",
+          "sourceReport": "array-c2j-replay/replay-2026-10-18.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        }
+      ]
+    },
+    {
+      "reviewId": "42b0bf1404c20a82879f4fb3",
+      "taskId": "HumanEval/98",
+      "variant": "7b",
+      "splitGroupTaskIds": [
+        "HumanEval/98"
+      ],
+      "cobolSourceSha256": "01e8b7b5d44bee3038432a992db9f5ab72f53c6362066d9cb9b57416cc18c2d7",
+      "candidateJavaSha256": "8c8410ac1bb622b423faa4849998049cd46f333b4b423394914d59ca8d11c196",
+      "canonicalJavaSha256": "91b2df4dafeeff5b9f1015385f9798c425b5fce71c726278051c90d4b0f7f543",
+      "machineStatus": "REPRODUCED_DISCREPANCY_PENDING_INDEPENDENT_REVIEW",
+      "humanReview": {
+        "decision": "PENDING",
+        "reviewer": null,
+        "reviewedAt": null,
+        "reason": null,
+        "validatedFaultSpans": []
+      },
+      "trainingEligible": false,
+      "witnesses": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "f430e2ddaf71e617c695cbaeacce714f8ac31995a69258c81b7e579c66bb285a",
+          "input": "aBCdEf",
+          "cobolResult": 1,
+          "cobolOutputSha256": "f106f9b345c8968371ea0c167961e26d40c2262cddb2e3daf91d8f9744da80d2",
+          "javaResult": 0,
+          "exceptionType": null,
+          "exceptionMessage": null,
+          "javaStdoutSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "contract": "Frozen ASCII text98 contract",
+          "sourceReport": "text-c2j-replay/exploratory-98-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "96e007241bc4042e453e3fcc045f4c46e46e428d3ade374ff4c6b0c54806affa",
+          "input": "dBBE",
+          "cobolResult": 0,
+          "cobolOutputSha256": "6f92601344e16851316e7cda90d053c0ad234e047ccf81ce6fe89e78bbdb111e",
+          "javaResult": 1,
+          "exceptionType": null,
+          "exceptionMessage": null,
+          "javaStdoutSha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+          "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "contract": "Frozen ASCII text98 contract",
+          "sourceReport": "text-c2j-replay/exploratory-98-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 4,
+          "driverSha256": "2671021c1c94bfb2e9bb8cc8c40fcdbae834ca7b64e6f4cd33ac780376e05420",
+          "input": "U",
+          "cobolResult": 1,
+          "cobolOutputSha256": "f106f9b345c8968371ea0c167961e26d40c2262cddb2e3daf91d8f9744da80d2",
+          "javaResult": 0,
+          "exceptionType": null,
+          "exceptionMessage": null,
+          "javaStdoutSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+          "javaStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "contract": "Frozen ASCII text98 contract",
+          "sourceReport": "text-c2j-replay/exploratory-98-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        }
+      ]
+    },
+    {
+      "reviewId": "58d0ea3f05597077cbefe5b4",
+      "taskId": "HumanEval/119",
+      "variant": "7b",
+      "splitGroupTaskIds": [
+        "HumanEval/119"
+      ],
+      "cobolSourceSha256": "1a314331bef196c197c841584ba5dba3a6d18d94ca875b450df129fafb526f94",
+      "candidateJavaSha256": "e8ef5a0d76623f8b09ad45258b239997257128290f61deaa43efacfa86e10dbc",
+      "canonicalJavaSha256": "6e27c3ee99331abcc1f0015cc96905b78be29466d535de9057a93360fc327132",
+      "machineStatus": "REPRODUCED_DISCREPANCY_PENDING_INDEPENDENT_REVIEW",
+      "humanReview": {
+        "decision": "PENDING",
+        "reviewer": null,
+        "reviewedAt": null,
+        "reason": null,
+        "validatedFaultSpans": []
+      },
+      "trainingEligible": false,
+      "witnesses": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "5a2ccc2cd75bd51d4da6dad0ef3f01a9054f4d58851d1d4b96c6b4500ebbf2f2",
+          "input": [
+            [
+              "()(",
+              ")"
+            ]
+          ],
+          "cobolResult": "Yes                                                                                                 ",
+          "cobolOutputSha256": "927580bf287560d4a26a5d6e129f91ffa9cb63031b1a8c772be6ec584e65e82b",
+          "javaResult": null,
+          "exceptionType": "java.lang.StringIndexOutOfBoundsException",
+          "exceptionMessage": "Index 3 out of bounds for length 3",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "e7768726630e3e65043999f3904925d01f14a04c7a70c886d0fe50ad1a74ec5a",
+          "contract": {
+            "method": "matchParens",
+            "fields": [
+              [
+                "L-LST",
+                "X(100)",
+                2
+              ]
+            ],
+            "output": "text100",
+            "contract": "Exactly two nonempty parentheses-only logical strings, each<=100 and combined<=100; COBOL right-pads PIC X(100), Java receives the same logical strings. Source concatenation and execution order remain unchanged."
+          },
+          "sourceReport": "expanded-c2j/numeric-b/replay-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "598d45e187ad5491a13b7696fba0429c3860d31a9a3086cf66c022d395c96d19",
+          "input": [
+            [
+              "(()(())",
+              "())())"
+            ]
+          ],
+          "cobolResult": "No                                                                                                  ",
+          "cobolOutputSha256": "31375587f8bedb1f33f6eca3d8cee94ab70845a6dd1a7c7eeb929f4aa7dc10ab",
+          "javaResult": null,
+          "exceptionType": "java.lang.StringIndexOutOfBoundsException",
+          "exceptionMessage": "Index 7 out of bounds for length 7",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "b9e4284b710353bed7acf5279638ea7bc709a116e0097a8dee9db62a66bcd0b7",
+          "contract": {
+            "method": "matchParens",
+            "fields": [
+              [
+                "L-LST",
+                "X(100)",
+                2
+              ]
+            ],
+            "output": "text100",
+            "contract": "Exactly two nonempty parentheses-only logical strings, each<=100 and combined<=100; COBOL right-pads PIC X(100), Java receives the same logical strings. Source concatenation and execution order remain unchanged."
+          },
+          "sourceReport": "expanded-c2j/numeric-b/replay-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 3,
+          "driverSha256": "27176f62b96ba4af3cb02eb542ffe1bef7a2b74002ee4307caf0dc5be01d7b5b",
+          "input": [
+            [
+              ")())",
+              "(()()("
+            ]
+          ],
+          "cobolResult": "Yes                                                                                                 ",
+          "cobolOutputSha256": "927580bf287560d4a26a5d6e129f91ffa9cb63031b1a8c772be6ec584e65e82b",
+          "javaResult": null,
+          "exceptionType": "java.lang.StringIndexOutOfBoundsException",
+          "exceptionMessage": "Index 6 out of bounds for length 6",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "c76cd0cc01e3e66a5316975fd93ddab111d4012d5d515359c4ad5f6e920f8a41",
+          "contract": {
+            "method": "matchParens",
+            "fields": [
+              [
+                "L-LST",
+                "X(100)",
+                2
+              ]
+            ],
+            "output": "text100",
+            "contract": "Exactly two nonempty parentheses-only logical strings, each<=100 and combined<=100; COBOL right-pads PIC X(100), Java receives the same logical strings. Source concatenation and execution order remain unchanged."
+          },
+          "sourceReport": "expanded-c2j/numeric-b/replay-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 4,
+          "driverSha256": "48989b99c153acca76c04225d77612d15667462fb67ffe39d950ed8cce8f867e",
+          "input": [
+            [
+              "(())))",
+              "(()())(("
+            ]
+          ],
+          "cobolResult": "Yes                                                                                                 ",
+          "cobolOutputSha256": "927580bf287560d4a26a5d6e129f91ffa9cb63031b1a8c772be6ec584e65e82b",
+          "javaResult": null,
+          "exceptionType": "java.lang.StringIndexOutOfBoundsException",
+          "exceptionMessage": "Index 8 out of bounds for length 8",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "993fb9c650c99653b427bfe5c750f8cfe0d4dffbf02733069e909ada8e3c9e8b",
+          "contract": {
+            "method": "matchParens",
+            "fields": [
+              [
+                "L-LST",
+                "X(100)",
+                2
+              ]
+            ],
+            "output": "text100",
+            "contract": "Exactly two nonempty parentheses-only logical strings, each<=100 and combined<=100; COBOL right-pads PIC X(100), Java receives the same logical strings. Source concatenation and execution order remain unchanged."
+          },
+          "sourceReport": "expanded-c2j/numeric-b/replay-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 5,
+          "driverSha256": "50ee467a761a18e3e57bc0dde5e8486f35e010e9dab92c6db137a8435be72963",
+          "input": [
+            [
+              "()",
+              "())"
+            ]
+          ],
+          "cobolResult": "No                                                                                                  ",
+          "cobolOutputSha256": "31375587f8bedb1f33f6eca3d8cee94ab70845a6dd1a7c7eeb929f4aa7dc10ab",
+          "javaResult": null,
+          "exceptionType": "java.lang.StringIndexOutOfBoundsException",
+          "exceptionMessage": "Index 2 out of bounds for length 2",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "41173dd320cc5bce0af2e664604fe3f668a5c028394d0af86f92e9c33425ef8c",
+          "contract": {
+            "method": "matchParens",
+            "fields": [
+              [
+                "L-LST",
+                "X(100)",
+                2
+              ]
+            ],
+            "output": "text100",
+            "contract": "Exactly two nonempty parentheses-only logical strings, each<=100 and combined<=100; COBOL right-pads PIC X(100), Java receives the same logical strings. Source concatenation and execution order remain unchanged."
+          },
+          "sourceReport": "expanded-c2j/numeric-b/replay-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 6,
+          "driverSha256": "1effd9e03a0c7ad1fd3c88b94d90be522498f682bee4f7470a545bccb2959ca5",
+          "input": [
+            [
+              "(()(",
+              "()))()"
+            ]
+          ],
+          "cobolResult": "Yes                                                                                                 ",
+          "cobolOutputSha256": "927580bf287560d4a26a5d6e129f91ffa9cb63031b1a8c772be6ec584e65e82b",
+          "javaResult": null,
+          "exceptionType": "java.lang.StringIndexOutOfBoundsException",
+          "exceptionMessage": "Index 4 out of bounds for length 4",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "fd0bc5c402ffaa83ea2f7f42dfb9417b302c645e4c5eada1d676ead93b05003c",
+          "contract": {
+            "method": "matchParens",
+            "fields": [
+              [
+                "L-LST",
+                "X(100)",
+                2
+              ]
+            ],
+            "output": "text100",
+            "contract": "Exactly two nonempty parentheses-only logical strings, each<=100 and combined<=100; COBOL right-pads PIC X(100), Java receives the same logical strings. Source concatenation and execution order remain unchanged."
+          },
+          "sourceReport": "expanded-c2j/numeric-b/replay-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 7,
+          "driverSha256": "94493a54ccfaa4f705339311c0e6caeb6aefe28de277aa7bbc781ebed9c1b7fd",
+          "input": [
+            [
+              "((((",
+              "((())"
+            ]
+          ],
+          "cobolResult": "No                                                                                                  ",
+          "cobolOutputSha256": "31375587f8bedb1f33f6eca3d8cee94ab70845a6dd1a7c7eeb929f4aa7dc10ab",
+          "javaResult": null,
+          "exceptionType": "java.lang.StringIndexOutOfBoundsException",
+          "exceptionMessage": "Index 4 out of bounds for length 4",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "fd0bc5c402ffaa83ea2f7f42dfb9417b302c645e4c5eada1d676ead93b05003c",
+          "contract": {
+            "method": "matchParens",
+            "fields": [
+              [
+                "L-LST",
+                "X(100)",
+                2
+              ]
+            ],
+            "output": "text100",
+            "contract": "Exactly two nonempty parentheses-only logical strings, each<=100 and combined<=100; COBOL right-pads PIC X(100), Java receives the same logical strings. Source concatenation and execution order remain unchanged."
+          },
+          "sourceReport": "expanded-c2j/numeric-b/replay-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 8,
+          "driverSha256": "d4a325415b5b3ae8bd3ec1ff8a3cfdb4ecd3446cc638811954cd920aa237406c",
+          "input": [
+            [
+              ")(()",
+              "(()("
+            ]
+          ],
+          "cobolResult": "No                                                                                                  ",
+          "cobolOutputSha256": "31375587f8bedb1f33f6eca3d8cee94ab70845a6dd1a7c7eeb929f4aa7dc10ab",
+          "javaResult": null,
+          "exceptionType": "java.lang.StringIndexOutOfBoundsException",
+          "exceptionMessage": "Index 4 out of bounds for length 4",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "5597cace2d11a9d9fbbb2ddb1356091e3015608162dbdfc4a4ec0f0983895176",
+          "contract": {
+            "method": "matchParens",
+            "fields": [
+              [
+                "L-LST",
+                "X(100)",
+                2
+              ]
+            ],
+            "output": "text100",
+            "contract": "Exactly two nonempty parentheses-only logical strings, each<=100 and combined<=100; COBOL right-pads PIC X(100), Java receives the same logical strings. Source concatenation and execution order remain unchanged."
+          },
+          "sourceReport": "expanded-c2j/numeric-b/replay-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 10,
+          "driverSha256": "64626a8ca5a7931fd6bb323a268e3aa26eff29fbdfbae0a63be488e368c3d723",
+          "input": [
+            [
+              "(",
+              ")"
+            ]
+          ],
+          "cobolResult": "Yes                                                                                                 ",
+          "cobolOutputSha256": "927580bf287560d4a26a5d6e129f91ffa9cb63031b1a8c772be6ec584e65e82b",
+          "javaResult": null,
+          "exceptionType": "java.lang.StringIndexOutOfBoundsException",
+          "exceptionMessage": "Index 1 out of bounds for length 1",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "8978b19e8e932deaf50482d58e18add8f92a3b15cec73135900cbee4191efc70",
+          "contract": {
+            "method": "matchParens",
+            "fields": [
+              [
+                "L-LST",
+                "X(100)",
+                2
+              ]
+            ],
+            "output": "text100",
+            "contract": "Exactly two nonempty parentheses-only logical strings, each<=100 and combined<=100; COBOL right-pads PIC X(100), Java receives the same logical strings. Source concatenation and execution order remain unchanged."
+          },
+          "sourceReport": "expanded-c2j/numeric-b/replay-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 11,
+          "driverSha256": "61039db722e2bbb820d6ea39759c49ace3674f33385bfb2bfbba831fb640a59b",
+          "input": [
+            [
+              ")",
+              "("
+            ]
+          ],
+          "cobolResult": "Yes                                                                                                 ",
+          "cobolOutputSha256": "927580bf287560d4a26a5d6e129f91ffa9cb63031b1a8c772be6ec584e65e82b",
+          "javaResult": null,
+          "exceptionType": "java.lang.StringIndexOutOfBoundsException",
+          "exceptionMessage": "Index 1 out of bounds for length 1",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "493785c137d1729224900869703409c9d2d477bbbd74015c18c9e7f0dbe2af1b",
+          "contract": {
+            "method": "matchParens",
+            "fields": [
+              [
+                "L-LST",
+                "X(100)",
+                2
+              ]
+            ],
+            "output": "text100",
+            "contract": "Exactly two nonempty parentheses-only logical strings, each<=100 and combined<=100; COBOL right-pads PIC X(100), Java receives the same logical strings. Source concatenation and execution order remain unchanged."
+          },
+          "sourceReport": "expanded-c2j/numeric-b/replay-2026-10-18/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        }
+      ]
+    },
+    {
+      "reviewId": "5e60fe85f878dde16b3ec5f3",
+      "taskId": "HumanEval/143",
+      "variant": "7b",
+      "splitGroupTaskIds": [
+        "HumanEval/143"
+      ],
+      "cobolSourceSha256": "53ab5588f293519095987a79ac6fb07d5d25d3c2cd7675827601d9d389bf8b41",
+      "candidateJavaSha256": "fce7324466b8e8482d6a8df3ad29c2893e75a1fe8d28d9d3f55f684d60149f2f",
+      "canonicalJavaSha256": "3608292c2f393c779481ff6d45faa9bde27b54385914fa106e3ab16bc742b11d",
+      "machineStatus": "REPRODUCED_DISCREPANCY_PENDING_INDEPENDENT_REVIEW",
+      "humanReview": {
+        "decision": "PENDING",
+        "reviewer": null,
+        "reviewedAt": null,
+        "reason": null,
+        "validatedFaultSpans": []
+      },
+      "trainingEligible": false,
+      "witnesses": [
+        {
+          "driverIndex": 0,
+          "driverSha256": "83fbdc95f4762aaa19979c38329673a9a0275c27678f93b45d297873b6ecae7c",
+          "input": [
+            "This is a test"
+          ],
+          "cobolResult": "is",
+          "cobolOutputSha256": "55165eeb5ff20b59c77fbc5b28095f2ac50ed622326dba9f2e8ca2b7e355b026",
+          "javaResult": null,
+          "exceptionType": "java.lang.IndexOutOfBoundsException",
+          "exceptionMessage": "Range [5, 2) out of bounds for length 14",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "42f021f0a6d1162163566320e931ea0fcb4935ea5194448085a2830ffae983ff",
+          "contract": {
+            "input": "sentence",
+            "logicalOutput": "one ASCII text record with COBOL right-space padding removed only",
+            "method": "wordsInSentence",
+            "program": "WORDS-IN-SENTENCE",
+            "result": "string",
+            "sourceLayout": "05 L-SENTENCE PIC X(100). 05 RESULT PIC X(100)."
+          },
+          "sourceReport": "expanded-c2j/text/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 1,
+          "driverSha256": "c7ddd92030064510322abb04fbf12dae62ca32c72ef295533c20a8748e6cbb8f",
+          "input": [
+            "lets go for swimming"
+          ],
+          "cobolResult": "go for",
+          "cobolOutputSha256": "dcd0434035782b843af6459a27e1e0c641e0e36ca8f930f3ff66839cebb569d4",
+          "javaResult": null,
+          "exceptionType": "java.lang.IndexOutOfBoundsException",
+          "exceptionMessage": "Range [5, 2) out of bounds for length 20",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "69adca6c87c911af2b25c33dc7485e40a49eee639504c3868df8d7777b46f4be",
+          "contract": {
+            "input": "sentence",
+            "logicalOutput": "one ASCII text record with COBOL right-space padding removed only",
+            "method": "wordsInSentence",
+            "program": "WORDS-IN-SENTENCE",
+            "result": "string",
+            "sourceLayout": "05 L-SENTENCE PIC X(100). 05 RESULT PIC X(100)."
+          },
+          "sourceReport": "expanded-c2j/text/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 2,
+          "driverSha256": "f2e22330c5bc0ddc5aa74a22527262ce81dfe21cc983e6920ff087ad758fa984",
+          "input": [
+            "there is no place available here"
+          ],
+          "cobolResult": "there is no place",
+          "cobolOutputSha256": "88ce96a48d5719154ae76c3c3aa676369c5afb3f3b65002cb3440d2f7a914d22",
+          "javaResult": null,
+          "exceptionType": "java.lang.IndexOutOfBoundsException",
+          "exceptionMessage": "Range [6, 2) out of bounds for length 32",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "32a032410da2d4847f04a0ca6607f6e96c56f684fd95ce6941bc8b72806138d0",
+          "contract": {
+            "input": "sentence",
+            "logicalOutput": "one ASCII text record with COBOL right-space padding removed only",
+            "method": "wordsInSentence",
+            "program": "WORDS-IN-SENTENCE",
+            "result": "string",
+            "sourceLayout": "05 L-SENTENCE PIC X(100). 05 RESULT PIC X(100)."
+          },
+          "sourceReport": "expanded-c2j/text/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 3,
+          "driverSha256": "ce13fcddf29088095223214194f632990df860a213d518fa7a6b60d9c87fa13a",
+          "input": [
+            "Hi I am Hussein"
+          ],
+          "cobolResult": "Hi am Hussein",
+          "cobolOutputSha256": "513f1780e47572b88362a5100f175dd16b7b17899b37d8dd78abeda2d0dd44c2",
+          "javaResult": null,
+          "exceptionType": "java.lang.IndexOutOfBoundsException",
+          "exceptionMessage": "Range [5, 2) out of bounds for length 15",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "c1b19855c14ddd28247c29928aadcc0f647b4f65c112c47c6ee44daa99a284ef",
+          "contract": {
+            "input": "sentence",
+            "logicalOutput": "one ASCII text record with COBOL right-space padding removed only",
+            "method": "wordsInSentence",
+            "program": "WORDS-IN-SENTENCE",
+            "result": "string",
+            "sourceLayout": "05 L-SENTENCE PIC X(100). 05 RESULT PIC X(100)."
+          },
+          "sourceReport": "expanded-c2j/text/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 4,
+          "driverSha256": "ee4ceb34f5b80abe54bb0042be48b6e3cd1868e8de7139bf542d3b321871bf29",
+          "input": [
+            "go for it"
+          ],
+          "cobolResult": "go for it",
+          "cobolOutputSha256": "9087d520c1e5175bfee5f1760e8c80bf52aa1d902c5d88a81a60cde40f189a01",
+          "javaResult": null,
+          "exceptionType": "java.lang.IndexOutOfBoundsException",
+          "exceptionMessage": "Range [7, 2) out of bounds for length 9",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "15982574c5104ada377c05b5964946ec2a78980f7fb6cf781b58fd398c744335",
+          "contract": {
+            "input": "sentence",
+            "logicalOutput": "one ASCII text record with COBOL right-space padding removed only",
+            "method": "wordsInSentence",
+            "program": "WORDS-IN-SENTENCE",
+            "result": "string",
+            "sourceLayout": "05 L-SENTENCE PIC X(100). 05 RESULT PIC X(100)."
+          },
+          "sourceReport": "expanded-c2j/text/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        },
+        {
+          "driverIndex": 6,
+          "driverSha256": "746fb537f20d96a8a1da10555390e1cb1ae9ea1b69f882da40ff338723aa1f95",
+          "input": [
+            "here is"
+          ],
+          "cobolResult": "is",
+          "cobolOutputSha256": "55165eeb5ff20b59c77fbc5b28095f2ac50ed622326dba9f2e8ca2b7e355b026",
+          "javaResult": null,
+          "exceptionType": "java.lang.IndexOutOfBoundsException",
+          "exceptionMessage": "Range [5, 2) out of bounds for length 7",
+          "javaStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "javaStderrSha256": "e11164a6912dec70e26c3e4f50f6d36b2f7265d9aef91808e7c7655da96e5499",
+          "contract": {
+            "input": "sentence",
+            "logicalOutput": "one ASCII text record with COBOL right-space padding removed only",
+            "method": "wordsInSentence",
+            "program": "WORDS-IN-SENTENCE",
+            "result": "string",
+            "sourceLayout": "05 L-SENTENCE PIC X(100). 05 RESULT PIC X(100)."
+          },
+          "sourceReport": "expanded-c2j/text/replay-report.json",
+          "canonicalControl": "AGREES",
+          "isIndependentDefectExample": false
+        }
+      ]
+    }
+  ]
+}

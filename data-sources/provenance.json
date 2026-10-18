@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "collectionDate": "2026-10-17",
+  "collectionTimezone": "Europe/London",
+  "collectionDateBasis": "User-provided client date; observation and survey dates retain their provider vintage.",
+  "desiredFxObservationDate": "2026-10-16",
+  "queryEndDate": "2026-10-17",
+  "fxDateLimitation": "Latest observation returned by archived responses is 2026-10-15. No 2026-10-16 quote or rate 1.2941 is asserted.",
+  "aiGenerated": [
+    "Collector, metadata, numeric transcription and documentation were prepared by an AI coding assistant.",
+    "The financial verifier's four educational fixtures and Java migrations are AI-generated; IBM extracts are separate unmodified reference material.",
+    "Any tiered fee policy used by the verifier is an illustrative generated formula, not a published World Bank or Wise tariff."
+  ],
+  "sources": [
+    {
+      "id": "boe-XUDLERS",
+      "provider": "Bank of England",
+      "url": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+      "collectedDate": "2026-10-17",
+      "observationDate": "2026-10-15",
+      "snapshotPath": "snapshots/boe-XUDLERS.html",
+      "sha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+      "licence": "OGL-UK-3.0",
+      "licenceUrl": "https://www.bankofengland.co.uk/legal",
+      "attribution": "Source: Bank of England. Contains public sector information licensed under the Open Government Licence v3.0."
+    },
+    {
+      "id": "boe-XUDLUSS",
+      "provider": "Bank of England",
+      "url": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLUSS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLUSS",
+      "collectedDate": "2026-10-17",
+      "observationDate": "2026-10-15",
+      "snapshotPath": "snapshots/boe-XUDLUSS.html",
+      "sha256": "acf9f188023e7b8818c25dfc6235f68774134ca7dea58971cdec8683e765f816",
+      "licence": "OGL-UK-3.0",
+      "licenceUrl": "https://www.bankofengland.co.uk/legal",
+      "attribution": "Source: Bank of England. Contains public sector information licensed under the Open Government Licence v3.0."
+    },
+    {
+      "id": "boe-XUDLBK87",
+      "provider": "Bank of England",
+      "url": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLBK87&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLBK87",
+      "collectedDate": "2026-10-17",
+      "observationDate": "2026-10-15",
+      "snapshotPath": "snapshots/boe-XUDLBK87.html",
+      "sha256": "423499acbd803cda3f357175c737b2ac883883c5f84944a791fd51a1e897bdd5",
+      "licence": "OGL-UK-3.0",
+      "licenceUrl": "https://www.bankofengland.co.uk/legal",
+      "attribution": "Source: Bank of England. Contains public sector information licensed under the Open Government Licence v3.0."
+    },
+    {
+      "id": "ibm-xfrfun",
+      "provider": "IBM / Bank-of-Z",
+      "url": "https://github.com/IBM/Bank-of-Z/blob/a570aa467cd41b4400db1d6db168d17e886dd136/src/base/cics/cobol/XFRFUN.cbl",
+      "downloadUrl": "https://raw.githubusercontent.com/IBM/Bank-of-Z/a570aa467cd41b4400db1d6db168d17e886dd136/src/base/cics/cobol/XFRFUN.cbl",
+      "revision": "a570aa467cd41b4400db1d6db168d17e886dd136",
+      "collectedDate": "2026-10-17",
+      "upstreamSha256": "f0de5e6b06ee8e6c3b1c37bf29d647e33382fe2533106269cc400a10c93cdad2",
+      "snapshotPath": "cobol/XFRFUN.excerpt.cbl",
+      "sha256": "3baed7a01f9b11355d76183a500c654066b33e4fd75276c3b1cea87873c3b6ba",
+      "upstreamLineRanges": [
+        [
+          1,
+          8
+        ],
+        [
+          59,
+          96
+        ],
+        [
+          975,
+          995
+        ]
+      ],
+      "transformation": "Concatenated verbatim line ranges; incomplete reference excerpts, not standalone compilable programs.",
+      "licence": "Apache-2.0",
+      "licencePath": "cobol/LICENSE.Apache-2.0.txt",
+      "attribution": "Copyright IBM Corp. 2023"
+    },
+    {
+      "id": "ibm-bnk1tfn",
+      "provider": "IBM / Bank-of-Z",
+      "url": "https://github.com/IBM/Bank-of-Z/blob/a570aa467cd41b4400db1d6db168d17e886dd136/src/base/cics/cobol/BNK1TFN.cbl",
+      "downloadUrl": "https://raw.githubusercontent.com/IBM/Bank-of-Z/a570aa467cd41b4400db1d6db168d17e886dd136/src/base/cics/cobol/BNK1TFN.cbl",
+      "revision": "a570aa467cd41b4400db1d6db168d17e886dd136",
+      "collectedDate": "2026-10-17",
+      "upstreamSha256": "2ef37381efb8383c42b0b369b9229c5cec80b15b333bc7e6761661ee3f66fe27",
+      "snapshotPath": "cobol/BNK1TFN.excerpt.cbl",
+      "sha256": "a7919135c05870d58a36141f95e0db087c6ff1fda43f49fdc813f71d1388a10d",
+      "upstreamLineRanges": [
+        [
+          1,
+          8
+        ],
+        [
+          88,
+          110
+        ],
+        [
+          351,
+          375
+        ]
+      ],
+      "transformation": "Concatenated verbatim line ranges; incomplete reference excerpts, not standalone compilable programs.",
+      "licence": "Apache-2.0",
+      "licencePath": "cobol/LICENSE.Apache-2.0.txt",
+      "attribution": "Copyright IBM Corp. 2023"
+    },
+    {
+      "id": "world-bank-gbp-thb-wise-2025q3",
+      "provider": "World Bank Remittance Prices Worldwide",
+      "url": "https://remittanceprices.worldbank.org/corridor/United-Kingdom/Thailand",
+      "collectedDate": "2026-10-17",
+      "surveyCollectionStart": "2025-08-08",
+      "surveyCollectionEnd": "2025-08-22",
+      "snapshotPath": "snapshots/world-bank-gbp-thb.extract.txt",
+      "sha256": "7187c334b988bced00f7857df818859300ef5dddd9051221795b7fb9b401ab29",
+      "snapshotType": "manually transcribed numeric row verified against primary-page web extraction",
+      "rawHttpResponseArchived": false,
+      "licence": "CC-BY-4.0",
+      "licenceUrl": "https://datacatalog.worldbank.org/search/dataset/0037898/remittance-prices-worldwide",
+      "attribution": "The World Bank, Remittance Prices Worldwide, available at http://remittanceprices.worldbank.org",
+      "limitations": [
+        "Historical survey observation, not a live quote or October 2026 spot reference rate.",
+        "The source displays rounded values. Do not reconstruct an exact provider tariff or FX margin from these rounded values.",
+        "Total cost combines sender fees and the exchange-rate margin and is not itself an FX rate.",
+        "Any demonstration tier schedule used by the verifier is AI-authored, not a World Bank or Wise published tariff.",
+        "No provider or World Bank endorsement is implied."
+      ]
+    }
+  ],
+  "hashAlgorithm": "SHA-256",
+  "hashMeaning": "Integrity of archived local bytes. For manually transcribed data, the hash is not an upstream HTTP-response checksum.",
+  "pairedCodeTraining": {
+    "dataset": "COBOL-JavaTrans",
+    "records": 143,
+    "repository": "https://github.com/COBOL-Coder/COBOL-Coder",
+    "commit": "2b14b7bf7e55556205654c6f7657fa60e36251fa",
+    "path": "evaluation/data/COBOL-JavaTrans.jsonl",
+    "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/data/COBOL-JavaTrans.jsonl",
+    "sha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+    "collectionDate": "2026-10-18",
+    "repositoryLicense": "Apache-2.0",
+    "underlyingTasks": "HumanEval (MIT); upstream benchmark translations are not independently audited",
+    "rawCache": "evaluation/corpora/cobol-javatrans/",
+    "use": "paired-source contrastive correspondence training and task-grouped evaluation; not equivalence labels",
+    "inventory": "data-sources/paired-code/README.md",
+    "modelPurpose": "whole-program correspondence; not defect-risk or equivalence labels"
+  }
+}

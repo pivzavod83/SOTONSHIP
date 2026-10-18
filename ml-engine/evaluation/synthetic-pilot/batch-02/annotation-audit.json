@@ -1,0 +1,51 @@
+{
+  "inputSha256": "f08dc2a1dffeb19ef75e4ac0750c8942b1cd30da3c5086269d9137e6f91507b9",
+  "status": "RUNTIME_CHECKS_PASS_METADATA_REPAIR_REQUIRED",
+  "counts": {
+    "families": 2,
+    "pairs": 8,
+    "proposedEquivalent": 4,
+    "proposedDefective": 4,
+    "validSourceSpans": 30,
+    "validAlignmentLinks": 24,
+    "positionalOneToOneLinks": 24,
+    "sourceAndRuntimeConsistencyChecks": 113
+  },
+  "splits": {
+    "F003": "train",
+    "F004": "validation"
+  },
+  "issues": [
+    {
+      "id": "WRONG_DEFECT_CATEGORY",
+      "variantId": "F004-V4",
+      "proposedCorrection": "ARITHMETIC_FORMULA",
+      "reason": "Computes unweighted mean instead of quantity-weighted mean; defect is formula/weighting, not scale or rounding. Original label preserved."
+    },
+    {
+      "id": "OVERSTATED_RATIONALE",
+      "variantId": "F004-V4",
+      "counterexampleToAlwaysMismatch": "F004-A4 has unequal prices and quantities, yet rounded COBOL and variant outputs both10.01. Say can differ, not always differs."
+    },
+    {
+      "id": "MISSING_DATASET_PLAN",
+      "reason": "Still no20-family algorithm/category/split manifest in attachment."
+    },
+    {
+      "id": "STYLE_LABEL_SHORTCUT",
+      "reason": "Across F001-F004 every scaled-integer V2 is positive; every defective variant uses BigDecimal. Mix styles across both labels."
+    },
+    {
+      "id": "POSITIONAL_ALIGNMENT_SHORTCUT",
+      "reason": "All24 links in this batch are ordered one-to-one Cn to Jn. Include justified reordering and one-to-many/many-to-one examples before claiming learned structural alignment."
+    },
+    {
+      "id": "LEXICAL_INPUT_CONTRACT",
+      "reason": "Add canonical ASCII plain decimal/integer grammar and20-character line cap. Supplied cases comply, but numeric bounds alone do not specify lexical forms."
+    }
+  ],
+  "trainingPerformed": false,
+  "originalInputEdited": false,
+  "alignmentGoldStatus": "AI_PROPOSED_STRUCTURALLY_CHECKED_ONLY",
+  "validationUse": "F004 remains excluded from parameter fitting; this is data-quality inspection, not unseen model evaluation."
+}

@@ -1,0 +1,989 @@
+{
+  "batchNumber": 3,
+  "datasetKind": "SYNTHETIC_AI_GENERATED",
+  "compilerProfile": {
+    "cobolCompiler": "GnuCOBOL 3.2",
+    "cobolSourceFormat": "FREE",
+    "javaVersion": "Java 21"
+  },
+  "families": [
+    {
+      "familyId": "F005",
+      "split": "test",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "algorithmDescription": "Computes a two-period compounded interest balance from an initial principal and two quarterly percentage rates. Period 1 interest (INT-1, PIC 9(5)V99) is computed without ROUNDED (truncating fractional cents toward zero) and added to PRINCIPAL to form BAL-1 (PIC 9(6)V99). Period 2 interest (INT-2, PIC 9(6)V99) is computed on BAL-1 with ROUNDED (half-up to 2 decimal places) and added to BAL-1 to produce BAL-2.",
+      "contract": {
+        "inputFields": [
+          {
+            "name": "PRINCIPAL",
+            "cobolPicture": "PIC 9(5)V99",
+            "description": "Initial principal balance"
+          },
+          {
+            "name": "RATE-Q1",
+            "cobolPicture": "PIC 99V99",
+            "description": "First period interest percentage rate"
+          },
+          {
+            "name": "RATE-Q2",
+            "cobolPicture": "PIC 99V99",
+            "description": "Second period interest percentage rate"
+          }
+        ],
+        "stdinFormat": "Three newline-separated canonical ASCII decimal strings (at most 20 characters per line, no exponent notation, no '+' sign, no padding or separators) representing PRINCIPAL, RATE-Q1, and RATE-Q2 with 2 fractional digits.",
+        "validInputDomain": "PRINCIPAL canonical ASCII decimal in [0.00, 50000.00] with 2 decimal places; RATE-Q1 and RATE-Q2 canonical ASCII decimals in [0.00, 25.00] with 2 decimal places; each line length in [4, 20].",
+        "outputMeaning": "Single scalar decimal representing the final compounded balance BAL-2 at scale 2.",
+        "outputNormalization": "Trim surrounding whitespace, strip optional leading '+' sign and leading integer zeros (preserving '0' before the decimal point), and format as an exact decimal string with 2 fractional digits (0.00).",
+        "semanticAssumptions": [
+          "Working-storage intermediate fields: INT-1 PIC 9(5)V99, BAL-1 PIC 9(6)V99, INT-2 PIC 9(6)V99, BAL-2 PIC 9(6)V99.",
+          "Across the declared valid input domain, INT-1 <= 12500.00, BAL-1 <= 62500.00, INT-2 <= 15625.00, and BAL-2 <= 78125.00, so no high-order integer digit truncation occurs.",
+          "COMPUTE INT-1 without ROUNDED truncates digits beyond 2 decimal places toward zero; COMPUTE INT-2 ROUNDED rounds half-way values away from zero at 2 decimal places."
+        ]
+      },
+      "cobolLines": [
+        ">>SOURCE FORMAT FREE",
+        "IDENTIFICATION DIVISION.",
+        "PROGRAM-ID. F005.",
+        "DATA DIVISION.",
+        "WORKING-STORAGE SECTION.",
+        "01 IN-S1 PIC X(20).",
+        "01 IN-S2 PIC X(20).",
+        "01 IN-S3 PIC X(20).",
+        "01 PRINCIPAL PIC 9(5)V99.",
+        "01 RATE-Q1 PIC 99V99.",
+        "01 RATE-Q2 PIC 99V99.",
+        "01 INT-1 PIC 9(5)V99.",
+        "01 BAL-1 PIC 9(6)V99.",
+        "01 INT-2 PIC 9(6)V99.",
+        "01 BAL-2 PIC 9(6)V99.",
+        "01 OUT-VAL PIC 9(6).99.",
+        "PROCEDURE DIVISION.",
+        "    ACCEPT IN-S1",
+        "    ACCEPT IN-S2",
+        "    ACCEPT IN-S3",
+        "    COMPUTE PRINCIPAL = FUNCTION NUMVAL(IN-S1)",
+        "    COMPUTE RATE-Q1 = FUNCTION NUMVAL(IN-S2)",
+        "    COMPUTE RATE-Q2 = FUNCTION NUMVAL(IN-S3)",
+        "    COMPUTE INT-1 = (PRINCIPAL * RATE-Q1) / 100",
+        "    COMPUTE BAL-1 = PRINCIPAL + INT-1",
+        "    COMPUTE INT-2 ROUNDED = (BAL-1 * RATE-Q2) / 100",
+        "    COMPUTE BAL-2 = BAL-1 + INT-2",
+        "    MOVE BAL-2 TO OUT-VAL",
+        "    DISPLAY OUT-VAL",
+        "    STOP RUN."
+      ],
+      "cobolSegments": [
+        {
+          "id": "C1",
+          "startLine": 24,
+          "endLine": 24
+        },
+        {
+          "id": "C2",
+          "startLine": 25,
+          "endLine": 25
+        },
+        {
+          "id": "C3",
+          "startLine": 26,
+          "endLine": 26
+        },
+        {
+          "id": "C4",
+          "startLine": 27,
+          "endLine": 27
+        }
+      ],
+      "tests": [
+        {
+          "testId": "F005-T1",
+          "stdin": "1000.00\n5.00\n4.00\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "1092.00"
+        },
+        {
+          "testId": "F005-T2",
+          "stdin": "2000.00\n10.00\n5.00\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "2310.00"
+        },
+        {
+          "testId": "F005-T3",
+          "stdin": "0.00\n0.00\n0.00\n",
+          "caseKind": "boundary",
+          "expectedReferenceValue": "0.00"
+        },
+        {
+          "testId": "F005-T4",
+          "stdin": "50000.00\n25.00\n25.00\n",
+          "caseKind": "boundary",
+          "expectedReferenceValue": "78125.00"
+        },
+        {
+          "testId": "F005-T5",
+          "stdin": "100.10\n5.50\n5.50\n",
+          "caseKind": "defect_witness",
+          "expectedReferenceValue": "111.41"
+        },
+        {
+          "testId": "F005-T6",
+          "stdin": "333.33\n3.00\n5.00\n",
+          "caseKind": "defect_witness",
+          "expectedReferenceValue": "360.49"
+        }
+      ],
+      "variants": [
+        {
+          "variantId": "F005-V1",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal principal = new BigDecimal(sc.nextLine()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal rateQ1 = new BigDecimal(sc.nextLine()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal rateQ2 = new BigDecimal(sc.nextLine()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal hundred = new BigDecimal(\"100\");",
+            "        BigDecimal int1 = principal.multiply(rateQ1).divide(hundred, 2, RoundingMode.DOWN);",
+            "        BigDecimal bal1 = principal.add(int1);",
+            "        BigDecimal int2 = bal1.multiply(rateQ2).divide(hundred, 2, RoundingMode.HALF_UP);",
+            "        BigDecimal bal2 = bal1.add(int2);",
+            "        System.out.println(bal2.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J2",
+              "startLine": 12,
+              "endLine": 12
+            },
+            {
+              "id": "J3",
+              "startLine": 13,
+              "endLine": 13
+            },
+            {
+              "id": "J4",
+              "startLine": 14,
+              "endLine": 14
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            },
+            {
+              "cobolSegmentIds": ["C4"],
+              "javaSegmentIds": ["J4"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Preserves COBOL semantics using BigDecimal: truncates Period 1 interest at scale 2 using RoundingMode.DOWN in J1, adds it to principal in J2, rounds Period 2 compounded interest on bal1 at scale 2 using RoundingMode.HALF_UP in J3, and sums bal1 and int2 in J4.",
+          "testPredictions": [
+            {
+              "testId": "F005-T1",
+              "expectedJavaValue": "1092.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T2",
+              "expectedJavaValue": "2310.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T4",
+              "expectedJavaValue": "78125.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T5",
+              "expectedJavaValue": "111.41",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T6",
+              "expectedJavaValue": "360.49",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F005-V2",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long prinCents = new BigDecimal(sc.nextLine()).movePointRight(2).longValue();",
+            "        long r1Bp = new BigDecimal(sc.nextLine()).movePointRight(2).longValue();",
+            "        long r2Bp = new BigDecimal(sc.nextLine()).movePointRight(2).longValue();",
+            "        long bal1Cents = prinCents + (prinCents * r1Bp) / 10000L;",
+            "        long shiftedInt2 = bal1Cents * r2Bp + 5000L;",
+            "        long int2Cents = shiftedInt2 / 10000L;",
+            "        long bal2Cents = bal1Cents + int2Cents;",
+            "        System.out.println(BigDecimal.valueOf(bal2Cents, 2).toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 9,
+              "endLine": 9
+            },
+            {
+              "id": "J2",
+              "startLine": 10,
+              "endLine": 10
+            },
+            {
+              "id": "J3",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J4",
+              "startLine": 12,
+              "endLine": 12
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1", "C2"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J2", "J3"]
+            },
+            {
+              "cobolSegmentIds": ["C4"],
+              "javaSegmentIds": ["J4"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Refactors the calculation into scaled 64-bit integer arithmetic (cents and basis points). Combines C1 and C2 via a many-to-one mapping into J1 (prinCents + (prinCents * r1Bp) / 10000L), and splits C3 via a one-to-many mapping across J2 and J3 (adding 5000L half-up bias in J2 and dividing by 10000L in J3).",
+          "testPredictions": [
+            {
+              "testId": "F005-T1",
+              "expectedJavaValue": "1092.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T2",
+              "expectedJavaValue": "2310.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T4",
+              "expectedJavaValue": "78125.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T5",
+              "expectedJavaValue": "111.41",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T6",
+              "expectedJavaValue": "360.49",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F005-V3",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal principal = new BigDecimal(sc.nextLine()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal rateQ1 = new BigDecimal(sc.nextLine()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal rateQ2 = new BigDecimal(sc.nextLine()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal hundred = new BigDecimal(\"100\");",
+            "        BigDecimal int1 = principal.multiply(rateQ1).divide(hundred, 2, RoundingMode.HALF_UP);",
+            "        BigDecimal bal1 = principal.add(int1);",
+            "        BigDecimal int2 = bal1.multiply(rateQ2).divide(hundred, 2, RoundingMode.HALF_UP);",
+            "        BigDecimal bal2 = bal1.add(int2);",
+            "        System.out.println(bal2.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J2",
+              "startLine": 12,
+              "endLine": 12
+            },
+            {
+              "id": "J3",
+              "startLine": 13,
+              "endLine": 13
+            },
+            {
+              "id": "J4",
+              "startLine": 14,
+              "endLine": 14
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            },
+            {
+              "cobolSegmentIds": ["C4"],
+              "javaSegmentIds": ["J4"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "DECIMAL_ROUNDING_AND_SCALE",
+          "defectCobolSegmentIds": ["C1"],
+          "defectJavaSegmentIds": ["J1"],
+          "labelRationale": "Segment J1 aligns with C1 but uses RoundingMode.HALF_UP instead of truncating toward zero (RoundingMode.DOWN). Because C1 omits ROUNDED on COMPUTE INT-1, COBOL truncates 5.5055 to 5.50 in T5 and 9.9999 to 9.99 in T6, whereas J1 rounds them up to 5.51 and 10.00.",
+          "testPredictions": [
+            {
+              "testId": "F005-T1",
+              "expectedJavaValue": "1092.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T2",
+              "expectedJavaValue": "2310.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T4",
+              "expectedJavaValue": "78125.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T5",
+              "expectedJavaValue": "111.42",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F005-T6",
+              "expectedJavaValue": "360.50",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F005-V4",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long prinCents = new BigDecimal(sc.nextLine()).movePointRight(2).longValue();",
+            "        long r1Bp = new BigDecimal(sc.nextLine()).movePointRight(2).longValue();",
+            "        long r2Bp = new BigDecimal(sc.nextLine()).movePointRight(2).longValue();",
+            "        long bal1Cents = prinCents + (prinCents * r1Bp) / 10000L;",
+            "        long int2Cents = (bal1Cents * r2Bp) / 10000L;",
+            "        long bal2Cents = bal1Cents + int2Cents;",
+            "        System.out.println(BigDecimal.valueOf(bal2Cents, 2).toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 9,
+              "endLine": 9
+            },
+            {
+              "id": "J2",
+              "startLine": 10,
+              "endLine": 10
+            },
+            {
+              "id": "J3",
+              "startLine": 11,
+              "endLine": 11
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1", "C2"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C4"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "DECIMAL_ROUNDING_AND_SCALE",
+          "defectCobolSegmentIds": ["C3"],
+          "defectJavaSegmentIds": ["J2"],
+          "labelRationale": "Uses scaled integer arithmetic (with a many-to-one mapping of C1 and C2 into J1) but omits the +5000L half-up rounding offset in J2 (aligned to C3), truncating Period 2 interest toward zero instead of honoring COMPUTE INT-2 ROUNDED. In T5 (5.8080 -> 5.80 vs 5.81) and T6 (17.1660 -> 17.16 vs 17.17), J2 understates the final balance by 0.01.",
+          "testPredictions": [
+            {
+              "testId": "F005-T1",
+              "expectedJavaValue": "1092.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T2",
+              "expectedJavaValue": "2310.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T4",
+              "expectedJavaValue": "78125.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F005-T5",
+              "expectedJavaValue": "111.40",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F005-T6",
+              "expectedJavaValue": "360.48",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        }
+      ]
+    },
+    {
+      "familyId": "F006",
+      "split": "train",
+      "focusCategory": "NUMERIC_STORAGE_AND_SIGN",
+      "algorithmDescription": "Updates an account balance by adding a signed adjustment (ADJ-AMT, PIC S9(5)) to an opening balance (START-BAL, PIC 9(5)) into an unsigned intermediate balance field (MID-BAL, PIC 9(5)), which strips the negative sign (coercing negative intermediate sums to their positive absolute magnitude), and then subtracts a signed fee (FEE-AMT, PIC S9(4)) into a signed final balance (END-BAL, PIC S9(6)).",
+      "contract": {
+        "inputFields": [
+          {
+            "name": "START-BAL",
+            "cobolPicture": "PIC 9(5)",
+            "description": "Unsigned opening integer balance"
+          },
+          {
+            "name": "ADJ-AMT",
+            "cobolPicture": "PIC S9(5)",
+            "description": "Signed integer adjustment added to opening balance"
+          },
+          {
+            "name": "FEE-AMT",
+            "cobolPicture": "PIC S9(4)",
+            "description": "Signed integer fee subtracted from intermediate balance"
+          }
+        ],
+        "stdinFormat": "Three newline-separated canonical ASCII integer strings (at most 20 characters per line, optional leading '-' on ADJ-AMT and FEE-AMT only, no '+' sign, no exponent notation, no padding or separators) representing START-BAL, ADJ-AMT, and FEE-AMT.",
+        "validInputDomain": "START-BAL canonical ASCII integer in [0, 40000]; ADJ-AMT canonical ASCII integer in [-40000, 40000]; FEE-AMT canonical ASCII integer in [-5000, 5000]; each line length in [1, 20].",
+        "outputMeaning": "Single signed scalar integer representing END-BAL.",
+        "outputNormalization": "Trim surrounding whitespace, preserve a leading '-' sign for negative values, strip optional leading '+' sign and leading zeros from the digit sequence (preserving '0' for zero), and format as an exact integer string.",
+        "semanticAssumptions": [
+          "Working-storage intermediate fields: MID-BAL PIC 9(5) (unsigned), END-BAL PIC S9(6) (signed).",
+          "Across the declared valid input domain, |START-BAL + ADJ-AMT| <= 80000, so storing into MID-BAL PIC 9(5) never overflows 5 digits, but because MID-BAL lacks an 'S' sign designation, GnuCOBOL 3.2 stores the absolute value |START-BAL + ADJ-AMT|.",
+          "END-BAL has PIC S9(6) and retains a negative sign when MID-BAL - FEE-AMT is negative."
+        ]
+      },
+      "cobolLines": [
+        ">>SOURCE FORMAT FREE",
+        "IDENTIFICATION DIVISION.",
+        "PROGRAM-ID. F006.",
+        "DATA DIVISION.",
+        "WORKING-STORAGE SECTION.",
+        "01 IN-S1 PIC X(20).",
+        "01 IN-S2 PIC X(20).",
+        "01 IN-S3 PIC X(20).",
+        "01 START-BAL PIC 9(5).",
+        "01 ADJ-AMT PIC S9(5).",
+        "01 FEE-AMT PIC S9(4).",
+        "01 MID-BAL PIC 9(5).",
+        "01 END-BAL PIC S9(6).",
+        "01 OUT-VAL PIC -9(6).",
+        "PROCEDURE DIVISION.",
+        "    ACCEPT IN-S1",
+        "    ACCEPT IN-S2",
+        "    ACCEPT IN-S3",
+        "    COMPUTE START-BAL = FUNCTION NUMVAL(IN-S1)",
+        "    COMPUTE ADJ-AMT = FUNCTION NUMVAL(IN-S2)",
+        "    COMPUTE FEE-AMT = FUNCTION NUMVAL(IN-S3)",
+        "    COMPUTE MID-BAL = START-BAL + ADJ-AMT",
+        "    COMPUTE END-BAL = MID-BAL - FEE-AMT",
+        "    MOVE END-BAL TO OUT-VAL",
+        "    DISPLAY OUT-VAL",
+        "    STOP RUN."
+      ],
+      "cobolSegments": [
+        {
+          "id": "C1",
+          "startLine": 22,
+          "endLine": 22
+        },
+        {
+          "id": "C2",
+          "startLine": 23,
+          "endLine": 23
+        }
+      ],
+      "tests": [
+        {
+          "testId": "F006-T1",
+          "stdin": "1000\n500\n50\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "1450"
+        },
+        {
+          "testId": "F006-T2",
+          "stdin": "2000\n-500\n-100\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "1600"
+        },
+        {
+          "testId": "F006-T3",
+          "stdin": "0\n0\n0\n",
+          "caseKind": "boundary",
+          "expectedReferenceValue": "0"
+        },
+        {
+          "testId": "F006-T4",
+          "stdin": "40000\n40000\n-5000\n",
+          "caseKind": "boundary",
+          "expectedReferenceValue": "85000"
+        },
+        {
+          "testId": "F006-T5",
+          "stdin": "500\n-800\n400\n",
+          "caseKind": "defect_witness",
+          "expectedReferenceValue": "-100"
+        },
+        {
+          "testId": "F006-T6",
+          "stdin": "100\n-250\n200\n",
+          "caseKind": "defect_witness",
+          "expectedReferenceValue": "-50"
+        }
+      ],
+      "variants": [
+        {
+          "variantId": "F006-V1",
+          "javaLines": [
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        int startBal = Integer.parseInt(sc.nextLine());",
+            "        int adjAmt = Integer.parseInt(sc.nextLine());",
+            "        int feeAmt = Integer.parseInt(sc.nextLine());",
+            "        int feeDelta = -feeAmt;",
+            "        int rawMid = startBal + adjAmt;",
+            "        int midBal = rawMid < 0 ? -rawMid : rawMid;",
+            "        int endBal = midBal + feeDelta;",
+            "        System.out.println(endBal);",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 8,
+              "endLine": 8
+            },
+            {
+              "id": "J2",
+              "startLine": 9,
+              "endLine": 9
+            },
+            {
+              "id": "J3",
+              "startLine": 10,
+              "endLine": 10
+            },
+            {
+              "id": "J4",
+              "startLine": 11,
+              "endLine": 11
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J2", "J3"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J1", "J4"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Uses 32-bit integer arithmetic with reordered and one-to-many segment mappings: C2 is split across J1 (pre-negating feeAmt) and J4 (adding feeDelta to midBal), while C1 is split across J2 (signed sum) and J3 (unsigned PIC 9(5) sign removal).",
+          "testPredictions": [
+            {
+              "testId": "F006-T1",
+              "expectedJavaValue": "1450",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T2",
+              "expectedJavaValue": "1600",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T3",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T4",
+              "expectedJavaValue": "85000",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T5",
+              "expectedJavaValue": "-100",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T6",
+              "expectedJavaValue": "-50",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F006-V2",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal startBal = new BigDecimal(sc.nextLine());",
+            "        BigDecimal adjAmt = new BigDecimal(sc.nextLine());",
+            "        BigDecimal feeAmt = new BigDecimal(sc.nextLine());",
+            "        BigDecimal midBal = startBal.add(adjAmt).abs();",
+            "        BigDecimal endBal = midBal.subtract(feeAmt);",
+            "        System.out.println(endBal.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 9,
+              "endLine": 9
+            },
+            {
+              "id": "J2",
+              "startLine": 10,
+              "endLine": 10
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Implements the calculation using BigDecimal: reproduces unsigned storage assignment into MID-BAL PIC 9(5) via .abs() in J1 and signed subtraction into END-BAL PIC S9(6) via .subtract(feeAmt) in J2.",
+          "testPredictions": [
+            {
+              "testId": "F006-T1",
+              "expectedJavaValue": "1450",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T2",
+              "expectedJavaValue": "1600",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T3",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T4",
+              "expectedJavaValue": "85000",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T5",
+              "expectedJavaValue": "-100",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T6",
+              "expectedJavaValue": "-50",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F006-V3",
+          "javaLines": [
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        int startBal = Integer.parseInt(sc.nextLine());",
+            "        int adjAmt = Integer.parseInt(sc.nextLine());",
+            "        int feeAmt = Integer.parseInt(sc.nextLine());",
+            "        int midBal = startBal + adjAmt;",
+            "        int endBal = midBal - feeAmt;",
+            "        System.out.println(endBal);",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 8,
+              "endLine": 8
+            },
+            {
+              "id": "J2",
+              "startLine": 9,
+              "endLine": 9
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "NUMERIC_STORAGE_AND_SIGN",
+          "defectCobolSegmentIds": ["C1"],
+          "defectJavaSegmentIds": ["J1"],
+          "labelRationale": "Segment J1 aligns with C1 using int arithmetic but keeps midBal signed instead of stripping the sign as unsigned MID-BAL PIC 9(5) does in COBOL. When startBal + adjAmt is negative (T5: 500 + -800 = -300 vs 300; T6: 100 + -250 = -150 vs 150), J1 propagates a negative intermediate balance.",
+          "testPredictions": [
+            {
+              "testId": "F006-T1",
+              "expectedJavaValue": "1450",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T2",
+              "expectedJavaValue": "1600",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T3",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T4",
+              "expectedJavaValue": "85000",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T5",
+              "expectedJavaValue": "-700",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F006-T6",
+              "expectedJavaValue": "-350",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F006-V4",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal startBal = new BigDecimal(sc.nextLine());",
+            "        BigDecimal adjAmt = new BigDecimal(sc.nextLine());",
+            "        BigDecimal feeAmt = new BigDecimal(sc.nextLine());",
+            "        BigDecimal midBal = startBal.add(adjAmt).abs();",
+            "        BigDecimal endBal = midBal.subtract(feeAmt).abs();",
+            "        System.out.println(endBal.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 9,
+              "endLine": 9
+            },
+            {
+              "id": "J2",
+              "startLine": 10,
+              "endLine": 10
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "NUMERIC_STORAGE_AND_SIGN",
+          "defectCobolSegmentIds": ["C2"],
+          "defectJavaSegmentIds": ["J2"],
+          "labelRationale": "Segment J2 aligns with C2 using BigDecimal but applies .abs() to endBal, treating END-BAL as unsigned even though COBOL declares END-BAL PIC S9(6) as signed. In T5 (300 - 400 = -100) and T6 (150 - 200 = -50), J2 outputs positive 100 and 50 instead of -100 and -50.",
+          "testPredictions": [
+            {
+              "testId": "F006-T1",
+              "expectedJavaValue": "1450",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T2",
+              "expectedJavaValue": "1600",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T3",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T4",
+              "expectedJavaValue": "85000",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F006-T5",
+              "expectedJavaValue": "100",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F006-T6",
+              "expectedJavaValue": "50",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        }
+      ]
+    }
+  ]
+}

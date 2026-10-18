@@ -1,0 +1,37 @@
+{
+  "status": "PASSED",
+  "checks": "Focused tests and both final-test reuse/retraining refusal guards",
+  "records": [
+    {
+      "argv": [
+        "ml-engine/.venv/bin/python",
+        "-m",
+        "pytest",
+        "ml-engine/tests/test_defect_detection.py",
+        "-q"
+      ],
+      "exitCode": 0,
+      "stdout": ".........                                                                [100%]\n9 passed in 0.17s\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "ml-engine/.venv/bin/python",
+        "ml-engine/scripts/train_defect_model.py",
+        "--evaluate-frozen-test"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/scripts/train_defect_model.py\", line 179, in <module>\n    evaluate_frozen_test() if args.evaluate_frozen_test else train()\n    ~~~~~~~~~~~~~~~~~~~~^^\n  File \"/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/scripts/train_defect_model.py\", line 161, in evaluate_frozen_test\n    if marker.exists():raise ValueError(\"Final test has already been assessed; repeated evaluation is refused\")\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Final test has already been assessed; repeated evaluation is refused\n"
+    },
+    {
+      "argv": [
+        "ml-engine/.venv/bin/python",
+        "ml-engine/scripts/train_defect_model.py"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/scripts/train_defect_model.py\", line 179, in <module>\n    evaluate_frozen_test() if args.evaluate_frozen_test else train()\n                                                             ~~~~~^^\n  File \"/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/scripts/train_defect_model.py\", line 112, in train\n    raise ValueError(\"Final test was already assessed. Use a new version and disclose test reuse; cannot retrain this version.\")\nValueError: Final test was already assessed. Use a new version and disclose test reuse; cannot retrain this version.\n"
+    }
+  ]
+}

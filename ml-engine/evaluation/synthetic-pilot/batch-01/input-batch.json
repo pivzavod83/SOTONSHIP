@@ -1,0 +1,1047 @@
+{
+  "batchNumber": 1,
+  "datasetKind": "SYNTHETIC_AI_GENERATED",
+  "compilerProfile": {
+    "cobolCompiler": "GnuCOBOL 3.2",
+    "cobolSourceFormat": "FREE",
+    "javaVersion": "Java 21"
+  },
+  "families": [
+    {
+      "familyId": "F001",
+      "split": "train",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "algorithmDescription": "Calculates an invoice total from a subtotal, discount percentage, and sales tax percentage. The discount amount is stored in PIC 9(5)V99 without ROUNDED (truncating fractional cents toward zero), subtracted from the subtotal to yield the net amount, and taxed using COMPUTE TAX-AMT ROUNDED (half-up to 2 decimal places) before adding net and tax.",
+      "contract": {
+        "inputFields": [
+          {
+            "name": "SUBTOTAL",
+            "cobolPicture": "PIC 9(5)V99",
+            "description": "Invoice subtotal before discount and tax"
+          },
+          {
+            "name": "DISC-PCT",
+            "cobolPicture": "PIC 99V99",
+            "description": "Discount percentage (e.g., 10.00 means 10%)"
+          },
+          {
+            "name": "TAX-PCT",
+            "cobolPicture": "PIC 99V99",
+            "description": "Sales tax percentage applied to net amount (e.g., 8.25 means 8.25%)"
+          }
+        ],
+        "stdinFormat": "Three newline-separated decimal strings representing SUBTOTAL, DISC-PCT, and TAX-PCT.",
+        "validInputDomain": "SUBTOTAL in [0.00, 99999.99] with at most 2 decimal places; DISC-PCT in [0.00, 99.99] with at most 2 decimal places; TAX-PCT in [0.00, 99.99] with at most 2 decimal places.",
+        "outputMeaning": "Single scalar decimal representing FINAL-TOTAL at scale 2.",
+        "outputNormalization": "Trim surrounding whitespace, strip optional leading '+' sign and leading integer zeros (preserving '0' before the decimal point), and format as an exact decimal string with 2 fractional digits (0.00).",
+        "semanticAssumptions": [
+          "GnuCOBOL 3.2 COMPUTE without ROUNDED into PIC 9(5)V99 truncates digits beyond 2 decimal places toward zero.",
+          "GnuCOBOL 3.2 default ROUNDED mode rounds half-way values away from zero (equivalent to RoundingMode.HALF_UP for non-negative values)."
+        ]
+      },
+      "cobolLines": [
+        ">>SOURCE FORMAT FREE",
+        "IDENTIFICATION DIVISION.",
+        "PROGRAM-ID. F001.",
+        "DATA DIVISION.",
+        "WORKING-STORAGE SECTION.",
+        "01 IN-S1 PIC X(20).",
+        "01 IN-S2 PIC X(20).",
+        "01 IN-S3 PIC X(20).",
+        "01 SUBTOTAL PIC 9(5)V99.",
+        "01 DISC-PCT PIC 99V99.",
+        "01 TAX-PCT PIC 99V99.",
+        "01 DISC-AMT PIC 9(5)V99.",
+        "01 NET-AMT PIC 9(5)V99.",
+        "01 TAX-AMT PIC 9(5)V99.",
+        "01 FINAL-TOTAL PIC 9(6)V99.",
+        "01 OUT-VAL PIC 9(6).99.",
+        "PROCEDURE DIVISION.",
+        "    ACCEPT IN-S1",
+        "    ACCEPT IN-S2",
+        "    ACCEPT IN-S3",
+        "    COMPUTE SUBTOTAL = FUNCTION NUMVAL(IN-S1)",
+        "    COMPUTE DISC-PCT = FUNCTION NUMVAL(IN-S2)",
+        "    COMPUTE TAX-PCT = FUNCTION NUMVAL(IN-S3)",
+        "    COMPUTE DISC-AMT = (SUBTOTAL * DISC-PCT) / 100",
+        "    COMPUTE NET-AMT = SUBTOTAL - DISC-AMT",
+        "    COMPUTE TAX-AMT ROUNDED = (NET-AMT * TAX-PCT) / 100",
+        "    COMPUTE FINAL-TOTAL = NET-AMT + TAX-AMT",
+        "    MOVE FINAL-TOTAL TO OUT-VAL",
+        "    DISPLAY OUT-VAL",
+        "    STOP RUN."
+      ],
+      "cobolSegments": [
+        {
+          "id": "C1",
+          "startLine": 24,
+          "endLine": 24
+        },
+        {
+          "id": "C2",
+          "startLine": 25,
+          "endLine": 25
+        },
+        {
+          "id": "C3",
+          "startLine": 26,
+          "endLine": 26
+        },
+        {
+          "id": "C4",
+          "startLine": 27,
+          "endLine": 27
+        }
+      ],
+      "tests": [
+        {
+          "testId": "F001-T1",
+          "stdin": "200.00\n10.00\n5.00\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "189.00"
+        },
+        {
+          "testId": "F001-T2",
+          "stdin": "150.00\n20.00\n8.00\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "129.60"
+        },
+        {
+          "testId": "F001-T3",
+          "stdin": "0.00\n0.00\n0.00\n",
+          "caseKind": "boundary",
+          "expectedReferenceValue": "0.00"
+        },
+        {
+          "testId": "F001-T4",
+          "stdin": "99999.99\n10.00\n10.00\n",
+          "caseKind": "boundary",
+          "expectedReferenceValue": "99000.00"
+        },
+        {
+          "testId": "F001-T5",
+          "stdin": "19.99\n10.00\n8.25\n",
+          "caseKind": "defect_witness",
+          "expectedReferenceValue": "19.49"
+        },
+        {
+          "testId": "F001-T6",
+          "stdin": "45.50\n5.00\n6.50\n",
+          "caseKind": "defect_witness",
+          "expectedReferenceValue": "46.04"
+        }
+      ],
+      "variants": [
+        {
+          "variantId": "F001-V1",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class F001V1 {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal subtotal = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal discPct = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal taxPct = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal hundred = new BigDecimal(\"100\");",
+            "        BigDecimal discAmt = subtotal.multiply(discPct).divide(hundred, 2, RoundingMode.DOWN);",
+            "        BigDecimal netAmt = subtotal.subtract(discAmt);",
+            "        BigDecimal taxAmt = netAmt.multiply(taxPct).divide(hundred, 2, RoundingMode.HALF_UP);",
+            "        BigDecimal finalTotal = netAmt.add(taxAmt);",
+            "        System.out.println(finalTotal.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J2",
+              "startLine": 12,
+              "endLine": 12
+            },
+            {
+              "id": "J3",
+              "startLine": 13,
+              "endLine": 13
+            },
+            {
+              "id": "J4",
+              "startLine": 14,
+              "endLine": 14
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            },
+            {
+              "cobolSegmentIds": ["C4"],
+              "javaSegmentIds": ["J4"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Preserves COBOL semantics by truncating the discount calculation at scale 2 using RoundingMode.DOWN (matching unrounded PIC 9(5)V99 assignment in C1) and rounding the tax calculation at scale 2 using RoundingMode.HALF_UP (matching COMPUTE ROUNDED in C3).",
+          "testPredictions": [
+            {
+              "testId": "F001-T1",
+              "expectedJavaValue": "189.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T2",
+              "expectedJavaValue": "129.60",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T4",
+              "expectedJavaValue": "99000.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T5",
+              "expectedJavaValue": "19.49",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T6",
+              "expectedJavaValue": "46.04",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F001-V2",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class F001V2 {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long subCents = new BigDecimal(sc.nextLine().trim()).movePointRight(2).longValue();",
+            "        long discBp = new BigDecimal(sc.nextLine().trim()).movePointRight(2).longValue();",
+            "        long taxBp = new BigDecimal(sc.nextLine().trim()).movePointRight(2).longValue();",
+            "        long discCents = (subCents * discBp) / 10000L;",
+            "        long netCents = subCents - discCents;",
+            "        long taxCents = (netCents * taxBp + 5000L) / 10000L;",
+            "        long finalCents = netCents + taxCents;",
+            "        System.out.println(BigDecimal.valueOf(finalCents, 2).toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 9,
+              "endLine": 9
+            },
+            {
+              "id": "J2",
+              "startLine": 10,
+              "endLine": 10
+            },
+            {
+              "id": "J3",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J4",
+              "startLine": 12,
+              "endLine": 12
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            },
+            {
+              "cobolSegmentIds": ["C4"],
+              "javaSegmentIds": ["J4"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Refactors the calculation into exact scaled 64-bit integer arithmetic (cents and basis points). Integer division by 10000L in J1 truncates fractional cents identically to C1, and adding 5000L before dividing by 10000L in J3 implements exact half-up rounding identically to C3 over the non-negative input domain.",
+          "testPredictions": [
+            {
+              "testId": "F001-T1",
+              "expectedJavaValue": "189.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T2",
+              "expectedJavaValue": "129.60",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T4",
+              "expectedJavaValue": "99000.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T5",
+              "expectedJavaValue": "19.49",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T6",
+              "expectedJavaValue": "46.04",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F001-V3",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class F001V3 {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal subtotal = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal discPct = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal taxPct = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal hundred = new BigDecimal(\"100\");",
+            "        BigDecimal discAmt = subtotal.multiply(discPct).divide(hundred, 2, RoundingMode.HALF_UP);",
+            "        BigDecimal netAmt = subtotal.subtract(discAmt);",
+            "        BigDecimal taxAmt = netAmt.multiply(taxPct).divide(hundred, 2, RoundingMode.HALF_UP);",
+            "        BigDecimal finalTotal = netAmt.add(taxAmt);",
+            "        System.out.println(finalTotal.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J2",
+              "startLine": 12,
+              "endLine": 12
+            },
+            {
+              "id": "J3",
+              "startLine": 13,
+              "endLine": 13
+            },
+            {
+              "id": "J4",
+              "startLine": 14,
+              "endLine": 14
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            },
+            {
+              "cobolSegmentIds": ["C4"],
+              "javaSegmentIds": ["J4"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "DECIMAL_ROUNDING_AND_SCALE",
+          "defectCobolSegmentIds": ["C1"],
+          "defectJavaSegmentIds": ["J1"],
+          "labelRationale": "Segment J1 aligns with C1 but uses RoundingMode.HALF_UP instead of truncating toward zero (RoundingMode.DOWN). Because C1 omits the ROUNDED phrase on COMPUTE DISC-AMT, COBOL truncates fractional cents (e.g., 9999.999 -> 9999.99 in T4, 1.999 -> 1.99 in T5, and 2.275 -> 2.27 in T6), whereas J1 rounds them up, reducing netAmt and altering finalTotal.",
+          "testPredictions": [
+            {
+              "testId": "F001-T1",
+              "expectedJavaValue": "189.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T2",
+              "expectedJavaValue": "129.60",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T4",
+              "expectedJavaValue": "98999.99",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F001-T5",
+              "expectedJavaValue": "19.47",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F001-T6",
+              "expectedJavaValue": "46.03",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F001-V4",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class F001V4 {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal subtotal = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal discPct = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal taxPct = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal hundred = new BigDecimal(\"100\");",
+            "        BigDecimal discAmt = subtotal.multiply(discPct).divide(hundred, 2, RoundingMode.DOWN);",
+            "        BigDecimal netAmt = subtotal.subtract(discAmt);",
+            "        BigDecimal taxAmt = netAmt.multiply(taxPct).divide(hundred, 2, RoundingMode.DOWN);",
+            "        BigDecimal finalTotal = netAmt.add(taxAmt);",
+            "        System.out.println(finalTotal.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J2",
+              "startLine": 12,
+              "endLine": 12
+            },
+            {
+              "id": "J3",
+              "startLine": 13,
+              "endLine": 13
+            },
+            {
+              "id": "J4",
+              "startLine": 14,
+              "endLine": 14
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            },
+            {
+              "cobolSegmentIds": ["C4"],
+              "javaSegmentIds": ["J4"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "DECIMAL_ROUNDING_AND_SCALE",
+          "defectCobolSegmentIds": ["C3"],
+          "defectJavaSegmentIds": ["J3"],
+          "labelRationale": "Segment J3 aligns with C3 but uses RoundingMode.DOWN instead of RoundingMode.HALF_UP, failing to preserve the ROUNDED phrase on COMPUTE TAX-AMT ROUNDED. In T5 (tax 1.485) and T6 (tax 2.80995), COBOL rounds taxAmt up by 0.01 whereas J3 truncates it.",
+          "testPredictions": [
+            {
+              "testId": "F001-T1",
+              "expectedJavaValue": "189.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T2",
+              "expectedJavaValue": "129.60",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T4",
+              "expectedJavaValue": "99000.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F001-T5",
+              "expectedJavaValue": "19.48",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F001-T6",
+              "expectedJavaValue": "46.03",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        }
+      ]
+    },
+    {
+      "familyId": "F002",
+      "split": "train",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "algorithmDescription": "Computes a pro-rata subscription charge from an annual fee, days used, and a promotional credit. The annual fee is divided by 365 into an intermediate 4-decimal field (PIC 9(3)V9(4)) with ROUNDED, multiplied by days used into a 2-decimal gross charge field (PIC 9(5)V99) with ROUNDED, and reduced by the credit amount with a floor at 0.00.",
+      "contract": {
+        "inputFields": [
+          {
+            "name": "ANNUAL-FEE",
+            "cobolPicture": "PIC 9(5)V99",
+            "description": "Annual subscription fee in dollars and cents"
+          },
+          {
+            "name": "DAYS-USED",
+            "cobolPicture": "PIC 9(3)",
+            "description": "Number of billable days in the 365-day year"
+          },
+          {
+            "name": "CREDIT-AMT",
+            "cobolPicture": "PIC 9(4)V99",
+            "description": "Promotional credit subtracted from gross charge, floored at zero"
+          }
+        ],
+        "stdinFormat": "Three newline-separated strings: ANNUAL-FEE (decimal), DAYS-USED (integer), and CREDIT-AMT (decimal).",
+        "validInputDomain": "ANNUAL-FEE in [0.00, 99999.99] with at most 2 decimal places; DAYS-USED integer in [0, 365]; CREDIT-AMT in [0.00, 9999.99] with at most 2 decimal places.",
+        "outputMeaning": "Single scalar decimal representing FINAL-CHG at scale 2.",
+        "outputNormalization": "Trim surrounding whitespace, strip optional leading '+' sign and leading integer zeros (preserving '0' before the decimal point), and format as an exact decimal string with 2 fractional digits (0.00).",
+        "semanticAssumptions": [
+          "DAILY-RATE has explicit storage scale 4 (PIC 9(3)V9(4)) and is rounded half-up via ROUNDED before being multiplied by DAYS-USED.",
+          "GROSS-CHG has explicit storage scale 2 (PIC 9(5)V99) and is rounded half-up via ROUNDED."
+        ]
+      },
+      "cobolLines": [
+        ">>SOURCE FORMAT FREE",
+        "IDENTIFICATION DIVISION.",
+        "PROGRAM-ID. F002.",
+        "DATA DIVISION.",
+        "WORKING-STORAGE SECTION.",
+        "01 IN-S1 PIC X(20).",
+        "01 IN-S2 PIC X(20).",
+        "01 IN-S3 PIC X(20).",
+        "01 ANNUAL-FEE PIC 9(5)V99.",
+        "01 DAYS-USED PIC 9(3).",
+        "01 CREDIT-AMT PIC 9(4)V99.",
+        "01 DAILY-RATE PIC 9(3)V9(4).",
+        "01 GROSS-CHG PIC 9(5)V99.",
+        "01 FINAL-CHG PIC 9(5)V99.",
+        "01 OUT-VAL PIC 9(5).99.",
+        "PROCEDURE DIVISION.",
+        "    ACCEPT IN-S1",
+        "    ACCEPT IN-S2",
+        "    ACCEPT IN-S3",
+        "    COMPUTE ANNUAL-FEE = FUNCTION NUMVAL(IN-S1)",
+        "    COMPUTE DAYS-USED = FUNCTION NUMVAL(IN-S2)",
+        "    COMPUTE CREDIT-AMT = FUNCTION NUMVAL(IN-S3)",
+        "    COMPUTE DAILY-RATE ROUNDED = ANNUAL-FEE / 365",
+        "    COMPUTE GROSS-CHG ROUNDED = DAILY-RATE * DAYS-USED",
+        "    IF GROSS-CHG > CREDIT-AMT",
+        "        COMPUTE FINAL-CHG = GROSS-CHG - CREDIT-AMT",
+        "    ELSE",
+        "        MOVE 0 TO FINAL-CHG",
+        "    END-IF",
+        "    MOVE FINAL-CHG TO OUT-VAL",
+        "    DISPLAY OUT-VAL",
+        "    STOP RUN."
+      ],
+      "cobolSegments": [
+        {
+          "id": "C1",
+          "startLine": 23,
+          "endLine": 23
+        },
+        {
+          "id": "C2",
+          "startLine": 24,
+          "endLine": 24
+        },
+        {
+          "id": "C3",
+          "startLine": 25,
+          "endLine": 29
+        }
+      ],
+      "tests": [
+        {
+          "testId": "F002-T1",
+          "stdin": "365.00\n30\n5.00\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "25.00"
+        },
+        {
+          "testId": "F002-T2",
+          "stdin": "365.00\n10\n15.00\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "0.00"
+        },
+        {
+          "testId": "F002-T3",
+          "stdin": "1000.00\n0\n0.00\n",
+          "caseKind": "boundary",
+          "expectedReferenceValue": "0.00"
+        },
+        {
+          "testId": "F002-T4",
+          "stdin": "100.00\n365\n0.00\n",
+          "caseKind": "boundary",
+          "expectedReferenceValue": "100.01"
+        },
+        {
+          "testId": "F002-T5",
+          "stdin": "200.00\n15\n1.00\n",
+          "caseKind": "defect_witness",
+          "expectedReferenceValue": "7.22"
+        },
+        {
+          "testId": "F002-T6",
+          "stdin": "500.00\n150\n5.00\n",
+          "caseKind": "defect_witness",
+          "expectedReferenceValue": "200.49"
+        }
+      ],
+      "variants": [
+        {
+          "variantId": "F002-V1",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class F002V1 {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal annualFee = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        int daysUsed = Integer.parseInt(sc.nextLine().trim());",
+            "        BigDecimal creditAmt = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal dailyRate = annualFee.divide(new BigDecimal(\"365\"), 4, RoundingMode.HALF_UP);",
+            "        BigDecimal grossChg = dailyRate.multiply(BigDecimal.valueOf(daysUsed)).setScale(2, RoundingMode.HALF_UP);",
+            "        BigDecimal finalChg = grossChg.compareTo(creditAmt) > 0 ? grossChg.subtract(creditAmt) : new BigDecimal(\"0.00\");",
+            "        System.out.println(finalChg.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 10,
+              "endLine": 10
+            },
+            {
+              "id": "J2",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J3",
+              "startLine": 12,
+              "endLine": 12
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Preserves the 4-decimal HALF_UP intermediate rounding of DAILY-RATE in J1, the 2-decimal HALF_UP rounding of GROSS-CHG in J2, and the zero-floored credit subtraction in J3.",
+          "testPredictions": [
+            {
+              "testId": "F002-T1",
+              "expectedJavaValue": "25.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T2",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T4",
+              "expectedJavaValue": "100.01",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T5",
+              "expectedJavaValue": "7.22",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T6",
+              "expectedJavaValue": "200.49",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F002-V2",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class F002V2 {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long feeCents = new BigDecimal(sc.nextLine().trim()).movePointRight(2).longValue();",
+            "        long daysUsed = Long.parseLong(sc.nextLine().trim());",
+            "        long creditCents = new BigDecimal(sc.nextLine().trim()).movePointRight(2).longValue();",
+            "        long dailyUnits = (feeCents * 100L + 182L) / 365L;",
+            "        long grossCents = (dailyUnits * daysUsed + 50L) / 100L;",
+            "        long finalCents = Math.max(0L, grossCents - creditCents);",
+            "        System.out.println(BigDecimal.valueOf(finalCents, 2).toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 9,
+              "endLine": 9
+            },
+            {
+              "id": "J2",
+              "startLine": 10,
+              "endLine": 10
+            },
+            {
+              "id": "J3",
+              "startLine": 11,
+              "endLine": 11
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Implements an equivalent fixed-point integer calculation using ten-thousandths of a dollar (dailyUnits) and cents. Because 365 is odd, adding 182 before integer division by 365 in J1 rounds half-up at scale 4 identically to C1; adding 50 before dividing by 100 in J2 rounds half-up to scale 2 identically to C2; Math.max in J3 preserves C3.",
+          "testPredictions": [
+            {
+              "testId": "F002-T1",
+              "expectedJavaValue": "25.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T2",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T4",
+              "expectedJavaValue": "100.01",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T5",
+              "expectedJavaValue": "7.22",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T6",
+              "expectedJavaValue": "200.49",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F002-V3",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class F002V3 {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal annualFee = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        int daysUsed = Integer.parseInt(sc.nextLine().trim());",
+            "        BigDecimal creditAmt = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal dailyRate = annualFee.divide(new BigDecimal(\"365\"), 2, RoundingMode.HALF_UP);",
+            "        BigDecimal grossChg = dailyRate.multiply(BigDecimal.valueOf(daysUsed)).setScale(2, RoundingMode.HALF_UP);",
+            "        BigDecimal finalChg = grossChg.compareTo(creditAmt) > 0 ? grossChg.subtract(creditAmt) : new BigDecimal(\"0.00\");",
+            "        System.out.println(finalChg.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 10,
+              "endLine": 10
+            },
+            {
+              "id": "J2",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J3",
+              "startLine": 12,
+              "endLine": 12
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "DECIMAL_ROUNDING_AND_SCALE",
+          "defectCobolSegmentIds": ["C1"],
+          "defectJavaSegmentIds": ["J1"],
+          "labelRationale": "Segment J1 aligns with C1 but rounds dailyRate to scale 2 instead of the COBOL field's scale 4 (PIC 9(3)V9(4)). This premature rounding distorts the subsequent multiplication by daysUsed in T4 (0.27 vs 0.2740), T5 (0.55 vs 0.5479), and T6 (1.37 vs 1.3699).",
+          "testPredictions": [
+            {
+              "testId": "F002-T1",
+              "expectedJavaValue": "25.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T2",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T4",
+              "expectedJavaValue": "98.55",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F002-T5",
+              "expectedJavaValue": "7.25",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F002-T6",
+              "expectedJavaValue": "200.50",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F002-V4",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class F002V4 {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal annualFee = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        int daysUsed = Integer.parseInt(sc.nextLine().trim());",
+            "        BigDecimal creditAmt = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal dailyRate = annualFee.divide(new BigDecimal(\"365\"), 4, RoundingMode.HALF_UP);",
+            "        BigDecimal grossChg = dailyRate.multiply(BigDecimal.valueOf(daysUsed)).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal finalChg = grossChg.compareTo(creditAmt) > 0 ? grossChg.subtract(creditAmt) : new BigDecimal(\"0.00\");",
+            "        System.out.println(finalChg.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 10,
+              "endLine": 10
+            },
+            {
+              "id": "J2",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J3",
+              "startLine": 12,
+              "endLine": 12
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "DECIMAL_ROUNDING_AND_SCALE",
+          "defectCobolSegmentIds": ["C2"],
+          "defectJavaSegmentIds": ["J2"],
+          "labelRationale": "Segment J2 aligns with C2 but truncates grossChg using RoundingMode.DOWN instead of honoring COMPUTE GROSS-CHG ROUNDED (RoundingMode.HALF_UP). In T5 (8.2185 -> 8.21 vs 8.22) and T6 (205.4850 -> 205.48 vs 205.49), truncation understates the result by 0.01.",
+          "testPredictions": [
+            {
+              "testId": "F002-T1",
+              "expectedJavaValue": "25.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T2",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T4",
+              "expectedJavaValue": "100.01",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F002-T5",
+              "expectedJavaValue": "7.21",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F002-T6",
+              "expectedJavaValue": "200.48",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        }
+      ]
+    }
+  ]
+}

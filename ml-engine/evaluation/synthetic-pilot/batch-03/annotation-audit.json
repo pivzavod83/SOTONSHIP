@@ -1,0 +1,64 @@
+{
+  "inputSha256": "87e181c46ba306d75373f36f37698a3de33b7dee836b8067839b922cd17ff502",
+  "status": "RUNTIME_CHECKS_PASS_SPLIT_GROUP_REVIEW_REQUIRED",
+  "counts": {
+    "submittedFamilies": 2,
+    "pairs": 8,
+    "proposedEquivalent": 4,
+    "proposedDefective": 4,
+    "validSourceSpans": 31,
+    "validAlignmentRecords": 22,
+    "oneToOneRecords": 17,
+    "manyToOneRecords": 2,
+    "oneToManyRecords": 3,
+    "actualProgramExecutions": 80,
+    "referencePredictionErrors": 0,
+    "javaPredictionErrors": 0,
+    "suppliedMismatchFlagErrors": 0
+  },
+  "proposedSplits": {
+    "F005": "test",
+    "F006": "train"
+  },
+  "evidenceConsistency": {
+    "attachmentBytesMatchArchive": true,
+    "verifiedArtifactHashes": 3,
+    "verifiedSourceHashes": 10,
+    "verifiedRunRecords": 80,
+    "verifiedJavaReferenceComparisons": 64,
+    "successfulCompileCommands": 10,
+    "successfulVersionCommands": 3,
+    "allRunStdinExitCodesAndNormalizedStdoutMatch": true,
+    "issuesFound": 0
+  },
+  "improvements": [
+    "Canonical ASCII numeric input grammar and 20-character line limit are declared.",
+    "Both integer and BigDecimal styles have two proposed correct and two defective examples in this batch.",
+    "Mappings include genuine combined, split and reordered operations.",
+    "Neutral Program class names are retained."
+  ],
+  "issues": [
+    {
+      "id": "CROSS_SPLIT_TEMPLATE_SIMILARITY",
+      "familyIds": ["F001", "F005"],
+      "reason": "F001 training and F005 proposed test use closely related truncate/combine/round/combine dependency structures, corresponding Java implementations and identical defect positions. Their first combine operator differs, so this is a structural similarity concern rather than an assertion that programs are identical.",
+      "requiredAction": "Replace F005 with a materially different held-out algorithm, or explicitly group F001/F005 in the same clone group and split under a revised complete plan. Preserve this original upload and issue a versioned correction.",
+      "testGeneralizationClaimAllowed": false
+    },
+    {
+      "id": "MISSING_DATASET_PLAN",
+      "reason": "The attachment still lacks the complete 20-family algorithm/category/split manifest and clone-group inventory."
+    },
+    {
+      "id": "RESIDUAL_CORPUS_STYLE_SHORTCUT",
+      "reason": "Across F001-F006, the rule integer=correct and BigDecimal=defective agrees with 16 of 24 proposed labels. This is a descriptive audit statistic, not trained-model accuracy. Continue balancing styles in subsequent batches."
+    }
+  ],
+  "alignmentGoldStatus": "AI_PROPOSED_STRUCTURALLY_CHECKED_ONLY",
+  "positiveEquivalenceAssessment": "MATCHES_EXECUTED_INPUTS_ONLY",
+  "negativeEquivalenceAssessment": "DEFECT_CONFIRMED_BY_RUNTIME_WITNESS",
+  "trainingPerformed": false,
+  "originalInputEdited": false,
+  "testDataUse": "F005 source and supplied labels inspected for dataset quality only; no model tuning or added test-family probes. Not an unseen model evaluation.",
+  "original143PairCorpusAnd23SampleHoldoutUsed": false
+}

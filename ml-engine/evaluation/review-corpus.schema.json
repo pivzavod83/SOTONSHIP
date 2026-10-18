@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sotonship:review-corpus.schema.v1",
+  "title": "SOTONSHIP Human-Reviewed Evaluation Corpus",
+  "type": "object",
+  "required": ["schemaVersion", "datasetId", "cases"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "datasetId": {"type": "string", "minLength": 1},
+    "provenance": {"type": "object"},
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["caseId", "groupId", "split", "dialectProfile", "patternTags", "request", "reviewVotes", "adjudication"],
+        "properties": {
+          "caseId": {"type": "string", "minLength": 1},
+          "groupId": {"type": "string", "minLength": 1, "description": "Application/system group. All cases from a group must use one split only."},
+          "split": {"enum": ["train", "calibration", "test"]},
+          "dialectProfile": {"type": "string", "minLength": 1},
+          "patternTags": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "request": {
+            "type": "object",
+            "required": ["moduleName", "category", "cobolSource", "javaSource"],
+            "properties": {
+              "moduleName": {"type": "string"},
+              "category": {"type": "string"},
+              "cobolSource": {"$ref": "#/$defs/sourceFile"},
+              "javaSource": {"$ref": "#/$defs/sourceFile"},
+              "proofInputs": {
+                "type": "object", "required": ["cobolDialectProfile", "cobolSourceFormat"],
+                "properties": {
+                  "cobolDialectProfile": {"const": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"},
+                  "cobolSourceFormat": {"enum": ["FREE", "FIXED"]}
+                }
+              },
+              "referenceFxRates": {"type": "array", "items": {"type": "object"}}
+            }
+          },
+          "reviewVotes": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/reviewVote"}
+          },
+          "adjudication": {"$ref": "#/$defs/adjudication"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sourceFile": {
+      "type": "object", "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "mapping": {
+      "type": "object", "required": ["cobolNodeId", "javaNodeId"],
+      "properties": {
+        "cobolNodeId": {"type": "string", "pattern": "^cobol:[0-9]+$"},
+        "javaNodeId": {"type": "string", "pattern": "^java:[0-9]+$"}
+      }
+    },
+    "reviewVote": {
+      "type": "object", "required": ["reviewerId", "qualification", "hasDefect", "mappings"],
+      "properties": {
+        "reviewerId": {"type": "string", "minLength": 1},
+        "qualification": {"type": "string", "minLength": 1},
+        "hasDefect": {"type": "boolean"},
+        "mappings": {"type": "array", "items": {"$ref": "#/$defs/mapping"}}
+      }
+    },
+    "adjudication": {
+      "type": "object", "required": ["status", "adjudicatorId", "rationale", "hasDefect", "mappings"],
+      "properties": {
+        "status": {"enum": ["PENDING", "ADJUDICATED"]},
+        "adjudicatorId": {"type": "string"},
+        "rationale": {"type": "string"},
+        "hasDefect": {"type": "boolean"},
+        "mappings": {"type": "array", "items": {"$ref": "#/$defs/mapping"}}
+      }
+    }
+  }
+}

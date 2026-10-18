@@ -1,0 +1,14 @@
+{
+  "dataset": "COBOL-JavaTrans",
+  "records": 143,
+  "repository": "https://github.com/COBOL-Coder/COBOL-Coder",
+  "commit": "2b14b7bf7e55556205654c6f7657fa60e36251fa",
+  "path": "evaluation/data/COBOL-JavaTrans.jsonl",
+  "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/data/COBOL-JavaTrans.jsonl",
+  "sha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+  "collectionDate": "2026-10-18",
+  "repositoryLicense": "Apache-2.0",
+  "underlyingTasks": "HumanEval (MIT); upstream benchmark translations are not independently audited",
+  "rawCache": "evaluation/corpora/cobol-javatrans/",
+  "use": "paired-source contrastive correspondence training and task-grouped evaluation; not equivalence labels"
+}

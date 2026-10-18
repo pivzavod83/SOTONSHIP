@@ -1,0 +1,70 @@
+{
+  "formalProofStatus": "SAT_COUNTEREXAMPLE_FOUND",
+  "bugCategory": "IEEE754_PENNY_DRIFT",
+  "counterexamplesJson": [
+    {
+      "inputAmountGbp": "45.00",
+      "referenceRate": "1.1830",
+      "cobolOutput": "53.24",
+      "javaOutput": "53.23",
+      "pennyDrift": "-0.01",
+      "dataSource": "Bank of England Daily Spot Rate",
+      "collectedDate": "2026-10-17",
+      "observationDate": "2026-10-15",
+      "solverGenerated": true,
+      "witnessStrategy": "Z3 Float64 checked finite candidate",
+      "cobolOutputEur": "53.24",
+      "javaOutputEur": "53.23"
+    }
+  ],
+  "isFailureLimitCase": false,
+  "proofScope": {
+    "supported": true,
+    "bounded": true,
+    "inputUnit": "integer cents",
+    "inputAmountCents": {
+      "min": -999999999,
+      "max": 999999999
+    },
+    "rate": {
+      "currencyPair": "GBP/EUR",
+      "rate": "1.1830",
+      "source": "Bank of England Daily Spot Rate",
+      "collectedDate": "2026-10-17",
+      "observationDate": "2026-10-15"
+    },
+    "proofInputs": {
+      "cobolSourceFormat": "FREE",
+      "amountField": "INPUT-AMOUNT",
+      "rateField": "REFERENCE-RATE",
+      "resultField": "SETTLEMENT-RESULT",
+      "javaAmountParameter": "principal",
+      "javaRateParameter": "quote",
+      "amountMinCents": -999999999,
+      "amountMaxCents": 999999999,
+      "referenceCurrencyPair": "GBP/EUR",
+      "referenceSource": "Bank of England Daily Spot Rate",
+      "referenceCollectedDate": "2026-10-17",
+      "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1"
+    },
+    "semantics": "restricted COBOL/Java scalar arithmetic v1",
+    "outputObservation": "monetary values rounded HALF_UP to integer cents",
+    "sourceSha256": {
+      "cobol": "c9bd04358c7ee83cd2c61530262e6d55ee880ab846a854467491d5138ee5f395",
+      "java": "211340a44236a811b8eaff6ec6d0d3007130cabfd0cd092832ce87699e1e4561"
+    },
+    "limitations": [
+      "One exact fixed reference rate; acyclic scalar arithmetic only.",
+      "PIC overflow discards high-order digits; no ON SIZE ERROR, runtime or I/O semantics.",
+      "UNSAT covers only the explicit finite input domain, never arbitrary whole programs.",
+      "GNN alignments guide inspection and do not authorize a proof."
+    ],
+    "floatingPointSearch": "Exact half-cent candidates up to 200000 cents; each candidate checked by Z3 Float64. Incomplete.",
+    "solver": {
+      "name": "Z3",
+      "version": "4.15.3",
+      "result": "sat",
+      "timeoutMs": 5000
+    }
+  }
+}

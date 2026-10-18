@@ -1,0 +1,948 @@
+{
+  "artifact": "synthetic final batch 5",
+  "datasetVersion": "synthetic-pilot-plan-repair-r3",
+  "batchNumber": 5,
+  "batchRevision": "B05-R1",
+  "datasetKind": "SYNTHETIC_AI_GENERATED",
+  "compilerProfile": {
+    "cobolCompiler": "GnuCOBOL 3.2",
+    "cobolSourceFormat": "FREE",
+    "javaVersion": "Java 21"
+  },
+  "predictionMethod": "Exact integer and decimal specification calculations and static source checks only. These exact COBOL and Java programs have not been compiled or executed. Labels, correspondences, and test predictions are proposed annotations, not equivalence proofs.",
+  "families": [
+    {
+      "familyId": "F009",
+      "familyRevision": "F009-R1",
+      "split": "validation",
+      "focusCategory": "NUMERIC_STORAGE_AND_SIGN",
+      "sourceStatus": "PROPOSED_WITH_SOURCE",
+      "cloneGroup": "CG-F009-SIGNED-MEDIAN-NETWORK",
+      "algorithmDescription": "Select the signed median using the explicit comparator network (a,b), (b,c), (a,b), with signed swap storage; return b.",
+      "contract": {
+        "inputFields": [
+          {
+            "name": "VALUE-A",
+            "cobolPicture": "PIC S9(5)",
+            "description": "First signed integer -99999..99999."
+          },
+          {
+            "name": "VALUE-B",
+            "cobolPicture": "PIC S9(5)",
+            "description": "Second signed integer -99999..99999."
+          },
+          {
+            "name": "VALUE-C",
+            "cobolPicture": "PIC S9(5)",
+            "description": "Third signed integer -99999..99999."
+          }
+        ],
+        "stdinFormat": "Three newline-separated canonical ASCII integers, one per line, at most 20 characters per line. No plus sign, exponent notation, padding, separators, or leading zeroes. Zero is 0 and negative zero is forbidden.",
+        "validInputDomain": "Each of a,b,c is in [-99999,99999]. Duplicate values are permitted. Programs assume valid inputs.",
+        "outputMeaning": "One signed scalar integer equal to the middle numeric value, in [-99999,99999].",
+        "outputNormalization": "Trim surrounding ASCII whitespace and normalize the exact base-ten signed integer to canonical decimal, removing a leading plus sign and redundant leading zeroes while preserving every negative sign on a nonzero value. Never take absolute value during normalization.",
+        "semanticAssumptions": [
+          "VALUE-A, VALUE-B, VALUE-C, SWAP-TEMP, and MEDIAN-VALUE are signed numeric fields. All comparisons are numeric and preserve sign.",
+          "The three comparator blocks implement an explicit fixed network, not a library sort or median operation.",
+          "Replacing > with >= throughout this complete network only permits exchanges of equal values and does not change the median.",
+          "OUT-VAL uses floating minus editing PIC -(5)9, retaining a minus sign on negative values and suppressing leading spaces and zeroes. FUNCTION TRIM emits one canonical signed integer.",
+          "Input conversion, swap operations, and output normalization never take a magnitude in the reference."
+        ],
+        "storageBounds": [
+          {
+            "field": "IN-A, IN-B, IN-C",
+            "picture": "PIC X(20)",
+            "bound": "Each buffer has 20 characters. Valid input text has 1..6 characters; remaining positions are ACCEPT padding."
+          },
+          {
+            "field": "VALUE-A, VALUE-B, VALUE-C",
+            "picture": "PIC S9(5)",
+            "minimum": -99999,
+            "maximum": 99999,
+            "note": "These remain signed input values in a different order after swaps."
+          },
+          {
+            "field": "SWAP-TEMP",
+            "picture": "PIC S9(5)",
+            "minimum": -99999,
+            "maximum": 99999,
+            "note": "Initialized to 0; every subsequent assignment copies a signed input value."
+          },
+          {
+            "field": "MEDIAN-VALUE",
+            "picture": "PIC S9(5)",
+            "minimum": -99999,
+            "maximum": 99999
+          },
+          {
+            "field": "OUT-VAL",
+            "picture": "PIC -(5)9",
+            "bound": "Six edited positions represent signed values -99999..99999. Trimming emits 1..6 characters and preserves the minus sign."
+          }
+        ],
+        "referenceTermination": "Three finite conditional blocks, with no loops or recursion.",
+        "candidateSafetyPolicy": "Per-candidate intermediateBounds and terminationArgument cover every named numeric Java variable, including deliberately defective operations."
+      },
+      "cobolLines": [
+        ">>SOURCE FORMAT FREE",
+        "IDENTIFICATION DIVISION.",
+        "PROGRAM-ID. F009R1.",
+        "DATA DIVISION.",
+        "WORKING-STORAGE SECTION.",
+        "01 IN-A PIC X(20).",
+        "01 IN-B PIC X(20).",
+        "01 IN-C PIC X(20).",
+        "01 VALUE-A PIC S9(5).",
+        "01 VALUE-B PIC S9(5).",
+        "01 VALUE-C PIC S9(5).",
+        "01 SWAP-TEMP PIC S9(5) VALUE 0.",
+        "01 MEDIAN-VALUE PIC S9(5).",
+        "01 OUT-VAL PIC -(5)9.",
+        "PROCEDURE DIVISION.",
+        "    ACCEPT IN-A",
+        "    ACCEPT IN-B",
+        "    ACCEPT IN-C",
+        "    COMPUTE VALUE-A = FUNCTION NUMVAL(IN-A)",
+        "    COMPUTE VALUE-B = FUNCTION NUMVAL(IN-B)",
+        "    COMPUTE VALUE-C = FUNCTION NUMVAL(IN-C)",
+        "    IF VALUE-A > VALUE-B",
+        "        MOVE VALUE-A TO SWAP-TEMP",
+        "        MOVE VALUE-B TO VALUE-A",
+        "        MOVE SWAP-TEMP TO VALUE-B",
+        "    END-IF",
+        "    IF VALUE-B > VALUE-C",
+        "        MOVE VALUE-B TO SWAP-TEMP",
+        "        MOVE VALUE-C TO VALUE-B",
+        "        MOVE SWAP-TEMP TO VALUE-C",
+        "    END-IF",
+        "    IF VALUE-A > VALUE-B",
+        "        MOVE VALUE-A TO SWAP-TEMP",
+        "        MOVE VALUE-B TO VALUE-A",
+        "        MOVE SWAP-TEMP TO VALUE-B",
+        "    END-IF",
+        "    MOVE VALUE-B TO MEDIAN-VALUE",
+        "    MOVE MEDIAN-VALUE TO OUT-VAL",
+        "    DISPLAY FUNCTION TRIM(OUT-VAL)",
+        "    STOP RUN."
+      ],
+      "cobolSegments": [
+        {"id": "C1", "startLine": 22, "endLine": 26},
+        {"id": "C2", "startLine": 27, "endLine": 31},
+        {"id": "C3", "startLine": 32, "endLine": 36},
+        {"id": "C4", "startLine": 37, "endLine": 37}
+      ],
+      "alignmentScope": "One-based inclusive spans. Segments cover the algorithm, including its control delimiters. Input conversion, declarations, and output editing are outside scope. Unmatched segments explicitly record inserted or missing operations; a correspondence does not itself assert equivalence.",
+      "tests": [
+        {
+          "testId": "F009-R1-T1",
+          "stdin": "7\n2\n5\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "5"
+        },
+        {
+          "testId": "F009-R1-T2",
+          "stdin": "-5\n-10\n0\n",
+          "caseKind": "mixed_negative_and_zero_witness",
+          "expectedReferenceValue": "-5"
+        },
+        {
+          "testId": "F009-R1-T3",
+          "stdin": "-7\n-99999\n99999\n",
+          "caseKind": "mixed_sign_magnitude_boundaries_witness",
+          "expectedReferenceValue": "-7"
+        },
+        {
+          "testId": "F009-R1-T4",
+          "stdin": "-3\n-3\n-8\n",
+          "caseKind": "negative_duplicates",
+          "expectedReferenceValue": "-3"
+        },
+        {
+          "testId": "F009-R1-T5",
+          "stdin": "99999\n99999\n-99999\n",
+          "caseKind": "duplicate_upper_boundary",
+          "expectedReferenceValue": "99999"
+        },
+        {
+          "testId": "F009-R1-T6",
+          "stdin": "0\n0\n0\n",
+          "caseKind": "all_zero_duplicates",
+          "expectedReferenceValue": "0"
+        }
+      ],
+      "variants": [
+        {
+          "variantId": "F009-V1",
+          "familyRevision": "F009-R1",
+          "implementationStyle": "INTEGER_LONG",
+          "javaLines": [
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long a = Long.parseLong(sc.nextLine());",
+            "        long b = Long.parseLong(sc.nextLine());",
+            "        long c = Long.parseLong(sc.nextLine());",
+            "        long temp = 0L;",
+            "        if (a > b) {",
+            "            temp = a;",
+            "            a = b;",
+            "            b = temp;",
+            "        }",
+            "        if (b > c) {",
+            "            temp = b;",
+            "            b = c;",
+            "            c = temp;",
+            "        }",
+            "        if (a > b) {",
+            "            temp = a;",
+            "            a = b;",
+            "            b = temp;",
+            "        }",
+            "        long median = b;",
+            "        System.out.println(median);",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {"id": "J1", "startLine": 9, "endLine": 13},
+            {"id": "J2", "startLine": 14, "endLine": 18},
+            {"id": "J3", "startLine": 19, "endLine": 23},
+            {"id": "J4", "startLine": 24, "endLine": 24}
+          ],
+          "alignments": [
+            {"cobolSegmentIds": ["C1"], "javaSegmentIds": ["J1"]},
+            {"cobolSegmentIds": ["C2"], "javaSegmentIds": ["J2"]},
+            {"cobolSegmentIds": ["C3"], "javaSegmentIds": ["J3"]},
+            {"cobolSegmentIds": ["C4"], "javaSegmentIds": ["J4"]}
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectSubtype": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "The signed long temporary preserves every swapped value. The fixed network compares (a,b), (b,c), then (a,b), leaving a<=b<=c and selecting b. Each whole comparator block corresponds directly to its COBOL block.",
+          "intermediateBounds": {
+            "a,b,c,temp,median": "Each remains in [-99999,99999]. temp starts at 0. Only comparisons and assignments are required; the defective absolute-value insertion also stays within this range.",
+            "longSafety": "The domain excludes Long.MIN_VALUE, so even the deliberately inserted Math.abs cannot overflow. No addition or multiplication is performed."
+          },
+          "terminationArgument": "Exactly three conditional comparison-and-swap blocks and one selection are executed. There are no loops or recursion; all valid inputs terminate.",
+          "testPredictions": [
+            {"testId": "F009-R1-T1", "expectedJavaValue": "5", "expectedMismatch": false},
+            {"testId": "F009-R1-T2", "expectedJavaValue": "-5", "expectedMismatch": false},
+            {"testId": "F009-R1-T3", "expectedJavaValue": "-7", "expectedMismatch": false},
+            {"testId": "F009-R1-T4", "expectedJavaValue": "-3", "expectedMismatch": false},
+            {"testId": "F009-R1-T5", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F009-R1-T6", "expectedJavaValue": "0", "expectedMismatch": false}
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F009-V2",
+          "familyRevision": "F009-R1",
+          "implementationStyle": "BIG_DECIMAL",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal a = new BigDecimal(sc.nextLine());",
+            "        BigDecimal b = new BigDecimal(sc.nextLine());",
+            "        BigDecimal c = new BigDecimal(sc.nextLine());",
+            "        BigDecimal temp = BigDecimal.ZERO;",
+            "        if (a.compareTo(b) >= 0) {",
+            "            temp = a;",
+            "            a = b;",
+            "            b = temp;",
+            "        }",
+            "        if (b.compareTo(c) >= 0) {",
+            "            temp = b;",
+            "            b = c;",
+            "            c = temp;",
+            "        }",
+            "        if (a.compareTo(b) >= 0) {",
+            "            temp = a;",
+            "            a = b;",
+            "            b = temp;",
+            "        }",
+            "        BigDecimal median = b;",
+            "        System.out.println(median.toBigIntegerExact().toString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {"id": "J1", "startLine": 10, "endLine": 14},
+            {"id": "J2", "startLine": 15, "endLine": 19},
+            {"id": "J3", "startLine": 20, "endLine": 24},
+            {"id": "J4", "startLine": 25, "endLine": 25}
+          ],
+          "alignments": [
+            {"cobolSegmentIds": ["C1"], "javaSegmentIds": ["J1"]},
+            {"cobolSegmentIds": ["C2"], "javaSegmentIds": ["J2"]},
+            {"cobolSegmentIds": ["C3"], "javaSegmentIds": ["J3"]},
+            {"cobolSegmentIds": ["C4"], "javaSegmentIds": ["J4"]}
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectSubtype": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "The complete signed comparison-and-swap network uses >= rather than >. Swapping equal numeric values preserves the state and median, so this is proposed equivalent, including duplicate inputs. No sort or median library routine is used.",
+          "intermediateBounds": {
+            "a,b,c,temp,median": "Exact scale-zero BigDecimal integers in [-99999,99999]; temp starts at 0.",
+            "comparisonResult": "compareTo is used only to test order or equality; sign is preserved by every assignment.",
+            "decimalSafety": "No division, rounding, or precision-limiting MathContext is used."
+          },
+          "terminationArgument": "Exactly three conditional comparison-and-swap blocks and one selection are executed. There are no loops or recursion; all valid inputs terminate.",
+          "testPredictions": [
+            {"testId": "F009-R1-T1", "expectedJavaValue": "5", "expectedMismatch": false},
+            {"testId": "F009-R1-T2", "expectedJavaValue": "-5", "expectedMismatch": false},
+            {"testId": "F009-R1-T3", "expectedJavaValue": "-7", "expectedMismatch": false},
+            {"testId": "F009-R1-T4", "expectedJavaValue": "-3", "expectedMismatch": false},
+            {"testId": "F009-R1-T5", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F009-R1-T6", "expectedJavaValue": "0", "expectedMismatch": false}
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F009-V3",
+          "familyRevision": "F009-R1",
+          "implementationStyle": "INTEGER_LONG",
+          "javaLines": [
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long a = Long.parseLong(sc.nextLine());",
+            "        long b = Long.parseLong(sc.nextLine());",
+            "        long c = Long.parseLong(sc.nextLine());",
+            "        long temp = 0L;",
+            "        if (a > b) {",
+            "            temp = a;",
+            "            a = b;",
+            "            temp = Math.abs(temp);",
+            "            b = temp;",
+            "        }",
+            "        if (b > c) {",
+            "            temp = b;",
+            "            b = c;",
+            "            c = temp;",
+            "        }",
+            "        if (a > b) {",
+            "            temp = a;",
+            "            a = b;",
+            "            b = temp;",
+            "        }",
+            "        long median = b;",
+            "        System.out.println(median);",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {"id": "J1", "startLine": 9, "endLine": 11},
+            {"id": "J2", "startLine": 12, "endLine": 12},
+            {"id": "J3", "startLine": 13, "endLine": 14},
+            {"id": "J4", "startLine": 15, "endLine": 19},
+            {"id": "J5", "startLine": 20, "endLine": 24},
+            {"id": "J6", "startLine": 25, "endLine": 25}
+          ],
+          "alignments": [
+            {"cobolSegmentIds": ["C1"], "javaSegmentIds": ["J1", "J3"]},
+            {"cobolSegmentIds": ["C2"], "javaSegmentIds": ["J4"]},
+            {"cobolSegmentIds": ["C3"], "javaSegmentIds": ["J5"]},
+            {"cobolSegmentIds": ["C4"], "javaSegmentIds": ["J6"]}
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": ["J2"],
+          "expectedEquivalent": false,
+          "defectCategory": "NUMERIC_SIGN",
+          "defectSubtype": "SWAP_TEMPORARY_SIGN_LOST",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": ["J2"],
+          "labelRationale": "J2 inserts Math.abs on the first swap temporary, losing a negative sign before restoration into b. This is the only semantic mistake. C1 maps to the noncontiguous J1/J3 fragments around the inserted operation; J2 has no reference counterpart.",
+          "intermediateBounds": {
+            "a,b,c,temp,median": "Each remains in [-99999,99999]. temp starts at 0. Only comparisons and assignments are required; the defective absolute-value insertion also stays within this range.",
+            "longSafety": "The domain excludes Long.MIN_VALUE, so even the deliberately inserted Math.abs cannot overflow. No addition or multiplication is performed."
+          },
+          "terminationArgument": "Exactly three conditional comparison-and-swap blocks and one selection are executed. There are no loops or recursion; all valid inputs terminate.",
+          "testPredictions": [
+            {"testId": "F009-R1-T1", "expectedJavaValue": "5", "expectedMismatch": false},
+            {"testId": "F009-R1-T2", "expectedJavaValue": "0", "expectedMismatch": true},
+            {"testId": "F009-R1-T3", "expectedJavaValue": "7", "expectedMismatch": true},
+            {"testId": "F009-R1-T4", "expectedJavaValue": "-3", "expectedMismatch": false},
+            {"testId": "F009-R1-T5", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F009-R1-T6", "expectedJavaValue": "0", "expectedMismatch": false}
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F009-V4",
+          "familyRevision": "F009-R1",
+          "implementationStyle": "BIG_DECIMAL",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal a = new BigDecimal(sc.nextLine());",
+            "        BigDecimal b = new BigDecimal(sc.nextLine());",
+            "        BigDecimal c = new BigDecimal(sc.nextLine());",
+            "        BigDecimal temp = BigDecimal.ZERO;",
+            "        if (a.compareTo(b) >= 0) {",
+            "            temp = a;",
+            "            a = b;",
+            "            b = temp;",
+            "        }",
+            "        if (b.compareTo(c) >= 0) {",
+            "            temp = b;",
+            "            b = c;",
+            "            c = temp;",
+            "        }",
+            "        if (a.compareTo(b) >= 0) {",
+            "            temp = a;",
+            "            a = b;",
+            "            b = temp;",
+            "        }",
+            "        BigDecimal median = c;",
+            "        System.out.println(median.toBigIntegerExact().toString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {"id": "J1", "startLine": 10, "endLine": 14},
+            {"id": "J2", "startLine": 15, "endLine": 19},
+            {"id": "J3", "startLine": 20, "endLine": 24},
+            {"id": "J4", "startLine": 25, "endLine": 25}
+          ],
+          "alignments": [
+            {"cobolSegmentIds": ["C1"], "javaSegmentIds": ["J1"]},
+            {"cobolSegmentIds": ["C2"], "javaSegmentIds": ["J2"]},
+            {"cobolSegmentIds": ["C3"], "javaSegmentIds": ["J3"]},
+            {"cobolSegmentIds": ["C4"], "javaSegmentIds": ["J4"]}
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "ARITHMETIC_FORMULA",
+          "defectSubtype": "MAXIMUM_SELECTED_INSTEAD_OF_MEDIAN",
+          "defectCobolSegmentIds": ["C4"],
+          "defectJavaSegmentIds": ["J4"],
+          "labelRationale": "The complete signed network is valid, including its >= comparisons. J4 then selects c, the maximum, instead of b, the middle value. Wrong output selection is the only semantic mistake.",
+          "intermediateBounds": {
+            "a,b,c,temp,median": "Exact scale-zero BigDecimal integers in [-99999,99999]; temp starts at 0.",
+            "comparisonResult": "compareTo is used only to test order or equality; sign is preserved by every assignment.",
+            "decimalSafety": "No division, rounding, or precision-limiting MathContext is used."
+          },
+          "terminationArgument": "Exactly three conditional comparison-and-swap blocks and one selection are executed. There are no loops or recursion; all valid inputs terminate.",
+          "testPredictions": [
+            {"testId": "F009-R1-T1", "expectedJavaValue": "7", "expectedMismatch": true},
+            {"testId": "F009-R1-T2", "expectedJavaValue": "0", "expectedMismatch": true},
+            {"testId": "F009-R1-T3", "expectedJavaValue": "99999", "expectedMismatch": true},
+            {"testId": "F009-R1-T4", "expectedJavaValue": "-3", "expectedMismatch": false},
+            {"testId": "F009-R1-T5", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F009-R1-T6", "expectedJavaValue": "0", "expectedMismatch": false}
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        }
+      ],
+      "labelStatus": "PROPOSED",
+      "executionStatus": "NOT_EXECUTED",
+      "executionEvidence": null
+    },
+    {
+      "familyId": "F010",
+      "familyRevision": "F010-R1",
+      "split": "test",
+      "focusCategory": "NUMERIC_STORAGE_AND_SIGN",
+      "sourceStatus": "PROPOSED_WITH_SOURCE",
+      "cloneGroup": "CG-F010-MAGNITUDE-EUCLIDEAN-GCD",
+      "algorithmDescription": "Take both signed input magnitudes, then repeatedly replace (a,b) by (b,a remainder b) until b is zero; output a.",
+      "contract": {
+        "inputFields": [
+          {
+            "name": "INPUT-A",
+            "cobolPicture": "PIC S9(5)",
+            "description": "First signed integer -99999..99999."
+          },
+          {
+            "name": "INPUT-B",
+            "cobolPicture": "PIC S9(5)",
+            "description": "Second signed integer -99999..99999."
+          }
+        ],
+        "stdinFormat": "Two newline-separated canonical ASCII integers, one per line, at most 20 characters per line. No plus sign, exponent notation, padding, separators, or leading zeroes. Zero is 0 and negative zero is forbidden.",
+        "validInputDomain": "a and b are in [-99999,99999], not both zero. Programs assume valid inputs.",
+        "outputMeaning": "One positive scalar integer gcd(abs(a),abs(b)), in [1,99999]. A defective candidate may output zero or a negative integer; normalization preserves that mismatch.",
+        "outputNormalization": "Trim surrounding ASCII whitespace and normalize the exact base-ten signed integer to canonical decimal, removing a leading plus sign and redundant leading zeroes while preserving every negative sign on a nonzero value. Never take absolute value during normalization.",
+        "semanticAssumptions": [
+          "Signed input storage preserves both signs until FUNCTION ABS is explicitly applied to initialize the two unsigned working magnitudes.",
+          "The reference uses an explicit Euclidean loop with DIVIDE GIVING REMAINDER; neither reference nor candidates call a built-in gcd function.",
+          "Division is evaluated only when WORK-B>0. Both working operands are nonnegative; the integral quotient and remainder are exact within the stated field bounds.",
+          "A zero second operand causes immediate output of the first magnitude. A zero first operand and nonzero second operand produces that second magnitude after one iteration.",
+          "Different valid remainder computations do not constitute defects. The BigDecimal candidates compute the remainder through quotient multiplication and subtraction.",
+          "OUT-VAL PIC ZZZZ9 and FUNCTION TRIM emit one canonical positive integer in the reference."
+        ],
+        "storageBounds": [
+          {
+            "field": "IN-A, IN-B",
+            "picture": "PIC X(20)",
+            "bound": "Each buffer has 20 characters. Valid input text has 1..6 characters; remaining positions are ACCEPT padding."
+          },
+          {
+            "field": "INPUT-A, INPUT-B",
+            "picture": "PIC S9(5)",
+            "minimum": -99999,
+            "maximum": 99999
+          },
+          {
+            "field": "WORK-A, WORK-B",
+            "picture": "PIC 9(5)",
+            "minimum": 0,
+            "maximum": 99999,
+            "note": "After the loop WORK-A is positive and WORK-B is zero."
+          },
+          {
+            "field": "QUOTIENT-VALUE",
+            "picture": "PIC 9(5)",
+            "minimum": 0,
+            "maximum": 99999,
+            "note": "Initialized to 0; each loop divisor is at least 1."
+          },
+          {
+            "field": "REMAINDER-VALUE",
+            "picture": "PIC 9(5)",
+            "minimum": 0,
+            "maximum": 99998,
+            "note": "Initialized to 0; each computed value is strictly less than the current nonzero WORK-B."
+          },
+          {
+            "field": "GCD-VALUE after assignment",
+            "picture": "PIC 9(5)",
+            "minimum": 1,
+            "maximum": 99999
+          },
+          {
+            "field": "OUT-VAL",
+            "picture": "PIC ZZZZ9",
+            "bound": "Five edited positions represent 1..99999. Trimming emits 1..5 digits."
+          }
+        ],
+        "referenceTermination": "The loop runs only when b>0. Each iteration replaces b by an integer remainder r with 0<=r<b, so b strictly decreases and reaches 0 after at most its initial magnitude, at most 99999 iterations. If b starts at 0 there are no iterations; if a starts at 0 the first remainder is 0. Division by zero is guarded. Operations after the loop are finite.",
+        "candidateSafetyPolicy": "Per-candidate intermediateBounds and terminationArgument include the exact loop variables and postprocessing, including both defective candidates."
+      },
+      "cobolLines": [
+        ">>SOURCE FORMAT FREE",
+        "IDENTIFICATION DIVISION.",
+        "PROGRAM-ID. F010R1.",
+        "DATA DIVISION.",
+        "WORKING-STORAGE SECTION.",
+        "01 IN-A PIC X(20).",
+        "01 IN-B PIC X(20).",
+        "01 INPUT-A PIC S9(5).",
+        "01 INPUT-B PIC S9(5).",
+        "01 WORK-A PIC 9(5).",
+        "01 WORK-B PIC 9(5).",
+        "01 QUOTIENT-VALUE PIC 9(5) VALUE 0.",
+        "01 REMAINDER-VALUE PIC 9(5) VALUE 0.",
+        "01 GCD-VALUE PIC 9(5).",
+        "01 OUT-VAL PIC ZZZZ9.",
+        "PROCEDURE DIVISION.",
+        "    ACCEPT IN-A",
+        "    ACCEPT IN-B",
+        "    COMPUTE INPUT-A = FUNCTION NUMVAL(IN-A)",
+        "    COMPUTE INPUT-B = FUNCTION NUMVAL(IN-B)",
+        "    COMPUTE WORK-A = FUNCTION ABS(INPUT-A)",
+        "    COMPUTE WORK-B = FUNCTION ABS(INPUT-B)",
+        "    PERFORM UNTIL WORK-B = 0",
+        "        DIVIDE WORK-A BY WORK-B GIVING QUOTIENT-VALUE",
+        "            REMAINDER REMAINDER-VALUE",
+        "        MOVE WORK-B TO WORK-A",
+        "        MOVE REMAINDER-VALUE TO WORK-B",
+        "    END-PERFORM",
+        "    MOVE WORK-A TO GCD-VALUE",
+        "    MOVE GCD-VALUE TO OUT-VAL",
+        "    DISPLAY FUNCTION TRIM(OUT-VAL)",
+        "    STOP RUN."
+      ],
+      "cobolSegments": [
+        {"id": "C1", "startLine": 21, "endLine": 21},
+        {"id": "C2", "startLine": 22, "endLine": 22},
+        {"id": "C3", "startLine": 23, "endLine": 23},
+        {"id": "C4", "startLine": 24, "endLine": 25},
+        {"id": "C5", "startLine": 26, "endLine": 26},
+        {"id": "C6", "startLine": 27, "endLine": 27},
+        {"id": "C7", "startLine": 28, "endLine": 28},
+        {"id": "C8", "startLine": 29, "endLine": 29}
+      ],
+      "alignmentScope": "One-based inclusive spans. Segments cover the algorithm, including its control delimiters. Input conversion, declarations, and output editing are outside scope. Unmatched segments explicitly record inserted or missing operations; a correspondence does not itself assert equivalence.",
+      "tests": [
+        {
+          "testId": "F010-R1-T1",
+          "stdin": "48\n18\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "6"
+        },
+        {
+          "testId": "F010-R1-T2",
+          "stdin": "0\n-99999\n",
+          "caseKind": "zero_first_and_max_magnitude",
+          "expectedReferenceValue": "99999"
+        },
+        {
+          "testId": "F010-R1-T3",
+          "stdin": "-99999\n0\n",
+          "caseKind": "zero_second_and_min_signed_boundary",
+          "expectedReferenceValue": "99999"
+        },
+        {
+          "testId": "F010-R1-T4",
+          "stdin": "-48\n18\n",
+          "caseKind": "negative_first_nonzero",
+          "expectedReferenceValue": "6"
+        },
+        {
+          "testId": "F010-R1-T5",
+          "stdin": "99999\n-99999\n",
+          "caseKind": "equal_maximum_magnitudes",
+          "expectedReferenceValue": "99999"
+        },
+        {
+          "testId": "F010-R1-T6",
+          "stdin": "-1\n-1\n",
+          "caseKind": "negative_unit_magnitudes",
+          "expectedReferenceValue": "1"
+        }
+      ],
+      "variants": [
+        {
+          "variantId": "F010-V1",
+          "familyRevision": "F010-R1",
+          "implementationStyle": "INTEGER_LONG",
+          "javaLines": [
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long inputA = Long.parseLong(sc.nextLine());",
+            "        long inputB = Long.parseLong(sc.nextLine());",
+            "        long a = Math.abs(inputA);",
+            "        long b = Math.abs(inputB);",
+            "        while (b != 0L) {",
+            "            long remainder = a % b;",
+            "            a = b;",
+            "            b = remainder;",
+            "        }",
+            "        long gcd = a;",
+            "        System.out.println(gcd);",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {"id": "J1", "startLine": 7, "endLine": 7},
+            {"id": "J2", "startLine": 8, "endLine": 8},
+            {"id": "J3", "startLine": 9, "endLine": 9},
+            {"id": "J4", "startLine": 10, "endLine": 10},
+            {"id": "J5", "startLine": 11, "endLine": 11},
+            {"id": "J6", "startLine": 12, "endLine": 12},
+            {"id": "J7", "startLine": 13, "endLine": 13},
+            {"id": "J8", "startLine": 14, "endLine": 14}
+          ],
+          "alignments": [
+            {"cobolSegmentIds": ["C1"], "javaSegmentIds": ["J1"]},
+            {"cobolSegmentIds": ["C2"], "javaSegmentIds": ["J2"]},
+            {"cobolSegmentIds": ["C3"], "javaSegmentIds": ["J3"]},
+            {"cobolSegmentIds": ["C4"], "javaSegmentIds": ["J4"]},
+            {"cobolSegmentIds": ["C5"], "javaSegmentIds": ["J5"]},
+            {"cobolSegmentIds": ["C6"], "javaSegmentIds": ["J6"]},
+            {"cobolSegmentIds": ["C7"], "javaSegmentIds": ["J7"]},
+            {"cobolSegmentIds": ["C8"], "javaSegmentIds": ["J8"]}
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectSubtype": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Both magnitudes are taken before the explicit Euclidean remainder loop. Java % on nonnegative operands supplies the reference remainder; the unused COBOL quotient can be eliminated. A zero operand is handled by the same loop guard and rotation.",
+          "intermediateBounds": {
+            "inputA,inputB": "-99999..99999; not both zero.",
+            "a,b": "0..99999 throughout the loop. After termination a is in 1..99999 and b is 0.",
+            "remainder": "0..b_before_iteration-1, hence 0..99998; evaluated only when b>0.",
+            "gcdBeforeAnyDefect": "1..99999",
+            "longSafety": "Math.abs is safe because inputs exclude Long.MIN_VALUE. No arithmetic intermediate has magnitude greater than 99999."
+          },
+          "terminationArgument": "The loop runs only when b>0. Each iteration replaces b by an integer remainder r with 0<=r<b, so b strictly decreases and reaches 0 after at most its initial magnitude, at most 99999 iterations. If b starts at 0 there are no iterations; if a starts at 0 the first remainder is 0. Division by zero is guarded. Operations after the loop are finite.",
+          "testPredictions": [
+            {"testId": "F010-R1-T1", "expectedJavaValue": "6", "expectedMismatch": false},
+            {"testId": "F010-R1-T2", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F010-R1-T3", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F010-R1-T4", "expectedJavaValue": "6", "expectedMismatch": false},
+            {"testId": "F010-R1-T5", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F010-R1-T6", "expectedJavaValue": "1", "expectedMismatch": false}
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F010-V2",
+          "familyRevision": "F010-R1",
+          "implementationStyle": "BIG_DECIMAL",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal inputA = new BigDecimal(sc.nextLine());",
+            "        BigDecimal inputB = new BigDecimal(sc.nextLine());",
+            "        BigDecimal b = inputB.abs();",
+            "        BigDecimal a = inputA.abs();",
+            "        while (b.signum() != 0) {",
+            "            BigDecimal quotient = a.divideToIntegralValue(b);",
+            "            BigDecimal product = quotient.multiply(b);",
+            "            BigDecimal remainder = a.subtract(product);",
+            "            a = b;",
+            "            b = remainder;",
+            "        }",
+            "        BigDecimal gcd = a;",
+            "        System.out.println(gcd.toBigIntegerExact().toString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {"id": "J1", "startLine": 8, "endLine": 8},
+            {"id": "J2", "startLine": 9, "endLine": 9},
+            {"id": "J3", "startLine": 10, "endLine": 10},
+            {"id": "J4", "startLine": 11, "endLine": 11},
+            {"id": "J5", "startLine": 12, "endLine": 12},
+            {"id": "J6", "startLine": 13, "endLine": 13},
+            {"id": "J7", "startLine": 14, "endLine": 14},
+            {"id": "J8", "startLine": 15, "endLine": 15},
+            {"id": "J9", "startLine": 16, "endLine": 16},
+            {"id": "J10", "startLine": 17, "endLine": 17}
+          ],
+          "alignments": [
+            {"cobolSegmentIds": ["C1"], "javaSegmentIds": ["J2"]},
+            {"cobolSegmentIds": ["C2"], "javaSegmentIds": ["J1"]},
+            {"cobolSegmentIds": ["C3"], "javaSegmentIds": ["J3"]},
+            {"cobolSegmentIds": ["C4"], "javaSegmentIds": ["J4", "J5", "J6"]},
+            {"cobolSegmentIds": ["C5"], "javaSegmentIds": ["J7"]},
+            {"cobolSegmentIds": ["C6"], "javaSegmentIds": ["J8"]},
+            {"cobolSegmentIds": ["C7"], "javaSegmentIds": ["J9"]},
+            {"cobolSegmentIds": ["C8"], "javaSegmentIds": ["J10"]}
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectSubtype": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "The independent magnitude initializations are reordered. C4 maps to the explicit integral quotient, product, and residual in J4/J5/J6. Both operands in the loop are nonnegative, so this remainder technique preserves Euclidean behavior. No built-in gcd function is used.",
+          "intermediateBounds": {
+            "inputA,inputB": "Exact scale-zero integers -99999..99999; not both zero.",
+            "a,b": "Exact integers 0..99999; final a is in 1..99999 and b is 0.",
+            "quotient": "0..99999; evaluated only for b>0.",
+            "product": "0..a_before_iteration, hence 0..99999.",
+            "remainder": "0..b_before_iteration-1, hence 0..99998.",
+            "gcdBeforeAnyDefect": "1..99999",
+            "decimalSafety": "Positive divideToIntegralValue, multiplication, and subtraction are exact here. No precision-limiting MathContext is used."
+          },
+          "terminationArgument": "The loop runs only when b>0. Each iteration replaces b by an integer remainder r with 0<=r<b, so b strictly decreases and reaches 0 after at most its initial magnitude, at most 99999 iterations. If b starts at 0 there are no iterations; if a starts at 0 the first remainder is 0. Division by zero is guarded. Operations after the loop are finite.",
+          "testPredictions": [
+            {"testId": "F010-R1-T1", "expectedJavaValue": "6", "expectedMismatch": false},
+            {"testId": "F010-R1-T2", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F010-R1-T3", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F010-R1-T4", "expectedJavaValue": "6", "expectedMismatch": false},
+            {"testId": "F010-R1-T5", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F010-R1-T6", "expectedJavaValue": "1", "expectedMismatch": false}
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F010-V3",
+          "familyRevision": "F010-R1",
+          "implementationStyle": "INTEGER_LONG",
+          "javaLines": [
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long inputA = Long.parseLong(sc.nextLine());",
+            "        long inputB = Long.parseLong(sc.nextLine());",
+            "        long a = Math.abs(inputA);",
+            "        long b = Math.abs(inputB);",
+            "        while (b != 0L) {",
+            "            long remainder = a % b;",
+            "            a = b;",
+            "            b = remainder;",
+            "        }",
+            "        long gcd = a;",
+            "        if (inputA < 0L) {",
+            "            gcd = -gcd;",
+            "        }",
+            "        System.out.println(gcd);",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {"id": "J1", "startLine": 7, "endLine": 7},
+            {"id": "J2", "startLine": 8, "endLine": 8},
+            {"id": "J3", "startLine": 9, "endLine": 9},
+            {"id": "J4", "startLine": 10, "endLine": 10},
+            {"id": "J5", "startLine": 11, "endLine": 11},
+            {"id": "J6", "startLine": 12, "endLine": 12},
+            {"id": "J7", "startLine": 13, "endLine": 13},
+            {"id": "J8", "startLine": 14, "endLine": 14},
+            {"id": "J9", "startLine": 15, "endLine": 17}
+          ],
+          "alignments": [
+            {"cobolSegmentIds": ["C1"], "javaSegmentIds": ["J1"]},
+            {"cobolSegmentIds": ["C2"], "javaSegmentIds": ["J2"]},
+            {"cobolSegmentIds": ["C3"], "javaSegmentIds": ["J3"]},
+            {"cobolSegmentIds": ["C4"], "javaSegmentIds": ["J4"]},
+            {"cobolSegmentIds": ["C5"], "javaSegmentIds": ["J5"]},
+            {"cobolSegmentIds": ["C6"], "javaSegmentIds": ["J6"]},
+            {"cobolSegmentIds": ["C7"], "javaSegmentIds": ["J7"]},
+            {"cobolSegmentIds": ["C8"], "javaSegmentIds": ["J8"]}
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": ["J9"],
+          "expectedEquivalent": false,
+          "defectCategory": "NUMERIC_SIGN",
+          "defectSubtype": "INPUT_SIGN_REAPPLIED_TO_GCD",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": ["J9"],
+          "labelRationale": "J9 incorrectly reapplies the first input sign to the positive gcd after the correct magnitude-based loop. This inserted postprocessing is the only semantic mistake and has no COBOL counterpart.",
+          "intermediateBounds": {
+            "inputA,inputB": "-99999..99999; not both zero.",
+            "a,b": "0..99999 throughout the loop. After termination a is in 1..99999 and b is 0.",
+            "remainder": "0..b_before_iteration-1, hence 0..99998; evaluated only when b>0.",
+            "gcdBeforeAnyDefect": "1..99999",
+            "longSafety": "Math.abs is safe because inputs exclude Long.MIN_VALUE. No arithmetic intermediate has magnitude greater than 99999.",
+            "gcdAfterDefect": "-99999..-1 or 1..99999; negating a gcd magnitude at most 99999 cannot overflow."
+          },
+          "terminationArgument": "The loop runs only when b>0. Each iteration replaces b by an integer remainder r with 0<=r<b, so b strictly decreases and reaches 0 after at most its initial magnitude, at most 99999 iterations. If b starts at 0 there are no iterations; if a starts at 0 the first remainder is 0. Division by zero is guarded. Operations after the loop are finite.",
+          "testPredictions": [
+            {"testId": "F010-R1-T1", "expectedJavaValue": "6", "expectedMismatch": false},
+            {"testId": "F010-R1-T2", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F010-R1-T3", "expectedJavaValue": "-99999", "expectedMismatch": true},
+            {"testId": "F010-R1-T4", "expectedJavaValue": "-6", "expectedMismatch": true},
+            {"testId": "F010-R1-T5", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F010-R1-T6", "expectedJavaValue": "-1", "expectedMismatch": true}
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F010-V4",
+          "familyRevision": "F010-R1",
+          "implementationStyle": "BIG_DECIMAL",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal inputA = new BigDecimal(sc.nextLine());",
+            "        BigDecimal inputB = new BigDecimal(sc.nextLine());",
+            "        BigDecimal b = inputB.abs();",
+            "        BigDecimal a = inputA.abs();",
+            "        while (b.signum() != 0) {",
+            "            BigDecimal quotient = a.divideToIntegralValue(b);",
+            "            BigDecimal product = quotient.multiply(b);",
+            "            BigDecimal remainder = a.subtract(product);",
+            "            a = b;",
+            "            b = remainder;",
+            "        }",
+            "        BigDecimal gcd = a;",
+            "        if (inputA.signum() == 0 || inputB.signum() == 0) {",
+            "            gcd = BigDecimal.ZERO;",
+            "        }",
+            "        System.out.println(gcd.toBigIntegerExact().toString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {"id": "J1", "startLine": 8, "endLine": 8},
+            {"id": "J2", "startLine": 9, "endLine": 9},
+            {"id": "J3", "startLine": 10, "endLine": 10},
+            {"id": "J4", "startLine": 11, "endLine": 11},
+            {"id": "J5", "startLine": 12, "endLine": 12},
+            {"id": "J6", "startLine": 13, "endLine": 13},
+            {"id": "J7", "startLine": 14, "endLine": 14},
+            {"id": "J8", "startLine": 15, "endLine": 15},
+            {"id": "J9", "startLine": 16, "endLine": 16},
+            {"id": "J10", "startLine": 17, "endLine": 17},
+            {"id": "J11", "startLine": 18, "endLine": 20}
+          ],
+          "alignments": [
+            {"cobolSegmentIds": ["C1"], "javaSegmentIds": ["J2"]},
+            {"cobolSegmentIds": ["C2"], "javaSegmentIds": ["J1"]},
+            {"cobolSegmentIds": ["C3"], "javaSegmentIds": ["J3"]},
+            {"cobolSegmentIds": ["C4"], "javaSegmentIds": ["J4", "J5", "J6"]},
+            {"cobolSegmentIds": ["C5"], "javaSegmentIds": ["J7"]},
+            {"cobolSegmentIds": ["C6"], "javaSegmentIds": ["J8"]},
+            {"cobolSegmentIds": ["C7"], "javaSegmentIds": ["J9"]},
+            {"cobolSegmentIds": ["C8"], "javaSegmentIds": ["J10"]}
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": ["J11"],
+          "expectedEquivalent": false,
+          "defectCategory": "CONTROL_FLOW_AND_BOUNDARIES",
+          "defectSubtype": "ZERO_OPERAND_RESULT_OVERRIDDEN",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": ["J11"],
+          "labelRationale": "J11 overrides an already correct positive gcd with zero whenever either original operand is zero. This inserted special case is the only semantic mistake; the Euclidean loop remains correct and terminating.",
+          "intermediateBounds": {
+            "inputA,inputB": "Exact scale-zero integers -99999..99999; not both zero.",
+            "a,b": "Exact integers 0..99999; final a is in 1..99999 and b is 0.",
+            "quotient": "0..99999; evaluated only for b>0.",
+            "product": "0..a_before_iteration, hence 0..99999.",
+            "remainder": "0..b_before_iteration-1, hence 0..99998.",
+            "gcdBeforeAnyDefect": "1..99999",
+            "decimalSafety": "Positive divideToIntegralValue, multiplication, and subtraction are exact here. No precision-limiting MathContext is used.",
+            "gcdAfterDefect": "0..99999; zero is produced only by the deliberately incorrect post-loop override."
+          },
+          "terminationArgument": "The loop runs only when b>0. Each iteration replaces b by an integer remainder r with 0<=r<b, so b strictly decreases and reaches 0 after at most its initial magnitude, at most 99999 iterations. If b starts at 0 there are no iterations; if a starts at 0 the first remainder is 0. Division by zero is guarded. Operations after the loop are finite.",
+          "testPredictions": [
+            {"testId": "F010-R1-T1", "expectedJavaValue": "6", "expectedMismatch": false},
+            {"testId": "F010-R1-T2", "expectedJavaValue": "0", "expectedMismatch": true},
+            {"testId": "F010-R1-T3", "expectedJavaValue": "0", "expectedMismatch": true},
+            {"testId": "F010-R1-T4", "expectedJavaValue": "6", "expectedMismatch": false},
+            {"testId": "F010-R1-T5", "expectedJavaValue": "99999", "expectedMismatch": false},
+            {"testId": "F010-R1-T6", "expectedJavaValue": "1", "expectedMismatch": false}
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        }
+      ],
+      "labelStatus": "PROPOSED",
+      "executionStatus": "NOT_EXECUTED",
+      "executionEvidence": null
+    }
+  ],
+  "labelStatus": "PROPOSED",
+  "executionStatus": "NOT_EXECUTED",
+  "executionEvidence": null
+}

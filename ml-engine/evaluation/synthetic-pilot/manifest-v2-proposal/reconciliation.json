@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "inputSha256": "e41c0712731cfd15c1feaf453773bc3d0e95e33cd62c1c42e3f636144613dc83",
+  "proposalVersion": "synthetic-pilot-v2",
+  "status": "REQUIRES_REVISION_NOT_ADOPTED",
+  "strictJsonValid": true,
+  "observedCounts": {
+    "families": 20,
+    "uniqueFamilyIds": 20,
+    "declaredCloneGroups": 19,
+    "splits": {
+      "train": 10,
+      "test": 5,
+      "validation": 5
+    },
+    "categories": {
+      "DECIMAL_ROUNDING_AND_SCALE": 4,
+      "NUMERIC_STORAGE_AND_SIGN": 4,
+      "CONTROL_FLOW_AND_BRANCHING": 4,
+      "DATE_AND_CALENDAR": 4,
+      "STRING_AND_RECORD_PARSING": 4
+    }
+  },
+  "declaredAllocationMatchesProposalCounts": true,
+  "allDeclaredCloneGroupsStayInOneSplit": true,
+  "verifiedAlgorithmIndependence": false,
+  "originalProtocol": {
+    "familyCount": 20,
+    "variantsPerFamily": 4,
+    "candidatePairs": 80,
+    "splits": {
+      "train": 12,
+      "validation": 4,
+      "test": 4
+    },
+    "categoryNames": [
+      "DECIMAL_ROUNDING_AND_SCALE",
+      "NUMERIC_STORAGE_AND_SIGN",
+      "CONTROL_FLOW_AND_BOUNDARIES",
+      "INDEXING_AND_LOOP_BOUNDS"
+    ],
+    "familiesPerCategory": 5,
+    "perCategorySplits": {
+      "train": 3,
+      "validation": 1,
+      "test": 1
+    }
+  },
+  "actualFamilyAnchors": [
+    {
+      "familyId": "F001",
+      "sourceArchive": "ml-engine/evaluation/synthetic-pilot/batch-01-refined/input-batch.json",
+      "sourceArchiveSha256": "640b04fcd1c4e2368aa37994826d6d4fa625b52cf1dae34a50af70fc6adaab9d",
+      "actualAlgorithm": "Calculates an invoice total from a subtotal, discount percentage, and sales tax percentage. The discount amount is stored in PIC 9(5)V99 without ROUNDED (truncating fractional cents toward zero), subtracted from the subtotal to yield the net amount, and taxed using COMPUTE TAX-AMT ROUNDED (half-up to 2 decimal places) before adding net and tax.",
+      "actualCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "actualSplit": "train",
+      "cobolSourceSha256": "444ccd83da615d73f56bea7fe866a447ccdeca8ecd79a7d86b62e31ab728811a",
+      "disposition": "PRESERVE_AUDITED_IDENTITY_AND_SPLIT"
+    },
+    {
+      "familyId": "F002",
+      "sourceArchive": "ml-engine/evaluation/synthetic-pilot/batch-01-refined/input-batch.json",
+      "sourceArchiveSha256": "640b04fcd1c4e2368aa37994826d6d4fa625b52cf1dae34a50af70fc6adaab9d",
+      "actualAlgorithm": "Computes a pro-rata subscription charge from an annual fee, days used, and a promotional credit. The annual fee is divided by 365 into an intermediate 4-decimal field (PIC 9(3)V9(4)) with ROUNDED, multiplied by days used into a 2-decimal gross charge field (PIC 9(5)V99) with ROUNDED (which truncates any sixth integer digit modulo 100000.00 when the rounded product reaches 100000.00), and reduced by the credit amount with a floor at 0.00.",
+      "actualCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "actualSplit": "train",
+      "cobolSourceSha256": "b1b71511e5864baac1dbdac08827a18dc6ed8831d1eaa7a29ce7879155d4e73f",
+      "disposition": "PRESERVE_AUDITED_IDENTITY_AND_SPLIT"
+    },
+    {
+      "familyId": "F003",
+      "sourceArchive": "ml-engine/evaluation/synthetic-pilot/batch-02/input-batch.json",
+      "sourceArchiveSha256": "f08dc2a1dffeb19ef75e4ac0750c8942b1cd30da3c5086269d9137e6f91507b9",
+      "actualAlgorithm": "Performs a triangulated foreign-exchange conversion from a base currency amount using two sequential 4-decimal rates and a fixed settlement wire fee. The intermediate amount MID-AMT is stored in PIC 9(6)V9(4) without ROUNDED (truncating fractional digits beyond scale 4 toward zero), multiplied by the second rate into SETTLE-AMT PIC 9(6)V99 with ROUNDED (half-up to scale 2), and reduced by WIRE-FEE.",
+      "actualCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "actualSplit": "train",
+      "cobolSourceSha256": "127478a35d2d12684b1b66c06d90ca463775bed437b851070553f6a31c4ea2b0",
+      "disposition": "PRESERVE_AUDITED_IDENTITY_AND_SPLIT"
+    },
+    {
+      "familyId": "F004",
+      "sourceArchive": "ml-engine/evaluation/synthetic-pilot/batch-02/input-batch.json",
+      "sourceArchiveSha256": "f08dc2a1dffeb19ef75e4ac0750c8942b1cd30da3c5086269d9137e6f91507b9",
+      "actualAlgorithm": "Computes the weighted average unit inventory cost across two purchase lots. Each lot's quantity (PIC 9(3)) and unit cost (PIC 9(3)V99) are multiplied into exact 2-decimal extended cost fields (EXT-1 and EXT-2, PIC 9(6)V99), the quantities are summed into TOT-QTY (PIC 9(4)), and the combined extended cost is divided by TOT-QTY into UNIT-AVG (PIC 9(4)V99) using ROUNDED (half-up to 2 decimal places).",
+      "actualCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "actualSplit": "validation",
+      "cobolSourceSha256": "d6737294eba9794350a8b795399b451f97eb5c3c8a29fd4515c8244e432af876",
+      "disposition": "PRESERVE_AUDITED_IDENTITY_AND_SPLIT"
+    },
+    {
+      "familyId": "F005",
+      "sourceArchive": "ml-engine/evaluation/synthetic-pilot/batch-03/input-batch.json",
+      "sourceArchiveSha256": "87e181c46ba306d75373f36f37698a3de33b7dee836b8067839b922cd17ff502",
+      "actualAlgorithm": "Computes a two-period compounded interest balance from an initial principal and two quarterly percentage rates. Period 1 interest (INT-1, PIC 9(5)V99) is computed without ROUNDED (truncating fractional cents toward zero) and added to PRINCIPAL to form BAL-1 (PIC 9(6)V99). Period 2 interest (INT-2, PIC 9(6)V99) is computed on BAL-1 with ROUNDED (half-up to 2 decimal places) and added to BAL-1 to produce BAL-2.",
+      "actualCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "actualSplit": "test",
+      "cobolSourceSha256": "59797b0b32fd9f05b408af1368b927378fa6bc79b243255fb5524f605c91b28b",
+      "disposition": "REPLACEMENT_PENDING_KEEP_OLD_SOURCE_ARCHIVED"
+    },
+    {
+      "familyId": "F006",
+      "sourceArchive": "ml-engine/evaluation/synthetic-pilot/batch-03/input-batch.json",
+      "sourceArchiveSha256": "87e181c46ba306d75373f36f37698a3de33b7dee836b8067839b922cd17ff502",
+      "actualAlgorithm": "Updates an account balance by adding a signed adjustment (ADJ-AMT, PIC S9(5)) to an opening balance (START-BAL, PIC 9(5)) into an unsigned intermediate balance field (MID-BAL, PIC 9(5)), which strips the negative sign (coercing negative intermediate sums to their positive absolute magnitude), and then subtracts a signed fee (FEE-AMT, PIC S9(4)) into a signed final balance (END-BAL, PIC S9(6)).",
+      "actualCategory": "NUMERIC_STORAGE_AND_SIGN",
+      "actualSplit": "train",
+      "cobolSourceSha256": "e7b750149a5b29fb17dd5048f0748a2e98053ecbe9de601db0eb08f36989ff3e",
+      "disposition": "PRESERVE_AUDITED_IDENTITY_AND_SPLIT"
+    }
+  ],
+  "issues": [
+    {
+      "id": "F001_FINAL_OPERATOR_WRONG",
+      "familyIds": [
+        "F001"
+      ],
+      "reason": "Proposal says subtract the second percentage amount. Actual invoice source adds rounded tax to net amount.",
+      "requiredCorrection": "Preserve source algorithm: final total = net amount + tax amount."
+    },
+    {
+      "id": "F002_IDENTITY_AND_CATEGORY_WRONG",
+      "familyIds": [
+        "F002",
+        "F006"
+      ],
+      "reason": "Proposal replaces actual pro-rata subscription algorithm with a duplicate of F006 unsigned-intermediate balance adjustment. Actual F002 is decimal rounding/train.",
+      "requiredCorrection": "Restore subscription definition including daily scale-4 rounding, gross scale-2 rounding and PIC storage truncation before subtracting credit with a zero floor; restore distinct clone group."
+    },
+    {
+      "id": "F003_IDENTITY_AND_CATEGORY_WRONG",
+      "familyIds": [
+        "F003"
+      ],
+      "reason": "Proposal substitutes tiered threshold branching for actual triangulated FX conversion.",
+      "requiredCorrection": "Restore sequential two-rate conversion with intermediate scale-4 truncation, settlement scale-2 rounding and wire-fee subtraction; decimal/train."
+    },
+    {
+      "id": "F004_IDENTITY_CATEGORY_AND_SPLIT_WRONG",
+      "familyIds": [
+        "F004"
+      ],
+      "reason": "Proposal substitutes a date algorithm for actual weighted inventory average and moves validation to train.",
+      "requiredCorrection": "Preserve actual weighted-average source identity, decimal category and validation assignment. No file or split has been changed by this audit."
+    },
+    {
+      "id": "F005_REPLACEMENT_SOURCE_MISSING",
+      "familyIds": [
+        "F005"
+      ],
+      "reason": "FX plus 0.05 cash-denomination rounding is a proposed replacement description only. No replacement COBOL/Java source, mappings, contract or test cases are attached.",
+      "requiredCorrection": "Produce separately versioned replacement code and labels, then compile/replay and review similarity to existing FX program F003. Retain original F005 as archived with its known F001 split concern."
+    },
+    {
+      "id": "UNREQUESTED_PROTOCOL_DRIFT",
+      "reason": "Proposed allocation changes original four categories with five families each and 12/4/4 family split into five categories with four each and 10/5/5. It drops INDEXING_AND_LOOP_BOUNDS, renames CONTROL_FLOW_AND_BOUNDARIES and adds calendar/parsing.",
+      "requiredCorrection": "Use original four-category protocol for the minimal repair. Actual F001-F004 plus replacement F005 already fill the five decimal slots with three train, one validation and one test."
+    },
+    {
+      "id": "INDEPENDENCE_NOT_ESTABLISHED",
+      "reason": "There are 20 IDs but only 19 declared clone groups, because F002 erroneously duplicates F006. Other unique group names do not establish algorithm independence. Proposed priority-branch programs and calendar helpers may share structures across splits.",
+      "requiredCorrection": "Correct F002 identity, then review source-level templates, dependency structure and shared helpers before accepting clone groups/splits. Do not count the number of distinct group strings as verified independent algorithms."
+    },
+    {
+      "id": "OUTPUT_AND_SCOPE_EXPANSION",
+      "reason": "Some new proposed algorithms return strings, an empty substring or a validity flag plus date key. Existing pilot calls for one scalar numeric output, and archived runtime comparison uses decimal normalization.",
+      "requiredCorrection": "Retain the original single-scalar numeric input/output scope for this pilot, or explicitly design and validate a new representation and evaluator before expansion."
+    }
+  ],
+  "replacementSourceProvided": false,
+  "programsCompiledOrExecuted": false,
+  "trainingPerformed": false,
+  "originalInputEdited": false,
+  "existingSplitsChanged": false,
+  "modelArtifactsChanged": false,
+  "newAccuracyClaimsSupported": false,
+  "provenance": "AI-assisted manifest/source reconciliation against archived generated data, not independent human review. No algorithm descriptions are accepted in place of source."
+}

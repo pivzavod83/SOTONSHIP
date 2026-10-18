@@ -1,0 +1,11 @@
+{
+  "actualCobolExecutions": 28,
+  "actualJavaExecutions": 79,
+  "admittedTrainingLabels": 0,
+  "frozenPlanSha256": "f8dd311f9a0ef0778fcc1eecbef50aed93b4c4da410a27061f167fe654073dda",
+  "independentHumanReviews": 0,
+  "replayReportSha256": "a81d774d64c5c3c469d1c175d0e7c1b13453789e6d67e9fdcd4e67a227440c9a",
+  "schemaVersion": "expanded-c2j-text-evidence-check-v1",
+  "trainingPerformed": false,
+  "verifiedRawEvidenceChecks": 292
+}

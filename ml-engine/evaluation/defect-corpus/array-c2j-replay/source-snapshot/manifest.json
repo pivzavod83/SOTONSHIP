@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "originalPath": "scripts/replay_array94_c2j_witnesses.py",
+      "snapshotFile": "replay_array94_c2j_witnesses.py",
+      "sha256": "a31fa139e8209e3aad2b8acc444b2bb2573e6b8a68c91672b25faecb4c954e9e"
+    },
+    {
+      "originalPath": "scripts/audit_natural_c2j_candidates.py",
+      "snapshotFile": "audit_natural_c2j_candidates.py",
+      "sha256": "2bc1518b701f7f56ea58f4b14d74dd745336135908e792414879ff53cf6e4282"
+    },
+    {
+      "originalPath": "scripts/replay_scalar_c2j_witnesses.py",
+      "snapshotFile": "replay_scalar_c2j_witnesses.py",
+      "sha256": "a93cb91eaed6d728032639f4b2971a483c9d10773e440ac45b94e0fc0660ea74"
+    },
+    {
+      "originalPath": "tests/test_array94_c2j_replay.py",
+      "snapshotFile": "test_array94_c2j_replay.py",
+      "sha256": "b07aa2b0c38a1105a5b77f1319d2131df097bb940b7fb7325ee864118a82fa9a"
+    }
+  ]
+}

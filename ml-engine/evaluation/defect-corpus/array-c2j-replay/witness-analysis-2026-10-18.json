@@ -1,0 +1,127 @@
+{
+  "status": "AI_ANALYSIS_OF_MACHINE_REPRODUCED_DISCREPANCY_PENDING_INDEPENDENT_HUMAN_REVIEW",
+  "screeningReportSha256": "e8d24265bbcba5877d93b66730753bec2e8a907fc86ebd449a7ecc31c15077bd",
+  "taskId": "HumanEval/94",
+  "driverIndex": 1,
+  "arguments": [
+    0,
+    8,
+    1,
+    2,
+    1,
+    7
+  ],
+  "observed": {
+    "cobol": 7,
+    "canonicalJava": 7,
+    "7b": 7,
+    "14b": 8
+  },
+  "suspectedCause": {
+    "status": "HYPOTHESIS_NOT_REVIEWED_FAULT_LOCATION_GOLD",
+    "cobolSourceLines": [
+      71,
+      74
+    ],
+    "java14bContextLines": [
+      25,
+      39
+    ],
+    "description": "The original COBOL rejects even numbers other than2 before marking a value prime. The14b translation tests only odd divisors starting at3. For8, the odd-divisor loop does not execute and8 is accepted as prime; it then displaces7 as the largest candidate. The exact original driver produces8 instead of7."
+  },
+  "scope": "One task family, three finite original driver inputs, one observed mismatch; post-screening exploratory selection.",
+  "evidenceHashChecks": [
+    {
+      "type": "source",
+      "variant": "cobol",
+      "sha256": "3f8dbb4a63d6d88341745557d62ec1df65a9767c72fcf80320fc39907c8dba39"
+    },
+    {
+      "type": "source",
+      "variant": "canonical",
+      "sha256": "d3885c65b61f638a1b6202ee06efd85c95990e801df82f24bdcb59b7fff1ec94"
+    },
+    {
+      "type": "source",
+      "variant": "7b",
+      "sha256": "86ae71b2d57f4ba7e04051c6f0c630d07095f9a706e8c69afe53e3fac3377abc"
+    },
+    {
+      "type": "source",
+      "variant": "14b",
+      "sha256": "2216261ea16a1b3c3bd610f068ac74ca3c9482b615ff51647356863378714d87"
+    },
+    {
+      "type": "cobol-output",
+      "driverIndex": 0,
+      "sha256": "dad7da350cf167b4b7d8d4e3be5a9476fee71a57f40ff25fff7341315e675e27"
+    },
+    {
+      "type": "cobol-output",
+      "driverIndex": 1,
+      "sha256": "7b56074ee0debc6dbf1d54af0b649df9314419f10a173dac42dd2e017c9517a3"
+    },
+    {
+      "type": "cobol-output",
+      "driverIndex": 2,
+      "sha256": "db5eb092aba156349bf669b546c8d74d4eba4010607481878a22114dacddc5d1"
+    },
+    {
+      "type": "java-output",
+      "variant": "canonical",
+      "driverIndex": 0,
+      "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+    },
+    {
+      "type": "java-output",
+      "variant": "canonical",
+      "driverIndex": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "type": "java-output",
+      "variant": "canonical",
+      "driverIndex": 2,
+      "sha256": "9400f1b21cb527d7fa3d3eabba93557a18ebe7a2ca4e471cfe5e4c5b4ca7f767"
+    },
+    {
+      "type": "java-output",
+      "variant": "7b",
+      "driverIndex": 0,
+      "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+    },
+    {
+      "type": "java-output",
+      "variant": "7b",
+      "driverIndex": 1,
+      "sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+    },
+    {
+      "type": "java-output",
+      "variant": "7b",
+      "driverIndex": 2,
+      "sha256": "9400f1b21cb527d7fa3d3eabba93557a18ebe7a2ca4e471cfe5e4c5b4ca7f767"
+    },
+    {
+      "type": "java-output",
+      "variant": "14b",
+      "driverIndex": 0,
+      "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+    },
+    {
+      "type": "java-output",
+      "variant": "14b",
+      "driverIndex": 1,
+      "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3"
+    },
+    {
+      "type": "java-output",
+      "variant": "14b",
+      "driverIndex": 2,
+      "sha256": "9400f1b21cb527d7fa3d3eabba93557a18ebe7a2ca4e471cfe5e4c5b4ca7f767"
+    }
+  ],
+  "independentHumanReviewsPerformed": 0,
+  "admittedDefectLabels": 0,
+  "modelTrainingPerformed": false
+}

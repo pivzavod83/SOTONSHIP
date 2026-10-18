@@ -1,0 +1,1089 @@
+{
+  "artifact": "synthetic batch 4",
+  "datasetVersion": "synthetic-pilot-plan-repair-r3",
+  "batchNumber": 4,
+  "batchRevision": "B04-R1",
+  "datasetKind": "SYNTHETIC_AI_GENERATED",
+  "compilerProfile": {
+    "cobolCompiler": "GnuCOBOL 3.2",
+    "cobolSourceFormat": "FREE",
+    "javaVersion": "Java 21"
+  },
+  "predictionMethod": "Exact integer and decimal specification calculations only. These COBOL and Java sources have not been compiled or executed. Labels and correspondences are proposed annotations, not equivalence proofs.",
+  "families": [
+    {
+      "familyId": "F007",
+      "familyRevision": "F007-R1",
+      "split": "train",
+      "focusCategory": "NUMERIC_STORAGE_AND_SIGN",
+      "sourceStatus": "PROPOSED_WITH_SOURCE",
+      "cloneGroup": "CG-F007-ODOMETER-WRAP",
+      "algorithmDescription": "Add an unsigned increment to a four-digit odometer and retain only the lowest four decimal digits through receiving-field storage.",
+      "contract": {
+        "inputFields": [
+          {
+            "name": "COUNTER-VALUE",
+            "cobolPicture": "PIC 9(4)",
+            "description": "Integer 0..9999."
+          },
+          {
+            "name": "INCREMENT-VALUE",
+            "cobolPicture": "PIC 9(5)",
+            "description": "Integer 0..50000."
+          }
+        ],
+        "stdinFormat": "Two newline-separated canonical ASCII integers, one per line, at most 20 characters per line. No plus sign, leading zeroes, padding, separators, or exponent notation. Zero is 0; negative zero is not permitted.",
+        "validInputDomain": "counter in [0,9999]; increment in [0,50000]. Both are unsigned canonical integers.",
+        "outputMeaning": "One scalar integer (counter+increment) modulo 10000, in [0,9999].",
+        "outputNormalization": "Trim surrounding ASCII whitespace and normalize the exact base-ten integer to canonical decimal without a leading plus sign or leading zeroes. Preserve every negative sign on a nonzero value; never apply absolute value during normalization.",
+        "semanticAssumptions": [
+          "TOTAL-VALUE holds the complete sum before any receiving-field reduction.",
+          "MOVE TOTAL-VALUE TO ODOMETER-VALUE genuinely stores a five-digit unsigned integer into PIC 9(4), discarding any excess high-order decimal digit. The reference does not compute modulo explicitly.",
+          "No ON SIZE ERROR handler or saturation policy replaces that receiving-field storage behavior.",
+          "OUT-VAL is numeric-edited; FUNCTION TRIM removes its leading spaces, and the mandatory final 9 prints zero as 0.",
+          "Invalid-input behavior is outside the contract."
+        ],
+        "storageBounds": [
+          {
+            "field": "IN-COUNTER, IN-INCREMENT",
+            "picture": "PIC X(20)",
+            "bound": "Each is a 20-character input buffer. Valid counter text has 1..4 characters; valid increment text has 1..5. Remaining positions are ACCEPT padding."
+          },
+          {
+            "field": "COUNTER-VALUE",
+            "picture": "PIC 9(4)",
+            "minimum": 0,
+            "maximum": 9999
+          },
+          {
+            "field": "INCREMENT-VALUE",
+            "picture": "PIC 9(5)",
+            "minimum": 0,
+            "maximum": 50000
+          },
+          {
+            "field": "TOTAL-VALUE",
+            "picture": "PIC 9(5)",
+            "minimum": 0,
+            "maximum": 59999
+          },
+          {
+            "field": "ODOMETER-VALUE",
+            "picture": "PIC 9(4)",
+            "minimum": 0,
+            "maximum": 9999,
+            "note": "The deliberate receiving-field reduction is the required behavior."
+          },
+          {
+            "field": "OUT-VAL",
+            "picture": "PIC ZZZ9",
+            "bound": "Represents 0..9999 in four edited positions; trimming emits 1..4 digits."
+          }
+        ],
+        "javaIntermediateBounds": {
+          "counter": "0..9999",
+          "increment": "0..50000",
+          "sumIncludingExpressionTemporaries": "0..59999",
+          "modulus": 10000,
+          "correctOdometer": "0..9999",
+          "V3UnreducedOdometer": "0..59999",
+          "V4SaturatedOdometer": "0..9999",
+          "longSafety": "Every integer intermediate is at most 59999, below Long.MAX_VALUE 9223372036854775807.",
+          "decimalSafety": "BigDecimal inputs and intermediates are exact scale-zero integers. No MathContext or nonterminating division is used."
+        }
+      },
+      "cobolLines": [
+        ">>SOURCE FORMAT FREE",
+        "IDENTIFICATION DIVISION.",
+        "PROGRAM-ID. F007R1.",
+        "DATA DIVISION.",
+        "WORKING-STORAGE SECTION.",
+        "01 IN-COUNTER PIC X(20).",
+        "01 IN-INCREMENT PIC X(20).",
+        "01 COUNTER-VALUE PIC 9(4).",
+        "01 INCREMENT-VALUE PIC 9(5).",
+        "01 TOTAL-VALUE PIC 9(5).",
+        "01 ODOMETER-VALUE PIC 9(4).",
+        "01 OUT-VAL PIC ZZZ9.",
+        "PROCEDURE DIVISION.",
+        "    ACCEPT IN-COUNTER",
+        "    ACCEPT IN-INCREMENT",
+        "    COMPUTE COUNTER-VALUE = FUNCTION NUMVAL(IN-COUNTER)",
+        "    COMPUTE INCREMENT-VALUE = FUNCTION NUMVAL(IN-INCREMENT)",
+        "    COMPUTE TOTAL-VALUE = COUNTER-VALUE + INCREMENT-VALUE",
+        "    MOVE TOTAL-VALUE TO ODOMETER-VALUE",
+        "    MOVE ODOMETER-VALUE TO OUT-VAL",
+        "    DISPLAY FUNCTION TRIM(OUT-VAL)",
+        "    STOP RUN."
+      ],
+      "cobolSegments": [
+        {
+          "id": "C1",
+          "startLine": 18,
+          "endLine": 18
+        },
+        {
+          "id": "C2",
+          "startLine": 19,
+          "endLine": 19
+        }
+      ],
+      "alignmentScope": "One-based inclusive line spans. Segments cover arithmetic and storage semantics; declarations, input conversion, output editing, and boilerplate are outside alignment scope. An unmatched segment denotes an actual omission or insertion.",
+      "tests": [
+        {
+          "testId": "F007-R1-T1",
+          "stdin": "1234\n56\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "1290"
+        },
+        {
+          "testId": "F007-R1-T2",
+          "stdin": "0\n0\n",
+          "caseKind": "lower_boundary",
+          "expectedReferenceValue": "0"
+        },
+        {
+          "testId": "F007-R1-T3",
+          "stdin": "9999\n0\n",
+          "caseKind": "counter_upper_boundary",
+          "expectedReferenceValue": "9999"
+        },
+        {
+          "testId": "F007-R1-T4",
+          "stdin": "9999\n1\n",
+          "caseKind": "single_wrap_witness",
+          "expectedReferenceValue": "0"
+        },
+        {
+          "testId": "F007-R1-T5",
+          "stdin": "0\n50000\n",
+          "caseKind": "multiple_wrap_witness",
+          "expectedReferenceValue": "0"
+        },
+        {
+          "testId": "F007-R1-T6",
+          "stdin": "9999\n50000\n",
+          "caseKind": "maximum_sum_boundary",
+          "expectedReferenceValue": "9999"
+        }
+      ],
+      "variants": [
+        {
+          "variantId": "F007-V1",
+          "familyRevision": "F007-R1",
+          "implementationStyle": "INTEGER_LONG",
+          "javaLines": [
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long counter = Long.parseLong(sc.nextLine());",
+            "        long increment = Long.parseLong(sc.nextLine());",
+            "        long total = counter + increment;",
+            "        long odometer = total % 10000L;",
+            "        System.out.println(odometer);",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 7,
+              "endLine": 7
+            },
+            {
+              "id": "J2",
+              "startLine": 8,
+              "endLine": 8
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectSubtype": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "C1 maps to the exact wide sum. J2 explicitly retains the low four decimal digits, reproducing unsigned PIC 9(4) receiving-field storage. Inputs are nonnegative, so Java remainder is nonnegative.",
+          "testPredictions": [
+            {
+              "testId": "F007-R1-T1",
+              "expectedJavaValue": "1290",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T2",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T3",
+              "expectedJavaValue": "9999",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T4",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T5",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T6",
+              "expectedJavaValue": "9999",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F007-V2",
+          "familyRevision": "F007-R1",
+          "implementationStyle": "BIG_DECIMAL",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal counter = new BigDecimal(sc.nextLine());",
+            "        BigDecimal increment = new BigDecimal(sc.nextLine());",
+            "        BigDecimal odometer = counter.add(increment).remainder(new BigDecimal(\"10000\"));",
+            "        System.out.println(odometer.toBigIntegerExact().toString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 8,
+              "endLine": 8
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1", "C2"],
+              "javaSegmentIds": ["J1"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectSubtype": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "J1 combines C1 and C2: exact integer-valued decimal addition followed by remainder modulo 10000. No rounding or precision context is introduced.",
+          "testPredictions": [
+            {
+              "testId": "F007-R1-T1",
+              "expectedJavaValue": "1290",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T2",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T3",
+              "expectedJavaValue": "9999",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T4",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T5",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T6",
+              "expectedJavaValue": "9999",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F007-V3",
+          "familyRevision": "F007-R1",
+          "implementationStyle": "INTEGER_LONG",
+          "javaLines": [
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long counter = Long.parseLong(sc.nextLine());",
+            "        long increment = Long.parseLong(sc.nextLine());",
+            "        long total = counter + increment;",
+            "        long odometer = total;",
+            "        System.out.println(odometer);",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 7,
+              "endLine": 7
+            },
+            {
+              "id": "J2",
+              "startLine": 8,
+              "endLine": 8
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "NUMERIC_STORAGE",
+          "defectSubtype": "EXCESS_HIGH_ORDER_DIGITS_RETAINED",
+          "defectCobolSegmentIds": ["C2"],
+          "defectJavaSegmentIds": ["J2"],
+          "labelRationale": "J2 retains the wide total instead of discarding high-order digits at the PIC 9(4) receiving boundary. The only mistake is omission of that storage reduction.",
+          "testPredictions": [
+            {
+              "testId": "F007-R1-T1",
+              "expectedJavaValue": "1290",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T2",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T3",
+              "expectedJavaValue": "9999",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T4",
+              "expectedJavaValue": "10000",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F007-R1-T5",
+              "expectedJavaValue": "50000",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F007-R1-T6",
+              "expectedJavaValue": "59999",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F007-V4",
+          "familyRevision": "F007-R1",
+          "implementationStyle": "BIG_DECIMAL",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal counter = new BigDecimal(sc.nextLine());",
+            "        BigDecimal increment = new BigDecimal(sc.nextLine());",
+            "        BigDecimal odometer = counter.add(increment).min(new BigDecimal(\"9999\"));",
+            "        System.out.println(odometer.toBigIntegerExact().toString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 8,
+              "endLine": 8
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1", "C2"],
+              "javaSegmentIds": ["J1"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "NUMERIC_STORAGE",
+          "defectSubtype": "SATURATION_INSTEAD_OF_DECIMAL_WRAP",
+          "defectCobolSegmentIds": ["C2"],
+          "defectJavaSegmentIds": ["J1"],
+          "labelRationale": "J1 replaces receiving-field wrap with saturation at 9999. Exact addition is preserved; clamping rather than wrapping is the single semantic mistake.",
+          "testPredictions": [
+            {
+              "testId": "F007-R1-T1",
+              "expectedJavaValue": "1290",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T2",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T3",
+              "expectedJavaValue": "9999",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F007-R1-T4",
+              "expectedJavaValue": "9999",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F007-R1-T5",
+              "expectedJavaValue": "9999",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F007-R1-T6",
+              "expectedJavaValue": "9999",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        }
+      ],
+      "labelStatus": "PROPOSED",
+      "executionStatus": "NOT_EXECUTED",
+      "executionEvidence": null
+    },
+    {
+      "familyId": "F008",
+      "familyRevision": "F008-R1",
+      "split": "train",
+      "focusCategory": "NUMERIC_STORAGE_AND_SIGN",
+      "sourceStatus": "PROPOSED_WITH_SOURCE",
+      "cloneGroup": "CG-F008-SIGNED-REMAINDER-NORMALIZATION",
+      "algorithmDescription": "Truncate signed dividend/divisor toward zero, subtract quotient*divisor from the dividend, and add the positive divisor only if the residual is negative.",
+      "contract": {
+        "inputFields": [
+          {
+            "name": "DIVIDEND-VALUE",
+            "cobolPicture": "PIC S9(5)",
+            "description": "Signed integer -99999..99999."
+          },
+          {
+            "name": "DIVISOR-VALUE",
+            "cobolPicture": "PIC 99",
+            "description": "Positive integer 1..99."
+          }
+        ],
+        "stdinFormat": "Two newline-separated canonical ASCII integers, one per line, at most 20 characters per line. No plus sign, leading zeroes, padding, separators, or exponent notation. Zero is 0; negative zero is not permitted.",
+        "validInputDomain": "dividend in [-99999,99999]; divisor in [1,99]. Only the dividend may have a minus sign.",
+        "outputMeaning": "One scalar integer r congruent to dividend modulo divisor, with 0<=r<divisor. Defective candidates may produce negative values; normalization must preserve that difference.",
+        "outputNormalization": "Trim surrounding ASCII whitespace and normalize the exact base-ten integer to canonical decimal without a leading plus sign or leading zeroes. Preserve every negative sign on a nonzero value; never apply absolute value during normalization.",
+        "semanticAssumptions": [
+          "QUOTIENT-VALUE has no fractional positions. COMPUTE without ROUNDED truncates the quotient toward zero.",
+          "PRODUCT-VALUE is the signed truncated quotient multiplied by the positive divisor; its magnitude never exceeds the dividend magnitude.",
+          "Before correction the residual satisfies -(divisor-1)<=r<=divisor-1. Adding the divisor only for a negative residual yields 0<=r<divisor.",
+          "Using floor division with a correctly calculated residual and normalization is equivalent, not a defect. V2 demonstrates this valid refactoring.",
+          "NORMALIZED-VALUE receives only a nonnegative corrected result in the reference, so its unsigned storage removes no meaningful sign.",
+          "OUT-VAL and FUNCTION TRIM emit a canonical nonnegative scalar integer. Invalid-input behavior is outside the contract."
+        ],
+        "storageBounds": [
+          {
+            "field": "IN-DIVIDEND, IN-DIVISOR",
+            "picture": "PIC X(20)",
+            "bound": "Each is a 20-character buffer. Valid dividend text has 1..6 characters; divisor text has 1..2. Remaining positions are ACCEPT padding."
+          },
+          {
+            "field": "DIVIDEND-VALUE",
+            "picture": "PIC S9(5)",
+            "minimum": -99999,
+            "maximum": 99999
+          },
+          {
+            "field": "DIVISOR-VALUE",
+            "picture": "PIC 99",
+            "minimum": 1,
+            "maximum": 99
+          },
+          {
+            "field": "QUOTIENT-VALUE",
+            "picture": "PIC S9(5)",
+            "minimum": -99999,
+            "maximum": 99999,
+            "note": "Truncation toward zero and divisor>=1 bound the quotient magnitude by the dividend magnitude."
+          },
+          {
+            "field": "PRODUCT-VALUE",
+            "picture": "PIC S9(5)",
+            "minimum": -99999,
+            "maximum": 99999,
+            "note": "The quotient and divisor are correlated: abs(trunc(dividend/divisor)*divisor)<=abs(dividend). Independent operand maxima are not multiplied to derive this invariant."
+          },
+          {
+            "field": "REMAINDER-VALUE before correction",
+            "picture": "PIC S9(3)",
+            "minimum": -98,
+            "maximum": 98
+          },
+          {
+            "field": "REMAINDER-VALUE after correction",
+            "picture": "PIC S9(3)",
+            "minimum": 0,
+            "maximum": 98,
+            "note": "More precisely, the value is less than the supplied divisor."
+          },
+          {
+            "field": "NORMALIZED-VALUE",
+            "picture": "PIC 99",
+            "minimum": 0,
+            "maximum": 98
+          },
+          {
+            "field": "OUT-VAL",
+            "picture": "PIC Z9",
+            "bound": "Represents 0..98 in two edited positions; trimming emits 1..2 digits."
+          }
+        ],
+        "javaIntermediateBounds": {
+          "dividend": "-99999..99999",
+          "divisor": "1..99",
+          "V1AndV3TruncatedQuotient": "-99999..99999",
+          "V1AndV3Product": "-99999..99999",
+          "V1AndV3RawRemainder": "-98..98",
+          "V1CorrectedRemainder": "0..98",
+          "V2FloorQuotient": "-99999..99999",
+          "V2FloorProductConservativeBound": "-100097..99999",
+          "V2RawAndNormalizedRemainder": "0..98",
+          "V4WorkingDividend": "0..99999",
+          "V4QuotientAndProduct": "0..99999",
+          "V4RawAndNormalizedRemainder": "0..98",
+          "longSafety": "Actual long intermediates have magnitude at most 99999. Even independently bounding the multiplication by 99999*99=9899901 and the subtraction by 99999+9899901=9999900 remains far below Long.MAX_VALUE 9223372036854775807.",
+          "decimalSafety": "All stored BigDecimal values are exact scale-zero integers. Division explicitly rounds the quotient toward negative infinity at scale zero; multiplication, subtraction, addition, and absolute value use no precision-limiting MathContext."
+        }
+      },
+      "cobolLines": [
+        ">>SOURCE FORMAT FREE",
+        "IDENTIFICATION DIVISION.",
+        "PROGRAM-ID. F008R1.",
+        "DATA DIVISION.",
+        "WORKING-STORAGE SECTION.",
+        "01 IN-DIVIDEND PIC X(20).",
+        "01 IN-DIVISOR PIC X(20).",
+        "01 DIVIDEND-VALUE PIC S9(5).",
+        "01 DIVISOR-VALUE PIC 99.",
+        "01 QUOTIENT-VALUE PIC S9(5).",
+        "01 PRODUCT-VALUE PIC S9(5).",
+        "01 REMAINDER-VALUE PIC S9(3).",
+        "01 NORMALIZED-VALUE PIC 99.",
+        "01 OUT-VAL PIC Z9.",
+        "PROCEDURE DIVISION.",
+        "    ACCEPT IN-DIVIDEND",
+        "    ACCEPT IN-DIVISOR",
+        "    COMPUTE DIVIDEND-VALUE = FUNCTION NUMVAL(IN-DIVIDEND)",
+        "    COMPUTE DIVISOR-VALUE = FUNCTION NUMVAL(IN-DIVISOR)",
+        "    COMPUTE QUOTIENT-VALUE = DIVIDEND-VALUE / DIVISOR-VALUE",
+        "    COMPUTE PRODUCT-VALUE = QUOTIENT-VALUE * DIVISOR-VALUE",
+        "    COMPUTE REMAINDER-VALUE = DIVIDEND-VALUE - PRODUCT-VALUE",
+        "    IF REMAINDER-VALUE < 0",
+        "        ADD DIVISOR-VALUE TO REMAINDER-VALUE",
+        "    END-IF",
+        "    MOVE REMAINDER-VALUE TO NORMALIZED-VALUE",
+        "    MOVE NORMALIZED-VALUE TO OUT-VAL",
+        "    DISPLAY FUNCTION TRIM(OUT-VAL)",
+        "    STOP RUN."
+      ],
+      "cobolSegments": [
+        {
+          "id": "C1",
+          "startLine": 20,
+          "endLine": 20
+        },
+        {
+          "id": "C2",
+          "startLine": 21,
+          "endLine": 21
+        },
+        {
+          "id": "C3",
+          "startLine": 22,
+          "endLine": 22
+        },
+        {
+          "id": "C4",
+          "startLine": 23,
+          "endLine": 25
+        }
+      ],
+      "alignmentScope": "One-based inclusive line spans. Segments cover arithmetic and storage semantics; declarations, input conversion, output editing, and boilerplate are outside alignment scope. An unmatched segment denotes an actual omission or insertion.",
+      "tests": [
+        {
+          "testId": "F008-R1-T1",
+          "stdin": "17\n5\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "2"
+        },
+        {
+          "testId": "F008-R1-T2",
+          "stdin": "0\n99\n",
+          "caseKind": "zero_dividend_and_max_divisor",
+          "expectedReferenceValue": "0"
+        },
+        {
+          "testId": "F008-R1-T3",
+          "stdin": "99999\n1\n",
+          "caseKind": "max_dividend_and_min_divisor",
+          "expectedReferenceValue": "0"
+        },
+        {
+          "testId": "F008-R1-T4",
+          "stdin": "-99999\n99\n",
+          "caseKind": "min_dividend_and_defect_witness",
+          "expectedReferenceValue": "90"
+        },
+        {
+          "testId": "F008-R1-T5",
+          "stdin": "-17\n5\n",
+          "caseKind": "negative_nonmultiple_and_defect_witness",
+          "expectedReferenceValue": "3"
+        },
+        {
+          "testId": "F008-R1-T6",
+          "stdin": "-100\n10\n",
+          "caseKind": "negative_exact_multiple",
+          "expectedReferenceValue": "0"
+        }
+      ],
+      "variants": [
+        {
+          "variantId": "F008-V1",
+          "familyRevision": "F008-R1",
+          "implementationStyle": "INTEGER_LONG",
+          "javaLines": [
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long dividend = Long.parseLong(sc.nextLine());",
+            "        long divisor = Long.parseLong(sc.nextLine());",
+            "        long quotient = dividend / divisor;",
+            "        long product = quotient * divisor;",
+            "        long remainder = dividend - product;",
+            "        if (remainder < 0L) {",
+            "            remainder += divisor;",
+            "        }",
+            "        System.out.println(remainder);",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 7,
+              "endLine": 7
+            },
+            {
+              "id": "J2",
+              "startLine": 8,
+              "endLine": 8
+            },
+            {
+              "id": "J3",
+              "startLine": 9,
+              "endLine": 9
+            },
+            {
+              "id": "J4",
+              "startLine": 10,
+              "endLine": 12
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            },
+            {
+              "cobolSegmentIds": ["C4"],
+              "javaSegmentIds": ["J4"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectSubtype": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Java integer division truncates toward zero. The signed quotient, product, residual, and conditional positive-divisor correction correspond directly to C1 through C4.",
+          "testPredictions": [
+            {
+              "testId": "F008-R1-T1",
+              "expectedJavaValue": "2",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T2",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T3",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T4",
+              "expectedJavaValue": "90",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T5",
+              "expectedJavaValue": "3",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T6",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F008-V2",
+          "familyRevision": "F008-R1",
+          "implementationStyle": "BIG_DECIMAL",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal dividend = new BigDecimal(sc.nextLine());",
+            "        BigDecimal divisor = new BigDecimal(sc.nextLine());",
+            "        BigDecimal quotient = dividend.divide(divisor, 0, RoundingMode.FLOOR);",
+            "        BigDecimal product = quotient.multiply(divisor);",
+            "        BigDecimal rawRemainder = dividend.subtract(product);",
+            "        BigDecimal normalized = rawRemainder.signum() < 0 ? rawRemainder.add(divisor) : rawRemainder;",
+            "        System.out.println(normalized.toBigIntegerExact().toString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 9,
+              "endLine": 9
+            },
+            {
+              "id": "J2",
+              "startLine": 10,
+              "endLine": 10
+            },
+            {
+              "id": "J3",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J4",
+              "startLine": 12,
+              "endLine": 12
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1", "C2", "C3", "C4"],
+              "javaSegmentIds": ["J1", "J2", "J3", "J4"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectSubtype": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "FLOOR division is intentionally equivalent here. Its residual is already in 0..divisor-1. For a negative nonmultiple, its quotient is one below the reference truncated quotient, and its residual equals the reference residual after correction. Intermediate quotients and products need not agree, so the complete pipeline is aligned as a group.",
+          "testPredictions": [
+            {
+              "testId": "F008-R1-T1",
+              "expectedJavaValue": "2",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T2",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T3",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T4",
+              "expectedJavaValue": "90",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T5",
+              "expectedJavaValue": "3",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T6",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F008-V3",
+          "familyRevision": "F008-R1",
+          "implementationStyle": "INTEGER_LONG",
+          "javaLines": [
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long dividend = Long.parseLong(sc.nextLine());",
+            "        long divisor = Long.parseLong(sc.nextLine());",
+            "        long quotient = dividend / divisor;",
+            "        long product = quotient * divisor;",
+            "        long remainder = dividend - product;",
+            "        System.out.println(remainder);",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 7,
+              "endLine": 7
+            },
+            {
+              "id": "J2",
+              "startLine": 8,
+              "endLine": 8
+            },
+            {
+              "id": "J3",
+              "startLine": 9,
+              "endLine": 9
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": ["C4"],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "NUMERIC_SIGN",
+          "defectSubtype": "NEGATIVE_REMAINDER_CORRECTION_OMITTED",
+          "defectCobolSegmentIds": ["C4"],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "The only mistake is omission of C4. Negative nonmultiples retain a negative residual. C4 is genuinely unmatched because the Java program contains no corresponding correction.",
+          "testPredictions": [
+            {
+              "testId": "F008-R1-T1",
+              "expectedJavaValue": "2",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T2",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T3",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T4",
+              "expectedJavaValue": "-9",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F008-R1-T5",
+              "expectedJavaValue": "-2",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F008-R1-T6",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F008-V4",
+          "familyRevision": "F008-R1",
+          "implementationStyle": "BIG_DECIMAL",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal dividend = new BigDecimal(sc.nextLine());",
+            "        BigDecimal divisor = new BigDecimal(sc.nextLine());",
+            "        BigDecimal workingDividend = dividend.abs();",
+            "        BigDecimal quotient = workingDividend.divide(divisor, 0, RoundingMode.FLOOR);",
+            "        BigDecimal product = quotient.multiply(divisor);",
+            "        BigDecimal rawRemainder = workingDividend.subtract(product);",
+            "        BigDecimal normalized = rawRemainder.signum() < 0 ? rawRemainder.add(divisor) : rawRemainder;",
+            "        System.out.println(normalized.toBigIntegerExact().toString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 9,
+              "endLine": 9
+            },
+            {
+              "id": "J2",
+              "startLine": 10,
+              "endLine": 10
+            },
+            {
+              "id": "J3",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J4",
+              "startLine": 12,
+              "endLine": 12
+            },
+            {
+              "id": "J5",
+              "startLine": 13,
+              "endLine": 13
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1", "C2", "C3", "C4"],
+              "javaSegmentIds": ["J2", "J3", "J4", "J5"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": ["J1"],
+          "expectedEquivalent": false,
+          "defectCategory": "NUMERIC_SIGN",
+          "defectSubtype": "DIVIDEND_MAGNITUDE_SUBSTITUTED",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": ["J1"],
+          "labelRationale": "J1 inserts an absolute-value transformation absent from the reference. The remaining floor-division normalization pipeline is valid for its supplied working value, but that value has lost the dividend sign. The absolute-value substitution is the only semantic mistake; J1 is genuinely unmatched.",
+          "testPredictions": [
+            {
+              "testId": "F008-R1-T1",
+              "expectedJavaValue": "2",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T2",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T3",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F008-R1-T4",
+              "expectedJavaValue": "9",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F008-R1-T5",
+              "expectedJavaValue": "2",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F008-R1-T6",
+              "expectedJavaValue": "0",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        }
+      ],
+      "labelStatus": "PROPOSED",
+      "executionStatus": "NOT_EXECUTED",
+      "executionEvidence": null
+    }
+  ],
+  "labelStatus": "PROPOSED",
+  "executionStatus": "NOT_EXECUTED",
+  "executionEvidence": null
+}

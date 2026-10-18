@@ -1,0 +1,4496 @@
+{
+  "formatVersion": 1,
+  "generatedAt": "2026-10-18T03:05:36.762454+00:00",
+  "provenance": "AI-authored financial test fixtures, excluded from paired-code GNN training; recomputed independent Z3 results. Raw reference-data provenance retained.",
+  "referenceFxRates": [
+    {
+      "currencyPair": "GBP/EUR",
+      "rate": "1.183",
+      "source": "Bank of England Daily Spot Rate",
+      "collectedDate": "2026-10-17",
+      "observationDate": "2026-10-15",
+      "seriesCode": "XUDLERS",
+      "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+      "licence": "OGL-UK-3.0",
+      "provenance": {
+        "id": "boe-XUDLERS",
+        "units": "EUR per 1 GBP",
+        "snapshotPath": "snapshots/boe-XUDLERS.html",
+        "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+        "requestedObservationThrough": "2026-10-17",
+        "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+        "desiredDemoObservationDate": "2026-10-16"
+      },
+      "provenanceJson": {
+        "seriesCode": "XUDLERS",
+        "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+        "licence": "OGL-UK-3.0",
+        "provenance": {
+          "id": "boe-XUDLERS",
+          "units": "EUR per 1 GBP",
+          "snapshotPath": "snapshots/boe-XUDLERS.html",
+          "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+          "requestedObservationThrough": "2026-10-17",
+          "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+          "desiredDemoObservationDate": "2026-10-16"
+        }
+      },
+      "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
+    },
+    {
+      "currencyPair": "GBP/USD",
+      "rate": "1.3253",
+      "source": "Bank of England Daily Spot Rate",
+      "collectedDate": "2026-10-17",
+      "observationDate": "2026-10-15",
+      "seriesCode": "XUDLUSS",
+      "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLUSS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLUSS",
+      "licence": "OGL-UK-3.0",
+      "provenance": {
+        "id": "boe-XUDLUSS",
+        "units": "USD per 1 GBP",
+        "snapshotPath": "snapshots/boe-XUDLUSS.html",
+        "snapshotSha256": "acf9f188023e7b8818c25dfc6235f68774134ca7dea58971cdec8683e765f816",
+        "requestedObservationThrough": "2026-10-17",
+        "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+        "desiredDemoObservationDate": "2026-10-16"
+      },
+      "provenanceJson": {
+        "seriesCode": "XUDLUSS",
+        "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLUSS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLUSS",
+        "licence": "OGL-UK-3.0",
+        "provenance": {
+          "id": "boe-XUDLUSS",
+          "units": "USD per 1 GBP",
+          "snapshotPath": "snapshots/boe-XUDLUSS.html",
+          "snapshotSha256": "acf9f188023e7b8818c25dfc6235f68774134ca7dea58971cdec8683e765f816",
+          "requestedObservationThrough": "2026-10-17",
+          "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+          "desiredDemoObservationDate": "2026-10-16"
+        }
+      },
+      "id": "a134f4e0-5538-557c-a2bf-85fc9f6f19c0"
+    },
+    {
+      "currencyPair": "GBP/THB",
+      "rate": "44.4158",
+      "source": "Bank of England Daily Spot Rate",
+      "collectedDate": "2026-10-17",
+      "observationDate": "2026-10-15",
+      "seriesCode": "XUDLBK87",
+      "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLBK87&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLBK87",
+      "licence": "OGL-UK-3.0",
+      "provenance": {
+        "id": "boe-XUDLBK87",
+        "units": "THB per 1 GBP",
+        "snapshotPath": "snapshots/boe-XUDLBK87.html",
+        "snapshotSha256": "423499acbd803cda3f357175c737b2ac883883c5f84944a791fd51a1e897bdd5",
+        "requestedObservationThrough": "2026-10-17",
+        "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+        "desiredDemoObservationDate": "2026-10-16"
+      },
+      "provenanceJson": {
+        "seriesCode": "XUDLBK87",
+        "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLBK87&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLBK87",
+        "licence": "OGL-UK-3.0",
+        "provenance": {
+          "id": "boe-XUDLBK87",
+          "units": "THB per 1 GBP",
+          "snapshotPath": "snapshots/boe-XUDLBK87.html",
+          "snapshotSha256": "423499acbd803cda3f357175c737b2ac883883c5f84944a791fd51a1e897bdd5",
+          "requestedObservationThrough": "2026-10-17",
+          "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+          "desiredDemoObservationDate": "2026-10-16"
+        }
+      },
+      "id": "93320c0b-4088-50db-a2a2-68cd51f7af84"
+    },
+    {
+      "currencyPair": "GBP/THB",
+      "rate": "43.98",
+      "source": "World Bank Remittance Prices Worldwide",
+      "collectedDate": "2026-10-17",
+      "observationDate": "2025-08-22",
+      "provenanceJson": {
+        "id": "world-bank-gbp-thb-wise-2025q3",
+        "currencyPair": "GBP/THB",
+        "sendingCountry": "United Kingdom",
+        "receivingCountry": "Thailand",
+        "provider": "Wise",
+        "accessPoint": "Internet",
+        "sendAmountGbp": "120.00",
+        "feeGbp": "1.89",
+        "exchangeRateMarginPercent": "0.06",
+        "displayedMarketReferenceRate": "44.01",
+        "displayedProviderExchangeRate": "43.98",
+        "rateUnits": "THB per 1 GBP",
+        "totalCostPercent": "1.64",
+        "totalCostGbp": "1.96",
+        "surveyCollectionStart": "2025-08-08",
+        "surveyCollectionEnd": "2025-08-22",
+        "collectedDate": "2026-10-17",
+        "source": "World Bank Remittance Prices Worldwide",
+        "sourceUrl": "https://remittanceprices.worldbank.org/corridor/United-Kingdom/Thailand",
+        "licence": "CC-BY-4.0",
+        "licenceUrl": "https://datacatalog.worldbank.org/search/dataset/0037898/remittance-prices-worldwide",
+        "attribution": "The World Bank, Remittance Prices Worldwide, available at http://remittanceprices.worldbank.org",
+        "provenance": {
+          "snapshotPath": "snapshots/world-bank-gbp-thb.extract.txt",
+          "snapshotType": "manually transcribed numeric row verified against primary-page web extraction",
+          "rawHttpResponseArchived": false,
+          "downloadLimitation": "The primary page and workbook returned HTTP 403 to direct Python downloads. The public corridor page remained readable through the web research tool.",
+          "rowSelection": "First Wise Internet row on the GBP 120 / USD 200 tab, survey 2025Q3"
+        },
+        "limitations": [
+          "Historical survey observation, not a live quote or October 2026 spot reference rate.",
+          "The source displays rounded values. Do not reconstruct an exact provider tariff or FX margin from these rounded values.",
+          "Total cost combines sender fees and the exchange-rate margin and is not itself an FX rate.",
+          "Any demonstration tier schedule used by the verifier is AI-authored, not a World Bank or Wise published tariff.",
+          "No provider or World Bank endorsement is implied."
+        ],
+        "rateMeaning": "historical displayed provider THB per GBP, rounded survey value"
+      },
+      "id": "49864c0b-8862-5dd9-8d4d-f0de6100664f"
+    }
+  ],
+  "verifications": [
+    {
+      "id": "529f05c9-2783-53b1-a89f-0aacc1b5a3fe",
+      "moduleName": "FX-WIRE-CALC.cbl",
+      "category": "FX_CONVERSION",
+      "cobolSource": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. FX-WIRE-CALC.\n       DATA DIVISION.\n       WORKING-STORAGE SECTION.\n       01 INPUT-AMOUNT PIC S9(7)V99 COMP-3 VALUE 0.\n       01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.\n       01 SETTLEMENT-RESULT PIC S9(7)V99 COMP-3 VALUE 0.\n       PROCEDURE DIVISION.\n       MAIN.\n           COMPUTE SETTLEMENT-RESULT ROUNDED = INPUT-AMOUNT * REFERENCE-RATE.\n           GOBACK.\n",
+      "javaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class FxWireService {\n    public BigDecimal calculate(double principal, double quote) {\n        return new BigDecimal(principal * quote).setScale(2, RoundingMode.HALF_UP);\n    }\n}\n",
+      "patchedJavaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class FxWireService {\n    public BigDecimal calculate(BigDecimal principal, BigDecimal quote) {\n        return principal.multiply(quote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));\n    }\n}\n",
+      "gnnAlignmentScore": 0.636735,
+      "gnnBugRiskScore": 0.0,
+      "baselineAlignmentScore": 0.0,
+      "baselineCaughtBug": false,
+      "formalProofStatus": "SAT_COUNTEREXAMPLE_FOUND",
+      "bugCategory": "IEEE754_PENNY_DRIFT",
+      "counterexamplesJson": [
+        {
+          "inputAmountGbp": "45.00",
+          "referenceRate": "1.183",
+          "cobolOutput": "53.24",
+          "javaOutput": "53.23",
+          "pennyDrift": "-0.01",
+          "dataSource": "Bank of England Daily Spot Rate",
+          "collectedDate": "2026-10-17",
+          "observationDate": "2026-10-15",
+          "solverGenerated": true,
+          "witnessStrategy": "Z3 Float64 checked finite candidate",
+          "cobolOutputEur": "53.24",
+          "javaOutputEur": "53.23"
+        }
+      ],
+      "isFailureLimitCase": false,
+      "proofScope": {
+        "supported": true,
+        "bounded": true,
+        "inputUnit": "integer cents",
+        "inputAmountCents": {
+          "min": -999999999,
+          "max": 999999999
+        },
+        "rate": {
+          "currencyPair": "GBP/EUR",
+          "rate": "1.183",
+          "source": "Bank of England Daily Spot Rate",
+          "collectedDate": "2026-10-17",
+          "observationDate": "2026-10-15",
+          "seriesCode": "XUDLERS",
+          "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+          "licence": "OGL-UK-3.0",
+          "provenance": {
+            "id": "boe-XUDLERS",
+            "units": "EUR per 1 GBP",
+            "snapshotPath": "snapshots/boe-XUDLERS.html",
+            "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+            "requestedObservationThrough": "2026-10-17",
+            "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+            "desiredDemoObservationDate": "2026-10-16"
+          },
+          "provenanceJson": {
+            "seriesCode": "XUDLERS",
+            "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+            "licence": "OGL-UK-3.0",
+            "provenance": {
+              "id": "boe-XUDLERS",
+              "units": "EUR per 1 GBP",
+              "snapshotPath": "snapshots/boe-XUDLERS.html",
+              "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+              "requestedObservationThrough": "2026-10-17",
+              "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+              "desiredDemoObservationDate": "2026-10-16"
+            }
+          },
+          "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
+        },
+        "proofInputs": {
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+          "cobolSourceFormat": "FREE",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "principal",
+          "javaRateParameter": "quote",
+          "amountMinCents": -999999999,
+          "amountMaxCents": 999999999,
+          "referenceCurrencyPair": "GBP/EUR",
+          "referenceSource": "Bank of England Daily Spot Rate",
+          "referenceCollectedDate": "2026-10-17"
+        },
+        "semantics": "restricted COBOL/Java scalar arithmetic v1",
+        "outputObservation": "monetary values rounded HALF_UP to integer cents",
+        "sourceSha256": {
+          "cobol": "c9bd04358c7ee83cd2c61530262e6d55ee880ab846a854467491d5138ee5f395",
+          "java": "211340a44236a811b8eaff6ec6d0d3007130cabfd0cd092832ce87699e1e4561"
+        },
+        "limitations": [
+          "One exact fixed reference rate; acyclic scalar arithmetic only.",
+          "PIC overflow discards high-order digits; no ON SIZE ERROR, runtime or I/O semantics.",
+          "UNSAT covers only the explicit finite input domain, never arbitrary whole programs.",
+          "GNN alignments guide inspection and do not authorize a proof."
+        ],
+        "floatingPointSearch": "Exact half-cent candidates up to 200000 cents; each candidate checked by Z3 Float64. Incomplete.",
+        "solver": {
+          "name": "Z3",
+          "version": "4.15.3",
+          "result": "sat",
+          "timeoutMs": 5000
+        }
+      },
+      "fStringSummary": "Paired-code GNN program cosine 0.637 (advisory matching, not equivalence). Defect risk is not estimated. Z3 found amount 45.00 GBP: COBOL 53.24, Java 53.23, drift -0.01 output units. Rate 1.183 (Bank of England Daily Spot Rate; observed 2026-10-15).",
+      "cpgGraphJson": {
+        "featureNames": [
+          "is_fixed_point_comp3",
+          "is_ieee754_float",
+          "is_big_decimal",
+          "decimal_scale",
+          "has_rounding_clause",
+          "is_loop_branch",
+          "is_external_call",
+          "pca_structural_residual"
+        ],
+        "extractorScope": "Line AST/CFG/type-use approximation; formal parser independently validates all syntax.",
+        "nodes": [
+          {
+            "id": "cobol:root",
+            "label": "COBOL",
+            "kind": "program",
+            "language": "cobol",
+            "line": 1,
+            "features": [
+              1.0,
+              0.0,
+              0.0,
+              0.25,
+              1.0,
+              0.0,
+              0.0,
+              0.12071151691710735
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:1",
+            "label": "IDENTIFICATION DIVISION.",
+            "sourceText": "IDENTIFICATION DIVISION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 1,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.014839822731102122
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:2",
+            "label": "PROGRAM-ID. FX-WIRE-CALC.",
+            "sourceText": "PROGRAM-ID. FX-WIRE-CALC.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 2,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.21756736930526793
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:3",
+            "label": "DATA DIVISION.",
+            "sourceText": "DATA DIVISION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 3,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.21756736930526793
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:4",
+            "label": "WORKING-STORAGE SECTION.",
+            "sourceText": "WORKING-STORAGE SECTION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 4,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.18469322994430323
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:5",
+            "label": "01 INPUT-AMOUNT PIC S9(7)V99 COMP-3 VALUE 0.",
+            "sourceText": "01 INPUT-AMOUNT PIC S9(7)V99 COMP-3 VALUE 0.",
+            "kind": "field",
+            "language": "cobol",
+            "line": 5,
+            "features": [
+              1.0,
+              0.0,
+              0.0,
+              0.25,
+              0.0,
+              0.0,
+              0.0,
+              0.014839822731102145
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:6",
+            "label": "01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.",
+            "sourceText": "01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.",
+            "kind": "field",
+            "language": "cobol",
+            "line": 6,
+            "features": [
+              1.0,
+              0.0,
+              0.0,
+              0.5,
+              0.0,
+              0.0,
+              0.0,
+              0.014839822731102145
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:7",
+            "label": "01 SETTLEMENT-RESULT PIC S9(7)V99 COMP-3 VALUE 0.",
+            "sourceText": "01 SETTLEMENT-RESULT PIC S9(7)V99 COMP-3 VALUE 0.",
+            "kind": "field",
+            "language": "cobol",
+            "line": 7,
+            "features": [
+              1.0,
+              0.0,
+              0.0,
+              0.25,
+              0.0,
+              0.0,
+              0.0,
+              0.34195844156759103
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:8",
+            "label": "PROCEDURE DIVISION.",
+            "sourceText": "PROCEDURE DIVISION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 8,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.37814004667627693
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:9",
+            "label": "MAIN",
+            "sourceText": "MAIN.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 9,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.09377737678107642
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:10",
+            "label": "COMPUTE SETTLEMENT-RESULT ROUNDED = INPUT-AMOUNT * REFERENCE-RATE.",
+            "sourceText": "COMPUTE SETTLEMENT-RESULT ROUNDED = INPUT-AMOUNT * REFERENCE-RATE.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 10,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.15320741300112106
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:11",
+            "label": "GOBACK",
+            "sourceText": "GOBACK.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 11,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.18469322994430323
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:root",
+            "label": "JAVA",
+            "kind": "program",
+            "language": "java",
+            "line": 1,
+            "features": [
+              0.0,
+              1.0,
+              1.0,
+              0.25,
+              1.0,
+              0.0,
+              0.0,
+              0.04488734085955027
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:1",
+            "label": "import java.math.BigDecimal;",
+            "sourceText": "import java.math.BigDecimal;",
+            "kind": "statement",
+            "language": "java",
+            "line": 1,
+            "features": [
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.2058212364641698
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:2",
+            "label": "import java.math.RoundingMode;",
+            "sourceText": "import java.math.RoundingMode;",
+            "kind": "statement",
+            "language": "java",
+            "line": 2,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.07281113463305214
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:3",
+            "label": "public final class FxWireService {",
+            "sourceText": "public final class FxWireService {",
+            "kind": "statement",
+            "language": "java",
+            "line": 3,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.02305159149830646
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:4",
+            "label": "calculate",
+            "sourceText": "public BigDecimal calculate(double principal, double quote) {",
+            "kind": "field",
+            "language": "java",
+            "line": 4,
+            "features": [
+              0.0,
+              1.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.28992582379773363
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:5",
+            "label": "return new BigDecimal(principal * quote).setScale(2, RoundingMode.HALF_UP);",
+            "sourceText": "return new BigDecimal(principal * quote).setScale(2, RoundingMode.HALF_UP);",
+            "kind": "statement",
+            "language": "java",
+            "line": 5,
+            "features": [
+              0.0,
+              0.0,
+              1.0,
+              0.25,
+              1.0,
+              0.0,
+              0.0,
+              0.09264504597803619
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:6",
+            "label": "}",
+            "sourceText": "}",
+            "kind": "statement",
+            "language": "java",
+            "line": 6,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.07281113463305211
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:7",
+            "label": "}",
+            "sourceText": "}",
+            "kind": "statement",
+            "language": "java",
+            "line": 7,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.02305159149830646
+            ],
+            "riskScore": 0.0
+          }
+        ],
+        "edges": [
+          {
+            "source": "cobol:root",
+            "target": "cobol:1",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:2",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:3",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:4",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:5",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:6",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:7",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:8",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:9",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:11",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:1",
+            "target": "cobol:2",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:2",
+            "target": "cobol:3",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:3",
+            "target": "cobol:4",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:5",
+            "target": "cobol:10",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:6",
+            "target": "cobol:10",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:7",
+            "target": "cobol:8",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:7",
+            "target": "cobol:10",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:8",
+            "target": "cobol:9",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:9",
+            "target": "cobol:10",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:9",
+            "target": "cobol:10",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:10",
+            "target": "cobol:11",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:root",
+            "target": "java:1",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:2",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:3",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:4",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:5",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:6",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:7",
+            "kind": "AST"
+          },
+          {
+            "source": "java:1",
+            "target": "java:2",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:2",
+            "target": "java:3",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:4",
+            "target": "java:5",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:4",
+            "target": "java:5",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "java:5",
+            "target": "java:6",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:6",
+            "target": "java:7",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:root",
+            "target": "java:root",
+            "kind": "GNN_ALIGNMENT",
+            "granularity": "PROGRAM",
+            "similarity": 0.636735,
+            "matchingIsProof": false
+          }
+        ]
+      },
+      "provenanceJson": {
+        "engineVersion": "0.1.0",
+        "model": {
+          "id": "paired-program-gnn-v1",
+          "sha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+          "trainingDataset": "COBOL-JavaTrans (143 original source pairs)",
+          "evaluation": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+          },
+          "limitations": [
+            "143 small HumanEval-derived pairs, not banking migrations",
+            "Pair labels are upstream correspondence, not independent correctness proofs",
+            "Heuristic graph extraction, not full compiler AST/CFG",
+            "Names excluded from model; name baseline may be stronger on named benchmark",
+            "Cosine scores are not calibrated probabilities",
+            "No financial-domain generalization claim",
+            "No defect prediction or code generation"
+          ]
+        },
+        "modelSha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+        "graphInferenceMs": 9.298,
+        "referenceRate": {
+          "currencyPair": "GBP/EUR",
+          "rate": "1.183",
+          "source": "Bank of England Daily Spot Rate",
+          "collectedDate": "2026-10-17",
+          "observationDate": "2026-10-15",
+          "seriesCode": "XUDLERS",
+          "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+          "licence": "OGL-UK-3.0",
+          "provenance": {
+            "id": "boe-XUDLERS",
+            "units": "EUR per 1 GBP",
+            "snapshotPath": "snapshots/boe-XUDLERS.html",
+            "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+            "requestedObservationThrough": "2026-10-17",
+            "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+            "desiredDemoObservationDate": "2026-10-16"
+          },
+          "provenanceJson": {
+            "seriesCode": "XUDLERS",
+            "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+            "licence": "OGL-UK-3.0",
+            "provenance": {
+              "id": "boe-XUDLERS",
+              "units": "EUR per 1 GBP",
+              "snapshotPath": "snapshots/boe-XUDLERS.html",
+              "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+              "requestedObservationThrough": "2026-10-17",
+              "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+              "desiredDemoObservationDate": "2026-10-16"
+            }
+          },
+          "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
+        },
+        "alignmentIsProof": false,
+        "measuredAlignmentBenchmark": null,
+        "mlValidation": {
+          "status": "BENCHMARK_PILOT",
+          "evidence": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+          },
+          "productionBankingValidated": false
+        },
+        "riskAssessment": {
+          "status": "NOT_ESTIMATED",
+          "reason": "The synthetic risk classifier was removed. Paired-program labels do not identify defects.",
+          "legacyNumericField": "gnnBugRiskScore=0 is unused compatibility data, not evidence of low risk."
+        },
+        "matchingGranularity": "PROGRAM",
+        "sourceAuthorship": {
+          "aiGenerated": true,
+          "description": "AI-authored executable scalar COBOL/Java banking demonstration",
+          "inspiration": "Apache-2.0 IBM/Bank-of-Z COBOL, pinned source attribution in data-sources/provenance.json",
+          "authenticVendorExtract": false,
+          "remittancePolicy": "Historical World Bank GBP120 fee1.89 plus AI-generated >GBP120 tier at1%; not a real provider tariff"
+        },
+        "limitations": [
+          "The displayed inspection graph is a line approximation; matching uses a separate semantic-feature graph.",
+          "Program-pair training does not supply statement correspondences or defect labels.",
+          "GNN/model confidence is not proof and does not prune symbolic inputs.",
+          "Small public benchmark retrieval results do not establish production migration reliability."
+        ],
+        "patchVerification": {
+          "status": "UNSAT_PROVEN_SAFE",
+          "proofScope": {
+            "supported": true,
+            "bounded": true,
+            "inputUnit": "integer cents",
+            "inputAmountCents": {
+              "min": -999999999,
+              "max": 999999999
+            },
+            "rate": {
+              "currencyPair": "GBP/EUR",
+              "rate": "1.183",
+              "source": "Bank of England Daily Spot Rate",
+              "collectedDate": "2026-10-17",
+              "observationDate": "2026-10-15",
+              "seriesCode": "XUDLERS",
+              "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+              "licence": "OGL-UK-3.0",
+              "provenance": {
+                "id": "boe-XUDLERS",
+                "units": "EUR per 1 GBP",
+                "snapshotPath": "snapshots/boe-XUDLERS.html",
+                "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+                "requestedObservationThrough": "2026-10-17",
+                "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+                "desiredDemoObservationDate": "2026-10-16"
+              },
+              "provenanceJson": {
+                "seriesCode": "XUDLERS",
+                "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+                "licence": "OGL-UK-3.0",
+                "provenance": {
+                  "id": "boe-XUDLERS",
+                  "units": "EUR per 1 GBP",
+                  "snapshotPath": "snapshots/boe-XUDLERS.html",
+                  "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+                  "requestedObservationThrough": "2026-10-17",
+                  "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+                  "desiredDemoObservationDate": "2026-10-16"
+                }
+              },
+              "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
+            },
+            "proofInputs": {
+              "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+              "cobolSourceFormat": "FREE",
+              "amountField": "INPUT-AMOUNT",
+              "rateField": "REFERENCE-RATE",
+              "resultField": "SETTLEMENT-RESULT",
+              "javaAmountParameter": "principal",
+              "javaRateParameter": "quote",
+              "amountMinCents": -999999999,
+              "amountMaxCents": 999999999,
+              "referenceCurrencyPair": "GBP/EUR",
+              "referenceSource": "Bank of England Daily Spot Rate",
+              "referenceCollectedDate": "2026-10-17"
+            },
+            "semantics": "restricted COBOL/Java scalar arithmetic v1",
+            "outputObservation": "monetary values rounded HALF_UP to integer cents",
+            "sourceSha256": {
+              "cobol": "c9bd04358c7ee83cd2c61530262e6d55ee880ab846a854467491d5138ee5f395",
+              "java": "57649c44b80daa20f15a7daead24d30d3749cd145f07665c4f73aaf06ff96123"
+            },
+            "limitations": [
+              "One exact fixed reference rate; acyclic scalar arithmetic only.",
+              "PIC overflow discards high-order digits; no ON SIZE ERROR, runtime or I/O semantics.",
+              "UNSAT covers only the explicit finite input domain, never arbitrary whole programs.",
+              "GNN alignments guide inspection and do not authorize a proof."
+            ],
+            "solver": {
+              "name": "Z3",
+              "version": "4.15.3",
+              "result": "unsat",
+              "timeoutMs": 5000
+            }
+          }
+        }
+      },
+      "createdAt": "2026-10-18T03:05:36.762454+00:00",
+      "updatedAt": "2026-10-18T03:05:36.762454+00:00"
+    },
+    {
+      "id": "3b0f8f5b-6c24-503e-8711-12ae3fc6a0c1",
+      "moduleName": "MORTGAGE-INT-CALC.cbl",
+      "category": "INTEREST_CALC",
+      "cobolSource": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. MORTGAGE-INT-CALC.\n       DATA DIVISION.\n       WORKING-STORAGE SECTION.\n       01 INPUT-AMOUNT PIC 9(7)V99 COMP-3 VALUE 0.\n       01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.\n       01 SETTLEMENT-RESULT PIC 9(5) COMP-3 VALUE 0.\n       PROCEDURE DIVISION.\n       MAIN.\n           PERFORM CALC-TIER THRU CALC-EXIT.\n           GOBACK.\n       CALC-TIER.\n           COMPUTE SETTLEMENT-RESULT = INPUT-AMOUNT * 0.05.\n       APPLY-PREMIUM.\n           COMPUTE SETTLEMENT-RESULT = SETTLEMENT-RESULT + 1.\n       CALC-EXIT.\n           EXIT.\n",
+      "javaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class MortgageInterestCalculator {\n    public BigDecimal calculate(BigDecimal balance, BigDecimal unusedReference) {\n        return balance.multiply(new BigDecimal(\"0.05\"));\n    }\n}\n",
+      "patchedJavaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class MortgageInterestCalculator {\n    public BigDecimal calculate(BigDecimal balance, BigDecimal unusedReference) {\n        BigDecimal tier = balance.multiply(new BigDecimal(\"0.05\")).setScale(0, RoundingMode.DOWN).remainder(new BigDecimal(\"100000\"));\n        return tier.add(BigDecimal.ONE).setScale(0, RoundingMode.DOWN).remainder(new BigDecimal(\"100000\"));\n    }\n}\n",
+      "gnnAlignmentScore": 0.721929,
+      "gnnBugRiskScore": 0.0,
+      "baselineAlignmentScore": 0.0,
+      "baselineCaughtBug": false,
+      "formalProofStatus": "SAT_COUNTEREXAMPLE_FOUND",
+      "bugCategory": "PERFORM_THRU_FALLTHROUGH",
+      "counterexamplesJson": [
+        {
+          "inputAmountGbp": "0.10",
+          "referenceRate": "1.183",
+          "cobolOutput": "1.00",
+          "javaOutput": "0.01",
+          "pennyDrift": "-0.99",
+          "dataSource": "Bank of England Daily Spot Rate",
+          "collectedDate": "2026-10-17",
+          "observationDate": "2026-10-15",
+          "solverGenerated": true,
+          "witnessStrategy": "unconstrained bounded Z3 model",
+          "cobolOutputEur": "1.00",
+          "javaOutputEur": "0.01"
+        }
+      ],
+      "isFailureLimitCase": false,
+      "proofScope": {
+        "supported": true,
+        "bounded": true,
+        "inputUnit": "integer cents",
+        "inputAmountCents": {
+          "min": 0,
+          "max": 999999999
+        },
+        "rate": {
+          "currencyPair": "GBP/EUR",
+          "rate": "1.183",
+          "source": "Bank of England Daily Spot Rate",
+          "collectedDate": "2026-10-17",
+          "observationDate": "2026-10-15",
+          "seriesCode": "XUDLERS",
+          "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+          "licence": "OGL-UK-3.0",
+          "provenance": {
+            "id": "boe-XUDLERS",
+            "units": "EUR per 1 GBP",
+            "snapshotPath": "snapshots/boe-XUDLERS.html",
+            "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+            "requestedObservationThrough": "2026-10-17",
+            "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+            "desiredDemoObservationDate": "2026-10-16"
+          },
+          "provenanceJson": {
+            "seriesCode": "XUDLERS",
+            "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+            "licence": "OGL-UK-3.0",
+            "provenance": {
+              "id": "boe-XUDLERS",
+              "units": "EUR per 1 GBP",
+              "snapshotPath": "snapshots/boe-XUDLERS.html",
+              "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+              "requestedObservationThrough": "2026-10-17",
+              "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+              "desiredDemoObservationDate": "2026-10-16"
+            }
+          },
+          "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
+        },
+        "proofInputs": {
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+          "cobolSourceFormat": "FREE",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "balance",
+          "javaRateParameter": "unusedReference",
+          "amountMinCents": 0,
+          "amountMaxCents": 999999999,
+          "referenceCurrencyPair": "GBP/EUR",
+          "referenceSource": "Bank of England Daily Spot Rate",
+          "referenceCollectedDate": "2026-10-17"
+        },
+        "semantics": "restricted COBOL/Java scalar arithmetic v1",
+        "outputObservation": "monetary values rounded HALF_UP to integer cents",
+        "sourceSha256": {
+          "cobol": "5ef83e23f8bd213a2f04002ccacf0d039a195b3afb66e8a1a10bdb4512371a21",
+          "java": "813ba7a1adde8f3b1243a0ed65e7e308f8f363d21f771d254f5d5f78c921dc95"
+        },
+        "limitations": [
+          "One exact fixed reference rate; acyclic scalar arithmetic only.",
+          "PIC overflow discards high-order digits; no ON SIZE ERROR, runtime or I/O semantics.",
+          "UNSAT covers only the explicit finite input domain, never arbitrary whole programs.",
+          "GNN alignments guide inspection and do not authorize a proof."
+        ],
+        "solver": {
+          "name": "Z3",
+          "version": "4.15.3",
+          "result": "sat",
+          "timeoutMs": 5000
+        }
+      },
+      "fStringSummary": "Paired-code GNN program cosine 0.722 (advisory matching, not equivalence). Defect risk is not estimated. Z3 found amount 0.10 GBP: COBOL 1.00, Java 0.01, drift -0.99 output units. Rate 1.183 (Bank of England Daily Spot Rate; observed 2026-10-15).",
+      "cpgGraphJson": {
+        "featureNames": [
+          "is_fixed_point_comp3",
+          "is_ieee754_float",
+          "is_big_decimal",
+          "decimal_scale",
+          "has_rounding_clause",
+          "is_loop_branch",
+          "is_external_call",
+          "pca_structural_residual"
+        ],
+        "extractorScope": "Line AST/CFG/type-use approximation; formal parser independently validates all syntax.",
+        "nodes": [
+          {
+            "id": "cobol:root",
+            "label": "COBOL",
+            "kind": "program",
+            "language": "cobol",
+            "line": 1,
+            "features": [
+              1.0,
+              0.0,
+              0.0,
+              0.25,
+              0.0,
+              1.0,
+              0.0,
+              0.2609118973558751
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:1",
+            "label": "IDENTIFICATION DIVISION.",
+            "sourceText": "IDENTIFICATION DIVISION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 1,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.07151650640922676
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:2",
+            "label": "PROGRAM-ID. MORTGAGE-INT-CALC.",
+            "sourceText": "PROGRAM-ID. MORTGAGE-INT-CALC.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 2,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.296443847256956
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:3",
+            "label": "DATA DIVISION.",
+            "sourceText": "DATA DIVISION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 3,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.296443847256956
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:4",
+            "label": "WORKING-STORAGE SECTION.",
+            "sourceText": "WORKING-STORAGE SECTION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 4,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.14722677571814746
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:5",
+            "label": "01 INPUT-AMOUNT PIC 9(7)V99 COMP-3 VALUE 0.",
+            "sourceText": "01 INPUT-AMOUNT PIC 9(7)V99 COMP-3 VALUE 0.",
+            "kind": "field",
+            "language": "cobol",
+            "line": 5,
+            "features": [
+              1.0,
+              0.0,
+              0.0,
+              0.25,
+              0.0,
+              0.0,
+              0.0,
+              0.07151650640922673
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:6",
+            "label": "01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.",
+            "sourceText": "01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.",
+            "kind": "field",
+            "language": "cobol",
+            "line": 6,
+            "features": [
+              1.0,
+              0.0,
+              0.0,
+              0.5,
+              0.0,
+              0.0,
+              0.0,
+              0.401563269476376
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:7",
+            "label": "01 SETTLEMENT-RESULT PIC 9(5) COMP-3 VALUE 0.",
+            "sourceText": "01 SETTLEMENT-RESULT PIC 9(5) COMP-3 VALUE 0.",
+            "kind": "field",
+            "language": "cobol",
+            "line": 7,
+            "features": [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.5262831468274068
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:8",
+            "label": "PROCEDURE DIVISION.",
+            "sourceText": "PROCEDURE DIVISION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 8,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.2917513506351188
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:9",
+            "label": "MAIN",
+            "sourceText": "MAIN.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 9,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.1540205764423485
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:10",
+            "label": "PERFORM CALC-TIER THRU CALC-EXIT.",
+            "sourceText": "PERFORM CALC-TIER THRU CALC-EXIT.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 10,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.2917513506351188
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:11",
+            "label": "GOBACK",
+            "sourceText": "GOBACK.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 11,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.2917513506351188
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:12",
+            "label": "CALC-TIER",
+            "sourceText": "CALC-TIER.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 12,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.1540205764423485
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:13",
+            "label": "COMPUTE SETTLEMENT-RESULT = INPUT-AMOUNT * 0.05.",
+            "sourceText": "COMPUTE SETTLEMENT-RESULT = INPUT-AMOUNT * 0.05.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 13,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.3690126983071602
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:14",
+            "label": "APPLY-PREMIUM",
+            "sourceText": "APPLY-PREMIUM.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 14,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.1540205764423485
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:15",
+            "label": "COMPUTE SETTLEMENT-RESULT = SETTLEMENT-RESULT + 1.",
+            "sourceText": "COMPUTE SETTLEMENT-RESULT = SETTLEMENT-RESULT + 1.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 15,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.07956448850452615
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:16",
+            "label": "CALC-EXIT",
+            "sourceText": "CALC-EXIT.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 16,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.2917513506351188
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:17",
+            "label": "EXIT",
+            "sourceText": "EXIT.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 17,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.14722677571814746
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:root",
+            "label": "JAVA",
+            "kind": "program",
+            "language": "java",
+            "line": 1,
+            "features": [
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.04488734085955027
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:1",
+            "label": "import java.math.BigDecimal;",
+            "sourceText": "import java.math.BigDecimal;",
+            "kind": "statement",
+            "language": "java",
+            "line": 1,
+            "features": [
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.2058212364641698
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:2",
+            "label": "import java.math.RoundingMode;",
+            "sourceText": "import java.math.RoundingMode;",
+            "kind": "statement",
+            "language": "java",
+            "line": 2,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.07281113463305214
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:3",
+            "label": "public final class MortgageInterestCalculator {",
+            "sourceText": "public final class MortgageInterestCalculator {",
+            "kind": "statement",
+            "language": "java",
+            "line": 3,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.02305159149830646
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:4",
+            "label": "calculate",
+            "sourceText": "public BigDecimal calculate(BigDecimal balance, BigDecimal unusedReference) {",
+            "kind": "field",
+            "language": "java",
+            "line": 4,
+            "features": [
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.28992582379773363
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:5",
+            "label": "return balance.multiply(new BigDecimal(\"0.05\"));",
+            "sourceText": "return balance.multiply(new BigDecimal(\"0.05\"));",
+            "kind": "statement",
+            "language": "java",
+            "line": 5,
+            "features": [
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.09264504597803619
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:6",
+            "label": "}",
+            "sourceText": "}",
+            "kind": "statement",
+            "language": "java",
+            "line": 6,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.07281113463305211
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:7",
+            "label": "}",
+            "sourceText": "}",
+            "kind": "statement",
+            "language": "java",
+            "line": 7,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.02305159149830646
+            ],
+            "riskScore": 0.0
+          }
+        ],
+        "edges": [
+          {
+            "source": "cobol:root",
+            "target": "cobol:1",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:2",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:3",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:4",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:5",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:6",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:7",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:8",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:9",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:11",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:12",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:14",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:16",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:17",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:1",
+            "target": "cobol:2",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:2",
+            "target": "cobol:3",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:3",
+            "target": "cobol:4",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:5",
+            "target": "cobol:13",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:7",
+            "target": "cobol:8",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:7",
+            "target": "cobol:13",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:7",
+            "target": "cobol:15",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:8",
+            "target": "cobol:9",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:9",
+            "target": "cobol:10",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:9",
+            "target": "cobol:10",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:10",
+            "target": "cobol:11",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:11",
+            "target": "cobol:12",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:12",
+            "target": "cobol:13",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:12",
+            "target": "cobol:13",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:13",
+            "target": "cobol:14",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:14",
+            "target": "cobol:15",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:14",
+            "target": "cobol:15",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:15",
+            "target": "cobol:16",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:16",
+            "target": "cobol:17",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:root",
+            "target": "java:1",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:2",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:3",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:4",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:5",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:6",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:7",
+            "kind": "AST"
+          },
+          {
+            "source": "java:1",
+            "target": "java:2",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:2",
+            "target": "java:3",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:4",
+            "target": "java:5",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:4",
+            "target": "java:5",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "java:5",
+            "target": "java:6",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:6",
+            "target": "java:7",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:root",
+            "target": "java:root",
+            "kind": "GNN_ALIGNMENT",
+            "granularity": "PROGRAM",
+            "similarity": 0.721929,
+            "matchingIsProof": false
+          }
+        ]
+      },
+      "provenanceJson": {
+        "engineVersion": "0.1.0",
+        "model": {
+          "id": "paired-program-gnn-v1",
+          "sha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+          "trainingDataset": "COBOL-JavaTrans (143 original source pairs)",
+          "evaluation": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+          },
+          "limitations": [
+            "143 small HumanEval-derived pairs, not banking migrations",
+            "Pair labels are upstream correspondence, not independent correctness proofs",
+            "Heuristic graph extraction, not full compiler AST/CFG",
+            "Names excluded from model; name baseline may be stronger on named benchmark",
+            "Cosine scores are not calibrated probabilities",
+            "No financial-domain generalization claim",
+            "No defect prediction or code generation"
+          ]
+        },
+        "modelSha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+        "graphInferenceMs": 1.102,
+        "referenceRate": {
+          "currencyPair": "GBP/EUR",
+          "rate": "1.183",
+          "source": "Bank of England Daily Spot Rate",
+          "collectedDate": "2026-10-17",
+          "observationDate": "2026-10-15",
+          "seriesCode": "XUDLERS",
+          "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+          "licence": "OGL-UK-3.0",
+          "provenance": {
+            "id": "boe-XUDLERS",
+            "units": "EUR per 1 GBP",
+            "snapshotPath": "snapshots/boe-XUDLERS.html",
+            "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+            "requestedObservationThrough": "2026-10-17",
+            "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+            "desiredDemoObservationDate": "2026-10-16"
+          },
+          "provenanceJson": {
+            "seriesCode": "XUDLERS",
+            "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+            "licence": "OGL-UK-3.0",
+            "provenance": {
+              "id": "boe-XUDLERS",
+              "units": "EUR per 1 GBP",
+              "snapshotPath": "snapshots/boe-XUDLERS.html",
+              "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+              "requestedObservationThrough": "2026-10-17",
+              "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+              "desiredDemoObservationDate": "2026-10-16"
+            }
+          },
+          "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
+        },
+        "alignmentIsProof": false,
+        "measuredAlignmentBenchmark": null,
+        "mlValidation": {
+          "status": "BENCHMARK_PILOT",
+          "evidence": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+          },
+          "productionBankingValidated": false
+        },
+        "riskAssessment": {
+          "status": "NOT_ESTIMATED",
+          "reason": "The synthetic risk classifier was removed. Paired-program labels do not identify defects.",
+          "legacyNumericField": "gnnBugRiskScore=0 is unused compatibility data, not evidence of low risk."
+        },
+        "matchingGranularity": "PROGRAM",
+        "sourceAuthorship": {
+          "aiGenerated": true,
+          "description": "AI-authored executable scalar COBOL/Java banking demonstration",
+          "inspiration": "Apache-2.0 IBM/Bank-of-Z COBOL, pinned source attribution in data-sources/provenance.json",
+          "authenticVendorExtract": false,
+          "remittancePolicy": "Historical World Bank GBP120 fee1.89 plus AI-generated >GBP120 tier at1%; not a real provider tariff"
+        },
+        "limitations": [
+          "The displayed inspection graph is a line approximation; matching uses a separate semantic-feature graph.",
+          "Program-pair training does not supply statement correspondences or defect labels.",
+          "GNN/model confidence is not proof and does not prune symbolic inputs.",
+          "Small public benchmark retrieval results do not establish production migration reliability."
+        ],
+        "patchVerification": {
+          "status": "UNSAT_PROVEN_SAFE",
+          "proofScope": {
+            "supported": true,
+            "bounded": true,
+            "inputUnit": "integer cents",
+            "inputAmountCents": {
+              "min": 0,
+              "max": 999999999
+            },
+            "rate": {
+              "currencyPair": "GBP/EUR",
+              "rate": "1.183",
+              "source": "Bank of England Daily Spot Rate",
+              "collectedDate": "2026-10-17",
+              "observationDate": "2026-10-15",
+              "seriesCode": "XUDLERS",
+              "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+              "licence": "OGL-UK-3.0",
+              "provenance": {
+                "id": "boe-XUDLERS",
+                "units": "EUR per 1 GBP",
+                "snapshotPath": "snapshots/boe-XUDLERS.html",
+                "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+                "requestedObservationThrough": "2026-10-17",
+                "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+                "desiredDemoObservationDate": "2026-10-16"
+              },
+              "provenanceJson": {
+                "seriesCode": "XUDLERS",
+                "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+                "licence": "OGL-UK-3.0",
+                "provenance": {
+                  "id": "boe-XUDLERS",
+                  "units": "EUR per 1 GBP",
+                  "snapshotPath": "snapshots/boe-XUDLERS.html",
+                  "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+                  "requestedObservationThrough": "2026-10-17",
+                  "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+                  "desiredDemoObservationDate": "2026-10-16"
+                }
+              },
+              "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
+            },
+            "proofInputs": {
+              "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+              "cobolSourceFormat": "FREE",
+              "amountField": "INPUT-AMOUNT",
+              "rateField": "REFERENCE-RATE",
+              "resultField": "SETTLEMENT-RESULT",
+              "javaAmountParameter": "balance",
+              "javaRateParameter": "unusedReference",
+              "amountMinCents": 0,
+              "amountMaxCents": 999999999,
+              "referenceCurrencyPair": "GBP/EUR",
+              "referenceSource": "Bank of England Daily Spot Rate",
+              "referenceCollectedDate": "2026-10-17"
+            },
+            "semantics": "restricted COBOL/Java scalar arithmetic v1",
+            "outputObservation": "monetary values rounded HALF_UP to integer cents",
+            "sourceSha256": {
+              "cobol": "5ef83e23f8bd213a2f04002ccacf0d039a195b3afb66e8a1a10bdb4512371a21",
+              "java": "21ae23cc721b83a9602d1b93244d20fad4acfb9bdf2e08f071b8feda87bddf3a"
+            },
+            "limitations": [
+              "One exact fixed reference rate; acyclic scalar arithmetic only.",
+              "PIC overflow discards high-order digits; no ON SIZE ERROR, runtime or I/O semantics.",
+              "UNSAT covers only the explicit finite input domain, never arbitrary whole programs.",
+              "GNN alignments guide inspection and do not authorize a proof."
+            ],
+            "solver": {
+              "name": "Z3",
+              "version": "4.15.3",
+              "result": "unsat",
+              "timeoutMs": 5000
+            }
+          }
+        }
+      },
+      "createdAt": "2026-10-18T03:05:36.762454+00:00",
+      "updatedAt": "2026-10-18T03:05:36.762454+00:00"
+    },
+    {
+      "id": "214a9ead-ee96-599d-93f8-9037dee2ab7b",
+      "moduleName": "REMIT-TIER-FEE.cbl",
+      "category": "REMITTANCE_FEE",
+      "cobolSource": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. REMIT-TIER-FEE.\n       DATA DIVISION.\n       WORKING-STORAGE SECTION.\n       01 INPUT-AMOUNT PIC S9(7)V99 COMP-3 VALUE 0.\n       01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.\n       01 SETTLEMENT-RESULT PIC S9(7)V99 COMP-3 VALUE 0.\n       PROCEDURE DIVISION.\n       MAIN.\n           IF INPUT-AMOUNT <= 120\n               COMPUTE SETTLEMENT-RESULT ROUNDED = 1.89 * REFERENCE-RATE\n           ELSE\n               COMPUTE SETTLEMENT-RESULT ROUNDED = INPUT-AMOUNT * 0.01 * REFERENCE-RATE\n           END-IF.\n           GOBACK.\n",
+      "javaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class RemittanceFeeEngine {\n    public BigDecimal calculate(BigDecimal transfer, BigDecimal bahtQuote) {\n        if (transfer.compareTo(new BigDecimal(\"120\")) <= 0) {\n            return new BigDecimal(\"1.89\").multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));\n        } else {\n            return transfer.multiply(new BigDecimal(\"0.01\")).multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));\n        }\n    }\n}\n",
+      "patchedJavaSource": "import java.math.BigDecimal;\nimport java.math.RoundingMode;\npublic final class RemittanceFeeEngine {\n    public BigDecimal calculate(BigDecimal transfer, BigDecimal bahtQuote) {\n        if (transfer.compareTo(new BigDecimal(\"120\")) <= 0) {\n            return new BigDecimal(\"1.89\").multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));\n        } else {\n            return transfer.multiply(new BigDecimal(\"0.01\")).multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));\n        }\n    }\n}\n",
+      "gnnAlignmentScore": 0.047353,
+      "gnnBugRiskScore": 0.0,
+      "baselineAlignmentScore": 0.0,
+      "baselineCaughtBug": false,
+      "formalProofStatus": "UNSAT_PROVEN_SAFE",
+      "bugCategory": "NONE",
+      "counterexamplesJson": [],
+      "isFailureLimitCase": false,
+      "proofScope": {
+        "supported": true,
+        "bounded": true,
+        "inputUnit": "integer cents",
+        "inputAmountCents": {
+          "min": -999999999,
+          "max": 999999999
+        },
+        "rate": {
+          "currencyPair": "GBP/THB",
+          "rate": "43.98",
+          "source": "World Bank Remittance Prices Worldwide",
+          "collectedDate": "2026-10-17",
+          "observationDate": "2025-08-22",
+          "provenanceJson": {
+            "id": "world-bank-gbp-thb-wise-2025q3",
+            "currencyPair": "GBP/THB",
+            "sendingCountry": "United Kingdom",
+            "receivingCountry": "Thailand",
+            "provider": "Wise",
+            "accessPoint": "Internet",
+            "sendAmountGbp": "120.00",
+            "feeGbp": "1.89",
+            "exchangeRateMarginPercent": "0.06",
+            "displayedMarketReferenceRate": "44.01",
+            "displayedProviderExchangeRate": "43.98",
+            "rateUnits": "THB per 1 GBP",
+            "totalCostPercent": "1.64",
+            "totalCostGbp": "1.96",
+            "surveyCollectionStart": "2025-08-08",
+            "surveyCollectionEnd": "2025-08-22",
+            "collectedDate": "2026-10-17",
+            "source": "World Bank Remittance Prices Worldwide",
+            "sourceUrl": "https://remittanceprices.worldbank.org/corridor/United-Kingdom/Thailand",
+            "licence": "CC-BY-4.0",
+            "licenceUrl": "https://datacatalog.worldbank.org/search/dataset/0037898/remittance-prices-worldwide",
+            "attribution": "The World Bank, Remittance Prices Worldwide, available at http://remittanceprices.worldbank.org",
+            "provenance": {
+              "snapshotPath": "snapshots/world-bank-gbp-thb.extract.txt",
+              "snapshotType": "manually transcribed numeric row verified against primary-page web extraction",
+              "rawHttpResponseArchived": false,
+              "downloadLimitation": "The primary page and workbook returned HTTP 403 to direct Python downloads. The public corridor page remained readable through the web research tool.",
+              "rowSelection": "First Wise Internet row on the GBP 120 / USD 200 tab, survey 2025Q3"
+            },
+            "limitations": [
+              "Historical survey observation, not a live quote or October 2026 spot reference rate.",
+              "The source displays rounded values. Do not reconstruct an exact provider tariff or FX margin from these rounded values.",
+              "Total cost combines sender fees and the exchange-rate margin and is not itself an FX rate.",
+              "Any demonstration tier schedule used by the verifier is AI-authored, not a World Bank or Wise published tariff.",
+              "No provider or World Bank endorsement is implied."
+            ],
+            "rateMeaning": "historical displayed provider THB per GBP, rounded survey value"
+          },
+          "id": "49864c0b-8862-5dd9-8d4d-f0de6100664f"
+        },
+        "proofInputs": {
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+          "cobolSourceFormat": "FREE",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "transfer",
+          "javaRateParameter": "bahtQuote",
+          "amountMinCents": -999999999,
+          "amountMaxCents": 999999999,
+          "referenceCurrencyPair": "GBP/THB",
+          "referenceSource": "World Bank Remittance Prices Worldwide",
+          "referenceCollectedDate": "2026-10-17"
+        },
+        "semantics": "restricted COBOL/Java scalar arithmetic v1",
+        "outputObservation": "monetary values rounded HALF_UP to integer cents",
+        "sourceSha256": {
+          "cobol": "6c0846cfe274057e3c773d904b9459eb754bef46a460e745f63b0a6e54ed5627",
+          "java": "0f808778e493aa3fbec3a8592b489dc02ba8faa327190e041f41812229f19b83"
+        },
+        "limitations": [
+          "One exact fixed reference rate; acyclic scalar arithmetic only.",
+          "PIC overflow discards high-order digits; no ON SIZE ERROR, runtime or I/O semantics.",
+          "UNSAT covers only the explicit finite input domain, never arbitrary whole programs.",
+          "GNN alignments guide inspection and do not authorize a proof."
+        ],
+        "solver": {
+          "name": "Z3",
+          "version": "4.15.3",
+          "result": "unsat",
+          "timeoutMs": 5000
+        }
+      },
+      "fStringSummary": "Paired-code GNN program cosine 0.047 (advisory matching, not equivalence). Defect risk is not estimated. Z3 UNSAT: no differing cent-observable outputs for integer cents in [-999999999, 999999999] with exact rate 43.98. This is equivalence of the supported bounded scalar model.",
+      "cpgGraphJson": {
+        "featureNames": [
+          "is_fixed_point_comp3",
+          "is_ieee754_float",
+          "is_big_decimal",
+          "decimal_scale",
+          "has_rounding_clause",
+          "is_loop_branch",
+          "is_external_call",
+          "pca_structural_residual"
+        ],
+        "extractorScope": "Line AST/CFG/type-use approximation; formal parser independently validates all syntax.",
+        "nodes": [
+          {
+            "id": "cobol:root",
+            "label": "COBOL",
+            "kind": "program",
+            "language": "cobol",
+            "line": 1,
+            "features": [
+              1.0,
+              0.0,
+              0.0,
+              0.25,
+              1.0,
+              1.0,
+              0.0,
+              0.4871584642665716
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:1",
+            "label": "IDENTIFICATION DIVISION.",
+            "sourceText": "IDENTIFICATION DIVISION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 1,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.09014762241928949
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:2",
+            "label": "PROGRAM-ID. REMIT-TIER-FEE.",
+            "sourceText": "PROGRAM-ID. REMIT-TIER-FEE.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 2,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.08131172949751422
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:3",
+            "label": "DATA DIVISION.",
+            "sourceText": "DATA DIVISION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 3,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.08131172949751422
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:4",
+            "label": "WORKING-STORAGE SECTION.",
+            "sourceText": "WORKING-STORAGE SECTION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 4,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.27408081044431054
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:5",
+            "label": "01 INPUT-AMOUNT PIC S9(7)V99 COMP-3 VALUE 0.",
+            "sourceText": "01 INPUT-AMOUNT PIC S9(7)V99 COMP-3 VALUE 0.",
+            "kind": "field",
+            "language": "cobol",
+            "line": 5,
+            "features": [
+              1.0,
+              0.0,
+              0.0,
+              0.25,
+              0.0,
+              0.0,
+              0.0,
+              0.2684673153099499
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:6",
+            "label": "01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.",
+            "sourceText": "01 REFERENCE-RATE PIC 9(2)V9(4) COMP-3 VALUE 0.",
+            "kind": "field",
+            "language": "cobol",
+            "line": 6,
+            "features": [
+              1.0,
+              0.0,
+              0.0,
+              0.5,
+              0.0,
+              0.0,
+              0.0,
+              0.2684673153099499
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:7",
+            "label": "01 SETTLEMENT-RESULT PIC S9(7)V99 COMP-3 VALUE 0.",
+            "sourceText": "01 SETTLEMENT-RESULT PIC S9(7)V99 COMP-3 VALUE 0.",
+            "kind": "field",
+            "language": "cobol",
+            "line": 7,
+            "features": [
+              1.0,
+              0.0,
+              0.0,
+              0.25,
+              0.0,
+              0.0,
+              0.0,
+              0.45446567727424597
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:8",
+            "label": "PROCEDURE DIVISION.",
+            "sourceText": "PROCEDURE DIVISION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 8,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.4440802573745377
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:9",
+            "label": "MAIN",
+            "sourceText": "MAIN.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 9,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.5158483288020794
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:10",
+            "label": "IF INPUT-AMOUNT <= 120",
+            "sourceText": "IF INPUT-AMOUNT <= 120",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 10,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.21636015142922274
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:11",
+            "label": "COMPUTE SETTLEMENT-RESULT ROUNDED = 1.89 * REFERENCE-RATE",
+            "sourceText": "COMPUTE SETTLEMENT-RESULT ROUNDED = 1.89 * REFERENCE-RATE",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 11,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.31679257033627856
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:12",
+            "label": "ELSE",
+            "sourceText": "ELSE",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 12,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.08131172949751422
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:13",
+            "label": "COMPUTE SETTLEMENT-RESULT ROUNDED = INPUT-AMOUNT * 0.01 * REFERENCE-RATE",
+            "sourceText": "COMPUTE SETTLEMENT-RESULT ROUNDED = INPUT-AMOUNT * 0.01 * REFERENCE-RATE",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 13,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.19097588335809754
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:14",
+            "label": "END-IF",
+            "sourceText": "END-IF.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 14,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.4440802573745377
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:15",
+            "label": "GOBACK",
+            "sourceText": "GOBACK.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 15,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.27408081044431054
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:root",
+            "label": "JAVA",
+            "kind": "program",
+            "language": "java",
+            "line": 1,
+            "features": [
+              0.0,
+              0.0,
+              1.0,
+              0.25,
+              1.0,
+              1.0,
+              0.0,
+              0.06764778030880411
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:1",
+            "label": "import java.math.BigDecimal;",
+            "sourceText": "import java.math.BigDecimal;",
+            "kind": "statement",
+            "language": "java",
+            "line": 1,
+            "features": [
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.15875628788088592
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:2",
+            "label": "import java.math.RoundingMode;",
+            "sourceText": "import java.math.RoundingMode;",
+            "kind": "statement",
+            "language": "java",
+            "line": 2,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.05596816248581816
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:3",
+            "label": "public final class RemittanceFeeEngine {",
+            "sourceText": "public final class RemittanceFeeEngine {",
+            "kind": "statement",
+            "language": "java",
+            "line": 3,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.011246834424402385
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:4",
+            "label": "calculate",
+            "sourceText": "public BigDecimal calculate(BigDecimal transfer, BigDecimal bahtQuote) {",
+            "kind": "field",
+            "language": "java",
+            "line": 4,
+            "features": [
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.305635683358512
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:5",
+            "label": "if (transfer.compareTo(new BigDecimal(\"120\")) <= 0) {",
+            "sourceText": "if (transfer.compareTo(new BigDecimal(\"120\")) <= 0) {",
+            "kind": "statement",
+            "language": "java",
+            "line": 5,
+            "features": [
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0,
+              0.06554592553149778
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:6",
+            "label": "return new BigDecimal(\"1.89\").multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));",
+            "sourceText": "return new BigDecimal(\"1.89\").multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));",
+            "kind": "statement",
+            "language": "java",
+            "line": 6,
+            "features": [
+              0.0,
+              0.0,
+              1.0,
+              0.25,
+              1.0,
+              0.0,
+              0.0,
+              0.05596816248581816
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:7",
+            "label": "} else {",
+            "sourceText": "} else {",
+            "kind": "statement",
+            "language": "java",
+            "line": 7,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.05596816248581816
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:8",
+            "label": "return transfer.multiply(new BigDecimal(\"0.01\")).multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));",
+            "sourceText": "return transfer.multiply(new BigDecimal(\"0.01\")).multiply(bahtQuote).setScale(2, RoundingMode.HALF_UP).remainder(new BigDecimal(\"10000000\"));",
+            "kind": "statement",
+            "language": "java",
+            "line": 8,
+            "features": [
+              0.0,
+              0.0,
+              1.0,
+              0.25,
+              1.0,
+              0.0,
+              0.0,
+              0.06554592553149778
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:9",
+            "label": "}",
+            "sourceText": "}",
+            "kind": "statement",
+            "language": "java",
+            "line": 9,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.05596816248581816
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:10",
+            "label": "}",
+            "sourceText": "}",
+            "kind": "statement",
+            "language": "java",
+            "line": 10,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.05596816248581816
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:11",
+            "label": "}",
+            "sourceText": "}",
+            "kind": "statement",
+            "language": "java",
+            "line": 11,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.011246834424402385
+            ],
+            "riskScore": 0.0
+          }
+        ],
+        "edges": [
+          {
+            "source": "cobol:root",
+            "target": "cobol:1",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:2",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:3",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:4",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:5",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:6",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:7",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:8",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:9",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:14",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:15",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:1",
+            "target": "cobol:2",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:2",
+            "target": "cobol:3",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:3",
+            "target": "cobol:4",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:5",
+            "target": "cobol:10",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:5",
+            "target": "cobol:13",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:6",
+            "target": "cobol:11",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:6",
+            "target": "cobol:13",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:7",
+            "target": "cobol:8",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:7",
+            "target": "cobol:11",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:7",
+            "target": "cobol:13",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:8",
+            "target": "cobol:9",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:9",
+            "target": "cobol:10",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:9",
+            "target": "cobol:10",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:9",
+            "target": "cobol:11",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:9",
+            "target": "cobol:12",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:9",
+            "target": "cobol:13",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:10",
+            "target": "cobol:11",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:11",
+            "target": "cobol:12",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:12",
+            "target": "cobol:13",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:13",
+            "target": "cobol:14",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:14",
+            "target": "cobol:15",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:root",
+            "target": "java:1",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:2",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:3",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:4",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:5",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:6",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:7",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:8",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:9",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:10",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:11",
+            "kind": "AST"
+          },
+          {
+            "source": "java:1",
+            "target": "java:2",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:2",
+            "target": "java:3",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:4",
+            "target": "java:5",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:4",
+            "target": "java:5",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "java:4",
+            "target": "java:8",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "java:5",
+            "target": "java:6",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:6",
+            "target": "java:7",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:7",
+            "target": "java:8",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:8",
+            "target": "java:9",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:9",
+            "target": "java:10",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:10",
+            "target": "java:11",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:root",
+            "target": "java:root",
+            "kind": "GNN_ALIGNMENT",
+            "granularity": "PROGRAM",
+            "similarity": 0.047353,
+            "matchingIsProof": false
+          }
+        ]
+      },
+      "provenanceJson": {
+        "engineVersion": "0.1.0",
+        "model": {
+          "id": "paired-program-gnn-v1",
+          "sha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+          "trainingDataset": "COBOL-JavaTrans (143 original source pairs)",
+          "evaluation": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+          },
+          "limitations": [
+            "143 small HumanEval-derived pairs, not banking migrations",
+            "Pair labels are upstream correspondence, not independent correctness proofs",
+            "Heuristic graph extraction, not full compiler AST/CFG",
+            "Names excluded from model; name baseline may be stronger on named benchmark",
+            "Cosine scores are not calibrated probabilities",
+            "No financial-domain generalization claim",
+            "No defect prediction or code generation"
+          ]
+        },
+        "modelSha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+        "graphInferenceMs": 1.163,
+        "referenceRate": {
+          "currencyPair": "GBP/THB",
+          "rate": "43.98",
+          "source": "World Bank Remittance Prices Worldwide",
+          "collectedDate": "2026-10-17",
+          "observationDate": "2025-08-22",
+          "provenanceJson": {
+            "id": "world-bank-gbp-thb-wise-2025q3",
+            "currencyPair": "GBP/THB",
+            "sendingCountry": "United Kingdom",
+            "receivingCountry": "Thailand",
+            "provider": "Wise",
+            "accessPoint": "Internet",
+            "sendAmountGbp": "120.00",
+            "feeGbp": "1.89",
+            "exchangeRateMarginPercent": "0.06",
+            "displayedMarketReferenceRate": "44.01",
+            "displayedProviderExchangeRate": "43.98",
+            "rateUnits": "THB per 1 GBP",
+            "totalCostPercent": "1.64",
+            "totalCostGbp": "1.96",
+            "surveyCollectionStart": "2025-08-08",
+            "surveyCollectionEnd": "2025-08-22",
+            "collectedDate": "2026-10-17",
+            "source": "World Bank Remittance Prices Worldwide",
+            "sourceUrl": "https://remittanceprices.worldbank.org/corridor/United-Kingdom/Thailand",
+            "licence": "CC-BY-4.0",
+            "licenceUrl": "https://datacatalog.worldbank.org/search/dataset/0037898/remittance-prices-worldwide",
+            "attribution": "The World Bank, Remittance Prices Worldwide, available at http://remittanceprices.worldbank.org",
+            "provenance": {
+              "snapshotPath": "snapshots/world-bank-gbp-thb.extract.txt",
+              "snapshotType": "manually transcribed numeric row verified against primary-page web extraction",
+              "rawHttpResponseArchived": false,
+              "downloadLimitation": "The primary page and workbook returned HTTP 403 to direct Python downloads. The public corridor page remained readable through the web research tool.",
+              "rowSelection": "First Wise Internet row on the GBP 120 / USD 200 tab, survey 2025Q3"
+            },
+            "limitations": [
+              "Historical survey observation, not a live quote or October 2026 spot reference rate.",
+              "The source displays rounded values. Do not reconstruct an exact provider tariff or FX margin from these rounded values.",
+              "Total cost combines sender fees and the exchange-rate margin and is not itself an FX rate.",
+              "Any demonstration tier schedule used by the verifier is AI-authored, not a World Bank or Wise published tariff.",
+              "No provider or World Bank endorsement is implied."
+            ],
+            "rateMeaning": "historical displayed provider THB per GBP, rounded survey value"
+          },
+          "id": "49864c0b-8862-5dd9-8d4d-f0de6100664f"
+        },
+        "alignmentIsProof": false,
+        "measuredAlignmentBenchmark": null,
+        "mlValidation": {
+          "status": "BENCHMARK_PILOT",
+          "evidence": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+          },
+          "productionBankingValidated": false
+        },
+        "riskAssessment": {
+          "status": "NOT_ESTIMATED",
+          "reason": "The synthetic risk classifier was removed. Paired-program labels do not identify defects.",
+          "legacyNumericField": "gnnBugRiskScore=0 is unused compatibility data, not evidence of low risk."
+        },
+        "matchingGranularity": "PROGRAM",
+        "sourceAuthorship": {
+          "aiGenerated": true,
+          "description": "AI-authored executable scalar COBOL/Java banking demonstration",
+          "inspiration": "Apache-2.0 IBM/Bank-of-Z COBOL, pinned source attribution in data-sources/provenance.json",
+          "authenticVendorExtract": false,
+          "remittancePolicy": "Historical World Bank GBP120 fee1.89 plus AI-generated >GBP120 tier at1%; not a real provider tariff"
+        },
+        "limitations": [
+          "The displayed inspection graph is a line approximation; matching uses a separate semantic-feature graph.",
+          "Program-pair training does not supply statement correspondences or defect labels.",
+          "GNN/model confidence is not proof and does not prune symbolic inputs.",
+          "Small public benchmark retrieval results do not establish production migration reliability."
+        ],
+        "patchVerification": {
+          "status": "UNSAT_PROVEN_SAFE",
+          "proofScope": {
+            "supported": true,
+            "bounded": true,
+            "inputUnit": "integer cents",
+            "inputAmountCents": {
+              "min": -999999999,
+              "max": 999999999
+            },
+            "rate": {
+              "currencyPair": "GBP/THB",
+              "rate": "43.98",
+              "source": "World Bank Remittance Prices Worldwide",
+              "collectedDate": "2026-10-17",
+              "observationDate": "2025-08-22",
+              "provenanceJson": {
+                "id": "world-bank-gbp-thb-wise-2025q3",
+                "currencyPair": "GBP/THB",
+                "sendingCountry": "United Kingdom",
+                "receivingCountry": "Thailand",
+                "provider": "Wise",
+                "accessPoint": "Internet",
+                "sendAmountGbp": "120.00",
+                "feeGbp": "1.89",
+                "exchangeRateMarginPercent": "0.06",
+                "displayedMarketReferenceRate": "44.01",
+                "displayedProviderExchangeRate": "43.98",
+                "rateUnits": "THB per 1 GBP",
+                "totalCostPercent": "1.64",
+                "totalCostGbp": "1.96",
+                "surveyCollectionStart": "2025-08-08",
+                "surveyCollectionEnd": "2025-08-22",
+                "collectedDate": "2026-10-17",
+                "source": "World Bank Remittance Prices Worldwide",
+                "sourceUrl": "https://remittanceprices.worldbank.org/corridor/United-Kingdom/Thailand",
+                "licence": "CC-BY-4.0",
+                "licenceUrl": "https://datacatalog.worldbank.org/search/dataset/0037898/remittance-prices-worldwide",
+                "attribution": "The World Bank, Remittance Prices Worldwide, available at http://remittanceprices.worldbank.org",
+                "provenance": {
+                  "snapshotPath": "snapshots/world-bank-gbp-thb.extract.txt",
+                  "snapshotType": "manually transcribed numeric row verified against primary-page web extraction",
+                  "rawHttpResponseArchived": false,
+                  "downloadLimitation": "The primary page and workbook returned HTTP 403 to direct Python downloads. The public corridor page remained readable through the web research tool.",
+                  "rowSelection": "First Wise Internet row on the GBP 120 / USD 200 tab, survey 2025Q3"
+                },
+                "limitations": [
+                  "Historical survey observation, not a live quote or October 2026 spot reference rate.",
+                  "The source displays rounded values. Do not reconstruct an exact provider tariff or FX margin from these rounded values.",
+                  "Total cost combines sender fees and the exchange-rate margin and is not itself an FX rate.",
+                  "Any demonstration tier schedule used by the verifier is AI-authored, not a World Bank or Wise published tariff.",
+                  "No provider or World Bank endorsement is implied."
+                ],
+                "rateMeaning": "historical displayed provider THB per GBP, rounded survey value"
+              },
+              "id": "49864c0b-8862-5dd9-8d4d-f0de6100664f"
+            },
+            "proofInputs": {
+              "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+              "cobolSourceFormat": "FREE",
+              "amountField": "INPUT-AMOUNT",
+              "rateField": "REFERENCE-RATE",
+              "resultField": "SETTLEMENT-RESULT",
+              "javaAmountParameter": "transfer",
+              "javaRateParameter": "bahtQuote",
+              "amountMinCents": -999999999,
+              "amountMaxCents": 999999999,
+              "referenceCurrencyPair": "GBP/THB",
+              "referenceSource": "World Bank Remittance Prices Worldwide",
+              "referenceCollectedDate": "2026-10-17"
+            },
+            "semantics": "restricted COBOL/Java scalar arithmetic v1",
+            "outputObservation": "monetary values rounded HALF_UP to integer cents",
+            "sourceSha256": {
+              "cobol": "6c0846cfe274057e3c773d904b9459eb754bef46a460e745f63b0a6e54ed5627",
+              "java": "0f808778e493aa3fbec3a8592b489dc02ba8faa327190e041f41812229f19b83"
+            },
+            "limitations": [
+              "One exact fixed reference rate; acyclic scalar arithmetic only.",
+              "PIC overflow discards high-order digits; no ON SIZE ERROR, runtime or I/O semantics.",
+              "UNSAT covers only the explicit finite input domain, never arbitrary whole programs.",
+              "GNN alignments guide inspection and do not authorize a proof."
+            ],
+            "solver": {
+              "name": "Z3",
+              "version": "4.15.3",
+              "result": "unsat",
+              "timeoutMs": 5000
+            }
+          }
+        }
+      },
+      "createdAt": "2026-10-18T03:05:36.762454+00:00",
+      "updatedAt": "2026-10-18T03:05:36.762454+00:00"
+    },
+    {
+      "id": "fa28af67-d28d-5eb2-adf5-834fc76e8eaa",
+      "moduleName": "CICS-TERMINAL-IO.cbl",
+      "category": "EXTERNAL_LIMIT_CASE",
+      "cobolSource": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. CICS-TERMINAL-IO.\n       DATA DIVISION.\n       WORKING-STORAGE SECTION.\n       01 TERMINAL-BUFFER PIC X(80).\n       01 ACCOUNT-VIEW REDEFINES TERMINAL-BUFFER.\n           05 ACCOUNT-ID PIC 9(10).\n       PROCEDURE DIVISION.\n       MAIN.\n           EXEC CICS RECEIVE MAP('WIREMAP')\n               INTO(TERMINAL-BUFFER) END-EXEC.\n           GOBACK.\n",
+      "javaSource": "public final class TerminalSessionHandler {\n    public void receiveMap(TerminalGateway gateway) {\n        gateway.receiveMap(\"WIREMAP\");\n    }\n}\n",
+      "patchedJavaSource": "public final class TerminalSessionHandler {\n    public void receiveMap(TerminalGateway gateway) {\n        gateway.receiveMap(\"WIREMAP\");\n    }\n}\n",
+      "gnnAlignmentScore": 0.832993,
+      "gnnBugRiskScore": 0.0,
+      "baselineAlignmentScore": 0.045455,
+      "baselineCaughtBug": false,
+      "formalProofStatus": "UNKNOWN_HALTED_LIMIT",
+      "bugCategory": "UNBOUNDED_CICS_LIMIT",
+      "counterexamplesJson": [],
+      "isFailureLimitCase": true,
+      "proofScope": {
+        "supported": false,
+        "bounded": true,
+        "inputUnit": "integer cents",
+        "inputAmountCents": {
+          "min": -999999999,
+          "max": 999999999
+        },
+        "rate": {
+          "currencyPair": "GBP/EUR",
+          "rate": "1.183",
+          "source": "Bank of England Daily Spot Rate",
+          "collectedDate": "2026-10-17",
+          "observationDate": "2026-10-15",
+          "seriesCode": "XUDLERS",
+          "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+          "licence": "OGL-UK-3.0",
+          "provenance": {
+            "id": "boe-XUDLERS",
+            "units": "EUR per 1 GBP",
+            "snapshotPath": "snapshots/boe-XUDLERS.html",
+            "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+            "requestedObservationThrough": "2026-10-17",
+            "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+            "desiredDemoObservationDate": "2026-10-16"
+          },
+          "provenanceJson": {
+            "seriesCode": "XUDLERS",
+            "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+            "licence": "OGL-UK-3.0",
+            "provenance": {
+              "id": "boe-XUDLERS",
+              "units": "EUR per 1 GBP",
+              "snapshotPath": "snapshots/boe-XUDLERS.html",
+              "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+              "requestedObservationThrough": "2026-10-17",
+              "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+              "desiredDemoObservationDate": "2026-10-16"
+            }
+          },
+          "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
+        },
+        "proofInputs": {
+          "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+          "cobolSourceFormat": "FREE",
+          "amountField": "INPUT-AMOUNT",
+          "rateField": "REFERENCE-RATE",
+          "resultField": "SETTLEMENT-RESULT",
+          "javaAmountParameter": "amount",
+          "javaRateParameter": "rate",
+          "amountMinCents": 0,
+          "amountMaxCents": 999999999,
+          "referenceCurrencyPair": "GBP/EUR",
+          "referenceSource": "Bank of England Daily Spot Rate",
+          "referenceCollectedDate": "2026-10-17"
+        },
+        "semantics": "restricted COBOL/Java scalar arithmetic v1",
+        "outputObservation": "monetary values rounded HALF_UP to integer cents",
+        "sourceSha256": {
+          "cobol": "5f03f1b366263c9a504d8075112f1c133bfdc146e114a514051946063ea48e69",
+          "java": "cc66f8f869f52b96ed5d996e9243c8e843c43bd668ba9dd812c00511f3d2c2f5"
+        },
+        "limitations": [
+          "One exact fixed reference rate; acyclic scalar arithmetic only.",
+          "PIC overflow discards high-order digits; no ON SIZE ERROR, runtime or I/O semantics.",
+          "UNSAT covers only the explicit finite input domain, never arbitrary whole programs.",
+          "GNN alignments guide inspection and do not authorize a proof."
+        ],
+        "reason": "External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly."
+      },
+      "fStringSummary": "Paired-code GNN program cosine 0.833 (advisory matching, not equivalence). Defect risk is not estimated. Proof halted: External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly.. Human review is required.",
+      "cpgGraphJson": {
+        "featureNames": [
+          "is_fixed_point_comp3",
+          "is_ieee754_float",
+          "is_big_decimal",
+          "decimal_scale",
+          "has_rounding_clause",
+          "is_loop_branch",
+          "is_external_call",
+          "pca_structural_residual"
+        ],
+        "extractorScope": "Line AST/CFG/type-use approximation; formal parser independently validates all syntax.",
+        "nodes": [
+          {
+            "id": "cobol:root",
+            "label": "COBOL",
+            "kind": "program",
+            "language": "cobol",
+            "line": 1,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.01999056310746392
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:1",
+            "label": "IDENTIFICATION DIVISION.",
+            "sourceText": "IDENTIFICATION DIVISION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 1,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.051761683002963604
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:2",
+            "label": "PROGRAM-ID. CICS-TERMINAL-IO.",
+            "sourceText": "PROGRAM-ID. CICS-TERMINAL-IO.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 2,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.1862338114559763
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:3",
+            "label": "DATA DIVISION.",
+            "sourceText": "DATA DIVISION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 3,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.1862338114559763
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:4",
+            "label": "WORKING-STORAGE SECTION.",
+            "sourceText": "WORKING-STORAGE SECTION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 4,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0538980405460623
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:5",
+            "label": "01 TERMINAL-BUFFER PIC X(80).",
+            "sourceText": "01 TERMINAL-BUFFER PIC X(80).",
+            "kind": "field",
+            "language": "cobol",
+            "line": 5,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.1653741861102431
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:6",
+            "label": "01 ACCOUNT-VIEW REDEFINES TERMINAL-BUFFER.",
+            "sourceText": "01 ACCOUNT-VIEW REDEFINES TERMINAL-BUFFER.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 6,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.28730318960455814
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:7",
+            "label": "05 ACCOUNT-ID PIC 9(10).",
+            "sourceText": "05 ACCOUNT-ID PIC 9(10).",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 7,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.1862338114559763
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:8",
+            "label": "PROCEDURE DIVISION.",
+            "sourceText": "PROCEDURE DIVISION.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 8,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.3732451594435223
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:9",
+            "label": "MAIN",
+            "sourceText": "MAIN.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 9,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.023318006445285568
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:10",
+            "label": "EXEC CICS RECEIVE MAP('WIREMAP')",
+            "sourceText": "EXEC CICS RECEIVE MAP('WIREMAP')",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 10,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.1862338114559763
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:11",
+            "label": "INTO(TERMINAL-BUFFER) END-EXEC.",
+            "sourceText": "INTO(TERMINAL-BUFFER) END-EXEC.",
+            "kind": "statement",
+            "language": "cobol",
+            "line": 11,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.29639560029565987
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "cobol:12",
+            "label": "GOBACK",
+            "sourceText": "GOBACK.",
+            "kind": "paragraph",
+            "language": "cobol",
+            "line": 12,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0538980405460623
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:root",
+            "label": "JAVA",
+            "kind": "program",
+            "language": "java",
+            "line": 1,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.15207995555319884
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:1",
+            "label": "public final class TerminalSessionHandler {",
+            "sourceText": "public final class TerminalSessionHandler {",
+            "kind": "statement",
+            "language": "java",
+            "line": 1,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.2334090445000042
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:2",
+            "label": "receiveMap",
+            "sourceText": "public void receiveMap(TerminalGateway gateway) {",
+            "kind": "method",
+            "language": "java",
+            "line": 2,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.0955178163076842
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:3",
+            "label": "gateway.receiveMap(\"WIREMAP\");",
+            "sourceText": "gateway.receiveMap(\"WIREMAP\");",
+            "kind": "statement",
+            "language": "java",
+            "line": 3,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              0.11801057868731486
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:4",
+            "label": "}",
+            "sourceText": "}",
+            "kind": "statement",
+            "language": "java",
+            "line": 4,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.11801057868731486
+            ],
+            "riskScore": 0.0
+          },
+          {
+            "id": "java:5",
+            "label": "}",
+            "sourceText": "}",
+            "kind": "statement",
+            "language": "java",
+            "line": 5,
+            "features": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.03556429410908022
+            ],
+            "riskScore": 0.0
+          }
+        ],
+        "edges": [
+          {
+            "source": "cobol:root",
+            "target": "cobol:1",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:2",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:3",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:4",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:5",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:6",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:7",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:8",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:9",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:root",
+            "target": "cobol:12",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:1",
+            "target": "cobol:2",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:2",
+            "target": "cobol:3",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:3",
+            "target": "cobol:4",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:5",
+            "target": "cobol:6",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:5",
+            "target": "cobol:6",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:5",
+            "target": "cobol:11",
+            "kind": "TYPE_FLOW"
+          },
+          {
+            "source": "cobol:6",
+            "target": "cobol:7",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:7",
+            "target": "cobol:8",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:8",
+            "target": "cobol:9",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:9",
+            "target": "cobol:10",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:9",
+            "target": "cobol:10",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:9",
+            "target": "cobol:11",
+            "kind": "AST"
+          },
+          {
+            "source": "cobol:10",
+            "target": "cobol:11",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:11",
+            "target": "cobol:12",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:root",
+            "target": "java:1",
+            "kind": "AST"
+          },
+          {
+            "source": "java:root",
+            "target": "java:2",
+            "kind": "AST"
+          },
+          {
+            "source": "java:1",
+            "target": "java:2",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:2",
+            "target": "java:3",
+            "kind": "AST"
+          },
+          {
+            "source": "java:2",
+            "target": "java:3",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:2",
+            "target": "java:4",
+            "kind": "AST"
+          },
+          {
+            "source": "java:2",
+            "target": "java:5",
+            "kind": "AST"
+          },
+          {
+            "source": "java:3",
+            "target": "java:4",
+            "kind": "CFG"
+          },
+          {
+            "source": "java:4",
+            "target": "java:5",
+            "kind": "CFG"
+          },
+          {
+            "source": "cobol:root",
+            "target": "java:root",
+            "kind": "GNN_ALIGNMENT",
+            "granularity": "PROGRAM",
+            "similarity": 0.832993,
+            "matchingIsProof": false
+          }
+        ]
+      },
+      "provenanceJson": {
+        "engineVersion": "0.1.0",
+        "model": {
+          "id": "paired-program-gnn-v1",
+          "sha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+          "trainingDataset": "COBOL-JavaTrans (143 original source pairs)",
+          "evaluation": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+          },
+          "limitations": [
+            "143 small HumanEval-derived pairs, not banking migrations",
+            "Pair labels are upstream correspondence, not independent correctness proofs",
+            "Heuristic graph extraction, not full compiler AST/CFG",
+            "Names excluded from model; name baseline may be stronger on named benchmark",
+            "Cosine scores are not calibrated probabilities",
+            "No financial-domain generalization claim",
+            "No defect prediction or code generation"
+          ]
+        },
+        "modelSha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+        "graphInferenceMs": 0.828,
+        "referenceRate": {
+          "currencyPair": "GBP/EUR",
+          "rate": "1.183",
+          "source": "Bank of England Daily Spot Rate",
+          "collectedDate": "2026-10-17",
+          "observationDate": "2026-10-15",
+          "seriesCode": "XUDLERS",
+          "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+          "licence": "OGL-UK-3.0",
+          "provenance": {
+            "id": "boe-XUDLERS",
+            "units": "EUR per 1 GBP",
+            "snapshotPath": "snapshots/boe-XUDLERS.html",
+            "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+            "requestedObservationThrough": "2026-10-17",
+            "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+            "desiredDemoObservationDate": "2026-10-16"
+          },
+          "provenanceJson": {
+            "seriesCode": "XUDLERS",
+            "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+            "licence": "OGL-UK-3.0",
+            "provenance": {
+              "id": "boe-XUDLERS",
+              "units": "EUR per 1 GBP",
+              "snapshotPath": "snapshots/boe-XUDLERS.html",
+              "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+              "requestedObservationThrough": "2026-10-17",
+              "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+              "desiredDemoObservationDate": "2026-10-16"
+            }
+          },
+          "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
+        },
+        "alignmentIsProof": false,
+        "measuredAlignmentBenchmark": null,
+        "mlValidation": {
+          "status": "BENCHMARK_PILOT",
+          "evidence": {
+            "status": "BENCHMARK_PILOT",
+            "test": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.37931,
+                "top3": 0.551724,
+                "top5": 0.689655,
+                "mrr": 0.50714
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.551724,
+                "top5": 0.62069,
+                "mrr": 0.433076
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.206897,
+                "top3": 0.310345,
+                "top5": 0.37931,
+                "mrr": 0.322989
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.931034,
+                "top5": 0.931034,
+                "mrr": 0.934138
+              }
+            },
+            "validation": {
+              "gnn": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.275862,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.450885
+              },
+              "noMessagePassing": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.344828,
+                "top3": 0.482759,
+                "top5": 0.655172,
+                "mrr": 0.486858
+              },
+              "semanticHistogram": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.172414,
+                "top3": 0.344828,
+                "top5": 0.448276,
+                "mrr": 0.297737
+              },
+              "nameMatching": {
+                "queries": 29,
+                "candidatesPerQuery": 29,
+                "top1": 0.931034,
+                "top3": 0.965517,
+                "top5": 0.965517,
+                "mrr": 0.950091
+              }
+            },
+            "financialDomainValidated": false,
+            "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+          },
+          "productionBankingValidated": false
+        },
+        "riskAssessment": {
+          "status": "NOT_ESTIMATED",
+          "reason": "The synthetic risk classifier was removed. Paired-program labels do not identify defects.",
+          "legacyNumericField": "gnnBugRiskScore=0 is unused compatibility data, not evidence of low risk."
+        },
+        "matchingGranularity": "PROGRAM",
+        "sourceAuthorship": {
+          "aiGenerated": true,
+          "description": "AI-authored executable scalar COBOL/Java banking demonstration",
+          "inspiration": "Apache-2.0 IBM/Bank-of-Z COBOL, pinned source attribution in data-sources/provenance.json",
+          "authenticVendorExtract": false,
+          "remittancePolicy": "Historical World Bank GBP120 fee1.89 plus AI-generated >GBP120 tier at1%; not a real provider tariff"
+        },
+        "limitations": [
+          "The displayed inspection graph is a line approximation; matching uses a separate semantic-feature graph.",
+          "Program-pair training does not supply statement correspondences or defect labels.",
+          "GNN/model confidence is not proof and does not prune symbolic inputs.",
+          "Small public benchmark retrieval results do not establish production migration reliability."
+        ],
+        "patchVerification": {
+          "status": "UNKNOWN_HALTED_LIMIT",
+          "proofScope": {
+            "supported": false,
+            "bounded": true,
+            "inputUnit": "integer cents",
+            "inputAmountCents": {
+              "min": -999999999,
+              "max": 999999999
+            },
+            "rate": {
+              "currencyPair": "GBP/EUR",
+              "rate": "1.183",
+              "source": "Bank of England Daily Spot Rate",
+              "collectedDate": "2026-10-17",
+              "observationDate": "2026-10-15",
+              "seriesCode": "XUDLERS",
+              "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+              "licence": "OGL-UK-3.0",
+              "provenance": {
+                "id": "boe-XUDLERS",
+                "units": "EUR per 1 GBP",
+                "snapshotPath": "snapshots/boe-XUDLERS.html",
+                "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+                "requestedObservationThrough": "2026-10-17",
+                "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+                "desiredDemoObservationDate": "2026-10-16"
+              },
+              "provenanceJson": {
+                "seriesCode": "XUDLERS",
+                "sourceUrl": "https://www.bankofengland.co.uk/boeapps/database/fromshowcolumns.asp?CSVF=TT&DAT=RNG&FD=1&FM=Jan&FNY=Y&FY=2021&Filter=N&FromSeries=1&SeriesCodes=XUDLERS&TD=17&TM=Oct&TY=2026&ToSeries=50&Travel=NIxAZxSUx&UsingCodes=Y&VPD=Y&html.x=66&html.y=26&title=XUDLERS",
+                "licence": "OGL-UK-3.0",
+                "provenance": {
+                  "id": "boe-XUDLERS",
+                  "units": "EUR per 1 GBP",
+                  "snapshotPath": "snapshots/boe-XUDLERS.html",
+                  "snapshotSha256": "f9ad7b23b0e5b83fc6d9786435f827dbe692720e632802038408abbf9986712f",
+                  "requestedObservationThrough": "2026-10-17",
+                  "datePolicy": "Latest observation returned by the provider, never relabelled to the retrieval date.",
+                  "desiredDemoObservationDate": "2026-10-16"
+                }
+              },
+              "id": "594e0eaa-2ef8-5a82-a2af-ce3444a85c2a"
+            },
+            "proofInputs": {
+              "cobolDialectProfile": "IBM_ENTERPRISE_COBOL_ZOS_6_5_SCALAR_SUBSET_V1",
+              "cobolSourceFormat": "FREE",
+              "amountField": "INPUT-AMOUNT",
+              "rateField": "REFERENCE-RATE",
+              "resultField": "SETTLEMENT-RESULT",
+              "javaAmountParameter": "amount",
+              "javaRateParameter": "rate",
+              "amountMinCents": 0,
+              "amountMaxCents": 999999999,
+              "referenceCurrencyPair": "GBP/EUR",
+              "referenceSource": "Bank of England Daily Spot Rate",
+              "referenceCollectedDate": "2026-10-17"
+            },
+            "semantics": "restricted COBOL/Java scalar arithmetic v1",
+            "outputObservation": "monetary values rounded HALF_UP to integer cents",
+            "sourceSha256": {
+              "cobol": "5f03f1b366263c9a504d8075112f1c133bfdc146e114a514051946063ea48e69",
+              "java": "cc66f8f869f52b96ed5d996e9243c8e843c43bd668ba9dd812c00511f3d2c2f5"
+            },
+            "limitations": [
+              "One exact fixed reference rate; acyclic scalar arithmetic only.",
+              "PIC overflow discards high-order digits; no ON SIZE ERROR, runtime or I/O semantics.",
+              "UNSAT covers only the explicit finite input domain, never arbitrary whole programs.",
+              "GNN alignments guide inspection and do not authorize a proof."
+            ],
+            "reason": "External CICS/JCL state or aliased REDEFINES storage cannot be modeled soundly."
+          }
+        }
+      },
+      "createdAt": "2026-10-18T03:05:36.762454+00:00",
+      "updatedAt": "2026-10-18T03:05:36.762454+00:00"
+    }
+  ]
+}

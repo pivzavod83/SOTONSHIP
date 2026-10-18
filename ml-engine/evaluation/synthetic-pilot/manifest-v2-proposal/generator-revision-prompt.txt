@@ -1,0 +1,41 @@
+Revise this synthetic COBOL-to-Java pilot plan before batch 4. Your previous manifest was internally balanced but contradicted already-audited source files. Treat the following facts as fixed; do not infer new identities from missing context.
+
+PURPOSE AND SCOPE
+The dataset is a small, explicitly SYNTHETIC_AI_GENERATED feasibility benchmark for learning correspondence and potential semantic defects in a supplied COBOL/Java pair. It is not real production defect data, proof of equivalence, or a production-accuracy benchmark. Keep the existing GnuCOBOL 3.2 FREE / Java 21 compiler profile, complete stdin/stdout programs, canonical bounded ASCII inputs and one scalar numeric output. Do not introduce date/string/multiple-output tasks or a new evaluator in this repair.
+
+RESTORE THE ORIGINAL ALLOCATION
+20 independent COBOL algorithm families, four Java variants each (two proposed equivalent and two defective), 80 candidate pairs total. Use exactly these four categories, five families each:
+DECIMAL_ROUNDING_AND_SCALE
+NUMERIC_STORAGE_AND_SIGN
+CONTROL_FLOW_AND_BOUNDARIES
+INDEXING_AND_LOOP_BOUNDS
+For EACH category use three train, one validation and one test family: 12 train / 4 validation / 4 test families overall. All four Java variants, tests and related fragments inherit their family's split. Keep related templates and shared algorithmic helpers in the same split; distinct business names or cloneGroup strings are not evidence of independence.
+
+PRESERVE THE EXISTING AUDITED IDENTITIES
+F001 — DECIMAL_ROUNDING_AND_SCALE / train: invoice discount and tax. Truncate subtotal*discount/100 to cents; subtract that discount; round tax on the net to cents; ADD that tax to the net. The final operation is addition, not subtraction.
+F002 — DECIMAL_ROUNDING_AND_SCALE / train: pro-rata subscription charge. Round annual fee/365 to FOUR fractional places; multiply by days and round gross to cents; preserve gross PIC 9(5)V99 storage truncation of a sixth integer digit modulo 100000.00 BEFORE subtracting promotional credit, with a zero floor. It is not F006's balance algorithm.
+F003 — DECIMAL_ROUNDING_AND_SCALE / train: triangulated FX. Multiply base amount by first four-decimal rate, truncate intermediate to FOUR fractional places, multiply by second rate and round settlement to cents, then subtract wire fee. It is not a threshold-selection algorithm.
+F004 — DECIMAL_ROUNDING_AND_SCALE / validation: weighted inventory unit cost. Sum each lot's quantity*unit cost; divide by combined quantity; round final quotient to cents. Keep it in validation. Do not replace its identity with a date program. Its previous V4 unweighted-mean defect is an ARITHMETIC_FORMULA subtype, not a rounding defect; this metadata repair is separate and must be versioned.
+F006 — NUMERIC_STORAGE_AND_SIGN / train: add signed adjustment to opening balance; store in unsigned intermediate, removing the negative sign; subtract signed fee into a signed final balance.
+Do not change, regenerate, rename or reassign these five existing source families to satisfy allocation counts. Derive their manifest summaries from the facts above.
+
+F005 IS A PROPOSED REPLACEMENT, NOT DELIVERED CODE
+The old F005 compounded-interest program remains archived and is unsuitable for an independent test claim because it closely resembles F001. The proposed new F005 algorithm is one FX conversion using a four-decimal rate, cent rounding, then nearest-0.05 cash-denomination quantization. Keep it DECIMAL_ROUNDING_AND_SCALE / test. Explicitly mark it as a replacement under a new family revision; retain old provenance. Provide actual source before claiming that the replacement fixes independence. Its quantization and dependency structure must differ materially from F001 and F003; a different name is not enough. Specify nonnegative bounded inputs, exact tie behavior, intermediate widths and output normalization. Check that integer and decimal implementations cannot overflow within the declared contract.
+
+REMAINING FAMILY SLOTS
+Choose materially different algorithms for these still-proposed slots:
+F007, F008: NUMERIC_STORAGE_AND_SIGN / train
+F009: NUMERIC_STORAGE_AND_SIGN / validation
+F010: NUMERIC_STORAGE_AND_SIGN / test
+F011, F012, F013: CONTROL_FLOW_AND_BOUNDARIES / train
+F014: CONTROL_FLOW_AND_BOUNDARIES / validation
+F015: CONTROL_FLOW_AND_BOUNDARIES / test
+F016, F017, F018: INDEXING_AND_LOOP_BOUNDS / train
+F019: INDEXING_AND_LOOP_BOUNDS / validation
+F020: INDEXING_AND_LOOP_BOUNDS / test
+The five decimal slots are already filled by F001-F005. Give every proposed algorithm a clear domain, relevant semantic failure modes and defensible clone-group rationale. Do not reuse one ordered first-match algorithm across splits under different business labels.
+
+OUTPUT NOW
+1. A corrected complete 20-family manifest with the original allocation and preserved identities, clearly marking existing audited families versus new proposed slots and replacement F005. No new validation/test assignment may put an already-designated validation/test source into training.
+2. The COMPLETE replacement F005 using the established batch schema: contract, cobolLines, cobolSegments, six tests with reference predictions, four Java variants with javaLines/javaSegments, genuine alignments (including split/combined/reordered mappings where appropriate), proposed equivalence and defect labels, defect segment references, rationales and per-test Java predictions. Each defective variant must have at least two valid predicted differing-output witnesses. Balance integer and BigDecimal implementation styles across correct and defective labels; use neutral Program class names. Predictive annotations are not proof.
+Do not generate F007 onward yet. Preserve labelStatus=PROPOSED, executionStatus=NOT_EXECUTED and executionEvidence=null unless the exact supplied sources were actually compiled and run. Do not fabricate compiler results, human review, model training or accuracy. Return strict JSON in two clearly identified JSON blocks: manifest, then replacement F005 batch; no comments or ellipses inside JSON.

@@ -1,0 +1,58 @@
+{
+  "inputSha256": "e8207d8200c16ecdb4fb5dd6813c4041cc7c5bd37ed08f0ae4969f37a36f8693",
+  "familyRevisions": {
+    "F007": "F007-R1",
+    "F008": "F008-R1"
+  },
+  "sourceReview": "AI-assisted static inspection; not independent human review",
+  "suppliedCasesPerFamily": 6,
+  "extraCases": {
+    "F007": [
+      [
+        "A1",
+        "9998\n1\n",
+        "Immediately below the first wrap boundary."
+      ],
+      [
+        "A2",
+        "9998\n2\n",
+        "Exactly at the first wrap boundary."
+      ],
+      [
+        "A3",
+        "1\n9999\n",
+        "Different operands reaching the wrap boundary."
+      ],
+      [
+        "A4",
+        "123\n23456\n",
+        "Multiple wraps with a nonzero retained remainder."
+      ]
+    ],
+    "F008": [
+      [
+        "A1",
+        "-1\n99\n",
+        "Small negative dividend and maximum positive divisor."
+      ],
+      [
+        "A2",
+        "1\n99\n",
+        "Positive dividend smaller than the divisor."
+      ],
+      [
+        "A3",
+        "-99999\n1\n",
+        "Minimum dividend divided by one, exact zero remainder."
+      ],
+      [
+        "A4",
+        "-98\n99\n",
+        "Negative residual adjacent to the divisor magnitude."
+      ]
+    ]
+  },
+  "executionScope": "Pinned source only, no source edits, no original 143-task corpus or training",
+  "comparison": "Exact decimal normalization; no tolerance and no float conversion",
+  "equivalenceLimit": "Passing executed inputs never establishes universal equivalence"
+}

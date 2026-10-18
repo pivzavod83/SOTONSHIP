@@ -1,0 +1,1026 @@
+{
+  "batchNumber": 2,
+  "datasetKind": "SYNTHETIC_AI_GENERATED",
+  "compilerProfile": {
+    "cobolCompiler": "GnuCOBOL 3.2",
+    "cobolSourceFormat": "FREE",
+    "javaVersion": "Java 21"
+  },
+  "families": [
+    {
+      "familyId": "F003",
+      "split": "train",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "algorithmDescription": "Performs a triangulated foreign-exchange conversion from a base currency amount using two sequential 4-decimal rates and a fixed settlement wire fee. The intermediate amount MID-AMT is stored in PIC 9(6)V9(4) without ROUNDED (truncating fractional digits beyond scale 4 toward zero), multiplied by the second rate into SETTLE-AMT PIC 9(6)V99 with ROUNDED (half-up to scale 2), and reduced by WIRE-FEE.",
+      "contract": {
+        "inputFields": [
+          {
+            "name": "BASE-AMT",
+            "cobolPicture": "PIC 9(4)V99",
+            "description": "Initial amount in base currency"
+          },
+          {
+            "name": "RATE-A",
+            "cobolPicture": "PIC 99V9(4)",
+            "description": "First leg conversion rate to intermediate currency"
+          },
+          {
+            "name": "RATE-B",
+            "cobolPicture": "PIC 99V9(4)",
+            "description": "Second leg conversion rate from intermediate to settlement currency"
+          },
+          {
+            "name": "WIRE-FEE",
+            "cobolPicture": "PIC 99V99",
+            "description": "Fixed wire fee deducted in settlement currency"
+          }
+        ],
+        "stdinFormat": "Four newline-separated decimal strings representing BASE-AMT, RATE-A, RATE-B, and WIRE-FEE.",
+        "validInputDomain": "BASE-AMT in [100.00, 1000.00] with at most 2 decimal places; RATE-A in [0.5000, 10.0000] with at most 4 decimal places; RATE-B in [0.5000, 80.0000] with at most 4 decimal places; WIRE-FEE in [0.00, 25.00] with at most 2 decimal places.",
+        "outputMeaning": "Single scalar decimal representing NET-OUT in settlement currency at scale 2.",
+        "outputNormalization": "Trim surrounding whitespace, strip optional leading '+' sign and leading integer zeros (preserving '0' before the decimal point), and format as an exact decimal string with 2 fractional digits (0.00).",
+        "semanticAssumptions": [
+          "Working-storage intermediate fields: MID-AMT PIC 9(6)V9(4), SETTLE-AMT PIC 9(6)V99, NET-OUT PIC 9(6)V99.",
+          "Across the declared valid input domain, MID-AMT lies in [50.0000, 10000.0000] and SETTLE-AMT lies in [25.00, 800000.00], so neither overflows its integer width and SETTLE-AMT is always greater than or equal to WIRE-FEE.",
+          "COMPUTE MID-AMT without ROUNDED truncates digits beyond 4 decimal places toward zero; COMPUTE SETTLE-AMT ROUNDED rounds half-way values away from zero at 2 decimal places."
+        ]
+      },
+      "cobolLines": [
+        ">>SOURCE FORMAT FREE",
+        "IDENTIFICATION DIVISION.",
+        "PROGRAM-ID. F003.",
+        "DATA DIVISION.",
+        "WORKING-STORAGE SECTION.",
+        "01 IN-S1 PIC X(20).",
+        "01 IN-S2 PIC X(20).",
+        "01 IN-S3 PIC X(20).",
+        "01 IN-S4 PIC X(20).",
+        "01 BASE-AMT PIC 9(4)V99.",
+        "01 RATE-A PIC 99V9(4).",
+        "01 RATE-B PIC 99V9(4).",
+        "01 WIRE-FEE PIC 99V99.",
+        "01 MID-AMT PIC 9(6)V9(4).",
+        "01 SETTLE-AMT PIC 9(6)V99.",
+        "01 NET-OUT PIC 9(6)V99.",
+        "01 OUT-VAL PIC 9(6).99.",
+        "PROCEDURE DIVISION.",
+        "    ACCEPT IN-S1",
+        "    ACCEPT IN-S2",
+        "    ACCEPT IN-S3",
+        "    ACCEPT IN-S4",
+        "    COMPUTE BASE-AMT = FUNCTION NUMVAL(IN-S1)",
+        "    COMPUTE RATE-A = FUNCTION NUMVAL(IN-S2)",
+        "    COMPUTE RATE-B = FUNCTION NUMVAL(IN-S3)",
+        "    COMPUTE WIRE-FEE = FUNCTION NUMVAL(IN-S4)",
+        "    COMPUTE MID-AMT = BASE-AMT * RATE-A",
+        "    COMPUTE SETTLE-AMT ROUNDED = MID-AMT * RATE-B",
+        "    COMPUTE NET-OUT = SETTLE-AMT - WIRE-FEE",
+        "    MOVE NET-OUT TO OUT-VAL",
+        "    DISPLAY OUT-VAL",
+        "    STOP RUN."
+      ],
+      "cobolSegments": [
+        {
+          "id": "C1",
+          "startLine": 27,
+          "endLine": 27
+        },
+        {
+          "id": "C2",
+          "startLine": 28,
+          "endLine": 28
+        },
+        {
+          "id": "C3",
+          "startLine": 29,
+          "endLine": 29
+        }
+      ],
+      "tests": [
+        {
+          "testId": "F003-T1",
+          "stdin": "200.00\n1.2500\n0.8000\n5.00\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "195.00"
+        },
+        {
+          "testId": "F003-T2",
+          "stdin": "500.00\n1.5000\n1.1000\n10.00\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "815.00"
+        },
+        {
+          "testId": "F003-T3",
+          "stdin": "100.00\n0.5000\n0.5000\n25.00\n",
+          "caseKind": "boundary",
+          "expectedReferenceValue": "0.00"
+        },
+        {
+          "testId": "F003-T4",
+          "stdin": "1000.00\n10.0000\n80.0000\n0.00\n",
+          "caseKind": "boundary",
+          "expectedReferenceValue": "800000.00"
+        },
+        {
+          "testId": "F003-T5",
+          "stdin": "100.09\n1.0009\n60.0500\n5.00\n",
+          "caseKind": "defect_witness",
+          "expectedReferenceValue": "6010.81"
+        },
+        {
+          "testId": "F003-T6",
+          "stdin": "250.07\n2.0008\n70.0250\n10.00\n",
+          "caseKind": "defect_witness",
+          "expectedReferenceValue": "35026.31"
+        }
+      ],
+      "variants": [
+        {
+          "variantId": "F003-V1",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal baseAmt = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal rateA = new BigDecimal(sc.nextLine().trim()).setScale(4, RoundingMode.DOWN);",
+            "        BigDecimal rateB = new BigDecimal(sc.nextLine().trim()).setScale(4, RoundingMode.DOWN);",
+            "        BigDecimal wireFee = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal midAmt = baseAmt.multiply(rateA).setScale(4, RoundingMode.DOWN);",
+            "        BigDecimal settleAmt = midAmt.multiply(rateB).setScale(2, RoundingMode.HALF_UP);",
+            "        BigDecimal netOut = settleAmt.subtract(wireFee);",
+            "        System.out.println(netOut.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J2",
+              "startLine": 12,
+              "endLine": 12
+            },
+            {
+              "id": "J3",
+              "startLine": 13,
+              "endLine": 13
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Preserves COBOL storage and rounding semantics by truncating midAmt at scale 4 via RoundingMode.DOWN (matching unrounded PIC 9(6)V9(4) in C1), rounding settleAmt half-up at scale 2 via RoundingMode.HALF_UP (matching COMPUTE ROUNDED into PIC 9(6)V99 in C2), and subtracting wireFee in J3.",
+          "testPredictions": [
+            {
+              "testId": "F003-T1",
+              "expectedJavaValue": "195.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T2",
+              "expectedJavaValue": "815.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T4",
+              "expectedJavaValue": "800000.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T5",
+              "expectedJavaValue": "6010.81",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T6",
+              "expectedJavaValue": "35026.31",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F003-V2",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long baseCents = new BigDecimal(sc.nextLine().trim()).movePointRight(2).longValue();",
+            "        long rateAPips = new BigDecimal(sc.nextLine().trim()).movePointRight(4).longValue();",
+            "        long rateBPips = new BigDecimal(sc.nextLine().trim()).movePointRight(4).longValue();",
+            "        long feeCents = new BigDecimal(sc.nextLine().trim()).movePointRight(2).longValue();",
+            "        long midUnits = (baseCents * rateAPips) / 100L;",
+            "        long settleCents = (midUnits * rateBPips + 500000L) / 1000000L;",
+            "        long netCents = settleCents - feeCents;",
+            "        System.out.println(BigDecimal.valueOf(netCents, 2).toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 10,
+              "endLine": 10
+            },
+            {
+              "id": "J2",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J3",
+              "startLine": 12,
+              "endLine": 12
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Refactors the conversion into exact 64-bit scaled integer arithmetic. Dividing baseCents * rateAPips by 100L in J1 truncates to ten-thousandths (scale 4) identically to C1, and adding 500000L before dividing by 1000000L in J2 performs exact half-up rounding to cents (scale 2) identically to C2.",
+          "testPredictions": [
+            {
+              "testId": "F003-T1",
+              "expectedJavaValue": "195.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T2",
+              "expectedJavaValue": "815.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T4",
+              "expectedJavaValue": "800000.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T5",
+              "expectedJavaValue": "6010.81",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T6",
+              "expectedJavaValue": "35026.31",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F003-V3",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal baseAmt = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal rateA = new BigDecimal(sc.nextLine().trim()).setScale(4, RoundingMode.DOWN);",
+            "        BigDecimal rateB = new BigDecimal(sc.nextLine().trim()).setScale(4, RoundingMode.DOWN);",
+            "        BigDecimal wireFee = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal midAmt = baseAmt.multiply(rateA).setScale(4, RoundingMode.HALF_UP);",
+            "        BigDecimal settleAmt = midAmt.multiply(rateB).setScale(2, RoundingMode.HALF_UP);",
+            "        BigDecimal netOut = settleAmt.subtract(wireFee);",
+            "        System.out.println(netOut.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J2",
+              "startLine": 12,
+              "endLine": 12
+            },
+            {
+              "id": "J3",
+              "startLine": 13,
+              "endLine": 13
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "DECIMAL_ROUNDING_AND_SCALE",
+          "defectCobolSegmentIds": ["C1"],
+          "defectJavaSegmentIds": ["J1"],
+          "labelRationale": "Segment J1 aligns with C1 but rounds midAmt using RoundingMode.HALF_UP instead of truncating toward zero (RoundingMode.DOWN). In T5 (100.180081 -> 100.1801 vs 100.1800) and T6 (500.340056 -> 500.3401 vs 500.3400), the extra 0.0001 in midAmt compounds with rateB to push settleAmt up by 0.01.",
+          "testPredictions": [
+            {
+              "testId": "F003-T1",
+              "expectedJavaValue": "195.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T2",
+              "expectedJavaValue": "815.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T4",
+              "expectedJavaValue": "800000.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T5",
+              "expectedJavaValue": "6010.82",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F003-T6",
+              "expectedJavaValue": "35026.32",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F003-V4",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal baseAmt = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal rateA = new BigDecimal(sc.nextLine().trim()).setScale(4, RoundingMode.DOWN);",
+            "        BigDecimal rateB = new BigDecimal(sc.nextLine().trim()).setScale(4, RoundingMode.DOWN);",
+            "        BigDecimal wireFee = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal midAmt = baseAmt.multiply(rateA).setScale(4, RoundingMode.DOWN);",
+            "        BigDecimal settleAmt = midAmt.multiply(rateB).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal netOut = settleAmt.subtract(wireFee);",
+            "        System.out.println(netOut.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J2",
+              "startLine": 12,
+              "endLine": 12
+            },
+            {
+              "id": "J3",
+              "startLine": 13,
+              "endLine": 13
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "DECIMAL_ROUNDING_AND_SCALE",
+          "defectCobolSegmentIds": ["C2"],
+          "defectJavaSegmentIds": ["J2"],
+          "labelRationale": "Segment J2 aligns with C2 but truncates settleAmt using RoundingMode.DOWN instead of honoring COMPUTE SETTLE-AMT ROUNDED (RoundingMode.HALF_UP). In T5 (6015.8090 -> 6015.80 vs 6015.81) and T6 (35036.3085 -> 35036.30 vs 35036.31), truncation reduces the output by 0.01.",
+          "testPredictions": [
+            {
+              "testId": "F003-T1",
+              "expectedJavaValue": "195.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T2",
+              "expectedJavaValue": "815.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T4",
+              "expectedJavaValue": "800000.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F003-T5",
+              "expectedJavaValue": "6010.80",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F003-T6",
+              "expectedJavaValue": "35026.30",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        }
+      ]
+    },
+    {
+      "familyId": "F004",
+      "split": "validation",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "algorithmDescription": "Computes the weighted average unit inventory cost across two purchase lots. Each lot's quantity (PIC 9(3)) and unit cost (PIC 9(3)V99) are multiplied into exact 2-decimal extended cost fields (EXT-1 and EXT-2, PIC 9(6)V99), the quantities are summed into TOT-QTY (PIC 9(4)), and the combined extended cost is divided by TOT-QTY into UNIT-AVG (PIC 9(4)V99) using ROUNDED (half-up to 2 decimal places).",
+      "contract": {
+        "inputFields": [
+          {
+            "name": "QTY-1",
+            "cobolPicture": "PIC 9(3)",
+            "description": "Unit quantity for purchase lot 1"
+          },
+          {
+            "name": "COST-1",
+            "cobolPicture": "PIC 9(3)V99",
+            "description": "Unit cost for purchase lot 1"
+          },
+          {
+            "name": "QTY-2",
+            "cobolPicture": "PIC 9(3)",
+            "description": "Unit quantity for purchase lot 2"
+          },
+          {
+            "name": "COST-2",
+            "cobolPicture": "PIC 9(3)V99",
+            "description": "Unit cost for purchase lot 2"
+          }
+        ],
+        "stdinFormat": "Four newline-separated strings: QTY-1 (integer), COST-1 (decimal), QTY-2 (integer), and COST-2 (decimal).",
+        "validInputDomain": "QTY-1 and QTY-2 integers in [1, 999]; COST-1 and COST-2 decimals in [0.00, 999.99] with at most 2 decimal places.",
+        "outputMeaning": "Single scalar decimal representing the weighted average unit cost UNIT-AVG at scale 2.",
+        "outputNormalization": "Trim surrounding whitespace, strip optional leading '+' sign and leading integer zeros (preserving '0' before the decimal point), and format as an exact decimal string with 2 fractional digits (0.00).",
+        "semanticAssumptions": [
+          "Working-storage intermediate fields: EXT-1 PIC 9(6)V99, EXT-2 PIC 9(6)V99, TOT-QTY PIC 9(4), UNIT-AVG PIC 9(4)V99.",
+          "Because QTY-1 and QTY-2 are integers in [1, 999], TOT-QTY is in [2, 1998] (never zero), EXT-1 and EXT-2 are exact at scale 2 without truncation and bounded by 998990.01, and UNIT-AVG is bounded by 999.99.",
+          "COMPUTE UNIT-AVG ROUNDED = (EXT-1 + EXT-2) / TOT-QTY divides total extended cost by total units and rounds half-way values away from zero at scale 2."
+        ]
+      },
+      "cobolLines": [
+        ">>SOURCE FORMAT FREE",
+        "IDENTIFICATION DIVISION.",
+        "PROGRAM-ID. F004.",
+        "DATA DIVISION.",
+        "WORKING-STORAGE SECTION.",
+        "01 IN-S1 PIC X(20).",
+        "01 IN-S2 PIC X(20).",
+        "01 IN-S3 PIC X(20).",
+        "01 IN-S4 PIC X(20).",
+        "01 QTY-1 PIC 9(3).",
+        "01 COST-1 PIC 9(3)V99.",
+        "01 QTY-2 PIC 9(3).",
+        "01 COST-2 PIC 9(3)V99.",
+        "01 EXT-1 PIC 9(6)V99.",
+        "01 EXT-2 PIC 9(6)V99.",
+        "01 TOT-QTY PIC 9(4).",
+        "01 UNIT-AVG PIC 9(4)V99.",
+        "01 OUT-VAL PIC 9(4).99.",
+        "PROCEDURE DIVISION.",
+        "    ACCEPT IN-S1",
+        "    ACCEPT IN-S2",
+        "    ACCEPT IN-S3",
+        "    ACCEPT IN-S4",
+        "    COMPUTE QTY-1 = FUNCTION NUMVAL(IN-S1)",
+        "    COMPUTE COST-1 = FUNCTION NUMVAL(IN-S2)",
+        "    COMPUTE QTY-2 = FUNCTION NUMVAL(IN-S3)",
+        "    COMPUTE COST-2 = FUNCTION NUMVAL(IN-S4)",
+        "    COMPUTE EXT-1 = QTY-1 * COST-1",
+        "    COMPUTE EXT-2 = QTY-2 * COST-2",
+        "    COMPUTE TOT-QTY = QTY-1 + QTY-2",
+        "    COMPUTE UNIT-AVG ROUNDED = (EXT-1 + EXT-2) / TOT-QTY",
+        "    MOVE UNIT-AVG TO OUT-VAL",
+        "    DISPLAY OUT-VAL",
+        "    STOP RUN."
+      ],
+      "cobolSegments": [
+        {
+          "id": "C1",
+          "startLine": 28,
+          "endLine": 29
+        },
+        {
+          "id": "C2",
+          "startLine": 30,
+          "endLine": 30
+        },
+        {
+          "id": "C3",
+          "startLine": 31,
+          "endLine": 31
+        }
+      ],
+      "tests": [
+        {
+          "testId": "F004-T1",
+          "stdin": "10\n20.00\n10\n30.00\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "25.00"
+        },
+        {
+          "testId": "F004-T2",
+          "stdin": "25\n12.40\n25\n15.60\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "14.00"
+        },
+        {
+          "testId": "F004-T3",
+          "stdin": "1\n0.00\n1\n0.00\n",
+          "caseKind": "boundary",
+          "expectedReferenceValue": "0.00"
+        },
+        {
+          "testId": "F004-T4",
+          "stdin": "999\n999.99\n999\n999.99\n",
+          "caseKind": "boundary",
+          "expectedReferenceValue": "999.99"
+        },
+        {
+          "testId": "F004-T5",
+          "stdin": "1\n10.00\n2\n20.00\n",
+          "caseKind": "defect_witness",
+          "expectedReferenceValue": "16.67"
+        },
+        {
+          "testId": "F004-T6",
+          "stdin": "1\n10.00\n3\n10.02\n",
+          "caseKind": "defect_witness",
+          "expectedReferenceValue": "10.02"
+        }
+      ],
+      "variants": [
+        {
+          "variantId": "F004-V1",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        int qty1 = Integer.parseInt(sc.nextLine().trim());",
+            "        BigDecimal cost1 = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        int qty2 = Integer.parseInt(sc.nextLine().trim());",
+            "        BigDecimal cost2 = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal ext1 = cost1.multiply(BigDecimal.valueOf(qty1));",
+            "        BigDecimal ext2 = cost2.multiply(BigDecimal.valueOf(qty2));",
+            "        int totQty = qty1 + qty2;",
+            "        BigDecimal unitAvg = ext1.add(ext2).divide(BigDecimal.valueOf(totQty), 2, RoundingMode.HALF_UP);",
+            "        System.out.println(unitAvg.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 11,
+              "endLine": 12
+            },
+            {
+              "id": "J2",
+              "startLine": 13,
+              "endLine": 13
+            },
+            {
+              "id": "J3",
+              "startLine": 14,
+              "endLine": 14
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Computes exact extended lot costs in J1, total quantity in J2, and divides total cost by totQty using RoundingMode.HALF_UP at scale 2 in J3 to match COMPUTE UNIT-AVG ROUNDED in C3.",
+          "testPredictions": [
+            {
+              "testId": "F004-T1",
+              "expectedJavaValue": "25.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T2",
+              "expectedJavaValue": "14.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T4",
+              "expectedJavaValue": "999.99",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T5",
+              "expectedJavaValue": "16.67",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T6",
+              "expectedJavaValue": "10.02",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F004-V2",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long qty1 = Long.parseLong(sc.nextLine().trim());",
+            "        long cost1Cents = new BigDecimal(sc.nextLine().trim()).movePointRight(2).longValue();",
+            "        long qty2 = Long.parseLong(sc.nextLine().trim());",
+            "        long cost2Cents = new BigDecimal(sc.nextLine().trim()).movePointRight(2).longValue();",
+            "        long totCents = qty1 * cost1Cents + qty2 * cost2Cents;",
+            "        long totQty = qty1 + qty2;",
+            "        long avgCents = (totCents * 2L + totQty) / (2L * totQty);",
+            "        System.out.println(BigDecimal.valueOf(avgCents, 2).toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 10,
+              "endLine": 10
+            },
+            {
+              "id": "J2",
+              "startLine": 11,
+              "endLine": 11
+            },
+            {
+              "id": "J3",
+              "startLine": 12,
+              "endLine": 12
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Refactors the weighted average into integer cents arithmetic. Computing (totCents * 2L + totQty) / (2L * totQty) in J3 performs exact half-up rounding to integer cents for all non-negative totCents and positive totQty, preserving C3.",
+          "testPredictions": [
+            {
+              "testId": "F004-T1",
+              "expectedJavaValue": "25.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T2",
+              "expectedJavaValue": "14.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T4",
+              "expectedJavaValue": "999.99",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T5",
+              "expectedJavaValue": "16.67",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T6",
+              "expectedJavaValue": "10.02",
+              "expectedMismatch": false
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F004-V3",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        int qty1 = Integer.parseInt(sc.nextLine().trim());",
+            "        BigDecimal cost1 = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        int qty2 = Integer.parseInt(sc.nextLine().trim());",
+            "        BigDecimal cost2 = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal ext1 = cost1.multiply(BigDecimal.valueOf(qty1));",
+            "        BigDecimal ext2 = cost2.multiply(BigDecimal.valueOf(qty2));",
+            "        int totQty = qty1 + qty2;",
+            "        BigDecimal unitAvg = ext1.add(ext2).divide(BigDecimal.valueOf(totQty), 2, RoundingMode.DOWN);",
+            "        System.out.println(unitAvg.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 11,
+              "endLine": 12
+            },
+            {
+              "id": "J2",
+              "startLine": 13,
+              "endLine": 13
+            },
+            {
+              "id": "J3",
+              "startLine": 14,
+              "endLine": 14
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "DECIMAL_ROUNDING_AND_SCALE",
+          "defectCobolSegmentIds": ["C3"],
+          "defectJavaSegmentIds": ["J3"],
+          "labelRationale": "Segment J3 aligns with C3 but truncates the quotient using RoundingMode.DOWN instead of honoring COMPUTE UNIT-AVG ROUNDED (RoundingMode.HALF_UP). In T5 (50.00 / 3 = 16.666... -> 16.66 vs 16.67) and T6 (40.06 / 4 = 10.015 -> 10.01 vs 10.02), J3 understates the average unit cost by 0.01.",
+          "testPredictions": [
+            {
+              "testId": "F004-T1",
+              "expectedJavaValue": "25.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T2",
+              "expectedJavaValue": "14.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T4",
+              "expectedJavaValue": "999.99",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T5",
+              "expectedJavaValue": "16.66",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F004-T6",
+              "expectedJavaValue": "10.01",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F004-V4",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        int qty1 = Integer.parseInt(sc.nextLine().trim());",
+            "        BigDecimal cost1 = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        int qty2 = Integer.parseInt(sc.nextLine().trim());",
+            "        BigDecimal cost2 = new BigDecimal(sc.nextLine().trim()).setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal ext1 = cost1.multiply(BigDecimal.valueOf(qty1));",
+            "        BigDecimal ext2 = cost2.multiply(BigDecimal.valueOf(qty2));",
+            "        int totQty = qty1 + qty2;",
+            "        BigDecimal unitAvg = cost1.add(cost2).divide(new BigDecimal(\"2\"), 2, RoundingMode.HALF_UP);",
+            "        System.out.println(unitAvg.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {
+              "id": "J1",
+              "startLine": 11,
+              "endLine": 12
+            },
+            {
+              "id": "J2",
+              "startLine": 13,
+              "endLine": 13
+            },
+            {
+              "id": "J3",
+              "startLine": 14,
+              "endLine": 14
+            }
+          ],
+          "alignments": [
+            {
+              "cobolSegmentIds": ["C1"],
+              "javaSegmentIds": ["J1"]
+            },
+            {
+              "cobolSegmentIds": ["C2"],
+              "javaSegmentIds": ["J2"]
+            },
+            {
+              "cobolSegmentIds": ["C3"],
+              "javaSegmentIds": ["J3"]
+            }
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "DECIMAL_ROUNDING_AND_SCALE",
+          "defectCobolSegmentIds": ["C3"],
+          "defectJavaSegmentIds": ["J3"],
+          "labelRationale": "Segment J3 aligns with C3 as the unit-average computation step but averages the raw unit prices (cost1 + cost2) / 2 instead of dividing the weighted extended total (ext1 + ext2) by totQty. Whenever QTY-1 != QTY-2 and COST-1 != COST-2 (as in T5: 15.00 vs 16.67, and T6: 10.01 vs 10.02), J3 diverges from COBOL.",
+          "testPredictions": [
+            {
+              "testId": "F004-T1",
+              "expectedJavaValue": "25.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T2",
+              "expectedJavaValue": "14.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T3",
+              "expectedJavaValue": "0.00",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T4",
+              "expectedJavaValue": "999.99",
+              "expectedMismatch": false
+            },
+            {
+              "testId": "F004-T5",
+              "expectedJavaValue": "15.00",
+              "expectedMismatch": true
+            },
+            {
+              "testId": "F004-T6",
+              "expectedJavaValue": "10.01",
+              "expectedMismatch": true
+            }
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        }
+      ]
+    }
+  ]
+}

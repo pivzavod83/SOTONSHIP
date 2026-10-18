@@ -1,0 +1,33 @@
+{
+  "inputSha256": "87e181c46ba306d75373f36f37698a3de33b7dee836b8067839b922cd17ff502",
+  "sourceReview": "AI-assisted static inspection; not independent human review",
+  "suppliedCasesPerFamily": 6,
+  "extraCases": {
+    "F005": [],
+    "F006": [
+      [
+        "A1",
+        "0\n-40000\n5000\n",
+        "Maximum negative intermediate magnitude with positive fee."
+      ],
+      [
+        "A2",
+        "0\n0\n5000\n",
+        "Minimum signed final output with zero intermediate balance."
+      ],
+      [
+        "A3",
+        "40000\n-40000\n-5000\n",
+        "Zero intermediate sum followed by negative fee."
+      ],
+      [
+        "A4",
+        "1\n-2\n1\n",
+        "Sign-removal boundary and exactly zero final result."
+      ]
+    ]
+  },
+  "executionScope": "Pinned source only, no source edits, no original 143-task corpus or training",
+  "comparison": "Exact decimal normalization; no tolerance and no float conversion",
+  "equivalenceLimit": "Passing executed inputs never establishes universal equivalence"
+}

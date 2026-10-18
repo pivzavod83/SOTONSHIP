@@ -1,0 +1,1539 @@
+{
+  "aiGeneratedAdapters": true,
+  "candidateAlignment": "position against the exact pinned 143-row upstream file",
+  "candidateFilesSha256": {
+    "14b": "5282a929afc7b0e0775f2f2109805a19052f8885e8143d81f7736b24906f4c41",
+    "7b": "f2a640f57159d257de6d6c3fdbd5af970ef447ab4fb24a72b928e7f77b76dba6"
+  },
+  "compilerFlags": [
+    "-w",
+    "-fformat=variable",
+    "-x"
+  ],
+  "createdAt": "2026-10-18T06:15:59.114533+00:00",
+  "datasetSha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+  "excludedContracts": [
+    {
+      "reason": "source result PIC S9(20), driver output PIC S9(10): truncated output cannot establish full result equivalence",
+      "taskId": "HumanEval/139"
+    }
+  ],
+  "expectedResultMetadataUsedAsOracle": false,
+  "heldoutSourceInspected": false,
+  "inputCaseCount": 118,
+  "outputDecoder": "ASCII display digits; leading p..y denotes a negative leading digit 0..9; one LF/CRLF record",
+  "partitionSha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+  "quarantinedInputs": [],
+  "schemaVersion": "scalar-c2j-frozen-contract-v1",
+  "scriptSha256": "a93cb91eaed6d728032639f4b2971a483c9d10773e440ac45b94e0fc0660ea74",
+  "status": "FROZEN_BEFORE_REPLAY",
+  "taskCount": 17,
+  "tasks": [
+    {
+      "candidateJavaSha256": {
+        "14b": "1491814998d756e26b3e2f94e646972b8195626ec2a338db1716de01fd970b55",
+        "7b": "dfe5f9e5ece08165408b6d5dec21c74ca423592464316431d7d1798c69f49c64"
+      },
+      "canonicalJavaSha256": "70d13363d18285f2fd3dad6a6663aa3e3517d4b240a1ff00f9d843798f6d221a",
+      "cases": [
+        {
+          "arguments": [
+            3
+          ],
+          "driverIndex": 0,
+          "driverSha256": "5b029eeb7542a3ed5ae8eb05bfcff53f3b4eea312b26e121aa43b733c2a8f68e",
+          "outputFile": "LARGEST-DIVISOR.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            7
+          ],
+          "driverIndex": 1,
+          "driverSha256": "24315b3aa103988462aa8fa22f87617da05e9665927f5f0ba9ccd4ff5975d743",
+          "outputFile": "LARGEST-DIVISOR.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            10
+          ],
+          "driverIndex": 2,
+          "driverSha256": "bfefb917ca79fc8d3cd17469e6e0f4b7e31dc037e1c3d859d3664a970a630f59",
+          "outputFile": "LARGEST-DIVISOR.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            100
+          ],
+          "driverIndex": 3,
+          "driverSha256": "ae858735ec1549eb5256218bd989e1edf6a6c12c099f34014e3739af0669bebc",
+          "outputFile": "LARGEST-DIVISOR.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            49
+          ],
+          "driverIndex": 4,
+          "driverSha256": "87a95318396492099c4b99e542fd52afefc36c59786a477840992de65130ed39",
+          "outputFile": "LARGEST-DIVISOR.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "b7b2fd6f86f3c0718df9713a20c22fa57c00182dd611800870ad0f619f1784e5",
+      "inputBoundsInclusive": [
+        1,
+        100
+      ],
+      "method": "largestDivisor",
+      "parameters": [
+        "N"
+      ],
+      "probeSha256": "4ffa048f9171eb7374a6508d80fcceabd2e0f0e5c264d86a43033817eaa75ce7",
+      "returnType": "int",
+      "rowPosition": 21,
+      "taskId": "HumanEval/24"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "b8523b84b5ea9144f0ad7f5491a6395663cb32f3f2ae1010a6f2c4931c0c770e",
+        "7b": "813f987aa127ec8b89f898a4d7dbdb4715bd4f6c5a35e3bab2a87c4d468d72ae"
+      },
+      "canonicalJavaSha256": "9ed7802accb957eb83fafaa400a7badcafb865e3ddd046a28506512fbdda127c",
+      "cases": [
+        {
+          "arguments": [
+            6
+          ],
+          "driverIndex": 0,
+          "driverSha256": "a40bccfd6d3081f9f80711684bcfaddd50957d7d37f9f1cced640054d17f36b0",
+          "outputFile": "IS-PRIME.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            101
+          ],
+          "driverIndex": 1,
+          "driverSha256": "534d17df3c3de116627e20e7430c2477af20533bfece7be5b28e7e83018419f1",
+          "outputFile": "IS-PRIME.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            11
+          ],
+          "driverIndex": 2,
+          "driverSha256": "1537caacf818a76991aa2cb2ae45af3d779ef60e93e987ece3dcf4f85ad7cfb6",
+          "outputFile": "IS-PRIME.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            13441
+          ],
+          "driverIndex": 3,
+          "driverSha256": "0d7c8143701dad8fba5fc6689869862dce8499b0937f36db0a28148f365b8642",
+          "outputFile": "IS-PRIME.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            61
+          ],
+          "driverIndex": 4,
+          "driverSha256": "0022a39ffd76bcf41259b89a38a08fa736133f2feda90ebc2d5f94e7fc071fb8",
+          "outputFile": "IS-PRIME.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            4
+          ],
+          "driverIndex": 5,
+          "driverSha256": "5f640e715ae51458fa2e950adf5510c81a06e2045c970e5149a8038c12cf0a9d",
+          "outputFile": "IS-PRIME.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            1
+          ],
+          "driverIndex": 6,
+          "driverSha256": "94ea5b33bc05a6940f54f6ed9979467fc10489ab937c8db29f14b1ce05559f0d",
+          "outputFile": "IS-PRIME.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            5
+          ],
+          "driverIndex": 7,
+          "driverSha256": "e8752ba2aac43861e6dafc60f05d4fed1153318a080fbd529b94a2b53dd51fc5",
+          "outputFile": "IS-PRIME.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            11
+          ],
+          "driverIndex": 8,
+          "driverSha256": "1537caacf818a76991aa2cb2ae45af3d779ef60e93e987ece3dcf4f85ad7cfb6",
+          "outputFile": "IS-PRIME.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            17
+          ],
+          "driverIndex": 9,
+          "driverSha256": "8d6f8fdc00e5694a99659669add94acd95ce5b9d05ace895d12ae522c411e7d7",
+          "outputFile": "IS-PRIME.TXT",
+          "outputPic": "9"
+        }
+      ],
+      "cobolSourceSha256": "6e0ecdb720acf560bd380f470d2f622afd3e6404c1351c5732788cea30c997bb",
+      "inputBoundsInclusive": [
+        1,
+        1000000
+      ],
+      "method": "isPrime",
+      "parameters": [
+        "N"
+      ],
+      "probeSha256": "57846dcc6d23b6f570d05fa5d42b48377666172abbe0bcf31babc619dc1daabc",
+      "returnType": "boolean",
+      "rowPosition": 28,
+      "taskId": "HumanEval/31"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "6e7d4d22b55252eb5ed482c99ef3f34074fdda7ded886e98e49a80beedbc7318",
+        "7b": "95c46c1feeec24d7f8fdee5f0ff92e7697facbadc919ce46fe2f9b24fb110fe8"
+      },
+      "canonicalJavaSha256": "01ec3306eb4acec569c01f6f3049ebde647e830ecd9b285292f9ceb2c852f6cf",
+      "cases": [
+        {
+          "arguments": [
+            50
+          ],
+          "driverIndex": 0,
+          "driverSha256": "53405634a9ee95f606280ec9d67e112d934ebca75ac908835728d0f0bdbfe2b1",
+          "outputFile": "FIZZ-BUZZ.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            78
+          ],
+          "driverIndex": 1,
+          "driverSha256": "6106d629ef88b125443cbbb87be27e4020aa6bdf2a370abae0e234ed5b6b556d",
+          "outputFile": "FIZZ-BUZZ.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            79
+          ],
+          "driverIndex": 2,
+          "driverSha256": "30c78e4e7cc8c02137c9f689b162e29a53d66dce09b8fe6b07dfafe25f26a45d",
+          "outputFile": "FIZZ-BUZZ.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            100
+          ],
+          "driverIndex": 3,
+          "driverSha256": "e6403644efae3dc5f32bc500722e85ae9f8f30f69d01cc5882febd5b9157358a",
+          "outputFile": "FIZZ-BUZZ.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            200
+          ],
+          "driverIndex": 4,
+          "driverSha256": "0a2097996fa1459588650e653f63cbd69bddf942d3d7c1749d98ce4163d2625c",
+          "outputFile": "FIZZ-BUZZ.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            4000
+          ],
+          "driverIndex": 5,
+          "driverSha256": "36386a211c8a2181374e35caca631f2bab079940303042c8ad3960404552730d",
+          "outputFile": "FIZZ-BUZZ.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            10000
+          ],
+          "driverIndex": 6,
+          "driverSha256": "82cdfedb7a77a3627fab6303a0b33cc0dddf30c91c14fe19c3c26d009b566981",
+          "outputFile": "FIZZ-BUZZ.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            100000
+          ],
+          "driverIndex": 7,
+          "driverSha256": "0884bcee9fedd1d43dba376663be5643e7454ef11daaab3029e8997ff763a7dd",
+          "outputFile": "FIZZ-BUZZ.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "bde7b9755d0305316b04b6852719785f31128a63c1cd89111e5abf3325522fc7",
+      "inputBoundsInclusive": [
+        1,
+        100000
+      ],
+      "method": "fizzBuzz",
+      "parameters": [
+        "N"
+      ],
+      "probeSha256": "ccc8bcaf1c70632b0b1641f44edaa2265430605a8b03742344c6f0422ebd55b5",
+      "returnType": "int",
+      "rowPosition": 31,
+      "taskId": "HumanEval/36"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "b1bb4069637ceadab9cd2329533ee1234ab828a3bc319a34fd9d50a2be8df346",
+        "7b": "777f696a004208f103a907b92a1844697ec2795312da4fa09b418c7e4c387d5e"
+      },
+      "canonicalJavaSha256": "2478786476cb7a9d9cbe4e1e26f332dd0160187219f31b601e6072e0a53b8ec9",
+      "cases": [
+        {
+          "arguments": [
+            5
+          ],
+          "driverIndex": 0,
+          "driverSha256": "ae97ec65631d65e1f8d8235a78466a5c8d3c09e2a2cacc764cd2a2c2558e3246",
+          "outputFile": "FIB4.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            8
+          ],
+          "driverIndex": 1,
+          "driverSha256": "f9fd8804247bc34ab921fdf3cfed4f22c65ea46b3cef01a6c4192fb18df9f508",
+          "outputFile": "FIB4.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            10
+          ],
+          "driverIndex": 2,
+          "driverSha256": "238203de6c121960b91b5c7bcd76af19d92f24bc6c4bdc01017165e905d20554",
+          "outputFile": "FIB4.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            12
+          ],
+          "driverIndex": 3,
+          "driverSha256": "62d2a536003e920793ac9d71787605b88791c1d3817bde6a4441dd47ddf5af26",
+          "outputFile": "FIB4.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "8dc6acd7f7e877750f75a7a374466c57d036a21595b573c6a1b13f8929d17ae5",
+      "inputBoundsInclusive": [
+        0,
+        12
+      ],
+      "method": "fib4",
+      "parameters": [
+        "N"
+      ],
+      "probeSha256": "a2d7d503bc14551f2f0f9dac850f3c714c1f0d7c4cceb4c4150df0c2e2f539ca",
+      "returnType": "int",
+      "rowPosition": 39,
+      "taskId": "HumanEval/46"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "5cac69b7213ab9e3bffa272ba1559a55319a968893e5c0b38e10b8fb1f00ffe6",
+        "7b": "e26dfafe300ca94c563a65ecc26c37bb7b38c64773edeb775e6214afcd60b935"
+      },
+      "canonicalJavaSha256": "0c5c07e8cb853428f2b1acc3e44d4f49a967e37f1fd3741d5b813ece8d09182c",
+      "cases": [
+        {
+          "arguments": [
+            3,
+            5
+          ],
+          "driverIndex": 0,
+          "driverSha256": "1f3c41e314c0f63683dd67a1b88ae159af52ba4afdfab3b432e4144d836b7743",
+          "outputFile": "MODP.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            1101,
+            101
+          ],
+          "driverIndex": 1,
+          "driverSha256": "08e8310f687c652901080b8b0d1bfe66c80b5c8a28a91bb5af23310e34fec34d",
+          "outputFile": "MODP.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            0,
+            101
+          ],
+          "driverIndex": 2,
+          "driverSha256": "cdcf7291b2bf9e042202171d655a7b432b1691eb931038900ddb07cf5484bdd6",
+          "outputFile": "MODP.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            3,
+            11
+          ],
+          "driverIndex": 3,
+          "driverSha256": "ed41a361dac0e906d7056c3ed8cd8e5f36097fb25e0bac46ba275e8ac92b08d8",
+          "outputFile": "MODP.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            100,
+            101
+          ],
+          "driverIndex": 4,
+          "driverSha256": "af9ad9da4aa60e7ffe97f31cb780adecbf7296219f4acf9f6ca6ca30323e78e9",
+          "outputFile": "MODP.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            30,
+            5
+          ],
+          "driverIndex": 5,
+          "driverSha256": "6c000fdb98a1ff768d1ed8c1ce6773fe395b751a39d24e9a36ae71c0d57f4401",
+          "outputFile": "MODP.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            31,
+            5
+          ],
+          "driverIndex": 6,
+          "driverSha256": "91d40a8b9143f2e44642f4bc2a993656aa22cbc2cbb88c93d1508737e616114b",
+          "outputFile": "MODP.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "551014b1f5d91e936541ba6ce856bcbab5bb096b1ef7d5e069b562f4adf42e35",
+      "inputBoundsInclusive": [
+        0,
+        1101
+      ],
+      "method": "modp",
+      "parameters": [
+        "N",
+        "P"
+      ],
+      "probeSha256": "f0454b9041c7661161b411c0b8007e5106374f4cae94ef51ac650d9c3134fdd8",
+      "returnType": "int",
+      "rowPosition": 42,
+      "taskId": "HumanEval/49"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "36a9dbcd6b348dc4fc3a7bd9366821f30e336743c94d3ba2902c855931965ca6",
+        "7b": "461ef1b08adc646cf1256574eeb0aaea465cea8951ef83903d0744bf4d352abf"
+      },
+      "canonicalJavaSha256": "084b9e72bd2d936eaaab943bfe35683c10f8f599f5ff4300dd5134b7d1547837",
+      "cases": [
+        {
+          "arguments": [
+            0,
+            1
+          ],
+          "driverIndex": 0,
+          "driverSha256": "d2c145456ff67d01124c192b187812db2ec0e75f37069e82b2b9cfc6723e0413",
+          "outputFile": "ADD.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            1,
+            0
+          ],
+          "driverIndex": 1,
+          "driverSha256": "e1aba2b6e2e52f8ea7e7a3f0bcde451bff4e50345ca48f66517e2dde1e7fd185",
+          "outputFile": "ADD.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            2,
+            3
+          ],
+          "driverIndex": 2,
+          "driverSha256": "e6808066186347c4eb5fac87037eb99b77a86a0c01d337971f0da911f26ed9fa",
+          "outputFile": "ADD.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            5,
+            7
+          ],
+          "driverIndex": 3,
+          "driverSha256": "80e04f75e32ee353af083ef3bc3540a8cce19da4c6732d6d3819cc96f35e108c",
+          "outputFile": "ADD.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            7,
+            5
+          ],
+          "driverIndex": 4,
+          "driverSha256": "e828dd2b903a052f1777ce98d808f2709c7996b777bd98b20a0a56f25a222d0a",
+          "outputFile": "ADD.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "42a911b68f5f226a28ec3d8f76d1cd06565fb7fb8ea1e9fa202e50d31016d94d",
+      "inputBoundsInclusive": [
+        0,
+        1000
+      ],
+      "method": "add",
+      "parameters": [
+        "X",
+        "Y"
+      ],
+      "probeSha256": "59e65bb4bb8749a2956975de95c06aabb7b89077d5039b6ad80a53978482a05d",
+      "returnType": "int",
+      "rowPosition": 45,
+      "taskId": "HumanEval/53"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "76b615d53ffd6ab8c82728e75320255ec01c8e55b17f63f6369224b43f12b7ae",
+        "7b": "6c9fafae48e8509218d1d7f6bee286b38a8387c074c6e748bb57222e77810913"
+      },
+      "canonicalJavaSha256": "4c7750a00c992a025913f62c663fcccdd258185528e5bf0dc6315ca2095eec16",
+      "cases": [
+        {
+          "arguments": [
+            10
+          ],
+          "driverIndex": 0,
+          "driverSha256": "d7d5f3637e97cf56e32362569e297b3404fee062f82e288d19553c33f67f0721",
+          "outputFile": "FIB.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            1
+          ],
+          "driverIndex": 1,
+          "driverSha256": "b326a83ce3ee18d1c4c86f536a9afb18952e845de3fa816cd90813fd2cbbf4c6",
+          "outputFile": "FIB.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            8
+          ],
+          "driverIndex": 2,
+          "driverSha256": "85de4ac28c7866b75ae16b3324c4ff23f3b23aa049b3816a92f533478aebeb67",
+          "outputFile": "FIB.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            11
+          ],
+          "driverIndex": 3,
+          "driverSha256": "fde177d09ca9d3a848d8ab1020bea209a0b8acc84e91b749a3e0648c8702ee83",
+          "outputFile": "FIB.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            12
+          ],
+          "driverIndex": 4,
+          "driverSha256": "575ae86728a724e5ff1b1bd3070eea22ae24adfc7854675c15bab01f4b45fc0f",
+          "outputFile": "FIB.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "d5131a70803c35822294b8ee804e15a0be6fd108af5e48927b13bae299e0b417",
+      "inputBoundsInclusive": [
+        0,
+        12
+      ],
+      "method": "fib",
+      "parameters": [
+        "N"
+      ],
+      "probeSha256": "7f33f1225a03b8dee51a25ea4dfd0e7de733bb1fb8b3f6ff43dd53bf06bfd08e",
+      "returnType": "int",
+      "rowPosition": 47,
+      "taskId": "HumanEval/55"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "28b1ec45abc64b58ccb640608693b2d8619d5ad1865d6cee4787ce569be12c63",
+        "7b": "16d19ddc2659ff74a3ef4ba048a486f981c477035e25476740d0a7e3ea7f9e08"
+      },
+      "canonicalJavaSha256": "97188f9f559bbf29eedd51b4a31feac320be87955d995ea4bb2edd2d29feeccf",
+      "cases": [
+        {
+          "arguments": [
+            15
+          ],
+          "driverIndex": 0,
+          "driverSha256": "a1b50b31a3ac580649524ee217230c858bfa52662c259c5837c40c3f6ad807d5",
+          "outputFile": "LARGEST-PRIME-FACTOR.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            27
+          ],
+          "driverIndex": 1,
+          "driverSha256": "2243a9d6d233e2b6eff59b128378b983b25cf438addf89d892f4eef97c1d9eb5",
+          "outputFile": "LARGEST-PRIME-FACTOR.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            63
+          ],
+          "driverIndex": 2,
+          "driverSha256": "b6650c6d468405e3e89961719e511d876166e7e33fcdcd2b23c229bb76739624",
+          "outputFile": "LARGEST-PRIME-FACTOR.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            330
+          ],
+          "driverIndex": 3,
+          "driverSha256": "6444eb9a34fee01d6be2bd8999cad5607c37d0e9b651f72263642b0d3362bf9d",
+          "outputFile": "LARGEST-PRIME-FACTOR.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            13195
+          ],
+          "driverIndex": 4,
+          "driverSha256": "2d61ed275e46c2099fe53e8e1e0e9dc7fad7641afa460d238d71dcf634036f9a",
+          "outputFile": "LARGEST-PRIME-FACTOR.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "ec64ccef845642bf4d12367c52a5906363067856a95b574a6fc5eda47db9586f",
+      "inputBoundsInclusive": [
+        2,
+        13195
+      ],
+      "method": "largestPrimeFactor",
+      "parameters": [
+        "N"
+      ],
+      "probeSha256": "56447bdb05fe79890bd30da5069c126a4c6553026f26eb15e50f3eeda6b895b7",
+      "returnType": "int",
+      "rowPosition": 51,
+      "taskId": "HumanEval/59"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "b0043aa10335711edf03accd6304c3ca27267536cc13acd3a3b258c7671f0f5f",
+        "7b": "a2ec69aea6e318737fc3f48a9dea1e5904d8067003c71649b7881a92803946bb"
+      },
+      "canonicalJavaSha256": "b2815752fad547c30c37ddb0d76414fca08e3b15c3d8c74bc432178676a615b4",
+      "cases": [
+        {
+          "arguments": [
+            1
+          ],
+          "driverIndex": 0,
+          "driverSha256": "a8e4dc68cc6fc006f81a9d35a69ea633c42773fa992ddf9a3c065625b77a029f",
+          "outputFile": "SUM-TO-N.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            6
+          ],
+          "driverIndex": 1,
+          "driverSha256": "ccab415477d29320b3758a0f739bd8e7651e27f4cd520584c3689c81bb418290",
+          "outputFile": "SUM-TO-N.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            11
+          ],
+          "driverIndex": 2,
+          "driverSha256": "59758ccdee418af6c2611de99c3a5db25bdd83d02cb9a5ee37d942e85efa5e61",
+          "outputFile": "SUM-TO-N.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            30
+          ],
+          "driverIndex": 3,
+          "driverSha256": "0cfc72cd3ec18a1f211fcd38fbe6ab9b93b3c32a90c560f78e4410a3f066ad5d",
+          "outputFile": "SUM-TO-N.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            100
+          ],
+          "driverIndex": 4,
+          "driverSha256": "f116bfe0431884a0c2403c174d3df68b573a6681d83ce28b5466d02fc861cb3f",
+          "outputFile": "SUM-TO-N.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "f9ae2dd8a77f2019e767550f1fba5ab7ced4c21565711481b69076941373da0c",
+      "inputBoundsInclusive": [
+        1,
+        100
+      ],
+      "method": "sumToN",
+      "parameters": [
+        "N"
+      ],
+      "probeSha256": "ce04a6f55679995f60a5f1b029a4f0a94c396058962c1fd765af9dc56bd60173",
+      "returnType": "int",
+      "rowPosition": 52,
+      "taskId": "HumanEval/60"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "4cd12bf6734bb8c365113f27c6bc7fc433d04eb8589fe4115185e0b5e0d5b47d",
+        "7b": "328a3ce9d87e408c8963adacc57d2d5d75b2ed94b9aa516290aaaabaa25a7cc4"
+      },
+      "canonicalJavaSha256": "389f385cf8eae3d596470ec8becb11d3b18d084aae76d77fe6f9657eee9ecc53",
+      "cases": [
+        {
+          "arguments": [
+            2
+          ],
+          "driverIndex": 0,
+          "driverSha256": "994959d1054a9a32a3647ae14035d413c527b2d15de6edbb57273c05a59f4f0e",
+          "outputFile": "FIBFIB.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            1
+          ],
+          "driverIndex": 1,
+          "driverSha256": "e42d7b101d20e2b48ed64ae61999820dc5b99ec6077bd673216fbe3bcbff4d98",
+          "outputFile": "FIBFIB.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            5
+          ],
+          "driverIndex": 2,
+          "driverSha256": "7025d00e92ce566e68741b6bd29db38e867ed69622e5238867bc37ce0657344e",
+          "outputFile": "FIBFIB.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            8
+          ],
+          "driverIndex": 3,
+          "driverSha256": "0268321d834d4125ec616a3ebd4af601c9659460925abaa0a4c9870776270e59",
+          "outputFile": "FIBFIB.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            10
+          ],
+          "driverIndex": 4,
+          "driverSha256": "59a5103b51995730e3c84a329e445fb52b3299522438568d312358c73dd85abe",
+          "outputFile": "FIBFIB.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            12
+          ],
+          "driverIndex": 5,
+          "driverSha256": "dcee90cc790d49a5a78ff6cb485cdc70f04f837d98704015c3963011b3d6654f",
+          "outputFile": "FIBFIB.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            14
+          ],
+          "driverIndex": 6,
+          "driverSha256": "8147bf334895bd49bc673a73414b1aea1431381630d103a9a6bd35d4a3c7a703",
+          "outputFile": "FIBFIB.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "2c256de82cd820b702808a128113d1e26e9712a173de5a7d8e880089d74e529c",
+      "inputBoundsInclusive": [
+        0,
+        14
+      ],
+      "method": "fibfib",
+      "parameters": [
+        "N"
+      ],
+      "probeSha256": "25b0a32914185d4f11583e168dbb23e02180495691c441f016fa052e87bdcf40",
+      "returnType": "int",
+      "rowPosition": 54,
+      "taskId": "HumanEval/63"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "ea00f4796145f24ae7a4f3934b8a4859ad69b3894e9fd6749d9b0f897607703b",
+        "7b": "775052478c50abadbe16e1ef4d67ab717d1c4b2384e277316c8c579046d92193"
+      },
+      "canonicalJavaSha256": "c5c5d6bcc722aac6ba27f5d8f616b546cab63f3c61fd8fc73085ae2c7d087793",
+      "cases": [
+        {
+          "arguments": [
+            1
+          ],
+          "driverIndex": 0,
+          "driverSha256": "018a45311d0cc8fa59ca3274070e5238318038bb2b2863e614d76d15c727973d",
+          "outputFile": "ISCUBE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            2
+          ],
+          "driverIndex": 1,
+          "driverSha256": "c68a97bf0e6a190caf337ec18a2b0707b7bbfbca6014dccb2ad3b0f0c1212a56",
+          "outputFile": "ISCUBE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            -1
+          ],
+          "driverIndex": 2,
+          "driverSha256": "d8dd6781d55aeaeea8ea1e0635758d089e4b41f6bd0a51348e859696c148ce86",
+          "outputFile": "ISCUBE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            64
+          ],
+          "driverIndex": 3,
+          "driverSha256": "a1cfdc778bbc69b00339b44f4305b08672dd5e2606137fc7ea9ccd4f99390e48",
+          "outputFile": "ISCUBE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            180
+          ],
+          "driverIndex": 4,
+          "driverSha256": "e58873cb39ea2187226a6dff16d2916d786217d7d4a8c5227cf51c90f78af510",
+          "outputFile": "ISCUBE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            1000
+          ],
+          "driverIndex": 5,
+          "driverSha256": "7001c9b2bb265deb075e25973b17f7431eb6ec1685cf33777714b564e5322fa8",
+          "outputFile": "ISCUBE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            0
+          ],
+          "driverIndex": 6,
+          "driverSha256": "2ca784a1ba3d117b6153cb2a61ae58989c07c98c6680c2984b361a4b7c16d33e",
+          "outputFile": "ISCUBE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            1729
+          ],
+          "driverIndex": 7,
+          "driverSha256": "23b68bf1a01b36cb9df2ff0f5cbc10dc404bbaa85cfe4872d4ce80239aa31a1f",
+          "outputFile": "ISCUBE.TXT",
+          "outputPic": "9"
+        }
+      ],
+      "cobolSourceSha256": "4852918074b5c073a8a86183efea0abff0d129f523ac46528eec2210774e70b3",
+      "inputBoundsInclusive": [
+        -1729,
+        1729
+      ],
+      "method": "iscube",
+      "parameters": [
+        "A"
+      ],
+      "probeSha256": "1ca218b8b02aeee6eebc098d7baab2481ca0159b024ec3fe548d90fc246b9f44",
+      "returnType": "boolean",
+      "rowPosition": 67,
+      "taskId": "HumanEval/77"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "adf5d96babddad236e8426edd240b1e5740a4239370d8ab08d2fbde1f6d912ee",
+        "7b": "3fb0e7fec0474d9056cbdf18ae80434a5edf371cc256321b551a6486f360b499"
+      },
+      "canonicalJavaSha256": "39298ac4274ab658390421ca8cfecfcdecc6b880758c751393da865add6d8804",
+      "cases": [
+        {
+          "arguments": [
+            1
+          ],
+          "driverIndex": 0,
+          "driverSha256": "21a7505c9a756943b98cdaae42f06413242c704af2b2d1f9e5fa9ae9bd056a70",
+          "outputFile": "STARTS-ONE-ENDS.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            2
+          ],
+          "driverIndex": 1,
+          "driverSha256": "12f16f791a25fe6e3f4ec3c57619554cead56ebe044b80e95ebe0dfe971ef50c",
+          "outputFile": "STARTS-ONE-ENDS.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            3
+          ],
+          "driverIndex": 2,
+          "driverSha256": "9ed6e550b9efd71c55982d0f4b2bf86691b6000b597360ef3427fa3c4be6c28e",
+          "outputFile": "STARTS-ONE-ENDS.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            4
+          ],
+          "driverIndex": 3,
+          "driverSha256": "23a78de2db9948519abfd553b75ab3c3b84de2aad88e3e08e0456e4fa5be89bf",
+          "outputFile": "STARTS-ONE-ENDS.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            5
+          ],
+          "driverIndex": 4,
+          "driverSha256": "52119881c38dd31ac61396cd94ff05392d208d2574466c0cda248885f7d3518b",
+          "outputFile": "STARTS-ONE-ENDS.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "953aaf2d4d9b317e134f17eb88908d154795c0bfce3cebb47e23ec0b940fc06a",
+      "inputBoundsInclusive": [
+        1,
+        5
+      ],
+      "method": "startsOneEnds",
+      "parameters": [
+        "N"
+      ],
+      "probeSha256": "7e8c63259b4530832cf83203879204caa9614b7542021bc1f6a824c2b35eeb6d",
+      "returnType": "int",
+      "rowPosition": 73,
+      "taskId": "HumanEval/83"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "99809c9209d2abfe862573827f8b6e48cd16f85da834edb912c01682bdb590f1",
+        "7b": "50c4f55b62143fd3b7e5444325d6e5dbe93ec1bae50d0216df99554c54a5b19d"
+      },
+      "canonicalJavaSha256": "5d2f419e1e57f5e4c60d3f3cfec8198429061126a411f36310f9963209e747bc",
+      "cases": [
+        {
+          "arguments": [
+            148,
+            412
+          ],
+          "driverIndex": 0,
+          "driverSha256": "ec3b459279a0ae7feb2c485cab61674451e796329a6f14684d854468ba48ba09",
+          "outputFile": "MULTIPLY.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            19,
+            28
+          ],
+          "driverIndex": 1,
+          "driverSha256": "a0817213345b1e39469efbb3c53512b7f450a773f85cac21dcf38b1fb585a1dd",
+          "outputFile": "MULTIPLY.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            2020,
+            1851
+          ],
+          "driverIndex": 2,
+          "driverSha256": "b1d600e54c31b01e6bc81b759c4b6914e208140923a747dad3d0d6a1301d2e97",
+          "outputFile": "MULTIPLY.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            14,
+            -15
+          ],
+          "driverIndex": 3,
+          "driverSha256": "e60d36646d1c882487dba8b52edff8ab5e50ef5fedce3a9ee305d7e83f6a562e",
+          "outputFile": "MULTIPLY.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            76,
+            67
+          ],
+          "driverIndex": 4,
+          "driverSha256": "146ed678cbfaea12d33a456461e0759ebf50956442d22e6eadd31890f1d9bb26",
+          "outputFile": "MULTIPLY.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            17,
+            27
+          ],
+          "driverIndex": 5,
+          "driverSha256": "d744c4f298808c2cfcd2bb7346db00dfcc3d13b6ff03681f4fe1de213c0ef2d1",
+          "outputFile": "MULTIPLY.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            0,
+            1
+          ],
+          "driverIndex": 6,
+          "driverSha256": "dac6b157430fd569aa2c896d0cd66b91c0415b8d449bbc2efebc45d3be5cf8d0",
+          "outputFile": "MULTIPLY.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            0,
+            0
+          ],
+          "driverIndex": 7,
+          "driverSha256": "a80e331d604eb09a79383fc68b12dd8e199580f6842221ccd587de622c6c607c",
+          "outputFile": "MULTIPLY.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "d31bb530af02368f4fd9cd50d1a59362be8d49a8108895906dc942b49ac9af2e",
+      "inputBoundsInclusive": [
+        -2020,
+        2020
+      ],
+      "method": "multiply",
+      "parameters": [
+        "A",
+        "B"
+      ],
+      "probeSha256": "7101bafc2bd7a38b1819a699e7f646c7dfaacfb7fdca23f250557283e9451c49",
+      "returnType": "int",
+      "rowPosition": 85,
+      "taskId": "HumanEval/97"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "ce9a9d3afcdace8a7fc8f8aca0b5aabc285db3fc4ae1d725852d11af828d35cb",
+        "7b": "2f786abf9d2e2e5124c221085407e04dbe3301533bd4e9505e7807a7550b0b27"
+      },
+      "canonicalJavaSha256": "b1e3e423ad4aac46be936fad029022fc757b062232f723c5b1dd2bcb7497b922",
+      "cases": [
+        {
+          "arguments": [
+            5
+          ],
+          "driverIndex": 0,
+          "driverSha256": "8ef382d688c58dc3112eba3e8d5da87df2241c5b93afe519cc0cf952c1bd5aa9",
+          "outputFile": "DIGITS.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            54
+          ],
+          "driverIndex": 1,
+          "driverSha256": "8255aad2ff24d9bc08db197b030838f1de3092d7b8618b1e96a72bb7fbea6856",
+          "outputFile": "DIGITS.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            120
+          ],
+          "driverIndex": 2,
+          "driverSha256": "786d70b8e452554668df9954c95798b70d6fb8d8eea62ac2723d955dd63b5fe2",
+          "outputFile": "DIGITS.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            5014
+          ],
+          "driverIndex": 3,
+          "driverSha256": "730640b55513d26b7ed05e0c714c87f8c900e5fbf17b9b68d527f7bc0b11b0c3",
+          "outputFile": "DIGITS.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            98765
+          ],
+          "driverIndex": 4,
+          "driverSha256": "dfda9ce0659948eb2c8e1c5fc028a951945de6cebc323d3d6e7cba0bf25fd7d5",
+          "outputFile": "DIGITS.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            5576543
+          ],
+          "driverIndex": 5,
+          "driverSha256": "ca98e2b566e71e61d958478e4f616ec0128ffc91275f5328587c8063439a4fd7",
+          "outputFile": "DIGITS.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            2468
+          ],
+          "driverIndex": 6,
+          "driverSha256": "9df01973f0b6b41b1975513c897192e6ed8985c90c5ce2c15151c98512538cb6",
+          "outputFile": "DIGITS.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "15b12a2d8022a9d0f72d0ff3a584fd81620eb37156c660b2c74ea24f941dba43",
+      "inputBoundsInclusive": [
+        1,
+        9999999
+      ],
+      "method": "digits",
+      "parameters": [
+        "N"
+      ],
+      "probeSha256": "58aeace2f5ce70eb6a0d1ccadd119d0c18873a208610eff5d4e6424eaf82c7bd",
+      "returnType": "int",
+      "rowPosition": 114,
+      "taskId": "HumanEval/131"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "7cadffb6af9057c48ac90f8c73f6ff06ecc18f12ed81aba00c3a82485c61603f",
+        "7b": "f24206788e8ad0a06b77c3babd3412f43c9f3a71f2c4b89e42bcef7fb9d2fb13"
+      },
+      "canonicalJavaSha256": "fe274bfe8abfa0b592f42d61057cbc45dff4eb1652497c054fad4e4ea2e31330",
+      "cases": [
+        {
+          "arguments": [
+            4
+          ],
+          "driverIndex": 0,
+          "driverSha256": "6e37b71903d51021d8cbcdaea432894b9fcb3e71261bdc3d459c82c467089cd4",
+          "outputFile": "IS-EQUAL-TO-SUM-EVEN.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            6
+          ],
+          "driverIndex": 1,
+          "driverSha256": "cfa8eb50bf8d2c77cac4c11ca03c479352a6bff6f4419b87335bc2dcc8dfaa5a",
+          "outputFile": "IS-EQUAL-TO-SUM-EVEN.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            8
+          ],
+          "driverIndex": 2,
+          "driverSha256": "3366597917ea06f298b3de0065947336ad31d15ef57b55a71b7ef0abfe502c0a",
+          "outputFile": "IS-EQUAL-TO-SUM-EVEN.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            10
+          ],
+          "driverIndex": 3,
+          "driverSha256": "fb07c25d16b4b9f5642420b527cee934b94bac499d4e943b313f6a910016e56f",
+          "outputFile": "IS-EQUAL-TO-SUM-EVEN.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            11
+          ],
+          "driverIndex": 4,
+          "driverSha256": "89b1e1c859772668af66c9cc8f9aecefa4cdd35c769e5133c33221d6067bdaef",
+          "outputFile": "IS-EQUAL-TO-SUM-EVEN.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            12
+          ],
+          "driverIndex": 5,
+          "driverSha256": "540384b55015e7aaf6de8531dae88628dc017310b8e5bde12bd1c0cdc733c350",
+          "outputFile": "IS-EQUAL-TO-SUM-EVEN.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            13
+          ],
+          "driverIndex": 6,
+          "driverSha256": "0ce9f706294932fa0c630db6eca9f63e9d778b0c022ce347ee9c251ff63f5dd1",
+          "outputFile": "IS-EQUAL-TO-SUM-EVEN.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            16
+          ],
+          "driverIndex": 7,
+          "driverSha256": "3ef636e72c74f1fac1b79bad64220e2ddb90574cfabe877c180d43a61c2b5967",
+          "outputFile": "IS-EQUAL-TO-SUM-EVEN.TXT",
+          "outputPic": "9"
+        }
+      ],
+      "cobolSourceSha256": "7b3c6a90df028cdf91784b5f5433c5be98c97a740cbc4aa4c6cab058468daf56",
+      "inputBoundsInclusive": [
+        0,
+        100
+      ],
+      "method": "isEqualToSumEven",
+      "parameters": [
+        "N"
+      ],
+      "probeSha256": "fbc038914354f01c635fba1b72ce37b7e64cb5f873cda5ff79d9a84b3df27d81",
+      "returnType": "boolean",
+      "rowPosition": 119,
+      "taskId": "HumanEval/138"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "704fa60df4ec8ccd723abc05c2e405c1926f0f49d192076dfe4781e5dd8e9274",
+        "7b": "d878221ba32d4fd76c25f8c10833c461ca49247b1d3af5dbac9d003738dbb9a8"
+      },
+      "canonicalJavaSha256": "ed8bb20206158d6427c3d03b120616ec342844f29c72b005ebd3a18154f16fd6",
+      "cases": [
+        {
+          "arguments": [
+            7,
+            34,
+            12
+          ],
+          "driverIndex": 0,
+          "driverSha256": "d77312a1c20afe9e24f2ff2f73edc54231f4e542ba07f88dc3c43a6ade558944",
+          "outputFile": "X-OR-Y.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            15,
+            8,
+            5
+          ],
+          "driverIndex": 1,
+          "driverSha256": "dbcd4a320b77aa406dde64dce1403fd25ae3dfbffa2454c543dbbc8cbd4908bf",
+          "outputFile": "X-OR-Y.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            3,
+            33,
+            5212
+          ],
+          "driverIndex": 2,
+          "driverSha256": "443df237fa5db3909d2b432379e050b8da63fc902ac59407074a067cd3411321",
+          "outputFile": "X-OR-Y.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            1259,
+            3,
+            52
+          ],
+          "driverIndex": 3,
+          "driverSha256": "db35d5357561a6aa82f143741df1da576fee4fc8b3c339299dc986346d230975",
+          "outputFile": "X-OR-Y.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            7919,
+            -1,
+            12
+          ],
+          "driverIndex": 4,
+          "driverSha256": "361c5d7e22ebffb835f4c6cbd301ae50cd9b2a7fe53346f148328e019006a30d",
+          "outputFile": "X-OR-Y.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            3609,
+            1245,
+            583
+          ],
+          "driverIndex": 5,
+          "driverSha256": "d59292f338abb4efaa7583be7e58c7069a548186e6a53826c763a5f508627d9c",
+          "outputFile": "X-OR-Y.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            91,
+            56,
+            129
+          ],
+          "driverIndex": 6,
+          "driverSha256": "c0ab9879cf36f2c1a943f38e0084ac2d6511b4b94dc0b3c2b9193cb7d2316dae",
+          "outputFile": "X-OR-Y.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            6,
+            34,
+            1234
+          ],
+          "driverIndex": 7,
+          "driverSha256": "9ff9b56c067af99a116e78a561f9a1f6ac187731cb6fceb9eb8cbe9670f2564e",
+          "outputFile": "X-OR-Y.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            1,
+            2,
+            0
+          ],
+          "driverIndex": 8,
+          "driverSha256": "74c31dab0531e4337ecf0624c3f478ff9bb44b7edd95642fecf99f1999280d8c",
+          "outputFile": "X-OR-Y.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        },
+        {
+          "arguments": [
+            2,
+            2,
+            0
+          ],
+          "driverIndex": 9,
+          "driverSha256": "fec01c98ac9e6ed01ce94c17fc033211f081f67b1c73923c702e262a414acbb9",
+          "outputFile": "X-OR-Y.TXT",
+          "outputPic": "S9(10) SIGN LEADING"
+        }
+      ],
+      "cobolSourceSha256": "e5017c8b2b85014633a3ac67f3ebf0c3d81e1a70ec9dc465a684478735ea4c0d",
+      "inputBoundsInclusive": [
+        -1,
+        7919
+      ],
+      "method": "xOrY",
+      "parameters": [
+        "N",
+        "X",
+        "Y"
+      ],
+      "probeSha256": "c8daad8a722170e037886ac9b8833113d19a60cb8c38ee0153bfb9407e1830a3",
+      "returnType": "int",
+      "rowPosition": 130,
+      "taskId": "HumanEval/150"
+    },
+    {
+      "candidateJavaSha256": {
+        "14b": "bff401c6c71528c0ac58394bcddab4f460b817fc8a8302ee10f971eae92e0248",
+        "7b": "700104fc4f5f5c0b3747732e2a782e619dd2a41299c24bbf930c1554e2a38708"
+      },
+      "canonicalJavaSha256": "52c6d3530122db2d6e81719b3408831d0ea16feae3e9e852f0ef7aae9fbaa3ce",
+      "cases": [
+        {
+          "arguments": [
+            3,
+            4,
+            5
+          ],
+          "driverIndex": 0,
+          "driverSha256": "44c76f0d5a4efb1ed289ca14e598f7d1f4ecb983241d4201eb76165ec3a541c4",
+          "outputFile": "RIGHT-ANGLE-TRIANGLE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            1,
+            2,
+            3
+          ],
+          "driverIndex": 1,
+          "driverSha256": "b4e2a41d7177b63da83db0fe7acc590c289e49165d4e3db75cec74698bff5f47",
+          "outputFile": "RIGHT-ANGLE-TRIANGLE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            10,
+            6,
+            8
+          ],
+          "driverIndex": 2,
+          "driverSha256": "75e023e5d5bd4bc355a1535ab5d8a33e8c4e4e64c68be2ef24a9801486448e95",
+          "outputFile": "RIGHT-ANGLE-TRIANGLE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            2,
+            2,
+            2
+          ],
+          "driverIndex": 3,
+          "driverSha256": "3093c6f2dab3b0f6445e8cb0c3d5a2c28837d229cd9e9b82a2668f87762baa82",
+          "outputFile": "RIGHT-ANGLE-TRIANGLE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            7,
+            24,
+            25
+          ],
+          "driverIndex": 4,
+          "driverSha256": "c8cd04c1fcb22911a608c30a8ca93943491acd4a3cdfa2ae1ebb9efbd4601985",
+          "outputFile": "RIGHT-ANGLE-TRIANGLE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            10,
+            5,
+            7
+          ],
+          "driverIndex": 5,
+          "driverSha256": "135d5e078204b9ff4ecf5583b8b631b69ac3167c5e8c3105cffcb5e62d30c2ee",
+          "outputFile": "RIGHT-ANGLE-TRIANGLE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            5,
+            12,
+            13
+          ],
+          "driverIndex": 6,
+          "driverSha256": "5f7b3129dc4ee498bcdc803c8bf213f3c747b7e310f210f7a1f65e95c85af168",
+          "outputFile": "RIGHT-ANGLE-TRIANGLE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            15,
+            8,
+            17
+          ],
+          "driverIndex": 7,
+          "driverSha256": "04c19bc96d3af0fee92987978467cf659cf40ba6fe353d3a529a66c4bf5b318a",
+          "outputFile": "RIGHT-ANGLE-TRIANGLE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            48,
+            55,
+            73
+          ],
+          "driverIndex": 8,
+          "driverSha256": "6fd8f7e77950da85d98c1458c59bf116ef86dad88a00e56060deb262e83e44e6",
+          "outputFile": "RIGHT-ANGLE-TRIANGLE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            1,
+            1,
+            1
+          ],
+          "driverIndex": 9,
+          "driverSha256": "178a969121a2ef26f599dab9504426d65fc0af95a7bb1b0ba04b421f5b758ad3",
+          "outputFile": "RIGHT-ANGLE-TRIANGLE.TXT",
+          "outputPic": "9"
+        },
+        {
+          "arguments": [
+            2,
+            2,
+            10
+          ],
+          "driverIndex": 10,
+          "driverSha256": "215f32e6c0adba93c6ea034954b0c19b9e6ed0a4219eed53a89d4ad8611b7004",
+          "outputFile": "RIGHT-ANGLE-TRIANGLE.TXT",
+          "outputPic": "9"
+        }
+      ],
+      "cobolSourceSha256": "772704b420644f4819dc004a81824b6ea4dc1746f254cbf619e42e0132489700",
+      "inputBoundsInclusive": [
+        1,
+        100
+      ],
+      "method": "rightAngleTriangle",
+      "parameters": [
+        "A",
+        "B",
+        "C"
+      ],
+      "probeSha256": "0034a96f03559411870d4b3fd2123318f3166b5deb540c999eb44e477aa78640",
+      "returnType": "boolean",
+      "rowPosition": 137,
+      "taskId": "HumanEval/157"
+    }
+  ],
+  "trainingPerformed": false
+}

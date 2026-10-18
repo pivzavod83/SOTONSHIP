@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "status": "FROZEN_EXPLORATORY_POST_SCREENING_BEFORE_ARRAY_REPLAY",
+  "createdAt": "2026-10-18T06:20:26.558914+00:00",
+  "taskId": "HumanEval/94",
+  "rowOrdinalZeroBased": 83,
+  "cohortSelection": "Exploratory selection after Java-only screening and source inspection; not an unbiased evaluation cohort.",
+  "artifacts": {
+    "data": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/data/COBOL-JavaTrans.jsonl",
+      "sha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+      "bytes": 1857161
+    },
+    "7b": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/output/translation_COBOL_to_Java_COBOL-Coder_7b.jsonl",
+      "sha256": "f2a640f57159d257de6d6c3fdbd5af970ef447ab4fb24a72b928e7f77b76dba6",
+      "bytes": 102732
+    },
+    "14b": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/output/translation_COBOL_to_Java_COBOL-Coder_14b.jsonl",
+      "sha256": "5282a929afc7b0e0775f2f2109805a19052f8885e8143d81f7736b24906f4c41",
+      "bytes": 115855
+    },
+    "license": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/LICENSE",
+      "sha256": "50e6751797c50dedd75ef1b8a0d9e42f5f8472e9fbce91f34718e9f97b0c780a",
+      "bytes": 11324
+    },
+    "generator": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/generate_cobol_javatrans.py",
+      "sha256": "ae23e080366a54bbdf427acd572d67091ed3ec68dc7548ac25e5d7a2bd548497",
+      "bytes": 7272
+    },
+    "evaluator": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/evaluate_translation_c2j.py",
+      "sha256": "c188f079d7f2152720fd8695328a26f6e844680dc8bf7a47bfbc314c1df0a4b8",
+      "bytes": 5365
+    },
+    "utils": {
+      "url": "https://raw.githubusercontent.com/COBOL-Coder/COBOL-Coder/2b14b7bf7e55556205654c6f7657fa60e36251fa/evaluation/utils.py",
+      "sha256": "273eb153d1045b26d104f0e73c4dcabf5b2f3a5cf020187223863b87019d85b8",
+      "bytes": 7915
+    }
+  },
+  "partitionSha256": "a191deec018fe29d873fa6183d4bb6b366d36f7dd4424e769048ba63f7f57e53",
+  "scriptSha256": "a31fa139e8209e3aad2b8acc444b2bb2573e6b8a68c91672b25faecb4c954e9e",
+  "helpers": {
+    "audit": {
+      "filename": "audit_natural_c2j_candidates.py",
+      "sha256": "2bc1518b701f7f56ea58f4b14d74dd745336135908e792414879ff53cf6e4282"
+    },
+    "scalar": {
+      "filename": "replay_scalar_c2j_witnesses.py",
+      "sha256": "a93cb91eaed6d728032639f4b2971a483c9d10773e440ac45b94e0fc0660ea74"
+    }
+  },
+  "javaProbeSha256": "863bc04c91ae1316c5379c1f110c9d9418d40dd613d3612b9cf1925ec67e9b6d",
+  "sourceHashes": {
+    "cobol": "3f8dbb4a63d6d88341745557d62ec1df65a9767c72fcf80320fc39907c8dba39",
+    "canonical": "d3885c65b61f638a1b6202ee06efd85c95990e801df82f24bdcb59b7fff1ec94",
+    "7b": "86ae71b2d57f4ba7e04051c6f0c630d07095f9a706e8c69afe53e3fac3377abc",
+    "14b": "2216261ea16a1b3c3bd610f068ac74ca3c9482b615ff51647356863378714d87"
+  },
+  "commonInputContract": "Exactly six fully initialized integer elements, in COBOL occurrence order; Java List<Integer> length6; original drivers only.",
+  "commonOutputContract": "Integer result: direct original RESULT->OUTPUT-RECORD, signed S9(10), strict GNU ASCII sign decoding; Java int return.",
+  "cases": [
+    {
+      "driverIndex": 0,
+      "arguments": [
+        0,
+        81,
+        12,
+        3,
+        1,
+        21
+      ],
+      "driverSha256": "c15239f9bb31cb74b86c121a8d1b486429e53f09fb808c6d044892042ec68b07",
+      "outputFile": "SKJKASDKD.TXT",
+      "outputPic": "S9(10) SIGN LEADING"
+    },
+    {
+      "driverIndex": 1,
+      "arguments": [
+        0,
+        8,
+        1,
+        2,
+        1,
+        7
+      ],
+      "driverSha256": "862889fa17f0a3b1071ed63a43269e0aa3c4a327cedf27a484eee469310801f9",
+      "outputFile": "SKJKASDKD.TXT",
+      "outputPic": "S9(10) SIGN LEADING"
+    },
+    {
+      "driverIndex": 2,
+      "arguments": [
+        8191,
+        123456,
+        127,
+        7,
+        1,
+        2
+      ],
+      "driverSha256": "f67a459173df6085ea3cab73d2d7de51b2a2b5310464c74343add4ef70220225",
+      "outputFile": "SKJKASDKD.TXT",
+      "outputPic": "S9(10) SIGN LEADING"
+    }
+  ],
+  "sourceRewritesPerformed": false,
+  "originalExpectedMetadataUsedAsOracle": false,
+  "reservedTasksExecuted": 0,
+  "modelTrainingPerformed": false
+}

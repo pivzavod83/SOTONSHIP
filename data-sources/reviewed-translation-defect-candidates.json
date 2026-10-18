@@ -1,0 +1,394 @@
+{
+  "schemaVersion": 1,
+  "collectedDate": "2026-10-18",
+  "status": "RESEARCH_AND_BOUNDED_DEVELOPMENT_EXECUTION_AUDIT",
+  "researchQuestion": "Can real reviewed translation failures support a paired-source semantic-defect detector/localizer for COBOL and Java?",
+  "searchConclusion": "Real reviewed compiler regression candidates exist, but no sufficiently sized ready-to-train public corpus of reviewed enterprise COBOL-to-Java defect/fix/source triples was established by this search. This is not a proof that no such corpus exists.",
+  "admittedTrainingExamples": 0,
+  "newModelTrainingPerformed": false,
+  "introducedMutations": 0,
+  "sources": [
+    {
+      "id": "opensourcecobol4j-regressions",
+      "url": "https://github.com/opensourcecobol/opensourcecobol4j",
+      "languages": [
+        "COBOL",
+        "compiler-generated Java"
+      ],
+      "domain": "Open-source COBOL-to-Java compiler/runtime regressions; not an enterprise hand-migration benchmark.",
+      "license": {
+        "compilerAndTests": "GPL-3.0 per repository declaration; retain file-level notices",
+        "javaRuntime": "LGPL-3.0 per repository declaration",
+        "evidence": "https://github.com/opensourcecobol/opensourcecobol4j#license"
+      },
+      "prioritizedFamiliesForReproduction": [
+        {
+          "pullRequest": 559,
+          "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/559",
+          "title": "fix comparison of COMP data",
+          "mergedAt": "2024-12-04T08:10:49Z",
+          "fixedCommit": "ce27cbf1185f487df62e51e35b6ca7dd8f9df081",
+          "preFixCommit": "6ffaf1799a54ec38177410d783498fae7326f95d",
+          "approvals": [
+            {
+              "reviewer": "n-isaka",
+              "accountType": "User",
+              "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/559#pullrequestreview-2477600845",
+              "reviewedCommit": "af2ab7b821476d60c05e1f78d5d517a32dfb2e8c",
+              "submittedAt": "2024-12-04T08:05:52Z"
+            }
+          ],
+          "evidence": [
+            {
+              "url": "https://api.github.com/repos/opensourcecobol/opensourcecobol4j/pulls/559",
+              "sha256": "c51b249f0611c14f4f2416e602bde19aa22a6b1633c369f2dd2a12c7c866c6bf",
+              "rawSnapshotCachePath": "ml-engine/evaluation/corpora/reviewed-defects/github-evidence/pr-559.json",
+              "hashMethod": "SHA256 of the exact saved HTTP response body bytes, without JSON canonicalization",
+              "cachePolicy": "Raw evidence is retained locally in the ignored corpus cache; primary immutable code/review links are versioned in this catalogue."
+            },
+            {
+              "url": "https://api.github.com/repos/opensourcecobol/opensourcecobol4j/pulls/559/reviews?per_page=100",
+              "sha256": "ee9be75a0756d89013c526ca570eec6867f67fa280fc75b0c6749ebe34a51dab",
+              "rawSnapshotCachePath": "ml-engine/evaluation/corpora/reviewed-defects/github-evidence/pr-559-reviews.json",
+              "hashMethod": "SHA256 of the exact saved HTTP response body bytes, without JSON canonicalization",
+              "cachePolicy": "Raw evidence is retained locally in the ignored corpus cache; primary immutable code/review links are versioned in this catalogue."
+            },
+            {
+              "url": "https://api.github.com/repos/opensourcecobol/opensourcecobol4j/commits/ce27cbf1185f487df62e51e35b6ca7dd8f9df081",
+              "sha256": "921386e7e18af937fd69e4c0d5b424e1dae7f4864b0c1ecb416d1dec7b0ca8d9",
+              "rawSnapshotCachePath": "ml-engine/evaluation/corpora/reviewed-defects/github-evidence/commit-ce27cbf1185f487df62e51e35b6ca7dd8f9df081.json",
+              "hashMethod": "SHA256 of the exact saved HTTP response body bytes, without JSON canonicalization",
+              "cachePolicy": "Raw evidence is retained locally in the ignored corpus cache; primary immutable code/review links are versioned in this catalogue."
+            }
+          ],
+          "classification": "REVIEWED_SEMANTIC_DEFECT_CANDIDATE",
+          "summary": "Signed/unsigned COMP comparison can produce an incorrect result.",
+          "regressionFiles": [
+            "tests/data-rep.src/binary.at"
+          ],
+          "observable": "Generator and Java runtime both change; pin both and retain relevant runtime context.",
+          "admissionCaveat": "Upstream review/test evidence is verified; before/after behavior and source triple have not been reproduced locally.",
+          "trainingAdmission": "PENDING_LOCAL_REPRODUCTION",
+          "independenceGroup": "opensourcecobol4j:pr-559",
+          "regressionUrls": [
+            "https://github.com/opensourcecobol/opensourcecobol4j/blob/ce27cbf1185f487df62e51e35b6ca7dd8f9df081/tests/data-rep.src/binary.at"
+          ],
+          "reviewEvidenceMeaning": "An upstream maintainer account approved the code change. This is not an independent human adjudication of our future dataset labels."
+        },
+        {
+          "pullRequest": 735,
+          "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/735",
+          "title": "Fix program status",
+          "mergedAt": "2025-10-31T06:14:58Z",
+          "fixedCommit": "a20956e6e4204992c84f72bc7bc54d4258db630f",
+          "preFixCommit": "649974246b2cefb192efccabf13b824e53b8e94c",
+          "approvals": [
+            {
+              "reviewer": "tsh-hashimoto",
+              "accountType": "User",
+              "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/735#pullrequestreview-3402724321",
+              "reviewedCommit": "355ae92d9ec1b637270ec5205b3ea181411a93cd",
+              "submittedAt": "2025-10-31T06:14:58Z"
+            }
+          ],
+          "evidence": [
+            {
+              "url": "https://api.github.com/repos/opensourcecobol/opensourcecobol4j/pulls/735",
+              "sha256": "c0913a588126df1c71d66ee9ae749cf8087ec7b989b24c3a43010b0d18dc4b32",
+              "rawSnapshotCachePath": "ml-engine/evaluation/corpora/reviewed-defects/github-evidence/pr-735.json",
+              "hashMethod": "SHA256 of the exact saved HTTP response body bytes, without JSON canonicalization",
+              "cachePolicy": "Raw evidence is retained locally in the ignored corpus cache; primary immutable code/review links are versioned in this catalogue."
+            },
+            {
+              "url": "https://api.github.com/repos/opensourcecobol/opensourcecobol4j/pulls/735/reviews?per_page=100",
+              "sha256": "8694a2feaf6a9b471471a506af4e69b4e38e2c8edd2aef687f5f5f2403cb3717",
+              "rawSnapshotCachePath": "ml-engine/evaluation/corpora/reviewed-defects/github-evidence/pr-735-reviews.json",
+              "hashMethod": "SHA256 of the exact saved HTTP response body bytes, without JSON canonicalization",
+              "cachePolicy": "Raw evidence is retained locally in the ignored corpus cache; primary immutable code/review links are versioned in this catalogue."
+            },
+            {
+              "url": "https://api.github.com/repos/opensourcecobol/opensourcecobol4j/commits/a20956e6e4204992c84f72bc7bc54d4258db630f",
+              "sha256": "1125c86d07cc326f22e193a6c5fc01487836c1d8d67445328816393b4a66f2cc",
+              "rawSnapshotCachePath": "ml-engine/evaluation/corpora/reviewed-defects/github-evidence/commit-a20956e6e4204992c84f72bc7bc54d4258db630f.json",
+              "hashMethod": "SHA256 of the exact saved HTTP response body bytes, without JSON canonicalization",
+              "cachePolicy": "Raw evidence is retained locally in the ignored corpus cache; primary immutable code/review links are versioned in this catalogue."
+            }
+          ],
+          "classification": "CONDITIONAL_FEATURE_SUPPORT_CHANGE",
+          "summary": "PROGRAM-STATUS support changes generated JVM exit status.",
+          "regressionFiles": [
+            "tests/jp-compat.src/spl-registers.at"
+          ],
+          "observable": "Generated Java changes, without a Java runtime source change.",
+          "admissionCaveat": "Determine whether this is a defect under an already supported configuration or newly added feature support. Do not label solely from PR title; unrelated SYSTEM test changes are excluded.",
+          "trainingAdmission": "PENDING_LOCAL_REPRODUCTION",
+          "independenceGroup": "opensourcecobol4j:pr-735",
+          "regressionUrls": [
+            "https://github.com/opensourcecobol/opensourcecobol4j/blob/a20956e6e4204992c84f72bc7bc54d4258db630f/tests/jp-compat.src/spl-registers.at"
+          ],
+          "reviewEvidenceMeaning": "An upstream maintainer account approved the code change. This is not an independent human adjudication of our future dataset labels."
+        },
+        {
+          "pullRequest": 747,
+          "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/747",
+          "title": "Fix the bug about EXTERNAL data item",
+          "mergedAt": "2025-11-18T23:57:00Z",
+          "fixedCommit": "2664dd962f0b6178fcc9c318b532b03dfe324b1a",
+          "preFixCommit": "5f52306e42fae7952c51d02a80a5ef114bec5592",
+          "approvals": [
+            {
+              "reviewer": "yutaro-sakamoto",
+              "accountType": "User",
+              "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/747#pullrequestreview-3480125259",
+              "reviewedCommit": "b707d6cebf7bd2bee4ec740694ca268787e2b9d9",
+              "submittedAt": "2025-11-18T23:56:39Z"
+            }
+          ],
+          "evidence": [
+            {
+              "url": "https://api.github.com/repos/opensourcecobol/opensourcecobol4j/pulls/747",
+              "sha256": "cf0acd8762891436a4e37580bb7620d716ec704eb1c63be09ce9f0d5ae511161",
+              "rawSnapshotCachePath": "ml-engine/evaluation/corpora/reviewed-defects/github-evidence/pr-747.json",
+              "hashMethod": "SHA256 of the exact saved HTTP response body bytes, without JSON canonicalization",
+              "cachePolicy": "Raw evidence is retained locally in the ignored corpus cache; primary immutable code/review links are versioned in this catalogue."
+            },
+            {
+              "url": "https://api.github.com/repos/opensourcecobol/opensourcecobol4j/pulls/747/reviews?per_page=100",
+              "sha256": "6fcd3a702025a7e464f5160ecbd01dace68d303d8c0aafb2c85d140ffbf84537",
+              "rawSnapshotCachePath": "ml-engine/evaluation/corpora/reviewed-defects/github-evidence/pr-747-reviews.json",
+              "hashMethod": "SHA256 of the exact saved HTTP response body bytes, without JSON canonicalization",
+              "cachePolicy": "Raw evidence is retained locally in the ignored corpus cache; primary immutable code/review links are versioned in this catalogue."
+            },
+            {
+              "url": "https://api.github.com/repos/opensourcecobol/opensourcecobol4j/commits/2664dd962f0b6178fcc9c318b532b03dfe324b1a",
+              "sha256": "0925492b69c9dabad44db9d255807cff56d575ba06e39a78d7ada5ae2743b813",
+              "rawSnapshotCachePath": "ml-engine/evaluation/corpora/reviewed-defects/github-evidence/commit-2664dd962f0b6178fcc9c318b532b03dfe324b1a.json",
+              "hashMethod": "SHA256 of the exact saved HTTP response body bytes, without JSON canonicalization",
+              "cachePolicy": "Raw evidence is retained locally in the ignored corpus cache; primary immutable code/review links are versioned in this catalogue."
+            }
+          ],
+          "classification": "REVIEWED_SEMANTIC_DEFECT_CANDIDATE",
+          "summary": "EXTERNAL group children can address the wrong storage and shared data can be unexpectedly reinitialized.",
+          "regressionFiles": [
+            "tests/run.src/miscellaneous.at"
+          ],
+          "observable": "Generator changes emitted Java storage offsets/initialization; no Java runtime source changed.",
+          "admissionCaveat": "Reproduce each affected regression separately; unrelated remaining EXTERNAL limitations are not corrected labels.",
+          "trainingAdmission": "PENDING_LOCAL_REPRODUCTION",
+          "independenceGroup": "opensourcecobol4j:pr-747",
+          "regressionUrls": [
+            "https://github.com/opensourcecobol/opensourcecobol4j/blob/2664dd962f0b6178fcc9c318b532b03dfe324b1a/tests/run.src/miscellaneous.at"
+          ],
+          "reviewEvidenceMeaning": "An upstream maintainer account approved the code change. This is not an independent human adjudication of our future dataset labels."
+        }
+      ],
+      "otherExaminedCandidates": [
+        {
+          "pr": 790,
+          "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/790",
+          "reason": "Primarily generated-Java compilation failures; keep separate from semantic mismatch training."
+        },
+        {
+          "pr": 799,
+          "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/799",
+          "reason": "Primarily generated-Java compilation failures involving OCCURS DEPENDING ON; multiple tests are not independent defects."
+        },
+        {
+          "pr": 809,
+          "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/809",
+          "reason": "Mixed syntax and sized-CALL semantic changes; admit only separately reproduced cases."
+        },
+        {
+          "pr": 604,
+          "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/604",
+          "reason": "Mixed runtime-only output defect and source-visible initialization exception; split by case and dependency visibility."
+        },
+        {
+          "pr": 910,
+          "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/910",
+          "reason": "Runtime-only PIC N handling can leave generated Java unchanged; inadmissible for a source-only model unless dependency context is included."
+        },
+        {
+          "pr": 813,
+          "url": "https://github.com/opensourcecobol/opensourcecobol4j/pull/813",
+          "reason": "Runtime-only Java unit test, no COBOL pair; approval comment is explicitly AI-generated, so it is not evidence of an independent manual label review."
+        }
+      ],
+      "sourceTripleReproducedLocally": false,
+      "compilerExecutionPerformed": false
+    },
+    {
+      "id": "lost-in-translation-icse2024",
+      "paper": "https://arxiv.org/html/2308.03109v3",
+      "repository": "https://github.com/Intelligent-CAT-Lab/PLTranslationEmpirical",
+      "artifactRecord": "https://zenodo.org/records/10447705",
+      "origin": "Naturally occurring failed LLM translations, manually categorized by the authors; not injected mutations and not production human-migration bugs.",
+      "languages": [
+        "C",
+        "C++",
+        "Go",
+        "Java",
+        "Python"
+      ],
+      "containsCobol": false,
+      "reviewEvidence": "Paper describes eight human labelers and pairwise reconciliation. Repair outputs are model-generated/test-assessed, not universally human-reviewed fixes.",
+      "licenses": {
+        "datasetMetadata": "CC-BY-4.0 per Zenodo record API",
+        "tooling": "MIT",
+        "upstreamCode": "Preserve original project/dataset licences separately"
+      },
+      "localAnnotationInventory": "../ml-engine/evaluation/defect-corpus/translation-label-audit-2026-10-18.json",
+      "observedCounts": {
+        "annotationRows": 1748,
+        "distinctTranslationIds": 1558,
+        "targetJavaAnnotationRows": 293,
+        "targetJavaDistinctTranslationIds": 267,
+        "targetJavaWrongOutputTranslationIds": 81
+      },
+      "trainingAdmission": "PENDING_CODE_JOIN_REPRODUCTION_CONTROLS_AND_OVERLAP_AUDIT",
+      "cobolValidityClaimAllowed": false,
+      "translationIdDefinition": [
+        "normalized dataset name",
+        "normalized source language",
+        "normalized target language",
+        "case-sensitive filename"
+      ],
+      "provenanceWarnings": [
+        {
+          "field": "Dataset",
+          "value": "M",
+          "annotationRows": 1,
+          "domain": "Java-to-Python",
+          "policy": "Preserved as supplied; resolve provenance before admission. Does not affect Java-target counts."
+        }
+      ]
+    },
+    {
+      "id": "alphatrans-fse2025",
+      "paper": "https://arxiv.org/html/2410.24117",
+      "repository": "https://github.com/Intelligent-CAT-Lab/AlphaTrans",
+      "inspectedCommit": "c1cabf93d41a153de207d6b098e1da7bbd79abab",
+      "artifactPath": "data/manually_verified_translations",
+      "languages": [
+        "Java",
+        "Python"
+      ],
+      "containsCobol": false,
+      "origin": "Actual model translations of open-source projects, followed by developer repairs.",
+      "reviewEvidence": "Authors describe two developers repairing four projects until all supplied tests pass; partial and manual translation trees are published.",
+      "projects": [
+        "commons-fileupload",
+        "commons-cli",
+        "commons-csv",
+        "commons-validator"
+      ],
+      "licenses": {
+        "tooling": "University of Illinois/NCSA Open Source License",
+        "upstreamCode": "Retain original Apache project and derived-code notices; inspect file-level terms"
+      },
+      "independenceWarning": "Four projects are not a count of independent defects; file and commit counts are not bug counts.",
+      "trainingAdmission": "PENDING_FIX_EXTRACTION_AND_REPRODUCTION",
+      "cobolValidityClaimAllowed": false,
+      "partialAndManualTreesAddedCommit": "22969dc293a5b45a8e913fe7c7eadd94fef183b6",
+      "snapshotCaveat": "Partial/manual trees are public snapshots, not individually reviewed per-defect issue-fix commits. Separate semantic fixes from scaffolding, missing translations and test changes before admission."
+    },
+    {
+      "id": "cms-pricer-real-migration",
+      "portal": "https://www.cms.gov/PricerSourceCodeSoftware",
+      "archive": "https://www.cms.gov/pc-pricerarchive",
+      "languages": [
+        "COBOL",
+        "Java"
+      ],
+      "origin": "Real Medicare Pricer migration, not a curated translation-defect benchmark.",
+      "javaSourceSample": "https://www.cms.gov/files/zip/esrd-pricer-2026-1-v2-11-1-java-source-code.zip",
+      "cobolSourceSample": "https://www.cms.gov/files/zip/cy-20212-esrd-main-frame-pricing-programs.zip",
+      "confirmedDomainBugNotice": "https://www.cms.gov/files/document/r10671bp.pdf",
+      "limitations": [
+        "No verified reviewed faulty-Java translation triple found.",
+        "The observed network-fee correction is a COBOL/domain defect, not evidence of translation failure.",
+        "Published Java sources omit common dependencies and cannot compile as supplied.",
+        "Fiscal-year policy changes must not be labeled as translation bugs.",
+        "Explicit source-reuse licence was not established in this audit."
+      ],
+      "licenseStatus": "UNVERIFIED",
+      "trainingAdmission": "NOT_A_TRANSLATION_DEFECT_LABEL_SOURCE"
+    },
+    {
+      "id": "existing-cobol-javatrans143",
+      "repository": "https://github.com/COBOL-Coder/COBOL-Coder",
+      "pinnedCommit": "2b14b7bf7e55556205654c6f7657fa60e36251fa",
+      "existingManifest": "../ml-engine/evaluation/paired-code/dataset-manifest.json",
+      "origin": "HumanEval-derived reference pairs, reviewed/validated by upstream authors.",
+      "defectLabelsAvailable": false,
+      "trainingAdmission": "CORRESPONDENCE_ONLY_NOT_DEFECT_GROUND_TRUTH",
+      "limitation": "The existing143 pairs and reserved23 tasks are not a labeled defect-detection test set; do not reuse retrieval accuracy as defect accuracy."
+    },
+    {
+      "id": "natural-cobol-javatrans-c2j-outputs",
+      "repository": "https://github.com/COBOL-Coder/COBOL-Coder",
+      "pinnedCommit": "2b14b7bf7e55556205654c6f7657fa60e36251fa",
+      "collectionDate": "2026-10-18",
+      "origin": "Published unmodified COBOL-to-Java outputs of COBOL-Coder7B and14B on the same143 benchmark task families; not production migration incidents.",
+      "outputFiles": {
+        "7b": {
+          "path": "evaluation/output/translation_COBOL_to_Java_COBOL-Coder_7b.jsonl",
+          "sha256": "f2a640f57159d257de6d6c3fdbd5af970ef447ab4fb24a72b928e7f77b76dba6",
+          "rows": 143
+        },
+        "14b": {
+          "path": "evaluation/output/translation_COBOL_to_Java_COBOL-Coder_14b.jsonl",
+          "sha256": "5282a929afc7b0e0775f2f2109805a19052f8885e8143d81f7736b24906f4c41",
+          "rows": 143
+        }
+      },
+      "licence": "Repository Apache-2.0; preserve upstream HumanEval MIT notices. Source and raw logs remain in ignored corpus cache.",
+      "summary": "../ml-engine/evaluation/defect-corpus/natural-c2j-audit-summary-2026-10-18.json",
+      "measurementScope": "Inventory286, screen239 development candidates plus120controls, quarantine1, do not execute46reserved candidates. Shared-input replay covers19 development tasks and127originaldrivercases.",
+      "observations": {
+        "javaTestFailures": 41,
+        "cobolDeclaredOracleDisagreements": 33,
+        "sourceTasksWithMachineReproducedDiscrepancies": 2,
+        "independentHumanReviews": 0,
+        "goldTrainingLabelsAdmitted": 0
+      },
+      "reviewStatus": "PENDING_INDEPENDENT_HUMAN_ADJUDICATION",
+      "limitations": [
+        "Output files lack task IDs; pinned ordinal order plus method/class checks does not independently prove identity.",
+        "Java benchmark tests are not a direct COBOL oracle.",
+        "Shared replay is bounded and partly selected after screening; it is not a model-performance evaluation.",
+        "Four disagreeing input cases represent two source-task defect candidates, not four independent defect families.",
+        "Existing23reserved families remain unexecuted in this audit, but historical retrieval exposure remains disclosed."
+      ],
+      "expandedAdjudication": {
+        "summary": "../ml-engine/evaluation/defect-corpus/expanded-c2j/consolidated-2026-10-18/summary.json",
+        "reviewQueue": "../ml-engine/evaluation/defect-corpus/expanded-c2j/consolidated-2026-10-18/review-queue.json",
+        "remainingFlaggedFamiliesTriaged": 23,
+        "newFamilyDispositions": {
+          "controlSupportedDiscrepancy": 4,
+          "scopedNoMismatch": 11,
+          "referenceOrRepresentationConflict": 6,
+          "unsupportedMapping": 2
+        },
+        "combinedStrongCandidatePrograms": 6,
+        "combinedStrongSourceTasks": 6,
+        "combinedInputWitnesses": 25,
+        "combinedSharedInputReplayTasks": 40,
+        "independentHumanReviews": 0,
+        "goldTrainingLabelsAdmitted": 0,
+        "replacementModelTrained": false,
+        "limitation": "Post-screening exploratory curation. Multiple witnesses do not increase the number of independent faulty programs; no defect-model accuracy is measured."
+      }
+    }
+  ],
+  "nextAdmissionSteps": [
+    "Pin source, faulty and fixed artifacts with SHA256 plus compiler/runtime versions and flags.",
+    "Reproduce failure before the fix and pass after the fix using an unchanged oracle.",
+    "Separate compilation/infrastructure failures from behavior mismatches.",
+    "Ensure the changed behavior is observable in the model input, including necessary helper/runtime context.",
+    "Record independent defect-family/project groups and resolve overlap with HumanEval/EvalPlus/CodeNet and the existing23 reserved task families.",
+    "Obtain reliable unaffected controls; a passing finite test suite is not proof of equivalence.",
+    "Freeze model selection and thresholds on grouped development data before scoring an independent reviewed COBOL-to-Java defect holdout."
+  ],
+  "aiDisclosure": "This search inventory, audit code and proposed measurement protocol were AI-generated. Upstream review records are linked as evidence; no reviewer votes or labels were invented."
+}

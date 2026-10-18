@@ -1,0 +1,35 @@
+{
+  "graphDistanceThreshold": 0.08120504491098683,
+  "selectionSplit": "train",
+  "training": {
+    "pairs": 24,
+    "correct": 13,
+    "accuracy": 0.5416666666666666,
+    "precision": 0.5217391304347826,
+    "recall": 1.0,
+    "f1": 0.6857142857142856,
+    "balancedAccuracy": 0.5416666666666666,
+    "confusion": {
+      "truePositive": 12,
+      "trueNegative": 1,
+      "falsePositive": 11,
+      "falseNegative": 0
+    }
+  },
+  "validation": {
+    "pairs": 8,
+    "correct": 4,
+    "accuracy": 0.5,
+    "precision": 0.5,
+    "recall": 1.0,
+    "f1": 0.6666666666666666,
+    "balancedAccuracy": 0.5,
+    "confusion": {
+      "truePositive": 4,
+      "trueNegative": 0,
+      "falsePositive": 4,
+      "falseNegative": 0
+    }
+  },
+  "definition": "Mean absolute distance between mean statement feature vectors"
+}

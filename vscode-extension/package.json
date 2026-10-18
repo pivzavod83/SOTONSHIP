@@ -1,0 +1,126 @@
+{
+  "name": "sotonship-financial-verifier",
+  "displayName": "SOTONSHIP Financial Verifier",
+  "description": "Inspect COBOL-to-Java translation defects with an LLM, optional GNN program matching and independent bounded Z3 proofs.",
+  "version": "0.3.0",
+  "publisher": "sotonship",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pivzavod83/SOTONSHIP.git",
+    "directory": "vscode-extension"
+  },
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages"
+  ],
+  "keywords": [
+    "cobol",
+    "java",
+    "verification",
+    "financial",
+    "z3"
+  ],
+  "main": "./dist/src/extension.js",
+  "extensionKind": [
+    "workspace"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "Reads selected source files only on requested analysis. AI review sends source through the backend to its configured model provider."
+    },
+    "virtualWorkspaces": false
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "cobol",
+        "aliases": [
+          "COBOL",
+          "cobol"
+        ],
+        "extensions": [
+          ".cbl",
+          ".cob",
+          ".cobol"
+        ]
+      }
+    ],
+    "jsonValidation": [
+      {
+        "fileMatch": [
+          "*.verification.json"
+        ],
+        "url": "./schemas/proof-inputs.schema.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "sotonship.openWorkbench",
+        "title": "Open Verification Workbench",
+        "category": "SOTONSHIP"
+      },
+      {
+        "command": "sotonship.verifyFiles",
+        "title": "Verify COBOL and Java Files",
+        "category": "SOTONSHIP"
+      },
+      {
+        "command": "sotonship.analyzePairWithAi",
+        "title": "Analyze Pair with AI",
+        "category": "SOTONSHIP"
+      },
+      {
+        "command": "sotonship.matchPrograms",
+        "title": "Find Java Program Matches with GNN",
+        "category": "SOTONSHIP"
+      },
+      {
+        "command": "sotonship.tryDemo",
+        "title": "Try the Penny Drift Demo",
+        "category": "SOTONSHIP"
+      },
+      {
+        "command": "sotonship.showFixDiff",
+        "title": "Compare Java with Proposed Fix",
+        "category": "SOTONSHIP"
+      }
+    ],
+    "configuration": {
+      "title": "SOTONSHIP",
+      "properties": {
+        "sotonship.backendUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:3001",
+          "description": "Local API address. Explicit AI review sends selected code to the model provider configured on that server; keys stay on the backend."
+        },
+        "sotonship.requestTimeoutMs": {
+          "type": "number",
+          "default": 120000,
+          "minimum": 1000,
+          "maximum": 600000,
+          "description": "Maximum time to wait for AI review, matching or verification responses."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -watch -p .",
+    "test": "npm run compile && node --test dist/test/*.test.js",
+    "test:host": "npm run compile && node test/run-host.cjs",
+    "vscode:prepublish": "npm run compile",
+    "package": "vsce package --no-dependencies --skip-license --out sotonship-financial-verifier-0.3.0.vsix"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.7",
+    "@types/vscode": "1.95.0",
+    "@vscode/test-electron": "3.1.0",
+    "@vscode/vsce": "4.0.0",
+    "typescript": "5.9.3"
+  }
+}

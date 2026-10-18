@@ -1,0 +1,369 @@
+{
+  "artifact": "replacement F005 batch",
+  "datasetVersion": "synthetic-pilot-plan-repair-r3",
+  "batchNumber": 3,
+  "batchRevision": "B03-F005-R2",
+  "datasetKind": "SYNTHETIC_AI_GENERATED",
+  "compilerProfile": {
+    "cobolCompiler": "GnuCOBOL 3.2",
+    "cobolSourceFormat": "FREE",
+    "javaVersion": "Java 21"
+  },
+  "provenance": {
+    "replacesOnly": "F005 in original batch 03",
+    "familyRevision": "F005-R2",
+    "originalBatchSha256": "87e181c46ba306d75373f36f37698a3de33b7dee836b8067839b922cd17ff502",
+    "archivedInput": "provenance/input-batch-03.json",
+    "oldAlgorithm": "Two-period compounded interest; excluded from independent-test claims.",
+    "F006Policy": "Preserve the existing audited source and labels; F006 is not regenerated in this replacement artifact.",
+    "priorLocalProposal": "synthetic-pilot-v2/batch-03-f005-replacement.json is superseded by this complete revision; retain it as prior proposal provenance."
+  },
+  "predictionMethod": "Exact decimal specification calculations only; no COBOL or Java source was compiled or executed. Predictions and alignment annotations are proposed, not equivalence proofs.",
+  "families": [
+    {
+      "familyId": "F005",
+      "familyRevision": "F005-R2",
+      "split": "test",
+      "focusCategory": "DECIMAL_ROUNDING_AND_SCALE",
+      "sourceStatus": "PROPOSED_REPLACEMENT_WITH_SOURCE",
+      "cloneGroup": "CG-F005-R2-CASH-QUANTIZATION",
+      "algorithmDescription": "Multiply one nonnegative amount by one four-decimal FX rate, round to cents half-up, then round to the nearest 0.05 cash denomination and output one scale-two amount.",
+      "structuralIndependenceRationale": "Actual source contains one multiply, a scale-two rounding boundary, rounded denomination division, and reconstruction. F001 has two dependent percentages around a net amount; F003 has two FX multiplications, a scale-four truncation boundary, and a fee. Independent initialization is reordered in Java; the algorithmic steps remain dependent. This rationale does not certify cross-corpus independence.",
+      "contract": {
+        "inputFields": [
+          {
+            "name": "FOREIGN-AMOUNT",
+            "cobolPicture": "PIC 9(5)V99",
+            "description": "Nonnegative foreign-currency amount."
+          },
+          {
+            "name": "EXCHANGE-RATE",
+            "cobolPicture": "PIC 9V9999",
+            "description": "Nonnegative local units per foreign unit."
+          }
+        ],
+        "stdinFormat": "Two newline-separated canonical ASCII decimals: amount with exactly 2 fractional digits, then rate with exactly 4. No leading integer zeroes except the single zero before the decimal point, signs, spaces, separators, or exponent notation. Each line is at most 20 characters.",
+        "validInputDomain": "Amount in [0.00,50000.00]; rate in [0.0000,9.9999]. Programs assume these valid inputs; invalid-input behavior is outside the contract.",
+        "outputMeaning": "One nonnegative scalar local-currency amount at scale two, a multiple of 0.05.",
+        "outputNormalization": "Trim surrounding ASCII whitespace; remove an optional leading plus sign and leading integer zeroes while preserving one zero before the decimal point; require exactly two fractional digits. Thus COBOL 000120.00 and Java 120.00 normalize to 120.00.",
+        "semanticAssumptions": [
+          "CASH-STEP PIC 9V99 is initialized to exactly 0.05.",
+          "RAW-LOCAL PIC 9(6)V9(6) stores the exact product of the two-place amount and four-place rate; no fractional product digit is discarded.",
+          "CENT-LOCAL PIC 9(6)V99 receives RAW-LOCAL with ROUNDED: nearest cent with half-way values away from zero, equivalent to HALF_UP on this nonnegative domain.",
+          "CASH-UNITS PIC 9(8) receives CENT-LOCAL/CASH-STEP with ROUNDED, using the same positive half-up rule. A half-denomination tie cannot occur after cent rounding: cent remainders 0,1,2 round down; 3,4 round up to the next multiple of five cents.",
+          "FINAL-LOCAL PIC 9(6)V99 is CASH-UNITS*CASH-STEP exactly; OUT-VAL PIC 9(6).99 supplies two output decimal places.",
+          "No original F005 runtime result applies to this revision."
+        ],
+        "staticBounds": {
+          "rawLocalMax": "499995.000000",
+          "centLocalMax": "499995.00",
+          "cashUnitsMax": 9999900,
+          "finalLocalMax": "499995.00",
+          "amountCentsMax": 5000000,
+          "rateTenThousandthsMax": 99999,
+          "longProductMax": 499995000000,
+          "longBiasedNumeratorMax": 499995005000,
+          "localCentsMax": 49999500,
+          "cashRoundingBiasedCentsMaxAcrossVariants": 49999505,
+          "javaLongMax": 9223372036854775807,
+          "conclusion": "Every COBOL receiving field fits; Java long intermediates fit even for defective V4, and BigDecimal has no fixed precision MathContext. Division by 0.05 is terminating. These are static bounds, not compiler or runtime results."
+        }
+      },
+      "cobolLines": [
+        ">>SOURCE FORMAT FREE",
+        "IDENTIFICATION DIVISION.",
+        "PROGRAM-ID. F005R2.",
+        "DATA DIVISION.",
+        "WORKING-STORAGE SECTION.",
+        "01 IN-AMOUNT PIC X(20).",
+        "01 IN-RATE PIC X(20).",
+        "01 FOREIGN-AMOUNT PIC 9(5)V99.",
+        "01 EXCHANGE-RATE PIC 9V9999.",
+        "01 CASH-STEP PIC 9V99.",
+        "01 RAW-LOCAL PIC 9(6)V9(6).",
+        "01 CENT-LOCAL PIC 9(6)V99.",
+        "01 CASH-UNITS PIC 9(8).",
+        "01 FINAL-LOCAL PIC 9(6)V99.",
+        "01 OUT-VAL PIC 9(6).99.",
+        "PROCEDURE DIVISION.",
+        "    ACCEPT IN-AMOUNT",
+        "    ACCEPT IN-RATE",
+        "    COMPUTE FOREIGN-AMOUNT = FUNCTION NUMVAL(IN-AMOUNT)",
+        "    COMPUTE EXCHANGE-RATE = FUNCTION NUMVAL(IN-RATE)",
+        "    MOVE 0.05 TO CASH-STEP",
+        "    COMPUTE RAW-LOCAL = FOREIGN-AMOUNT * EXCHANGE-RATE",
+        "    COMPUTE CENT-LOCAL ROUNDED = RAW-LOCAL",
+        "    COMPUTE CASH-UNITS ROUNDED = CENT-LOCAL / CASH-STEP",
+        "    COMPUTE FINAL-LOCAL = CASH-UNITS * CASH-STEP",
+        "    MOVE FINAL-LOCAL TO OUT-VAL",
+        "    DISPLAY OUT-VAL",
+        "    STOP RUN."
+      ],
+      "cobolSegments": [
+        {"id": "C1", "startLine": 21, "endLine": 21},
+        {"id": "C2", "startLine": 22, "endLine": 22},
+        {"id": "C3", "startLine": 23, "endLine": 23},
+        {"id": "C4", "startLine": 24, "endLine": 24},
+        {"id": "C5", "startLine": 25, "endLine": 25}
+      ],
+      "alignmentScope": "One-based inclusive lines. Segments cover cash-step initialization and all arithmetic. Declarations, input conversion, output editing, and boilerplate are intentionally outside the alignment scope. Every declared segment participates in an alignment.",
+      "tests": [
+        {
+          "testId": "F005-R2-T1",
+          "stdin": "100.00\n1.2000\n",
+          "caseKind": "ordinary",
+          "expectedReferenceValue": "120.00"
+        },
+        {
+          "testId": "F005-R2-T2",
+          "stdin": "12.34\n1.2500\n",
+          "caseKind": "cent_tie_and_defect_witness",
+          "expectedReferenceValue": "15.45"
+        },
+        {
+          "testId": "F005-R2-T3",
+          "stdin": "0.00\n0.0000\n",
+          "caseKind": "lower_boundary",
+          "expectedReferenceValue": "0.00"
+        },
+        {
+          "testId": "F005-R2-T4",
+          "stdin": "50000.00\n9.9999\n",
+          "caseKind": "upper_boundary",
+          "expectedReferenceValue": "499995.00"
+        },
+        {
+          "testId": "F005-R2-T5",
+          "stdin": "1.00\n1.2250\n",
+          "caseKind": "cent_tie_and_defect_witness",
+          "expectedReferenceValue": "1.25"
+        },
+        {
+          "testId": "F005-R2-T6",
+          "stdin": "25.00\n1.2345\n",
+          "caseKind": "denomination_boundary",
+          "expectedReferenceValue": "30.85"
+        }
+      ],
+      "variants": [
+        {
+          "variantId": "F005-V1",
+          "familyRevision": "F005-R2",
+          "implementationStyle": "BIG_DECIMAL",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal amount = new BigDecimal(sc.nextLine());",
+            "        BigDecimal rate = new BigDecimal(sc.nextLine());",
+            "        BigDecimal rawLocal = amount.multiply(rate);",
+            "        BigDecimal cashStep = new BigDecimal(\"0.05\");",
+            "        BigDecimal centLocal = rawLocal.setScale(2, RoundingMode.HALF_UP);",
+            "        BigDecimal cashRatio = centLocal.divide(cashStep);",
+            "        BigDecimal cashUnits = cashRatio.setScale(0, RoundingMode.HALF_UP);",
+            "        BigDecimal finalLocal = cashUnits.multiply(cashStep).setScale(2);",
+            "        System.out.println(finalLocal.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {"id": "J1", "startLine": 9, "endLine": 9},
+            {"id": "J2", "startLine": 10, "endLine": 10},
+            {"id": "J3", "startLine": 11, "endLine": 11},
+            {"id": "J4", "startLine": 12, "endLine": 12},
+            {"id": "J5", "startLine": 13, "endLine": 13},
+            {"id": "J6", "startLine": 14, "endLine": 14}
+          ],
+          "alignments": [
+            {"cobolSegmentIds": ["C1"], "javaSegmentIds": ["J2"]},
+            {"cobolSegmentIds": ["C2"], "javaSegmentIds": ["J1"]},
+            {"cobolSegmentIds": ["C3"], "javaSegmentIds": ["J3"]},
+            {"cobolSegmentIds": ["C4"], "javaSegmentIds": ["J4", "J5"]},
+            {"cobolSegmentIds": ["C5"], "javaSegmentIds": ["J6"]}
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectSubtype": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "BigDecimal preserves exact six-place conversion, HALF_UP cent rounding, exact division by 0.05, integer HALF_UP unit rounding, and reconstruction. C4 maps to J4/J5. Cash-step initialization moves after the independent raw conversion.",
+          "testPredictions": [
+            {"testId": "F005-R2-T1", "expectedJavaValue": "120.00", "expectedMismatch": false},
+            {"testId": "F005-R2-T2", "expectedJavaValue": "15.45", "expectedMismatch": false},
+            {"testId": "F005-R2-T3", "expectedJavaValue": "0.00", "expectedMismatch": false},
+            {"testId": "F005-R2-T4", "expectedJavaValue": "499995.00", "expectedMismatch": false},
+            {"testId": "F005-R2-T5", "expectedJavaValue": "1.25", "expectedMismatch": false},
+            {"testId": "F005-R2-T6", "expectedJavaValue": "30.85", "expectedMismatch": false}
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F005-V2",
+          "familyRevision": "F005-R2",
+          "implementationStyle": "SCALED_LONG",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long amountCents = new BigDecimal(sc.nextLine()).movePointRight(2).longValueExact();",
+            "        long rateTenThousandths = new BigDecimal(sc.nextLine()).movePointRight(4).longValueExact();",
+            "        long localCents = (amountCents * rateTenThousandths + 5000L) / 10000L;",
+            "        long cashStepCents = 5L;",
+            "        long cashCents = ((localCents + cashStepCents / 2L) / cashStepCents) * cashStepCents;",
+            "        System.out.println(BigDecimal.valueOf(cashCents, 2).toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {"id": "J1", "startLine": 8, "endLine": 8},
+            {"id": "J2", "startLine": 9, "endLine": 9},
+            {"id": "J3", "startLine": 10, "endLine": 10}
+          ],
+          "alignments": [
+            {"cobolSegmentIds": ["C1"], "javaSegmentIds": ["J2"]},
+            {"cobolSegmentIds": ["C2", "C3"], "javaSegmentIds": ["J1"]},
+            {"cobolSegmentIds": ["C4", "C5"], "javaSegmentIds": ["J3"]}
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": true,
+          "defectCategory": "NONE",
+          "defectSubtype": "NONE",
+          "defectCobolSegmentIds": [],
+          "defectJavaSegmentIds": [],
+          "labelRationale": "Scaled long arithmetic combines C2/C3 into J1 and C4/C5 into J3. For cent integers, rounding division by 5 is (cents+2)/5. Cash-step initialization moves after the independent conversion. BigDecimal is used only for exact parsing and formatting.",
+          "testPredictions": [
+            {"testId": "F005-R2-T1", "expectedJavaValue": "120.00", "expectedMismatch": false},
+            {"testId": "F005-R2-T2", "expectedJavaValue": "15.45", "expectedMismatch": false},
+            {"testId": "F005-R2-T3", "expectedJavaValue": "0.00", "expectedMismatch": false},
+            {"testId": "F005-R2-T4", "expectedJavaValue": "499995.00", "expectedMismatch": false},
+            {"testId": "F005-R2-T5", "expectedJavaValue": "1.25", "expectedMismatch": false},
+            {"testId": "F005-R2-T6", "expectedJavaValue": "30.85", "expectedMismatch": false}
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F005-V3",
+          "familyRevision": "F005-R2",
+          "implementationStyle": "BIG_DECIMAL",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.math.RoundingMode;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        BigDecimal amount = new BigDecimal(sc.nextLine());",
+            "        BigDecimal rate = new BigDecimal(sc.nextLine());",
+            "        BigDecimal rawLocal = amount.multiply(rate);",
+            "        BigDecimal cashStep = new BigDecimal(\"0.05\");",
+            "        BigDecimal centLocal = rawLocal.setScale(2, RoundingMode.DOWN);",
+            "        BigDecimal cashRatio = centLocal.divide(cashStep);",
+            "        BigDecimal cashUnits = cashRatio.setScale(0, RoundingMode.HALF_UP);",
+            "        BigDecimal finalLocal = cashUnits.multiply(cashStep).setScale(2);",
+            "        System.out.println(finalLocal.toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {"id": "J1", "startLine": 9, "endLine": 9},
+            {"id": "J2", "startLine": 10, "endLine": 10},
+            {"id": "J3", "startLine": 11, "endLine": 11},
+            {"id": "J4", "startLine": 12, "endLine": 12},
+            {"id": "J5", "startLine": 13, "endLine": 13},
+            {"id": "J6", "startLine": 14, "endLine": 14}
+          ],
+          "alignments": [
+            {"cobolSegmentIds": ["C1"], "javaSegmentIds": ["J2"]},
+            {"cobolSegmentIds": ["C2"], "javaSegmentIds": ["J1"]},
+            {"cobolSegmentIds": ["C3"], "javaSegmentIds": ["J3"]},
+            {"cobolSegmentIds": ["C4"], "javaSegmentIds": ["J4", "J5"]},
+            {"cobolSegmentIds": ["C5"], "javaSegmentIds": ["J6"]}
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "ROUNDING_MODE",
+          "defectSubtype": "CENT_TRUNCATION_INSTEAD_OF_HALF_UP",
+          "defectCobolSegmentIds": ["C3"],
+          "defectJavaSegmentIds": ["J3"],
+          "labelRationale": "J3 truncates fractional cents with DOWN instead of the reference C3 HALF_UP rule. This is the only semantic mutation of the BigDecimal baseline.",
+          "testPredictions": [
+            {"testId": "F005-R2-T1", "expectedJavaValue": "120.00", "expectedMismatch": false},
+            {"testId": "F005-R2-T2", "expectedJavaValue": "15.40", "expectedMismatch": true},
+            {"testId": "F005-R2-T3", "expectedJavaValue": "0.00", "expectedMismatch": false},
+            {"testId": "F005-R2-T4", "expectedJavaValue": "499995.00", "expectedMismatch": false},
+            {"testId": "F005-R2-T5", "expectedJavaValue": "1.20", "expectedMismatch": true},
+            {"testId": "F005-R2-T6", "expectedJavaValue": "30.85", "expectedMismatch": false}
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        },
+        {
+          "variantId": "F005-V4",
+          "familyRevision": "F005-R2",
+          "implementationStyle": "SCALED_LONG",
+          "javaLines": [
+            "import java.math.BigDecimal;",
+            "import java.util.Scanner;",
+            "public class Program {",
+            "    public static void main(String[] args) {",
+            "        Scanner sc = new Scanner(System.in);",
+            "        long amountCents = new BigDecimal(sc.nextLine()).movePointRight(2).longValueExact();",
+            "        long rateTenThousandths = new BigDecimal(sc.nextLine()).movePointRight(4).longValueExact();",
+            "        long localCents = (amountCents * rateTenThousandths + 5000L) / 10000L;",
+            "        long cashStepCents = 10L;",
+            "        long cashCents = ((localCents + cashStepCents / 2L) / cashStepCents) * cashStepCents;",
+            "        System.out.println(BigDecimal.valueOf(cashCents, 2).toPlainString());",
+            "    }",
+            "}"
+          ],
+          "javaSegments": [
+            {"id": "J1", "startLine": 8, "endLine": 8},
+            {"id": "J2", "startLine": 9, "endLine": 9},
+            {"id": "J3", "startLine": 10, "endLine": 10}
+          ],
+          "alignments": [
+            {"cobolSegmentIds": ["C1"], "javaSegmentIds": ["J2"]},
+            {"cobolSegmentIds": ["C2", "C3"], "javaSegmentIds": ["J1"]},
+            {"cobolSegmentIds": ["C4", "C5"], "javaSegmentIds": ["J3"]}
+          ],
+          "unmatchedCobolSegmentIds": [],
+          "unmatchedJavaSegmentIds": [],
+          "expectedEquivalent": false,
+          "defectCategory": "ROUNDING_SCALE",
+          "defectSubtype": "TEN_CENT_INSTEAD_OF_FIVE_CENT_DENOMINATION",
+          "defectCobolSegmentIds": ["C1"],
+          "defectJavaSegmentIds": ["J2"],
+          "labelRationale": "J2 initializes a 10-cent step instead of the reference C1 five-cent step. Later calculations consume the wrong denomination. This is the only semantic mutation of the scaled-integer baseline.",
+          "testPredictions": [
+            {"testId": "F005-R2-T1", "expectedJavaValue": "120.00", "expectedMismatch": false},
+            {"testId": "F005-R2-T2", "expectedJavaValue": "15.40", "expectedMismatch": true},
+            {"testId": "F005-R2-T3", "expectedJavaValue": "0.00", "expectedMismatch": false},
+            {"testId": "F005-R2-T4", "expectedJavaValue": "499995.00", "expectedMismatch": false},
+            {"testId": "F005-R2-T5", "expectedJavaValue": "1.20", "expectedMismatch": true},
+            {"testId": "F005-R2-T6", "expectedJavaValue": "30.90", "expectedMismatch": true}
+          ],
+          "labelStatus": "PROPOSED",
+          "executionStatus": "NOT_EXECUTED",
+          "executionEvidence": null
+        }
+      ],
+      "labelStatus": "PROPOSED",
+      "executionStatus": "NOT_EXECUTED",
+      "executionEvidence": null
+    }
+  ]
+}

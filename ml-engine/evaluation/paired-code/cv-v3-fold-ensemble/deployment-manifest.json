@@ -1,0 +1,15 @@
+{
+  "modelId": "paired-program-gnn-v3-fold-ensemble",
+  "runId": "paired-cv-v3-ensemble-96a1806f504e39f5",
+  "modelSha256": "afd5b36cfd1c0d9b0f8e9f00105216c0d602af7ed2b62948f9120c141657159c",
+  "frozenCheckpointSha256": "dfda89d0eece01f9333385bb5c6ce9279ec732b8ed0725a2efe2c82ff91edfda",
+  "finalEvaluationReportSha256": "db17a859e2a2bfb8096187bc0b1977fd83838f2db8000e96e54a1913f45547e9",
+  "membersChangedAfterFreeze": false,
+  "membersSha256": "c6c0dfe2b721e176ad64449a840eb62119a339b9b54eeb68e75966f571b1c520",
+  "fullDevelopmentRefit": false,
+  "ensemble": {
+    "aggregation": "MEAN_COSINE",
+    "members": 5
+  },
+  "note": "Only measured evaluation/provenance metadata are added; all five frozen rounded member weights, memberships, epochs, aggregation and gate remain unchanged."
+}

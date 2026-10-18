@@ -1,0 +1,185 @@
+{
+  "model": {
+    "id": "paired-program-gnn-v1",
+    "sha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+    "trainingDataset": "COBOL-JavaTrans (143 original source pairs)",
+    "evaluation": {
+      "status": "BENCHMARK_PILOT",
+      "test": {
+        "gnn": {
+          "queries": 29,
+          "candidatesPerQuery": 29,
+          "top1": 0.37931,
+          "top3": 0.551724,
+          "top5": 0.689655,
+          "mrr": 0.50714
+        },
+        "noMessagePassing": {
+          "queries": 29,
+          "candidatesPerQuery": 29,
+          "top1": 0.275862,
+          "top3": 0.551724,
+          "top5": 0.62069,
+          "mrr": 0.433076
+        },
+        "semanticHistogram": {
+          "queries": 29,
+          "candidatesPerQuery": 29,
+          "top1": 0.206897,
+          "top3": 0.310345,
+          "top5": 0.37931,
+          "mrr": 0.322989
+        },
+        "nameMatching": {
+          "queries": 29,
+          "candidatesPerQuery": 29,
+          "top1": 0.931034,
+          "top3": 0.931034,
+          "top5": 0.931034,
+          "mrr": 0.934138
+        }
+      },
+      "validation": {
+        "gnn": {
+          "queries": 29,
+          "candidatesPerQuery": 29,
+          "top1": 0.275862,
+          "top3": 0.482759,
+          "top5": 0.655172,
+          "mrr": 0.450885
+        },
+        "noMessagePassing": {
+          "queries": 29,
+          "candidatesPerQuery": 29,
+          "top1": 0.344828,
+          "top3": 0.482759,
+          "top5": 0.655172,
+          "mrr": 0.486858
+        },
+        "semanticHistogram": {
+          "queries": 29,
+          "candidatesPerQuery": 29,
+          "top1": 0.172414,
+          "top3": 0.344828,
+          "top5": 0.448276,
+          "mrr": 0.297737
+        },
+        "nameMatching": {
+          "queries": 29,
+          "candidatesPerQuery": 29,
+          "top1": 0.931034,
+          "top3": 0.965517,
+          "top5": 0.965517,
+          "mrr": 0.950091
+        }
+      },
+      "financialDomainValidated": false,
+      "scope": "whole-program paired-task retrieval, not statement localization or formal equivalence"
+    },
+    "limitations": [
+      "143 small HumanEval-derived pairs, not banking migrations",
+      "Pair labels are upstream correspondence, not independent correctness proofs",
+      "Heuristic graph extraction, not full compiler AST/CFG",
+      "Names excluded from model; name baseline may be stronger on named benchmark",
+      "Cosine scores are not calibrated probabilities",
+      "No financial-domain generalization claim",
+      "No defect prediction or code generation"
+    ]
+  },
+  "evaluatedAt": "2026-10-18T03:06:18.419622+00:00",
+  "datasetSha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+  "candidateOrder": [
+    "HumanEval/1",
+    "HumanEval/2",
+    "HumanEval/9",
+    "HumanEval/11",
+    "HumanEval/13",
+    "HumanEval/15",
+    "HumanEval/21",
+    "HumanEval/30",
+    "HumanEval/35",
+    "HumanEval/41",
+    "HumanEval/54",
+    "HumanEval/68",
+    "HumanEval/69",
+    "HumanEval/72",
+    "HumanEval/76",
+    "HumanEval/81",
+    "HumanEval/84",
+    "HumanEval/90",
+    "HumanEval/94",
+    "HumanEval/101",
+    "HumanEval/102",
+    "HumanEval/118",
+    "HumanEval/124",
+    "HumanEval/145",
+    "HumanEval/146",
+    "HumanEval/147",
+    "HumanEval/149",
+    "HumanEval/155",
+    "HumanEval/160"
+  ],
+  "queries": 29,
+  "candidatesPerQuery": 29,
+  "originalNames": {
+    "gnn": {
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.37931,
+      "top3": 0.551724,
+      "top5": 0.689655,
+      "mrr": 0.50714
+    },
+    "nameMatching": {
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.931034,
+      "top3": 0.931034,
+      "top5": 0.931034,
+      "mrr": 0.934138
+    },
+    "semanticHistogram": {
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.310345,
+      "top5": 0.37931,
+      "mrr": 0.322989
+    }
+  },
+  "anonymisedJavaDeclarations": {
+    "gnn": {
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.37931,
+      "top3": 0.551724,
+      "top5": 0.689655,
+      "mrr": 0.50714
+    },
+    "nameMatching": {
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.034483,
+      "top3": 0.103448,
+      "top5": 0.172414,
+      "mrr": 0.136609
+    },
+    "semanticHistogram": {
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.310345,
+      "top5": 0.37931,
+      "mrr": 0.322989
+    }
+  },
+  "maximumEmbeddingDifference": 0.0,
+  "method": "Remove comments and rename Java class/method declarations; retain implementations, external API calls and COBOL. Frozen weights and thresholds. Stable stored test-task candidate order breaks ties.",
+  "limitations": [
+    "Controlled name-unavailability stress test, not representative real-world deployment evidence",
+    "Same previously observed 29 test tasks, not a fresh independent holdout",
+    "Name matching is deliberately deprived of its signal; original 93% performance remains visible",
+    "No no-message ablation stress claim: that checkpoint is not stored",
+    "Financial-domain matching remains unvalidated; rankings require engineer confirmation"
+  ]
+}

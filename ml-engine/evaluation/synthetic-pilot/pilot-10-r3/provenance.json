@@ -1,0 +1,217 @@
+{
+  "datasetVersion": "synthetic-pilot-10-r3",
+  "records": [
+    {
+      "familyId": "F001",
+      "sourceArtifact": "ml-engine/evaluation/synthetic-pilot/batch-01-refined/input-batch.json",
+      "sourceArtifactSha256": "640b04fcd1c4e2368aa37994826d6d4fa625b52cf1dae34a50af70fc6adaab9d",
+      "runtimeReport": "ml-engine/evaluation/synthetic-pilot/batch-01-refined/runtime-audit-2026-10-18/report.json",
+      "runtimeReportSha256": "93f5e86cf3aa4a95a5e332cc91437e5cf8473551a85d4067bd2e9d408f3daddd",
+      "sourceHashes": {
+        "cobol": "444ccd83da615d73f56bea7fe866a447ccdeca8ecd79a7d86b62e31ab728811a",
+        "java": {
+          "F001-V1": "f1dba6887c52c089c70043089e4f6cf5b977fbbbf4ab0b221470008551be7d38",
+          "F001-V2": "4353a7866937806d30fac18f5e9739b8a4d445ea06f441e5109f7dbba0edd218",
+          "F001-V3": "dda5a599506ebbac15b98b782750479aa415c809e41a798db1819f0ac2985bec",
+          "F001-V4": "69b034cc2e8d5b7855b204440d1212191a0ca89de7e57cdc5fb36f062c1fde23"
+        }
+      },
+      "lexicalContractVersion": "EXPLICIT_CANONICAL_SUBSET_R1"
+    },
+    {
+      "familyId": "F002",
+      "sourceArtifact": "ml-engine/evaluation/synthetic-pilot/batch-01-refined/input-batch.json",
+      "sourceArtifactSha256": "640b04fcd1c4e2368aa37994826d6d4fa625b52cf1dae34a50af70fc6adaab9d",
+      "runtimeReport": "ml-engine/evaluation/synthetic-pilot/batch-01-refined/runtime-audit-2026-10-18/report.json",
+      "runtimeReportSha256": "93f5e86cf3aa4a95a5e332cc91437e5cf8473551a85d4067bd2e9d408f3daddd",
+      "sourceHashes": {
+        "cobol": "b1b71511e5864baac1dbdac08827a18dc6ed8831d1eaa7a29ce7879155d4e73f",
+        "java": {
+          "F002-V1": "dc8375e5bb5a154ae344cad46fe0872761477e7a25e5e5ac44d837f07a3f2aea",
+          "F002-V2": "c1edc95d1c404c9cc948b088a440c35d3e0041c1d5cfb4a44c68489b1f63a54b",
+          "F002-V3": "3c20a8d92104907a38f41e169825c117c83a169e0e5005bdc47da9c599c124dc",
+          "F002-V4": "352745049aacc4c867afe350e371b3c2c3fa0b111c45a678d2f34db6441ceedd"
+        }
+      },
+      "lexicalContractVersion": "EXPLICIT_CANONICAL_SUBSET_R1"
+    },
+    {
+      "familyId": "F003",
+      "sourceArtifact": "ml-engine/evaluation/synthetic-pilot/batch-02-repaired-r1/dataset.json",
+      "sourceArtifactSha256": "228cfeeee1f15db171250de181201e471ba24a359ac6b0411b6ea8044bb0713e",
+      "runtimeReport": "ml-engine/evaluation/synthetic-pilot/batch-02/runtime-audit-2026-10-18/report.json",
+      "runtimeReportSha256": "242fd2c8574ab95829d45360a18223d11540f503a5a532acad97573abc32a656",
+      "sourceHashes": {
+        "cobol": "127478a35d2d12684b1b66c06d90ca463775bed437b851070553f6a31c4ea2b0",
+        "java": {
+          "F003-V1": "cc5be695614ba57488e259ae8b972666e3fb4ffdc2ab24c0e60bbeeacc221842",
+          "F003-V2": "cdcc4c1dca89d5e804b6bebf20f34c2d89850672e2521a05d25f72fba11537a5",
+          "F003-V3": "8c77ad5e86db025e58a840358df49ffae9c4a7318a3943f6a29c22e0a7fcdcce",
+          "F003-V4": "0cd448a1b7d5c0b2811de3c5a51ce54c61658065fd1666c2724b284789e177e4"
+        }
+      },
+      "lexicalContractVersion": "EXPLICIT_CANONICAL_SUBSET_R1"
+    },
+    {
+      "familyId": "F004",
+      "sourceArtifact": "ml-engine/evaluation/synthetic-pilot/batch-02-repaired-r1/dataset.json",
+      "sourceArtifactSha256": "228cfeeee1f15db171250de181201e471ba24a359ac6b0411b6ea8044bb0713e",
+      "runtimeReport": "ml-engine/evaluation/synthetic-pilot/batch-02/runtime-audit-2026-10-18/report.json",
+      "runtimeReportSha256": "242fd2c8574ab95829d45360a18223d11540f503a5a532acad97573abc32a656",
+      "sourceHashes": {
+        "cobol": "d6737294eba9794350a8b795399b451f97eb5c3c8a29fd4515c8244e432af876",
+        "java": {
+          "F004-V1": "2393042e56f3be34fed91f469fd42799a4b1ab30594edcdc980fc73656028e84",
+          "F004-V2": "881c6a000e772f48287beb3ef6764e2f7bcddec02f7caef1a6a9d1c74115de73",
+          "F004-V3": "bf049274cfa85fd6adb29a532cba7cf85475b1cbec70bade49d1fc9f0a643e04",
+          "F004-V4": "c68eaffd051be9171d9a7524ee8a523990c3bcc673c836d258512d1e3740b322"
+        }
+      },
+      "lexicalContractVersion": "EXPLICIT_CANONICAL_SUBSET_R1"
+    },
+    {
+      "familyId": "F005",
+      "sourceArtifact": "ml-engine/evaluation/synthetic-pilot/batch-03-f005-r2/input-batch.json",
+      "sourceArtifactSha256": "340dea0c97b2abea74f2e92154954eff1606d68da74ae463d23ff165dc103c53",
+      "runtimeReport": "ml-engine/evaluation/synthetic-pilot/batch-03-f005-r2/runtime-audit-2026-10-18/report.json",
+      "runtimeReportSha256": "7fac98e16e14b799cbcc0f7e3e43cae80b71f0baa9003e9817696ce2a9e6240d",
+      "sourceHashes": {
+        "cobol": "58d7c81bbf5d2a733184f3adaa705611c05106d5d825f9ad15c25a6ce9f6336e",
+        "java": {
+          "F005-V1": "812a5033a24c426f9da33619f5cc65fa3c37e4f2bc23946a07f25df87fea67c3",
+          "F005-V2": "c3733df961ac1bf0b260bdd12da16b4c2f9dc0bbd8ada336c2acdae4fca49751",
+          "F005-V3": "00cc94bfb54e809c723dd4acf90bf5bcf5f744f18dd432c15734732d01b0de98",
+          "F005-V4": "ea7bbdfcf24a3af7257e32d277214541e75628409cf4bda42cb99fbc6a70b599"
+        }
+      },
+      "lexicalContractVersion": "EXISTING_CANONICAL_SCOPE_WITH_STRUCTURED_RULES"
+    },
+    {
+      "familyId": "F006",
+      "sourceArtifact": "ml-engine/evaluation/synthetic-pilot/batch-03/input-batch.json",
+      "sourceArtifactSha256": "87e181c46ba306d75373f36f37698a3de33b7dee836b8067839b922cd17ff502",
+      "runtimeReport": "ml-engine/evaluation/synthetic-pilot/batch-03/runtime-audit-2026-10-18/report.json",
+      "runtimeReportSha256": "4e977d47bec37725fbf73e922b6616951be24df414d0d690caad6431507e81fa",
+      "sourceHashes": {
+        "cobol": "e7b750149a5b29fb17dd5048f0748a2e98053ecbe9de601db0eb08f36989ff3e",
+        "java": {
+          "F006-V1": "802c92a1a24ede269eac0c6bdfb36804192ccfe028d69d61b373afaa846ba0e8",
+          "F006-V2": "251b0e17893d3a3ee04736ffadbd5455a88f272060b167252428016d5a7fde4a",
+          "F006-V3": "5d61fc7b4284f264dcaa2fde25026765fa39031bc3180be4c881e27bf9b833d9",
+          "F006-V4": "988122837b26f3a42387772344ae9cb820f62a8b5aa2751a04bebc18125b9eb8"
+        }
+      },
+      "lexicalContractVersion": "EXISTING_CANONICAL_SCOPE_WITH_STRUCTURED_RULES"
+    },
+    {
+      "familyId": "F007",
+      "sourceArtifact": "ml-engine/evaluation/synthetic-pilot/batch-04/input-batch.json",
+      "sourceArtifactSha256": "e8207d8200c16ecdb4fb5dd6813c4041cc7c5bd37ed08f0ae4969f37a36f8693",
+      "runtimeReport": "ml-engine/evaluation/synthetic-pilot/batch-04/runtime-audit-2026-10-18/report.json",
+      "runtimeReportSha256": "a43a1d25e25d5355f63aa999f10039a67a843efbaddd156734becb098e53d41d",
+      "sourceHashes": {
+        "cobol": "d87e65d3e380aa00029751ec1d2f19dff1e85a493a7fe2aca6b1ff9fcb1edaba",
+        "java": {
+          "F007-V1": "fb7e18a938ce0aff6891f73ff6f2139df8ae1b693eb1f458f8a1af5c50933866",
+          "F007-V2": "4de4bc1f53c2e861ba50b20e7caad85c86f2a4db829499ad28d1bc40cdce3bc8",
+          "F007-V3": "2c9a4570b38a4037cd424956891784e2ddc4525f870dda86ccd2bd43db82b0a1",
+          "F007-V4": "ded6c9f77a196752656ef37be886b8ac2c59dae4d361887282b9553fceda334a"
+        }
+      },
+      "lexicalContractVersion": "EXISTING_CANONICAL_SCOPE_WITH_STRUCTURED_RULES"
+    },
+    {
+      "familyId": "F008",
+      "sourceArtifact": "ml-engine/evaluation/synthetic-pilot/batch-04/input-batch.json",
+      "sourceArtifactSha256": "e8207d8200c16ecdb4fb5dd6813c4041cc7c5bd37ed08f0ae4969f37a36f8693",
+      "runtimeReport": "ml-engine/evaluation/synthetic-pilot/batch-04/runtime-audit-2026-10-18/report.json",
+      "runtimeReportSha256": "a43a1d25e25d5355f63aa999f10039a67a843efbaddd156734becb098e53d41d",
+      "sourceHashes": {
+        "cobol": "b77f49f1bb21c6eea83b618e85257abb2a3f5d89551678cfb5fcb8d3ee655c28",
+        "java": {
+          "F008-V1": "c966cb651680052bc7d22d2974eb2e3c01925465c119bf2ce4ca4064b3323a1d",
+          "F008-V2": "5b3a31b84d224ba520efd94895953ec26533fad6de5c7558b13e35cfd5f3885d",
+          "F008-V3": "ed3769d4dc76034ac1bcf2b348b2b1424bc7191a2cc7c122895cd8e44fdc7e4f",
+          "F008-V4": "4cd7889b5cd38d2708a487c88ae9e10ed4da06e15ac7b9a745e33cdf9837ada7"
+        }
+      },
+      "lexicalContractVersion": "EXISTING_CANONICAL_SCOPE_WITH_STRUCTURED_RULES"
+    },
+    {
+      "familyId": "F009",
+      "sourceArtifact": "ml-engine/evaluation/synthetic-pilot/batch-05/input-batch.json",
+      "sourceArtifactSha256": "b77464a12665fd053c9a17bd7cce6956420d19ea374a334acef586cb97547dc3",
+      "runtimeReport": "ml-engine/evaluation/synthetic-pilot/batch-05/runtime-audit-2026-10-18/report.json",
+      "runtimeReportSha256": "5c845b49ff6c341ff6f620a930160ce6c95839d78de36196157d7b112e2e5dff",
+      "sourceHashes": {
+        "cobol": "a8723a90df7d3cd0ef1c7660ef9a097d75ae685944a35666757c62ebf8fec146",
+        "java": {
+          "F009-V1": "ab46d36e9c1ee641685d5c5881a5a9f37320d4e945feca2801c563fdf32cc297",
+          "F009-V2": "b6ac90cd3523824d7508590a35c28fc7ae9a55c1f6230d5c45af688296498878",
+          "F009-V3": "9c56d0b24fc48677cdc7ead53eae54429793065d10e57561ccab804afa828517",
+          "F009-V4": "a41d17c328b177f2bb7c94ca91178cadcab189dd34206e01ec6d3d7b5992f1f0"
+        }
+      },
+      "lexicalContractVersion": "EXISTING_CANONICAL_SCOPE_WITH_STRUCTURED_RULES"
+    },
+    {
+      "familyId": "F010",
+      "sourceArtifact": "ml-engine/evaluation/synthetic-pilot/batch-05/input-batch.json",
+      "sourceArtifactSha256": "b77464a12665fd053c9a17bd7cce6956420d19ea374a334acef586cb97547dc3",
+      "runtimeReport": "ml-engine/evaluation/synthetic-pilot/batch-05/runtime-audit-2026-10-18/report.json",
+      "runtimeReportSha256": "5c845b49ff6c341ff6f620a930160ce6c95839d78de36196157d7b112e2e5dff",
+      "sourceHashes": {
+        "cobol": "40d40e82680f30278dc9ead9af07ee179852f8b68abfc5ad3f43a754fcd8f089",
+        "java": {
+          "F010-V1": "f9e74cfd539e7f9a73690ca6ced62e2138a71c3dbb85f806af79a8690fb03f8e",
+          "F010-V2": "24d69859fe1b2b38d47c047c4ead799a35a7b1b27e89003c15b3f2c7d49fbedc",
+          "F010-V3": "66c1839a424d29988a2d87921b43f1fe466b8a25ce4012b8bd87e33b31375d91",
+          "F010-V4": "18553811a90b97bf463753adc0f12a8f84ceb1dae708b41ceca3bbada1c9ff2d"
+        }
+      },
+      "lexicalContractVersion": "EXISTING_CANONICAL_SCOPE_WITH_STRUCTURED_RULES"
+    }
+  ],
+  "appliedRepairs": [
+    "F004-V4 formula category/subtype and bounded rationale in a versioned metadata derivative.",
+    "Canonical lexical subset for F001-F004 with unchanged numeric bounds and exact code bytes.",
+    "Actual offline execution statuses/evidence bound to exact current source hashes.",
+    "F005-R2 selected explicitly; original compounded-interest F005 is excluded.",
+    "Reduced 10-family allocation and unresolved replacement-provenance paths corrected."
+  ],
+  "sourceCodeChanged": false,
+  "originalUploadsEdited": false,
+  "modelTrained": false,
+  "missingSources": [],
+  "parentRevision": {
+    "path": "ml-engine/evaluation/synthetic-pilot/pilot-10-r2/dataset.json",
+    "sha256": "c3725fced9ae1eca2695e18023aa2dffec25c980cccf10a124c632f00136ad6c"
+  },
+  "newBatchSourceCodeOrPredictionsChanged": false,
+  "metadataRepairsThisRevision": [
+    {
+      "familyId": "F009",
+      "variantId": "F009-V1",
+      "field": "intermediateBounds/a,b,c,temp,median",
+      "oldValue": "Each remains in [-99999,99999]. temp starts at 0. Only comparisons and assignments are required; the defective absolute-value insertion also stays within this range.",
+      "newValue": "Each remains in [-99999,99999]. temp starts at 0. Only signed comparisons and assignments are performed.",
+      "reason": "Remove copied references to an absolute-value insertion absent from this correct candidate."
+    },
+    {
+      "familyId": "F009",
+      "variantId": "F009-V1",
+      "field": "intermediateBounds/longSafety",
+      "oldValue": "The domain excludes Long.MIN_VALUE, so even the deliberately inserted Math.abs cannot overflow. No addition or multiplication is performed.",
+      "newValue": "All named long values remain in [-99999,99999]. This candidate uses comparisons and assignments only; no arithmetic operation can overflow.",
+      "reason": "Remove copied references to an absolute-value insertion absent from this correct candidate."
+    }
+  ],
+  "frozenDataset": {
+    "path": "ml-engine/evaluation/synthetic-pilot/pilot-10-r3/dataset.json",
+    "sha256": "7d6f612855da2e75ee5f552ea0ebc9e0fd95e5f3399a28e6d982f10c194c9dcb"
+  },
+  "frozenSplitPlan": {
+    "path": "ml-engine/evaluation/synthetic-pilot/pilot-10-r3/split-plan.json",
+    "sha256": "8a4a35515b5fd6f3f320d9425f91b1816742238877116a863dc86da81d571bfe"
+  }
+}

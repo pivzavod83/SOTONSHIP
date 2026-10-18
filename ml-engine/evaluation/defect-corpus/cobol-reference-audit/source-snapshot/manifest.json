@@ -1,0 +1,15 @@
+{
+  "files": [
+    {
+      "source": "scripts/audit_cobol_references.py",
+      "snapshot": "evaluation/defect-corpus/cobol-reference-audit/source-snapshot/audit_cobol_references.py",
+      "sha256": "04033f2be18f62c79ff3633389ea44a90db52ee06a46652321b84f7d641fb206"
+    },
+    {
+      "source": "tests/test_cobol_reference_audit.py",
+      "snapshot": "evaluation/defect-corpus/cobol-reference-audit/source-snapshot/test_cobol_reference_audit.py",
+      "sha256": "d878ca66582805b258b94539a167958cad8f360a6af2afb448b1bc358ea9e72a"
+    }
+  ],
+  "note": "Frozen before completed canonical control audit. Earlier interrupted attempt retained only in ignored cache due conservative identifier-token false positives; it produced no results report or labels."
+}

@@ -1,0 +1,9 @@
+{
+  "modelPath": "ml_engine/models/defect_model_v1.json",
+  "sha256": "e6e7f75b54ce9daa2deb31c7bd45a6727019f8f00b0226a3ae9c1ae82d7b69e0",
+  "datasetSha256": "7d6f612855da2e75ee5f552ea0ebc9e0fd95e5f3399a28e6d982f10c194c9dcb",
+  "threshold": 0.015076902444285249,
+  "selectedC": 1.0,
+  "frozenBeforeFinalTest": true,
+  "createdUtc": "2026-10-18T09:59:30.035135+00:00"
+}

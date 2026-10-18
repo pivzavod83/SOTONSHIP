@@ -1,0 +1,613 @@
+{
+  "schemaVersion": 1,
+  "status": "EXPLORATORY_MACHINE_REPLAY_PENDING_INDEPENDENT_REVIEW",
+  "taskId": "HumanEval/94",
+  "frozenContractSha256": "dd59f297151b95da353db2b21b4ad4879ca86cd50201c820e522e78bd12f4293",
+  "scriptSha256": "a31fa139e8209e3aad2b8acc444b2bb2573e6b8a68c91672b25faecb4c954e9e",
+  "helpers": {
+    "audit": {
+      "filename": "audit_natural_c2j_candidates.py",
+      "sha256": "2bc1518b701f7f56ea58f4b14d74dd745336135908e792414879ff53cf6e4282"
+    },
+    "scalar": {
+      "filename": "replay_scalar_c2j_witnesses.py",
+      "sha256": "a93cb91eaed6d728032639f4b2971a483c9d10773e440ac45b94e0fc0660ea74"
+    }
+  },
+  "toolchain": {
+    "cobc": {
+      "path": "/private/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+      "sha256": "f4a65024353d389ec1c3d93ab3d53226bab61aca66e62f3783c1f79b1f07b1ef",
+      "version": {
+        "command": [
+          "/private/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+          "--version"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.0117,
+        "stdoutSha256": "861072381b363a0cf7cf2b5dc98ba899f0b401b457bd96c282ea0a91e5d8203a",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 497,
+        "stderrBytes": 0
+      },
+      "versionText": "cobc (GnuCOBOL) 3.2.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nWritten by Keisuke Nishida, Roger While, Ron Norman, Simon Sobisch, Edward Hart\nBuilt     Oct 18 2026 07:13:57\nPackaged  Jul 28 2023 17:02:56 UTC\nC version \"Apple LLVM 17.0.0 (clang-1700.6.3.2)\"\n"
+    },
+    "java": {
+      "path": "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+      "sha256": "ba7e7438c1fcf51fab5b1654d3605063826613ebae17759b10224316a81ce104",
+      "version": {
+        "command": [
+          "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+          "-version"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.0706,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "7599d324c6a5f9ab0511ee601471237f84bd12a46d6afa1ed7bdac014ede742f",
+        "stdoutBytes": 0,
+        "stderrBytes": 177
+      },
+      "versionText": "java version \"21.0.10\" 2026-01-20 LTS\nJava(TM) SE Runtime Environment (build 21.0.10+8-LTS-217)\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.10+8-LTS-217, mixed mode, sharing)\n"
+    },
+    "javac": {
+      "path": "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/javac",
+      "sha256": "475858f1be81fb3575e5bd3f5c5c032087b53e856ac76643101a4e68f9dde3f1",
+      "version": {
+        "command": [
+          "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/javac",
+          "-version"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.1324,
+        "stdoutSha256": "fc77c1bff71ef3d96ab91ecea5d18c5b326d7215c937176bad04cdc79a4de547",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 14,
+        "stderrBytes": 0
+      },
+      "versionText": "javac 21.0.10\n"
+    }
+  },
+  "rawEvidenceDirectory": "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18",
+  "sourceHashes": {
+    "cobol": "3f8dbb4a63d6d88341745557d62ec1df65a9767c72fcf80320fc39907c8dba39",
+    "canonical": "d3885c65b61f638a1b6202ee06efd85c95990e801df82f24bdcb59b7fff1ec94",
+    "7b": "86ae71b2d57f4ba7e04051c6f0c630d07095f9a706e8c69afe53e3fac3377abc",
+    "14b": "2216261ea16a1b3c3bd610f068ac74ca3c9482b615ff51647356863378714d87"
+  },
+  "cohortSelection": "Exploratory selection after Java-only screening and source inspection; not an unbiased evaluation cohort.",
+  "cases": [
+    {
+      "driverIndex": 0,
+      "arguments": [
+        0,
+        81,
+        12,
+        3,
+        1,
+        21
+      ],
+      "driverSha256": "c15239f9bb31cb74b86c121a8d1b486429e53f09fb808c6d044892042ec68b07",
+      "outputFile": "SKJKASDKD.TXT",
+      "outputPic": "S9(10) SIGN LEADING",
+      "cobolCompilation": {
+        "command": [
+          "/private/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+          "-w",
+          "-fformat=variable",
+          "-x",
+          "-o",
+          "replay",
+          "driver.cob",
+          "../source.cob"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.1328,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "status": "OBSERVED",
+      "cobolExecution": {
+        "command": [
+          "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18/driver-0/replay"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.2965,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolOutputHex": "303030303030303030330a",
+      "cobolOutputSha256": "dad7da350cf167b4b7d8d4e3be5a9476fee71a57f40ff25fff7341315e675e27",
+      "cobolResult": 3,
+      "canonicalControl": "AGREES"
+    },
+    {
+      "driverIndex": 1,
+      "arguments": [
+        0,
+        8,
+        1,
+        2,
+        1,
+        7
+      ],
+      "driverSha256": "862889fa17f0a3b1071ed63a43269e0aa3c4a327cedf27a484eee469310801f9",
+      "outputFile": "SKJKASDKD.TXT",
+      "outputPic": "S9(10) SIGN LEADING",
+      "cobolCompilation": {
+        "command": [
+          "/private/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+          "-w",
+          "-fformat=variable",
+          "-x",
+          "-o",
+          "replay",
+          "driver.cob",
+          "../source.cob"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.1309,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "status": "OBSERVED",
+      "cobolExecution": {
+        "command": [
+          "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18/driver-1/replay"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.2933,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolOutputHex": "303030303030303030370a",
+      "cobolOutputSha256": "7b56074ee0debc6dbf1d54af0b649df9314419f10a173dac42dd2e017c9517a3",
+      "cobolResult": 7,
+      "canonicalControl": "AGREES"
+    },
+    {
+      "driverIndex": 2,
+      "arguments": [
+        8191,
+        123456,
+        127,
+        7,
+        1,
+        2
+      ],
+      "driverSha256": "f67a459173df6085ea3cab73d2d7de51b2a2b5310464c74343add4ef70220225",
+      "outputFile": "SKJKASDKD.TXT",
+      "outputPic": "S9(10) SIGN LEADING",
+      "cobolCompilation": {
+        "command": [
+          "/private/tmp/sotonship-cobol-toolchain/install/bin/cobc",
+          "-w",
+          "-fformat=variable",
+          "-x",
+          "-o",
+          "replay",
+          "driver.cob",
+          "../source.cob"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.1305,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "status": "OBSERVED",
+      "cobolExecution": {
+        "command": [
+          "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18/driver-2/replay"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.2908,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cobolOutputHex": "303030303030303031390a",
+      "cobolOutputSha256": "db5eb092aba156349bf669b546c8d74d4eba4010607481878a22114dacddc5d1",
+      "cobolResult": 19,
+      "canonicalControl": "AGREES"
+    }
+  ],
+  "javaVariants": {
+    "canonical": {
+      "javaSourceSha256": "d3885c65b61f638a1b6202ee06efd85c95990e801df82f24bdcb59b7fff1ec94",
+      "compilation": {
+        "command": [
+          "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/javac",
+          "-J-Xmx128m",
+          "-J-XX:ActiveProcessorCount=1",
+          "-proc:none",
+          "-encoding",
+          "UTF-8",
+          "Solution.java",
+          "Array94Replay.java"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.2431,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "status": "OBSERVED",
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-Xss1m",
+              "-XX:ActiveProcessorCount=1",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18/canonical",
+              "Array94Replay",
+              "0",
+              "81",
+              "12",
+              "3",
+              "1",
+              "21"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0427,
+            "stdoutSha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "result": 3
+        },
+        {
+          "driverIndex": 1,
+          "status": "OBSERVED",
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-Xss1m",
+              "-XX:ActiveProcessorCount=1",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18/canonical",
+              "Array94Replay",
+              "0",
+              "8",
+              "1",
+              "2",
+              "1",
+              "7"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0461,
+            "stdoutSha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "result": 7
+        },
+        {
+          "driverIndex": 2,
+          "status": "OBSERVED",
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-Xss1m",
+              "-XX:ActiveProcessorCount=1",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18/canonical",
+              "Array94Replay",
+              "8191",
+              "123456",
+              "127",
+              "7",
+              "1",
+              "2"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0453,
+            "stdoutSha256": "9400f1b21cb527d7fa3d3eabba93557a18ebe7a2ca4e471cfe5e4c5b4ca7f767",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 2,
+            "stderrBytes": 0
+          },
+          "result": 19
+        }
+      ]
+    },
+    "7b": {
+      "javaSourceSha256": "86ae71b2d57f4ba7e04051c6f0c630d07095f9a706e8c69afe53e3fac3377abc",
+      "compilation": {
+        "command": [
+          "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/javac",
+          "-J-Xmx128m",
+          "-J-XX:ActiveProcessorCount=1",
+          "-proc:none",
+          "-encoding",
+          "UTF-8",
+          "Solution.java",
+          "Array94Replay.java"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.2398,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "status": "OBSERVED",
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-Xss1m",
+              "-XX:ActiveProcessorCount=1",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18/7b",
+              "Array94Replay",
+              "0",
+              "81",
+              "12",
+              "3",
+              "1",
+              "21"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0413,
+            "stdoutSha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "result": 3,
+          "comparison": "AGREEMENT"
+        },
+        {
+          "driverIndex": 1,
+          "status": "OBSERVED",
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-Xss1m",
+              "-XX:ActiveProcessorCount=1",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18/7b",
+              "Array94Replay",
+              "0",
+              "8",
+              "1",
+              "2",
+              "1",
+              "7"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0414,
+            "stdoutSha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "result": 7,
+          "comparison": "AGREEMENT"
+        },
+        {
+          "driverIndex": 2,
+          "status": "OBSERVED",
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-Xss1m",
+              "-XX:ActiveProcessorCount=1",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18/7b",
+              "Array94Replay",
+              "8191",
+              "123456",
+              "127",
+              "7",
+              "1",
+              "2"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.041,
+            "stdoutSha256": "9400f1b21cb527d7fa3d3eabba93557a18ebe7a2ca4e471cfe5e4c5b4ca7f767",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 2,
+            "stderrBytes": 0
+          },
+          "result": 19,
+          "comparison": "AGREEMENT"
+        }
+      ]
+    },
+    "14b": {
+      "javaSourceSha256": "2216261ea16a1b3c3bd610f068ac74ca3c9482b615ff51647356863378714d87",
+      "compilation": {
+        "command": [
+          "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/javac",
+          "-J-Xmx128m",
+          "-J-XX:ActiveProcessorCount=1",
+          "-proc:none",
+          "-encoding",
+          "UTF-8",
+          "Solution.java",
+          "Array94Replay.java"
+        ],
+        "returnCode": 0,
+        "timedOut": false,
+        "elapsedSeconds": 0.2394,
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "cases": [
+        {
+          "driverIndex": 0,
+          "status": "OBSERVED",
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-Xss1m",
+              "-XX:ActiveProcessorCount=1",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18/14b",
+              "Array94Replay",
+              "0",
+              "81",
+              "12",
+              "3",
+              "1",
+              "21"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0413,
+            "stdoutSha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "result": 3,
+          "comparison": "AGREEMENT"
+        },
+        {
+          "driverIndex": 1,
+          "status": "OBSERVED",
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-Xss1m",
+              "-XX:ActiveProcessorCount=1",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18/14b",
+              "Array94Replay",
+              "0",
+              "8",
+              "1",
+              "2",
+              "1",
+              "7"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0411,
+            "stdoutSha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 1,
+            "stderrBytes": 0
+          },
+          "result": 8,
+          "comparison": "MISMATCH_PENDING_REVIEW"
+        },
+        {
+          "driverIndex": 2,
+          "status": "OBSERVED",
+          "execution": {
+            "command": [
+              "/Users/volodymyrsydorenko/Developer/jdk-21.0.10.jdk/Contents/Home/bin/java",
+              "-Xmx128m",
+              "-Xss1m",
+              "-XX:ActiveProcessorCount=1",
+              "-XX:+UseSerialGC",
+              "-ea",
+              "-cp",
+              "/Users/volodymyrsydorenko/Desktop/SOTONSHIP/ml-engine/evaluation/corpora/natural-c2j/array94-replay-2026-10-18/14b",
+              "Array94Replay",
+              "8191",
+              "123456",
+              "127",
+              "7",
+              "1",
+              "2"
+            ],
+            "returnCode": 0,
+            "timedOut": false,
+            "elapsedSeconds": 0.0404,
+            "stdoutSha256": "9400f1b21cb527d7fa3d3eabba93557a18ebe7a2ca4e471cfe5e4c5b4ca7f767",
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutBytes": 2,
+            "stderrBytes": 0
+          },
+          "result": 19,
+          "comparison": "AGREEMENT"
+        }
+      ]
+    }
+  },
+  "candidateSummary": {
+    "7b": {
+      "AGREEMENT": 3
+    },
+    "14b": {
+      "AGREEMENT": 2,
+      "MISMATCH_PENDING_REVIEW": 1
+    }
+  },
+  "originalExpectedMetadataUsedAsOracle": false,
+  "sourceRewritesPerformed": false,
+  "independentHumanReviewsPerformed": 0,
+  "admittedDefectTrainingLabels": 0,
+  "reservedTasksExecuted": 0,
+  "modelTrainingPerformed": false,
+  "limitations": [
+    "Actual same-input differences are pending independent review; these are not human-reviewed gold labels.",
+    "The three related inputs belong to one original task family, not three independent defects.",
+    "This cohort was selected after screening and cannot estimate overall defect prevalence or detector accuracy.",
+    "Agreement is finite compatibility, not formal equivalence."
+  ]
+}

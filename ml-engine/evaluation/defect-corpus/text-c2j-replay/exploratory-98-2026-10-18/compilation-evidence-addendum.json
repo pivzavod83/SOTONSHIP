@@ -1,0 +1,64 @@
+{
+  "reportSha256": "5cd7d9b014c84a7dd1fda9b40c6fbd7316ff50188ee01cb0075764dedfad73f3",
+  "createdDate": "2026-10-18",
+  "records": [
+    {
+      "variant": "reference",
+      "logs": {
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "classHashes": {
+        "TextReplay.class": "017e5c6919f35207528affa53b5a90dc40b9b30cce16d45d1b04f749659f9b1a",
+        "Solution.class": "516b8d176c6e8cc463ae0eb9387bc3c7905f6e77227773c62d02135ef732b6b3"
+      },
+      "compilationProcessObjectRetained": false,
+      "evidenceLimit": "Frozen runner reaches observed Java cases only after successful compilation; original compile return code/timing object was not serialized. This addendum hashes retained compile streams without inventing missing process metadata."
+    },
+    {
+      "variant": "7b",
+      "logs": {
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "classHashes": {
+        "TextReplay.class": "017e5c6919f35207528affa53b5a90dc40b9b30cce16d45d1b04f749659f9b1a",
+        "Solution.class": "426017b1086ecee54d4cf7b45a3194ab6508cd20a77d6eff8546f90717298c3f"
+      },
+      "compilationProcessObjectRetained": false,
+      "evidenceLimit": "Frozen runner reaches observed Java cases only after successful compilation; original compile return code/timing object was not serialized. This addendum hashes retained compile streams without inventing missing process metadata."
+    },
+    {
+      "variant": "14b",
+      "logs": {
+        "stdout": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "classHashes": {
+        "TextReplay.class": "017e5c6919f35207528affa53b5a90dc40b9b30cce16d45d1b04f749659f9b1a",
+        "Solution.class": "af37843c7a65a6310769a15e8b6c54f50c1b03c80a377e3b776249ec191adeb4"
+      },
+      "compilationProcessObjectRetained": false,
+      "evidenceLimit": "Frozen runner reaches observed Java cases only after successful compilation; original compile return code/timing object was not serialized. This addendum hashes retained compile streams without inventing missing process metadata."
+    }
+  ],
+  "javacSha256": "475858f1be81fb3575e5bd3f5c5c032087b53e856ac76643101a4e68f9dde3f1"
+}

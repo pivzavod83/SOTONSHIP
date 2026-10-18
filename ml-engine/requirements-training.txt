@@ -1,0 +1,2 @@
+# Paired-program GNN fitting is portable NumPy and needs no synthetic-risk tools.
+-r requirements.txt

@@ -1,0 +1,83 @@
+{
+  "collectionDate": "2026-10-18",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "sourceManifest": "cobol-toolchain-source-manifest.json",
+  "sourceManifestSha256": "e6c086f0dc857cd046b2b7d49cc35385a00b74e9245bbbe5baf86779c91b1e43",
+  "installationPrefix": "/tmp/sotonship-cobol-toolchain/install",
+  "buildCommands": {
+    "gmp": [
+      "./configure --prefix=/tmp/sotonship-cobol-toolchain/install --disable-shared --enable-static",
+      "make -j4",
+      "make install"
+    ],
+    "gnucobol": [
+      "CPPFLAGS=-I/tmp/sotonship-cobol-toolchain/install/include LDFLAGS=-L/tmp/sotonship-cobol-toolchain/install/lib ./configure --prefix=/tmp/sotonship-cobol-toolchain/install --disable-nls --without-db --without-curses --without-xml2 --without-json",
+      "make -j4",
+      "make install"
+    ]
+  },
+  "versions": {
+    "cobcVersion": "cobc (GnuCOBOL) 3.2.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nWritten by Keisuke Nishida, Roger While, Ron Norman, Simon Sobisch, Edward Hart\nBuilt     Oct 18 2026 07:13:57\nPackaged  Jul 28 2023 17:02:56 UTC\nC version \"Apple LLVM 17.0.0 (clang-1700.6.3.2)\"\n",
+    "cobcInfo": "cobc (GnuCOBOL) 3.2.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\nWritten by Keisuke Nishida, Roger While, Ron Norman, Simon Sobisch, Edward Hart\nBuilt     Oct 18 2026 07:13:57\nPackaged  Jul 28 2023 17:02:56 UTC\nC version \"Apple LLVM 17.0.0 (clang-1700.6.3.2)\"\n\nbuild information\nbuild environment        : aarch64-apple-darwin25.6.0\nCC                       : gcc\nC version                : \"Apple LLVM 17.0.0 (clang-1700.6.3.2)\"\nCPPFLAGS                 : -I/tmp/sotonship-cobol-toolchain/install/include\nCFLAGS                   : -O2 -pipe\nLD                       : /Library/Developer/CommandLineTools/usr/bin/ld\nLDFLAGS                  : -L/tmp/sotonship-cobol-toolchain/install/lib\n\nGnuCOBOL information\nCOB_CC                   : gcc\nCOB_CFLAGS               : -pipe\n                           -I/tmp/sotonship-cobol-toolchain/install/include\n                           -I/tmp/sotonship-cobol-toolchain/install/include\n                           -Wno-unused -fsigned-char -Wno-pointer-sign\n                           -Qunused-arguments\n                           -Wno-deprecated-non-prototype\nCOB_DEBUG_FLAGS          : -ggdb3 -fasynchronous-unwind-tables\nCOB_LDFLAGS              : -L/tmp/sotonship-cobol-toolchain/install/lib\nCOB_LIBS                 : -L/tmp/sotonship-cobol-toolchain/install/lib\n                           -lcob\nCOB_CONFIG_DIR           : /tmp/sotonship-cobol-toolchain/install/share/gnucobol/config\nCOB_COPY_DIR             : /tmp/sotonship-cobol-toolchain/install/share/gnucobol/copy\nCOB_MSG_FORMAT           : GCC\nCOB_OBJECT_EXT           : o\nCOB_MODULE_EXT           : dylib\nCOB_EXE_EXT              : \n64bit-mode               : yes\nBINARY-C-LONG            : 8 bytes\nendianness               : little-endian\nnative EBCDIC            : no\nextended screen I/O      : disabled\nvariable file format     : 0\nsequential file handler  : built-in\nindexed file handler     : disabled\nmathematical library     : GMP\nXML library              : disabled\nJSON library             : disabled\n",
+    "cCompiler": "Apple clang version 17.0.0 (clang-1700.6.3.2)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin\n"
+  },
+  "libraryHashes": {
+    "lib/libcob.dylib": "cc9437c92cc13c1b0383a01274244a4edcf30a053f049f47759d78fe6bcb78fd",
+    "lib/libgmp.a": "46c67078471e9fa1205b6bb5dcd22a97b4043471a788344ceb5c6da6c92378f9",
+    "lib/libcob.la": "6d0ac1408d4cef2dc0b6da32ca9509cbd790784183ff37f68be72f0cacbe29a3",
+    "lib/libcob.a": "5235966b011369ccca84a760e7c0af08f940ab9131d2fd1a1b074db794f6ccfd",
+    "lib/libgmp.la": "e4537fa77b20f3a66589c0a257e826b511b567c44b272fb152a33e7b05107c17",
+    "lib/libcob.4.dylib": "cc9437c92cc13c1b0383a01274244a4edcf30a053f049f47759d78fe6bcb78fd"
+  },
+  "compilerSha256": "f4a65024353d389ec1c3d93ab3d53226bab61aca66e62f3783c1f79b1f07b1ef",
+  "configurationHashes": {
+    "share/gnucobol/config/acu-strict.conf": "5b1b5a228ee5dbf39ca1e3f02305549252dd30d9fca73f285ed01debc383421b",
+    "share/gnucobol/config/acu.conf": "92447a47ec7b231a05167c5b2e0f0dccb47ec71e78cf1fb99250cff00fb75870",
+    "share/gnucobol/config/acu.words": "b140978b10640938dbce45bcd22080708839f983dac20c77891eca662cd903ce",
+    "share/gnucobol/config/alternate.ttbl": "682cc87ebb78bae01b8e292017e4d6e7638910c38fa1a1985d52c571501af6b0",
+    "share/gnucobol/config/bs2000-strict.conf": "489d23e3f2e923101bbae089b0f562ca7b57337eb0f3a50e11ae5f1593fca931",
+    "share/gnucobol/config/bs2000.conf": "69a5052615d17da4c34059aefea25a2823fab940c89d13abd8146105b714a926",
+    "share/gnucobol/config/bs2000.words": "beccc4b0fd2832852c765ea360f5b620a32620d40749ac05dcf10e0267c760be",
+    "share/gnucobol/config/cobol2002.conf": "e00ce6b6b3eefae7e839ec006c65ae32d3824a6bfdde387fa8a8538c80d0f3f4",
+    "share/gnucobol/config/cobol2002.words": "468115aea27fb01076fbf39014c0f2125f20ab19b144c96de1272677c05cb910",
+    "share/gnucobol/config/cobol2014.conf": "bfe98f253cf2782d2b966777a146b624d8593f27b1b212d6012be9b922cee8f7",
+    "share/gnucobol/config/cobol2014.words": "97d1724136479f6175edcc54e253d1d5542c0b7fafcab7b0f8671d2385e4d6bd",
+    "share/gnucobol/config/cobol85.conf": "7aa9e1a1b74b387413a795aa7c17382fa10b2a9774e8a2feabebeb44f5e12f94",
+    "share/gnucobol/config/cobol85.words": "88178a1a3118a47818128b7ec3ee1ecdf2e560ba8f7b72c559f4a2be5355ac1b",
+    "share/gnucobol/config/default.conf": "d736c8d5386b245f3ebcbfa76e82626ea0b3807fe93d098085379185d094e2fe",
+    "share/gnucobol/config/default.ttbl": "2df73339eed67eb7a5f525f35f1ce68aad00f404767385b42200b26c76c697ab",
+    "share/gnucobol/config/ebcdic500_ascii7bit.ttbl": "a866e5419438c724f3021489307886f992624fa90212ead136b6090939e5393e",
+    "share/gnucobol/config/ebcdic500_ascii8bit.ttbl": "9762266eda54ede37d4267c176b259d107ba3db26e334f030ff7094eab811f79",
+    "share/gnucobol/config/ebcdic500_latin1.ttbl": "599f257c8635510683017a52dad3f02999f05b5dd31955c819a71a61045394f2",
+    "share/gnucobol/config/gcos-strict.conf": "38a46a8632b2fcf53f4821394ae55a15fd4efabd394de71b290c7a7cfb383d0b",
+    "share/gnucobol/config/gcos.conf": "09608acbd485958b195d3646984284f1e12f8c89b464dfca1fc75789ffebf80b",
+    "share/gnucobol/config/gcos.words": "bcc7b5f28092cdf5e0e7a032bf9f042fe85f3852cde6a11500f8813cb9fa80a2",
+    "share/gnucobol/config/ibm-strict.conf": "e1eebcdcebae06278a533875e20e7cac809465dac8ba2211d7d41dd3b1a25ce6",
+    "share/gnucobol/config/ibm.conf": "9220624ee67056073268e58bd16fdf819afd1e17f249c4603c06270717a3995c",
+    "share/gnucobol/config/ibm.words": "e13017258080c6a41f596724aec3d4aa6c65082368d3dd94d1bbb6344ab8054d",
+    "share/gnucobol/config/lax.conf-inc": "f813b082f706e369eac184f653b0af82566f88448af277acc2c9c149d7454f3d",
+    "share/gnucobol/config/mf-strict.conf": "b74b06280bff38d1167d65eb9cae89fa80597ef325f0fa79148028052a88f7cc",
+    "share/gnucobol/config/mf.conf": "71c1a63d4d3821a1b43f563c7801b187510e506f0de7209f86bdd4c468acf3ff",
+    "share/gnucobol/config/mf.words": "42fdb9a89aa9464b69deb831e1bd4c0e575f70f8cfcc96fc3fe63b580a4c6f8a",
+    "share/gnucobol/config/mvs-strict.conf": "f0e806038ae216bf3226a79945126d3de0626554c115789d982d4aa397ebc3e9",
+    "share/gnucobol/config/mvs.conf": "9e83b7e75e2af00b4e154b39f66584b968250c1fd22147ff341f35ece051b6ce",
+    "share/gnucobol/config/mvs.words": "1754e0627579c2d5dee1274d731b544f6824295ac111bd9c0563228e8bd9fba4",
+    "share/gnucobol/config/realia-strict.conf": "e4fcc7e9351e410daed62c0de125bafe69e0203d2ef6a78e05645d8b280bc019",
+    "share/gnucobol/config/realia.conf": "30dd72751fdb35c6d305f0a274012d5fd21f5fe53b4f5937886e9d2dc17cc79c",
+    "share/gnucobol/config/realia.words": "dbdb13d9fb39d4603934fecac33ed87288705871e9b14e065acb75a06d168e10",
+    "share/gnucobol/config/rm-strict.conf": "528d1c1e339d85cfcd193224658d346fd5151b8e8faf4f294f88e85c929c3648",
+    "share/gnucobol/config/rm.conf": "40576a422ae2e25fdd5e4d5647766119dfb3a06c207c684970083fb274c5b771",
+    "share/gnucobol/config/rm.words": "71986d9838d38f6849d67e21c7e30224fd9049a444bd572c8d1d7079268be37b",
+    "share/gnucobol/config/runtime.cfg": "f34ad81159631d45a9f8c6e4a513c5afd3120393d4bff506a478ba0251af7494",
+    "share/gnucobol/config/runtime_empty.cfg": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "share/gnucobol/config/xopen.conf": "818f55d72ec9183a54601779e881882d1797b5de3559e7c729719aa58ea448ba"
+  },
+  "buildLogHashes": {
+    "gnucobol-build.log": "0439e32c2ab3704f0dc883403292b9c6780afaa5bc87ed2051509eded03e3b75",
+    "gmp-install.log": "06f725483662bd552ca22faf28f14bd620a787cd0be7630e2782731febdc66e6",
+    "gmp-build.log": "575f87e0df9e50577be73e00d5a0a5343e1aa032dd38df0473418eac0b84d5c7",
+    "gnucobol-install.log": "0f169bb62ff0622fc336047c08f386ae768a3bb5a1cd53a2e88bc5739a310ab1",
+    "gnucobol-configure.log": "73ec3f54172e58f9e98f2f7b78019f8837e49e58eafc97d0b50f7fa36f0b34b6"
+  },
+  "scope": "GnuCOBOL3.2 ASCII/host behavior only; indexed I/O, screen, XML and JSON disabled. Not an IBM mainframe runtime."
+}

@@ -1,0 +1,11 @@
+{
+  "purpose": "Historical source snapshot added before v3 changes; every byte matches source hashes recorded before v2 final evaluation. Frozen v2 records are unchanged.",
+  "files": {
+    "scripts/train_paired_gnn_cv.py": "38fa40e409cb712a366bd7f3b361630726e2a9a7f861b1bba01f92d1c9326f5f",
+    "ml_engine/code_graph.py": "bff04bf64896bec4aead98835857d65b14fb92dbd77f1e94608a26bb4dbfd369",
+    "ml_engine/paired_gnn.py": "b4d6164bf2900ad0148759ff7463e6e5cc1f577f27619d14fa2990b93f09ab6a",
+    "scripts/train_paired_gnn.py": "14953c909696ed76094faacfb8be8ea16993287b1a0ba26a4dea14b5598d5de0",
+    "ml_engine/cv_partition.py": "b1491886337ac9e81e4d3af9ab4475fb48c90e00efefe438c5452b4b9ca185f8",
+    "scripts/partition_paired_dataset.py": "a432861232c1dba05eb60197c3e2257e514aa252893b67f2b5072feee3dca90c"
+  }
+}

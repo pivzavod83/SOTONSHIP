@@ -1,0 +1,734 @@
+{
+  "modelId": "paired-program-gnn-v1",
+  "modelSha256": "e8108cbb174bc1ff0e5d8680df912acedd81b048522767d2b70f822f99f4d925",
+  "training": {
+    "dataset": "COBOL-JavaTrans (143 original source pairs)",
+    "datasetSha256": "ff1b2e308ea006d905fd979103f32486c57d586c5fdbc0325a23f8ae23a6530d",
+    "sourceCommit": "2b14b7bf7e55556205654c6f7657fa60e36251fa",
+    "seed": 431,
+    "epochsBudget": 250,
+    "selectedEpoch": 40,
+    "noMessageSelectedEpoch": 30,
+    "objective": "symmetric paired-source InfoNCE; temperature0.12; Adam0.004; weight decay0.0001",
+    "splitCounts": {
+      "train": 85,
+      "validation": 29,
+      "test": 29
+    },
+    "nearDuplicateGroups": 142,
+    "selection": "validation MRR, then validation loss; never test",
+    "featureLeakageControls": [
+      "identifier spelling excluded",
+      "comments excluded",
+      "program/method/task names excluded",
+      "original-task grouped split before training"
+    ]
+  },
+  "evaluation": {
+    "train": {
+      "gnn": {
+        "queries": 85,
+        "candidatesPerQuery": 85,
+        "top1": 0.894118,
+        "top3": 1.0,
+        "top5": 1.0,
+        "mrr": 0.945098
+      },
+      "noMessagePassing": {
+        "queries": 85,
+        "candidatesPerQuery": 85,
+        "top1": 0.505882,
+        "top3": 0.694118,
+        "top5": 0.8,
+        "mrr": 0.625875
+      },
+      "semanticHistogram": {
+        "queries": 85,
+        "candidatesPerQuery": 85,
+        "top1": 0.082353,
+        "top3": 0.141176,
+        "top5": 0.211765,
+        "mrr": 0.164755
+      },
+      "nameMatching": {
+        "queries": 85,
+        "candidatesPerQuery": 85,
+        "top1": 0.976471,
+        "top3": 0.976471,
+        "top5": 0.976471,
+        "mrr": 0.976975
+      }
+    },
+    "validation": {
+      "gnn": {
+        "queries": 29,
+        "candidatesPerQuery": 29,
+        "top1": 0.275862,
+        "top3": 0.482759,
+        "top5": 0.655172,
+        "mrr": 0.450885
+      },
+      "noMessagePassing": {
+        "queries": 29,
+        "candidatesPerQuery": 29,
+        "top1": 0.344828,
+        "top3": 0.482759,
+        "top5": 0.655172,
+        "mrr": 0.486858
+      },
+      "semanticHistogram": {
+        "queries": 29,
+        "candidatesPerQuery": 29,
+        "top1": 0.172414,
+        "top3": 0.344828,
+        "top5": 0.448276,
+        "mrr": 0.297737
+      },
+      "nameMatching": {
+        "queries": 29,
+        "candidatesPerQuery": 29,
+        "top1": 0.931034,
+        "top3": 0.965517,
+        "top5": 0.965517,
+        "mrr": 0.950091
+      }
+    },
+    "test": {
+      "gnn": {
+        "queries": 29,
+        "candidatesPerQuery": 29,
+        "top1": 0.37931,
+        "top3": 0.551724,
+        "top5": 0.689655,
+        "mrr": 0.50714
+      },
+      "noMessagePassing": {
+        "queries": 29,
+        "candidatesPerQuery": 29,
+        "top1": 0.275862,
+        "top3": 0.551724,
+        "top5": 0.62069,
+        "mrr": 0.433076
+      },
+      "semanticHistogram": {
+        "queries": 29,
+        "candidatesPerQuery": 29,
+        "top1": 0.206897,
+        "top3": 0.310345,
+        "top5": 0.37931,
+        "mrr": 0.322989
+      },
+      "nameMatching": {
+        "queries": 29,
+        "candidatesPerQuery": 29,
+        "top1": 0.931034,
+        "top3": 0.931034,
+        "top5": 0.931034,
+        "mrr": 0.934138
+      }
+    }
+  },
+  "thresholds": {
+    "minimumSimilarity": 1.0,
+    "minimumMargin": 2.0,
+    "calibration": {
+      "enabled": false,
+      "reason": "No validation gate reached 80% retrieval precision on at least 3 queries. All matches require review.",
+      "validationQueries": 29
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "trainLoss": 4.399303,
+      "validationLoss": 3.199308,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.137931,
+      "top3": 0.275862,
+      "top5": 0.344828,
+      "mrr": 0.270902
+    },
+    {
+      "epoch": 10,
+      "trainLoss": 2.891556,
+      "validationLoss": 2.579959,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.448276,
+      "top5": 0.551724,
+      "mrr": 0.403267
+    },
+    {
+      "epoch": 20,
+      "trainLoss": 1.808133,
+      "validationLoss": 2.817344,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.241379,
+      "top3": 0.448276,
+      "top5": 0.62069,
+      "mrr": 0.407119
+    },
+    {
+      "epoch": 30,
+      "trainLoss": 1.164872,
+      "validationLoss": 2.849586,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.275862,
+      "top3": 0.517241,
+      "top5": 0.586207,
+      "mrr": 0.431572
+    },
+    {
+      "epoch": 40,
+      "trainLoss": 0.838794,
+      "validationLoss": 2.611444,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.275862,
+      "top3": 0.482759,
+      "top5": 0.655172,
+      "mrr": 0.450885
+    },
+    {
+      "epoch": 50,
+      "trainLoss": 0.639813,
+      "validationLoss": 2.59258,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.275862,
+      "top3": 0.482759,
+      "top5": 0.551724,
+      "mrr": 0.43283
+    },
+    {
+      "epoch": 60,
+      "trainLoss": 0.558127,
+      "validationLoss": 2.665882,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.275862,
+      "top3": 0.482759,
+      "top5": 0.62069,
+      "mrr": 0.432594
+    },
+    {
+      "epoch": 70,
+      "trainLoss": 0.457405,
+      "validationLoss": 2.864914,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.448276,
+      "top5": 0.62069,
+      "mrr": 0.393195
+    },
+    {
+      "epoch": 80,
+      "trainLoss": 0.386633,
+      "validationLoss": 2.98682,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.517241,
+      "top5": 0.62069,
+      "mrr": 0.398443
+    },
+    {
+      "epoch": 90,
+      "trainLoss": 0.336494,
+      "validationLoss": 2.995642,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.517241,
+      "top5": 0.62069,
+      "mrr": 0.400256
+    },
+    {
+      "epoch": 100,
+      "trainLoss": 0.303083,
+      "validationLoss": 2.947889,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.413793,
+      "top5": 0.586207,
+      "mrr": 0.375528
+    },
+    {
+      "epoch": 110,
+      "trainLoss": 0.281407,
+      "validationLoss": 2.915756,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.448276,
+      "top5": 0.62069,
+      "mrr": 0.391745
+    },
+    {
+      "epoch": 120,
+      "trainLoss": 0.309616,
+      "validationLoss": 2.873645,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.172414,
+      "top3": 0.517241,
+      "top5": 0.689655,
+      "mrr": 0.378305
+    },
+    {
+      "epoch": 130,
+      "trainLoss": 0.241247,
+      "validationLoss": 2.856197,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.586207,
+      "top5": 0.724138,
+      "mrr": 0.412187
+    },
+    {
+      "epoch": 140,
+      "trainLoss": 0.217797,
+      "validationLoss": 2.887467,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.172414,
+      "top3": 0.62069,
+      "top5": 0.689655,
+      "mrr": 0.3953
+    },
+    {
+      "epoch": 150,
+      "trainLoss": 0.20178,
+      "validationLoss": 2.89189,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.62069,
+      "top5": 0.689655,
+      "mrr": 0.409502
+    },
+    {
+      "epoch": 160,
+      "trainLoss": 0.189369,
+      "validationLoss": 2.904276,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.586207,
+      "top5": 0.655172,
+      "mrr": 0.409651
+    },
+    {
+      "epoch": 170,
+      "trainLoss": 0.179044,
+      "validationLoss": 2.905795,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.551724,
+      "top5": 0.655172,
+      "mrr": 0.405507
+    },
+    {
+      "epoch": 180,
+      "trainLoss": 0.170035,
+      "validationLoss": 2.910932,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.172414,
+      "top3": 0.482759,
+      "top5": 0.655172,
+      "mrr": 0.383226
+    },
+    {
+      "epoch": 190,
+      "trainLoss": 0.244323,
+      "validationLoss": 2.707623,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.551724,
+      "top5": 0.655172,
+      "mrr": 0.395834
+    },
+    {
+      "epoch": 200,
+      "trainLoss": 0.197672,
+      "validationLoss": 2.722878,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.62069,
+      "top5": 0.655172,
+      "mrr": 0.417694
+    },
+    {
+      "epoch": 210,
+      "trainLoss": 0.178438,
+      "validationLoss": 2.818154,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.517241,
+      "top5": 0.655172,
+      "mrr": 0.410466
+    },
+    {
+      "epoch": 220,
+      "trainLoss": 0.16108,
+      "validationLoss": 2.790169,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.517241,
+      "top5": 0.689655,
+      "mrr": 0.413342
+    },
+    {
+      "epoch": 230,
+      "trainLoss": 0.148978,
+      "validationLoss": 2.8002,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.517241,
+      "top5": 0.655172,
+      "mrr": 0.404384
+    },
+    {
+      "epoch": 240,
+      "trainLoss": 0.140801,
+      "validationLoss": 2.814327,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.517241,
+      "top5": 0.655172,
+      "mrr": 0.402578
+    },
+    {
+      "epoch": 250,
+      "trainLoss": 0.134735,
+      "validationLoss": 2.843515,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.482759,
+      "top5": 0.62069,
+      "mrr": 0.39671
+    }
+  ],
+  "noMessageHistory": [
+    {
+      "epoch": 1,
+      "trainLoss": 4.409961,
+      "validationLoss": 3.150622,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.068966,
+      "top3": 0.172414,
+      "top5": 0.275862,
+      "mrr": 0.202926
+    },
+    {
+      "epoch": 10,
+      "trainLoss": 3.579845,
+      "validationLoss": 2.526887,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.103448,
+      "top3": 0.482759,
+      "top5": 0.62069,
+      "mrr": 0.347694
+    },
+    {
+      "epoch": 20,
+      "trainLoss": 2.775585,
+      "validationLoss": 2.499217,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.344828,
+      "top3": 0.482759,
+      "top5": 0.689655,
+      "mrr": 0.478242
+    },
+    {
+      "epoch": 30,
+      "trainLoss": 2.077739,
+      "validationLoss": 2.64097,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.344828,
+      "top3": 0.482759,
+      "top5": 0.655172,
+      "mrr": 0.486858
+    },
+    {
+      "epoch": 40,
+      "trainLoss": 1.753593,
+      "validationLoss": 2.828542,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.310345,
+      "top3": 0.448276,
+      "top5": 0.655172,
+      "mrr": 0.451212
+    },
+    {
+      "epoch": 50,
+      "trainLoss": 1.541639,
+      "validationLoss": 3.14098,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.206897,
+      "top3": 0.448276,
+      "top5": 0.586207,
+      "mrr": 0.368102
+    },
+    {
+      "epoch": 60,
+      "trainLoss": 1.396796,
+      "validationLoss": 2.982423,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.241379,
+      "top3": 0.37931,
+      "top5": 0.517241,
+      "mrr": 0.384771
+    },
+    {
+      "epoch": 70,
+      "trainLoss": 1.300351,
+      "validationLoss": 2.835467,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.241379,
+      "top3": 0.413793,
+      "top5": 0.586207,
+      "mrr": 0.39505
+    },
+    {
+      "epoch": 80,
+      "trainLoss": 1.221588,
+      "validationLoss": 2.679714,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.275862,
+      "top3": 0.37931,
+      "top5": 0.62069,
+      "mrr": 0.41766
+    },
+    {
+      "epoch": 90,
+      "trainLoss": 1.169323,
+      "validationLoss": 2.690664,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.275862,
+      "top3": 0.413793,
+      "top5": 0.62069,
+      "mrr": 0.417393
+    },
+    {
+      "epoch": 100,
+      "trainLoss": 1.105649,
+      "validationLoss": 2.620115,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.275862,
+      "top3": 0.448276,
+      "top5": 0.586207,
+      "mrr": 0.419353
+    },
+    {
+      "epoch": 110,
+      "trainLoss": 1.0706,
+      "validationLoss": 2.553854,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.310345,
+      "top3": 0.482759,
+      "top5": 0.62069,
+      "mrr": 0.447754
+    },
+    {
+      "epoch": 120,
+      "trainLoss": 1.021723,
+      "validationLoss": 2.563501,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.310345,
+      "top3": 0.482759,
+      "top5": 0.62069,
+      "mrr": 0.447976
+    },
+    {
+      "epoch": 130,
+      "trainLoss": 1.032028,
+      "validationLoss": 2.483928,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.275862,
+      "top3": 0.551724,
+      "top5": 0.62069,
+      "mrr": 0.449973
+    },
+    {
+      "epoch": 140,
+      "trainLoss": 0.977708,
+      "validationLoss": 2.496245,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.310345,
+      "top3": 0.448276,
+      "top5": 0.586207,
+      "mrr": 0.454268
+    },
+    {
+      "epoch": 150,
+      "trainLoss": 0.940643,
+      "validationLoss": 2.482627,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.310345,
+      "top3": 0.448276,
+      "top5": 0.62069,
+      "mrr": 0.466752
+    },
+    {
+      "epoch": 160,
+      "trainLoss": 0.955826,
+      "validationLoss": 2.48218,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.310345,
+      "top3": 0.448276,
+      "top5": 0.62069,
+      "mrr": 0.458317
+    },
+    {
+      "epoch": 170,
+      "trainLoss": 0.907828,
+      "validationLoss": 2.438146,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.310345,
+      "top3": 0.517241,
+      "top5": 0.62069,
+      "mrr": 0.475398
+    },
+    {
+      "epoch": 180,
+      "trainLoss": 0.911104,
+      "validationLoss": 2.472777,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.310345,
+      "top3": 0.482759,
+      "top5": 0.62069,
+      "mrr": 0.471678
+    },
+    {
+      "epoch": 190,
+      "trainLoss": 0.895891,
+      "validationLoss": 2.50741,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.310345,
+      "top3": 0.448276,
+      "top5": 0.689655,
+      "mrr": 0.46299
+    },
+    {
+      "epoch": 200,
+      "trainLoss": 0.871788,
+      "validationLoss": 2.476026,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.344828,
+      "top3": 0.482759,
+      "top5": 0.689655,
+      "mrr": 0.486597
+    },
+    {
+      "epoch": 210,
+      "trainLoss": 0.881573,
+      "validationLoss": 2.464726,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.344828,
+      "top3": 0.482759,
+      "top5": 0.689655,
+      "mrr": 0.481604
+    },
+    {
+      "epoch": 220,
+      "trainLoss": 0.866037,
+      "validationLoss": 2.478856,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.310345,
+      "top3": 0.482759,
+      "top5": 0.689655,
+      "mrr": 0.469875
+    },
+    {
+      "epoch": 230,
+      "trainLoss": 0.851815,
+      "validationLoss": 2.479288,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.344828,
+      "top3": 0.482759,
+      "top5": 0.689655,
+      "mrr": 0.482098
+    },
+    {
+      "epoch": 240,
+      "trainLoss": 0.860356,
+      "validationLoss": 2.557068,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.275862,
+      "top3": 0.551724,
+      "top5": 0.724138,
+      "mrr": 0.458195
+    },
+    {
+      "epoch": 250,
+      "trainLoss": 0.845673,
+      "validationLoss": 2.548182,
+      "queries": 29,
+      "candidatesPerQuery": 29,
+      "top1": 0.275862,
+      "top3": 0.517241,
+      "top5": 0.689655,
+      "mrr": 0.452155
+    }
+  ],
+  "durationSeconds": 9.009,
+  "limitations": [
+    "143 small HumanEval-derived pairs, not banking migrations",
+    "Pair labels are upstream correspondence, not independent correctness proofs",
+    "Heuristic graph extraction, not full compiler AST/CFG",
+    "Names excluded from model; name baseline may be stronger on named benchmark",
+    "Cosine scores are not calibrated probabilities",
+    "No financial-domain generalization claim",
+    "No defect prediction or code generation"
+  ],
+  "baselineConclusion": "Read measured metrics; message passing is not assumed superior.",
+  "testExposureAudit": {
+    "previousRunObserved": true,
+    "previousRunGnnTop1": 0.137931,
+    "previousRunNoMessageTop1": 0.344828,
+    "reasonForRetrain": "Review found declared method names and string contents could become operation features. Fixed those leaks; added previously specified numeric width/precision/scale/signedness. Same split, seed, architecture size, objective, optimizer, epochs and selection protocol.",
+    "limitation": "This test split has been observed during correctness review; treat final results as pilot evidence, not a pristine independent confirmatory study. No test-driven hyperparameter search was performed."
+  }
+}

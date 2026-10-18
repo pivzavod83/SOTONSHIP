@@ -1,0 +1,90 @@
+{
+  "admittedTrainingLabels": 0,
+  "aiCuratedHypothesesNotGoldLocalizationLabels": true,
+  "cases": [
+    {
+      "disposition": "OBSERVED_BEHAVIOR_DIFFERENCE_CONTROL_AGREES_PENDING_REVIEW",
+      "driverIndices": [
+        1,
+        3
+      ],
+      "hypothesis": "COBOL PIC X(100) right-pads the final single o with a space, matching the two-character o-space case. Java takes a truncated substring at the actual String end, producing a single o that matches no case. The last whole note is omitted.",
+      "suspectedCobolLines": [
+        44,
+        46
+      ],
+      "suspectedJavaLines": [
+        10,
+        12
+      ],
+      "taskId": "HumanEval/17",
+      "variant": "14b"
+    },
+    {
+      "disposition": "OBSERVED_PROGRAM_EXCEPTION_CONTROL_AGREES_PENDING_REVIEW",
+      "driverIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "exceptionType": "java.lang.IndexOutOfBoundsException",
+      "hypothesis": "COBOL reference modification uses start:length. Java StringBuilder.append(CharSequence,start,end) requires an exclusive end index. Generated Java passes len directly as end, and observed stacks originate inside Solution.wordsInSentence.",
+      "suspectedCobolLines": [
+        121,
+        122
+      ],
+      "suspectedJavaLines": [
+        35
+      ],
+      "taskId": "HumanEval/143",
+      "variant": "7b"
+    },
+    {
+      "disposition": "UNRESOLVED_SOURCE_AND_API_ARTIFACT",
+      "reason": "Quoted alphanumeric literals moved into numeric COMP-2 storage do not establish the intended shared numeric value. The reference Java API is countUpper(String), whereas 14b declares closestInteger(double); the original source was not renamed or repaired to fit the probe. No source-equivalence bug label is admitted for either variant.",
+      "taskId": "HumanEval/99"
+    },
+    {
+      "disposition": "NO_MISMATCH_ON_MEASURED_COMMON_CONTRACT",
+      "reason": "The one original driver supplies exactly eight digits1..9 and both translations agree. Java benchmark calls also include lengths0,3,4; the fixed eight-element COBOL linkage contains no logical length and cannot directly represent these variable-length calls. Passing this one driver does not assess all in-range arrays or prove the entire Java screening failure is harmless.",
+      "taskId": "HumanEval/105"
+    },
+    {
+      "disposition": "NO_MISMATCH_ON_MEASURED_COMMON_CONTRACT",
+      "reason": "All three original calls provide two lists of exactly four integers and both translations agree. Java benchmark calls also include list lengths2,3,6 that are outside the source fixed4+4 linkage contract.",
+      "taskId": "HumanEval/110"
+    },
+    {
+      "disposition": "NO_MISMATCH_ON_MEASURED_COMMON_CONTRACT",
+      "reason": "Four five-element original calls agree. The source declares five result elements while its driver serializes100; the first five are compared and all95 trailing driver records are verified zero. Java benchmark calls of lengths0,7,8,11,15 are outside the fixed five-element source contract. No claim about universal sorting stability follows.",
+      "taskId": "HumanEval/145"
+    },
+    {
+      "actualCobol": 34,
+      "candidate14b": 34,
+      "candidate7b": 34,
+      "canonicalJava": 0,
+      "disposition": "REPRESENTATION_REFERENCE_CONFLICT",
+      "driverIndex": 3,
+      "inputNumericValues": [
+        0.2,
+        3.0,
+        5.0
+      ],
+      "javaRuntimeElementTypes": [
+        "Double",
+        "Double",
+        "Double"
+      ],
+      "reason": "All COMP-2 fields map consistently to Double. Canonical Java filters only Integer runtime tags, so the control conflicts with the source. Inferring Integer boxing from original numeric literal spelling is forbidden; no mixed-boxing ClassCastException is promoted to a COBOL-equivalence defect.",
+      "taskId": "HumanEval/151"
+    }
+  ],
+  "independentHumanReviews": 0,
+  "replayReportSha256": "a81d774d64c5c3c469d1c175d0e7c1b13453789e6d67e9fdcd4e67a227440c9a",
+  "schemaVersion": "expanded-c2j-text-triage-notes-v1",
+  "trainingPerformed": false
+}
