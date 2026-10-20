@@ -64,6 +64,17 @@ The default signed-balance training example has an actual recorded mismatch: ope
 
 The local action sends source only to the local API; optional cloud review sends it to a configured provider only on its separate explicit action. Source changes hide old evidence. No API key is accepted or stored by the browser. Final test metrics are loaded from an exact-hash-bound aggregate report, not inferred from the working training example.
 
+## Local benchmark dashboard
+
+Run `npm run benchmarks` from `backend/` and open **http://127.0.0.1:3010**.
+The separate [benchmark lab](backend/benchmark-ui/README.md) displays recorded
+model versions, scoped metrics, known problems, source reports and exact GitHub
+artifact links. Its [research inventory](docs/benchmark-research.md) explains
+peer-reviewed ideas and their applicability limits. It reads existing artifacts;
+it does not train models or execute submitted programs. Defect classification
+and program-matching retrieval remain separate tasks. The migration workbench
+continues to use its original port and deployed models.
+
 ## Run locally
 
 An optional [VS Code extension](vscode-extension/README.md) adds an editor workflow on top of this backend: select COBOL and Java documents, supply an explicit proof-input contract, inspect counterexamples in the workbench and Problems panel, compare a proposed fix in a native diff, and apply it only after fresh verification of the exact current source. Unsaved changes are included in verification; applying a fix remains undoable and does not save the file automatically. This client uses the same local API and bounded proof model. It does not generate Java or bundle PostgreSQL/Python.

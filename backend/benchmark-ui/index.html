@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#152b37">
+  <title>Parity — Benchmark Lab</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to benchmark content</a>
+  <aside class="sidebar" aria-label="Primary navigation">
+    <a href="#overview" class="brand" aria-label="Parity Benchmark Lab home"><span class="brand-icon" aria-hidden="true">≋</span><span>PARITY<small>BENCHMARK LAB</small></span></a>
+    <p class="sidebar-label">RESEARCH WORKSPACE</p>
+    <nav id="navigation">
+      <a href="#overview" data-view="overview" class="nav-link active"><span aria-hidden="true">◫</span> Overview</a>
+      <a href="#versions" data-view="versions" class="nav-link"><span aria-hidden="true">▤</span> Model registry <span id="version-count" class="nav-count">—</span></a>
+      <a href="#case-study" data-view="case-study" class="nav-link"><span aria-hidden="true">⌘</span> Failure inspector</a>
+      <a href="#research" data-view="research" class="nav-link"><span aria-hidden="true">↗</span> Research & next steps</a>
+    </nav>
+    <div class="sidebar-bottom"><span class="local-indicator"></span> LOCAL RESEARCH INSTANCE<p>Evidence first.<br>Claims kept in scope.</p><a href="http://127.0.0.1:3000" target="_blank" rel="noopener" style="margin-bottom:12px">Open verification workbench <span aria-hidden="true">↗</span></a><a id="sidebar-repository" href="https://github.com/pivzavod83/SOTONSHIP" target="_blank" rel="noopener">View GitHub repository <span aria-hidden="true">↗</span></a></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <strong id="breadcrumb-current">Overview</strong></div><a id="branch-link" class="branch-link" href="https://github.com/pivzavod83/SOTONSHIP/tree/research/benchmark-dashboard" target="_blank" rel="noopener"><span aria-hidden="true">⑂</span><span id="branch-name">Loading branch…</span><span aria-hidden="true">↗</span></a></header>
+    <main id="main" tabindex="-1">
+      <div id="loading" class="loading-panel" role="status"><span class="loader"></span><h1>Opening the research ledger</h1><p>Reading the model reports and their source bindings.</p></div>
+      <div id="error-panel" class="error-panel" hidden role="alert"><span class="eyebrow">DATA UNAVAILABLE</span><h1>The benchmark catalog could not be loaded.</h1><p id="error-message"></p><button id="retry-button" class="primary-button">Try again <span aria-hidden="true">↻</span></button></div>
+      <div id="content" hidden>
+        <section id="view-overview" class="view">
+          <div class="page-heading"><div><p class="eyebrow"><span class="tiny-rule"></span> MODEL EVALUATION / LIVE FROM REPOSITORY</p><h1>Progress, with the evidence.</h1><p class="lead">A transparent view of what changed, what improved, and what still needs work.</p></div><button id="export-button" class="secondary-button"><span aria-hidden="true">↓</span> Export catalog</button></div>
+          <div class="scope-banner"><span class="scope-icon" aria-hidden="true">i</span><p><strong>Two tasks. Different questions.</strong> Defect detection examines a supplied COBOL–Java pair. Program matching retrieves a likely counterpart. Their scores are not interchangeable.</p><span class="outline-badge">NO AUTOMATIC APPROVAL</span></div>
+          <div id="overview-stats" class="stat-grid"></div>
+          <div id="contract-summary" class="contract-summary"></div>
+          <div class="section-top"><div><p class="eyebrow">EXPERIMENT TRACKER</p><h2>Compare the evidence</h2></div><span class="subtle-label">Original reports · no live retraining</span></div>
+          <div class="comparison-panel panel">
+            <div class="panel-controls"><div class="segmented task-switch" aria-label="Evaluation task"><button data-task="defect" class="selected" aria-pressed="true">Defect detection</button><button data-task="matching" aria-pressed="false">Program matching</button></div><label class="select-label">Assessment <select id="assessment-select" aria-label="Comparison assessment"></select></label></div>
+            <div id="comparison-note" class="assessment-note"></div>
+            <div class="chart-heading"><div><h3 id="chart-title">Model performance</h3><p id="chart-subtitle"></p></div><div id="metric-switch" class="metric-switch" aria-label="Chart metric"></div></div>
+            <div id="comparison-chart" class="chart-container"></div>
+            <div class="table-scroll"><table id="comparison-table"><caption class="sr-only">Metrics for the selected task and assessment</caption><thead></thead><tbody></tbody></table></div>
+            <div class="panel-foot"><span><span class="legend-dot teal"></span> Reported score</span><span>Click a model row for its method, limitations, and exact source.</span></div>
+          </div>
+          <div class="bottom-grid"><article class="insight-card"><span class="eyebrow">READ THE RESULTS CORRECTLY</span><h3>Better extraction is a foundation.<br>It is not proof of better predictions.</h3><p>Known regression examples can reveal a failure. They cannot establish performance on genuinely new programs.</p><a href="#versions" class="text-link">Inspect methods & limitations <span aria-hidden="true">→</span></a></article><article class="insight-card warm"><span class="eyebrow">NEXT EXPERIMENT</span><h3>More meaning.<br>More independent programs.</h3><p>Prioritize typed differences, output dependencies, and a grouped tree-model baseline. Keep a fresh family-level holdout untouched.</p><a href="#research" class="text-link">Explore the research plan <span aria-hidden="true">→</span></a></article></div>
+        </section>
+        <section id="view-versions" class="view" hidden>
+          <div class="page-heading"><div><p class="eyebrow"><span class="tiny-rule"></span> VERSIONED METHODS / INSPECTABLE REPORTS</p><h1>The model registry.</h1><p class="lead">Every recorded version, with its purpose, measurements, and limitations.</p></div><span class="outline-badge">REPOSITORY-BACKED</span></div>
+          <div class="registry-controls"><label class="search-field"><span aria-hidden="true">⌕</span><input id="version-search" type="search" placeholder="Search models, methods, limitations…" aria-label="Search model versions"><kbd>/</kbd></label><label class="select-label">Task <select id="registry-task"><option value="all">All tasks</option><option value="defect">Defect detection</option><option value="matching">Program matching</option></select></label><label class="select-label">Status <select id="registry-status"><option value="all">All statuses</option><option value="deployed">Deployed</option><option value="experimental">Experimental</option><option value="historical">Historical</option></select></label></div>
+          <div id="registry-summary" class="registry-summary" role="status"></div><div id="version-grid" class="version-grid"></div>
+        </section>
+        <section id="view-case-study" class="view" hidden>
+          <div class="page-heading"><div><p class="eyebrow"><span class="tiny-rule"></span> STORED BEHAVIORAL EVIDENCE</p><h1>A real mismatch, in context.</h1><p class="lead">Inspect the source, the responsible line, and the inputs that expose the difference.</p></div><span class="outline-badge amber">KNOWN REGRESSION CASE</span></div>
+          <div id="case-content"></div>
+        </section>
+        <section id="view-research" class="view" hidden>
+          <div class="page-heading"><div><p class="eyebrow"><span class="tiny-rule"></span> PEER-REVIEWED METHODS / NEXT EXPERIMENTS</p><h1>A research-backed direction.</h1><p class="lead">Methods worth testing, with a clear boundary between published evidence and our own results.</p></div><span class="outline-badge">PROPOSALS ≠ TRAINED MODELS</span></div>
+          <div id="research-error" hidden class="inline-error"></div><div id="proposals" class="proposal-grid"></div>
+          <div class="section-top"><div><p class="eyebrow">PRIMARY SOURCES</p><h2>The reading list</h2></div><span class="subtle-label">Published results do not establish COBOL-specific accuracy</span></div><div id="paper-grid" class="paper-grid"></div>
+        </section>
+        <footer class="page-footer"><span><strong>PARITY</strong> / BENCHMARK LAB</span><span>Source-bound measurements. No unreported experiments.</span><a id="footer-commit" href="https://github.com/pivzavod83/SOTONSHIP/commits/research/benchmark-dashboard" target="_blank" rel="noopener">View revision ↗</a></footer>
+      </div>
+    </main>
+  </div>
+  <div id="detail-overlay" class="detail-overlay" hidden><section id="version-detail" class="detail-drawer" role="dialog" aria-modal="true" aria-labelledby="detail-title" tabindex="-1"></section></div>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

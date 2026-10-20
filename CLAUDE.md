@@ -82,6 +82,15 @@ The local browser workbench is a backend developer tool in `backend/dev-ui/`, st
 
 ## Validation
 
+The separate read-only benchmark dashboard is `backend/benchmark-ui/`, launched
+with `npm run benchmarks` on loopback port 3010. It catalogs committed reports,
+research and proposed experiments; never train or execute source from its routes.
+Keep defect metrics separate from retrieval metrics and label different/reused
+splits explicitly. Preserve exact branch/commit/report links and distinguish
+computed hashes from independently frozen evidence. Run `npm run test:benchmarks`
+when changing catalog/server behavior. Paper results on other domains are not
+project performance; proposed models have no measured accuracy.
+
 The VS Code extension is a thin desktop client for the existing local API. It reads only explicitly selected editor documents, including unsaved text; sends code only on an explicit matching, verification or AI review action; and never holds provider credentials or executes submitted source. AI review calls the local backend, which sends the exact pair to the configured model provider. Its separate review state must be invalidated on document versions, selection, endpoint, context or source-format changes; source-linked model findings remain hypotheses. Keep its webview passive, use a strict CSP, and render response/source text as text. Proof-input mappings and source SHA-256 hashes bind a result to a precise question. Editing source, mappings or the endpoint invalidates previous results and diagnostics. Candidate ranking reads only explicitly selected unsaved documents; confirmation rechecks hashes, text, endpoint and source format and selects only a URI. It does not apply Java edits or silently infer the proof contract. Applying a candidate requires a fresh supported, bounded UNSAT result for the exact current documents, followed by a version-aware native editor edit. Leave the edit unsaved and undoable. Diagnostics identify program-level findings; do not claim that a first-line report anchor identifies the defect location. The extension has its own unit and native-host tests; the server architecture rules remain unchanged.
 
 From `vscode-extension/`: run `npm ci`, `npm test`, and `npm run package` to build the local VSIX. With the backend running, `npm run test:host` runs native VS Code integration checks in a separate temporary profile. `LIVE_VERIFIER_URL` selects the local API for these checks. Keep generated VSIX files, dependency installs, extension-host profiles and compiled output out of Git. The extension package is not a Marketplace publication.

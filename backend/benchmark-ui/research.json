@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "retrievedAt": "2026-10-20T14:36:55Z",
+  "scope": "Peer-reviewed classifier methods and directly related COBOL-to-Java translation studies; published results are not this project's accuracy or evidence of equivalence.",
+  "papers": [
+    {
+      "id": "enterprise-cobol-java-2026",
+      "title": "Enterprise-Scale COBOL-to-Java Translation: LLMs Augmented with Program Analysis",
+      "authors": ["Venkatesan Chakaravarthy", "Anamitra Roy Choudhury", "Dinesh Garg", "Vini Kanvar", "Shivmaran Pandian", "Aditya Raghuvanshi", "Yogish Sabharwal", "Amith Singhee"],
+      "venue": "ICSE Software Engineering in Practice (SEIP)",
+      "year": 2026,
+      "url": "https://doi.org/10.1145/3786583.3786915",
+      "peerReviewed": true,
+      "verificationUrl": "https://conf.researchr.org/details/icse-2026/icse-2026-software-engineering-in-practice/56/Enterprise-Scale-COBOL-to-Java-Translation-LLMs-Augmented-with-Program-Analysis",
+      "additionalSourceUrl": "https://research.ibm.com/publications/enterprise-scale-cobol-to-java-translation-llms-augmented-with-program-analysis",
+      "method": "COBOL-to-Java translation combining global program analysis for class/method design with LLM-generated procedural logic.",
+      "relevance": "Direct evidence that structural analysis matters in enterprise COBOL migration; motivates preserving data declarations, control flow, and application-level dependencies.",
+      "limitation": "A translation pipeline, not our paired defect classifier. Its reported functional-quality evaluation uses LLM-as-judge scores; those are not formal equivalence or this project's measured accuracy."
+    },
+    {
+      "id": "cobol-java-refinement-2024",
+      "title": "Translation of Low-Resource COBOL to Logically Correct and Readable Java leveraging High-Resource Java Refinement",
+      "authors": ["Shubham Gandhi", "Manasi Patwardhan", "Jyotsana Khatri", "Lovekesh Vig", "Raveendra Kumar Medicherla"],
+      "venue": "LLM4Code workshop, co-located with ICSE",
+      "year": 2024,
+      "url": "https://conf.researchr.org/details/icse-2024/llm4code-2024-papers/22/Translation-of-Low-Resource-COBOL-to-Logically-Correct-and-Readable-Java-leveraging-H",
+      "peerReviewed": true,
+      "verificationUrl": "https://conf.researchr.org/details/icse-2024/llm4code-2024-papers/22/Translation-of-Low-Resource-COBOL-to-Logically-Correct-and-Readable-Java-leveraging-H",
+      "additionalSourceUrl": "https://llm4code.github.io/2024/call/",
+      "doi": "10.1145/3643795.3648388",
+      "method": "COBOL-to-Java LLM translation followed by execution-guided Java logic refinement and readability feedback, evaluated with CodeNet examples.",
+      "relevance": "Directly related migration work showing why observed behavioral feedback belongs in translation assessment and dataset curation.",
+      "limitation": "A peer-reviewed workshop translation/refinement study, not an independent defect classifier. Algorithmic examples and finite-test execution success do not establish enterprise-wide equivalence."
+    },
+    {
+      "id": "xgboost-2016",
+      "title": "XGBoost: A Scalable Tree Boosting System",
+      "authors": ["Tianqi Chen", "Carlos Guestrin"],
+      "venue": "ACM SIGKDD (KDD)",
+      "year": 2016,
+      "url": "https://doi.org/10.1145/2939672.2939785",
+      "peerReviewed": true,
+      "verificationUrl": "https://doi.org/10.1145/2939672.2939785",
+      "method": "Regularized gradient-boosted decision trees with a scalable training system.",
+      "relevance": "A candidate for learning interactions between extracted numeric, control-flow, and paired-difference features.",
+      "limitation": "The paper establishes a general learning method, not COBOL translation verification. Trees cannot recover semantics omitted by the extractor; the present pilot is very small."
+    },
+    {
+      "id": "tabular-trees-2022",
+      "title": "Why do tree-based models still outperform deep learning on typical tabular data?",
+      "authors": ["Léo Grinsztajn", "Edouard Oyallon", "Gaël Varoquaux"],
+      "venue": "NeurIPS Datasets and Benchmarks Track",
+      "year": 2022,
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/0378c7692da36807bdec87ab043cdadc-Abstract-Datasets_and_Benchmarks.html",
+      "peerReviewed": true,
+      "verificationUrl": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/0378c7692da36807bdec87ab043cdadc-Abstract-Datasets_and_Benchmarks.html",
+      "method": "Controlled comparison of tree ensembles and neural models on 45 tabular datasets, including hyperparameter-search cost.",
+      "relevance": "Supports testing a strong tree baseline before increasing neural-model complexity on our extracted feature tables.",
+      "limitation": "Its typical dataset size and domains differ greatly from our tiny synthetic pilot. It does not establish which classifier will win here."
+    },
+    {
+      "id": "graph-matching-2019",
+      "title": "Graph Matching Networks for Learning the Similarity of Graph Structured Objects",
+      "authors": ["Yujia Li", "Chenjie Gu", "Thomas Dullien", "Oriol Vinyals", "Pushmeet Kohli"],
+      "venue": "ICML, Proceedings of Machine Learning Research 97",
+      "year": 2019,
+      "url": "https://proceedings.mlr.press/v97/li19d.html",
+      "peerReviewed": true,
+      "verificationUrl": "https://proceedings.mlr.press/v97/li19d.html",
+      "method": "Joint graph-pair reasoning through cross-graph attention, alongside independent graph-embedding baselines.",
+      "relevance": "A foundation for comparing the supplied COBOL and Java dependency graphs directly instead of reducing each to an independent similarity vector.",
+      "limitation": "The reported task includes graph similarity and function retrieval, not COBOL-to-Java defect detection. Similarity is not behavioral equivalence; our adaptation needs defect supervision."
+    },
+    {
+      "id": "devign-2019",
+      "title": "Devign: Effective Vulnerability Identification by Learning Comprehensive Program Semantics via Graph Neural Networks",
+      "authors": ["Yaqin Zhou", "Shangqing Liu", "Jingkai Siow", "Xiaoning Du", "Yang Liu"],
+      "venue": "NeurIPS",
+      "year": 2019,
+      "url": "https://papers.neurips.cc/paper/2019/hash/49265d2447bc3bbfe9e76306ce40a31f-Abstract.html",
+      "peerReviewed": true,
+      "verificationUrl": "https://papers.neurips.cc/paper/2019/hash/49265d2447bc3bbfe9e76306ce40a31f-Abstract.html",
+      "method": "Function-level vulnerability classification using a joint syntax, control-flow, data-flow, and code-sequence graph with gated message passing.",
+      "relevance": "Motivates retaining distinct dependency relations and learning from program structure rather than token counts alone.",
+      "limitation": "Evaluated on C vulnerability labels, not paired translations or exact line-level localization. It neither demonstrates COBOL support nor proves equivalence."
+    },
+    {
+      "id": "graphcodebert-2021",
+      "title": "GraphCodeBERT: Pre-training Code Representations with Data Flow",
+      "authors": ["Daya Guo", "Shuo Ren", "Shuai Lu", "Zhangyin Feng", "Duyu Tang", "Shujie Liu", "Long Zhou", "Nan Duan", "Alexey Svyatkovskiy", "Shengyu Fu", "Michele Tufano", "Shao Kun Deng", "Colin Clement", "Dawn Drain", "Neel Sundaresan", "Jian Yin", "Daxin Jiang", "Ming Zhou"],
+      "venue": "ICLR",
+      "year": 2021,
+      "url": "https://iclr.cc/virtual/2021/poster/2598",
+      "peerReviewed": true,
+      "verificationUrl": "https://iclr.cc/virtual/2021/poster/2598",
+      "additionalSourceUrl": "https://github.com/microsoft/CodeBERT",
+      "method": "A pretrained Transformer with data-flow-guided attention and structure-aware pretraining objectives.",
+      "relevance": "Suggests learning reusable structural representations from unlabeled code before fitting a defect detector with scarce labels.",
+      "limitation": "The released model's six pretraining languages exclude COBOL. Applying it directly does not establish cross-language numeric semantics or COBOL-to-Java defect accuracy."
+    },
+    {
+      "id": "buglab-2021",
+      "title": "Self-Supervised Bug Detection and Repair",
+      "authors": ["Miltiadis Allamanis", "Henry Jackson-Flux", "Marc Brockschmidt"],
+      "venue": "NeurIPS",
+      "year": 2021,
+      "url": "https://proceedings.neurips.cc/paper/2021/hash/ea96efc03b9a050d895110db8c4af057-Abstract.html",
+      "peerReviewed": true,
+      "verificationUrl": "https://proceedings.neurips.cc/paper/2021/hash/ea96efc03b9a050d895110db8c4af057-Abstract.html",
+      "method": "Co-training a bug detector/repairer and a selector that creates challenging training bugs.",
+      "relevance": "Supports studying hard, carefully controlled training examples when naturally reviewed defects are scarce.",
+      "limitation": "Implemented and evaluated for Python, not COBOL migration. Generated defects remain synthetic; the paper also reports impractical false-positive rates in an open-source deployment experiment."
+    },
+    {
+      "id": "conformal-risk-2024",
+      "title": "Conformal Risk Control",
+      "authors": ["Anastasios Angelopoulos", "Stephen Bates", "Adam Fisch", "Lihua Lei", "Tal Schuster"],
+      "venue": "ICLR",
+      "year": 2024,
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/f3549ef9b5ff520a7e41ff3cc306ab2b-Abstract-Conference.html",
+      "peerReviewed": true,
+      "verificationUrl": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/f3549ef9b5ff520a7e41ff3cc306ab2b-Abstract-Conference.html",
+      "method": "Calibration procedures controlling expected monotone loss under stated sampling assumptions.",
+      "relevance": "A future framework for choosing a review threshold against a missed-defect risk target using independent calibration data.",
+      "limitation": "Needs adequate independent calibration data and justified exchangeability or applicable shift assumptions. It does not guarantee zero missed bugs in each program, and has not been applied to this project."
+    }
+  ],
+  "proposals": [
+    {
+      "id": "semantic-difference-trees",
+      "name": "Explicit semantic differences + tree classifier",
+      "priority": 1,
+      "paperIds": ["xgboost-2016", "tabular-trees-2022"],
+      "why": "The immediate bottleneck is representing meaningful differences. Test whether explicit paired features and nonlinear interactions improve on the existing logistic control.",
+      "changes": ["Normalize numeric values and units across languages while preserving receiving scale, signedness, overflow, and rounding position.", "Compare operand roles, branch predicates, output dependencies, and conversion semantics explicitly.", "Compare shallow regularized XGBoost and logistic regression with identical family splits and a predefined tuning budget."],
+      "risks": ["Unit inference can be ambiguous and must abstain rather than guess.", "A flexible classifier can memorize a few source families.", "The general tabular literature supplies a rationale for an experiment, not a promised accuracy gain."],
+      "status": "NOT_TRAINED"
+    },
+    {
+      "id": "output-slices-localization",
+      "name": "Output dependency slices + localization checks",
+      "priority": 2,
+      "paperIds": ["devign-2019", "graph-matching-2019", "enterprise-cobol-java-2026"],
+      "why": "Whole-program summaries can hide one wrong constant or edge. Focus comparison on overlapping regions that determine each observable output.",
+      "changes": ["Trace backwards through data and control dependencies from returns and displays, retaining boundary dependencies.", "Measure whether candidate regions cover reviewed defect correspondences before training a ranker.", "Evaluate localization Hit@1/Hit@3 separately from pair classification and extraction coverage."],
+      "risks": ["These papers motivate graph/dependency reasoning; this particular slicing adaptation is our proposal, not a reproduced published method.", "Cutting dependencies or treating weak AI-proposed spans as reviewed gold can invalidate localization results."],
+      "status": "NOT_TRAINED"
+    },
+    {
+      "id": "paired-defect-gnn",
+      "name": "Joint paired-graph defect network",
+      "priority": 3,
+      "paperIds": ["graph-matching-2019", "devign-2019", "graphcodebert-2021"],
+      "why": "Compare both supplied graphs during message passing and train specifically for subtle behavioral differences, rather than repurposing the separate retrieval GNN.",
+      "changes": ["Keep typed nodes, directed relation types, operand positions, and cross-graph attention.", "Learn a pair-level defect head plus a source-bound localization head with appropriate labels.", "Consider training-only structural pretraining when more unlabeled pairs are available; retain a tree and logistic baseline."],
+      "risks": ["The current number of independent families is insufficient to establish reliable neural generalization.", "Graph similarity can remain high for a critical defect.", "A pretrained code encoder without COBOL coverage needs adaptation and independent evaluation."],
+      "status": "NOT_TRAINED"
+    },
+    {
+      "id": "confirmed-hard-examples-calibration",
+      "name": "Confirmed difficult examples + independent risk calibration",
+      "priority": 4,
+      "paperIds": ["buglab-2021", "conformal-risk-2024", "cobol-java-refinement-2024"],
+      "why": "Better labels and realistic difficult cases are prerequisites for defensible recall. Review thresholds need fresh evidence, not tuning on the known regression set.",
+      "changes": ["Collect reviewed incorrect translations, corrected Java, valid common inputs, observed discrepancies, compiler settings, and provenance.", "Include structurally different correct implementations and almost-identical incorrect ones; identify synthetic supplements explicitly.", "Group all variants of one source family in one split; reserve fresh test families and a separate calibration partition before development.", "Compare defect recall against review workload; investigate conformal risk control only when its calibration requirements are met."],
+      "risks": ["Passing a finite test suite means no observed mismatch, not universal equivalence.", "Synthetic mutation patterns may differ from actual migration errors.", "Small calibration sets or company/compiler distribution shifts can make a recall target unsupported. ML signals never authorize acceptance."],
+      "status": "NOT_TRAINED"
+    }
+  ]
+}

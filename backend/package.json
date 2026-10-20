@@ -15,7 +15,9 @@
     "test:matching": "node test/matching.smoke.mjs",
     "test:ai-review:smoke": "node test/ai-review.smoke.mjs",
     "ui": "node dev-ui/serve.mjs",
-    "test:ui": "node --test test/dev-ui.test.mjs"
+    "test:ui": "node --test test/dev-ui.test.mjs",
+    "benchmarks": "node benchmark-ui/serve.mjs",
+    "test:benchmarks": "node --test test/benchmark*.test.mjs"
   },
   "engines": { "node": ">=22" },
   "dependencies": {
