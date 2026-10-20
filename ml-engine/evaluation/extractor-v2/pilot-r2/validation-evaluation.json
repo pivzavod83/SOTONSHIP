@@ -1,0 +1,1487 @@
+{
+  "v1-refit-control": {
+    "reviewTriageIncludingAbstentions": {
+      "pairs": 8,
+      "accuracy": 0.5,
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5,
+      "confusion": {
+        "truePositive": 2,
+        "trueNegative": 2,
+        "falsePositive": 2,
+        "falseNegative": 2
+      },
+      "reviewedPairs": 4,
+      "reviewWorkloadFraction": 0.5,
+      "nonFlaggedPairs": 4,
+      "nonFlaggedDefects": 2,
+      "autonomousAcceptances": 0
+    },
+    "coveredClassifierOnly": {
+      "pairs": 8,
+      "accuracy": 0.5,
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5,
+      "confusion": {
+        "truePositive": 2,
+        "trueNegative": 2,
+        "falsePositive": 2,
+        "falseNegative": 2
+      },
+      "reviewedPairs": 4,
+      "reviewWorkloadFraction": 0.5,
+      "nonFlaggedPairs": 4,
+      "nonFlaggedDefects": 2,
+      "autonomousAcceptances": 0
+    },
+    "coverage": {
+      "pairs": 8,
+      "supportedPairs": null,
+      "computedPairs": 8,
+      "strictCoverageProvided": false,
+      "abstainedPairs": 0,
+      "fraction": 1.0
+    },
+    "localizationWeakLabels": {
+      "defectivePairs": 4,
+      "hitAt1Count": 1,
+      "hitAt3Count": 2,
+      "hitAt1": 0.25,
+      "hitAt3": 0.5,
+      "scope": "All labelled defective pairs, including abstentions and missed classifications; exploratory AI-generated span labels"
+    },
+    "perFamily": {
+      "F004": {
+        "reviewTriageIncludingAbstentions": {
+          "pairs": 4,
+          "accuracy": 0.5,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "confusion": {
+            "truePositive": 2,
+            "trueNegative": 0,
+            "falsePositive": 2,
+            "falseNegative": 0
+          },
+          "reviewedPairs": 4,
+          "reviewWorkloadFraction": 1.0,
+          "nonFlaggedPairs": 0,
+          "nonFlaggedDefects": 0,
+          "autonomousAcceptances": 0
+        },
+        "computedPairs": 4
+      },
+      "F009": {
+        "reviewTriageIncludingAbstentions": {
+          "pairs": 4,
+          "accuracy": 0.5,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "confusion": {
+            "truePositive": 0,
+            "trueNegative": 2,
+            "falsePositive": 0,
+            "falseNegative": 2
+          },
+          "reviewedPairs": 0,
+          "reviewWorkloadFraction": 0.0,
+          "nonFlaggedPairs": 4,
+          "nonFlaggedDefects": 2,
+          "autonomousAcceptances": 0
+        },
+        "computedPairs": 4
+      }
+    },
+    "constantBaselines": {
+      "alwaysNoDefect": {
+        "pairs": 8,
+        "accuracy": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "confusion": {
+          "truePositive": 0,
+          "trueNegative": 4,
+          "falsePositive": 0,
+          "falseNegative": 4
+        },
+        "reviewedPairs": 0,
+        "reviewWorkloadFraction": 0.0,
+        "nonFlaggedPairs": 8,
+        "nonFlaggedDefects": 4,
+        "autonomousAcceptances": 0
+      },
+      "alwaysReview": {
+        "pairs": 8,
+        "accuracy": 0.5,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "confusion": {
+          "truePositive": 4,
+          "trueNegative": 0,
+          "falsePositive": 4,
+          "falseNegative": 0
+        },
+        "reviewedPairs": 8,
+        "reviewWorkloadFraction": 1.0,
+        "nonFlaggedPairs": 0,
+        "nonFlaggedDefects": 0,
+        "autonomousAcceptances": 0
+      }
+    },
+    "predictions": [
+      {
+        "familyId": "F004",
+        "variantId": "F004-V1",
+        "defectLabel": 0,
+        "score": 0.4586293634394718,
+        "decision": "REVIEW_REQUIRED",
+        "abstained": false,
+        "parseCoverage": {
+          "strictCoverageProvided": false,
+          "status": "UNCHECKED_HEURISTIC"
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 30
+            },
+            "javaLines": {
+              "start": 13,
+              "end": 13
+            },
+            "score": 0.8700034574828043,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 29,
+              "end": 29
+            },
+            "javaLines": {
+              "start": 12,
+              "end": 12
+            },
+            "score": 0.46599376630703854,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 30
+            },
+            "javaLines": null,
+            "score": 0.4659223257383802,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      },
+      {
+        "familyId": "F004",
+        "variantId": "F004-V2",
+        "defectLabel": 0,
+        "score": 0.7632269934713222,
+        "decision": "REVIEW_REQUIRED",
+        "abstained": false,
+        "parseCoverage": {
+          "strictCoverageProvided": false,
+          "status": "UNCHECKED_HEURISTIC"
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 30
+            },
+            "javaLines": {
+              "start": 11,
+              "end": 11
+            },
+            "score": 0.7893035203865809,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 30
+            },
+            "javaLines": null,
+            "score": 0.4659223257383802,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 30
+            },
+            "javaLines": {
+              "start": 10,
+              "end": 10
+            },
+            "score": 0.4475185136348659,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      },
+      {
+        "familyId": "F004",
+        "variantId": "F004-V3",
+        "defectLabel": 1,
+        "score": 0.8307940655837159,
+        "decision": "REVIEW_REQUIRED",
+        "abstained": false,
+        "parseCoverage": {
+          "strictCoverageProvided": false,
+          "status": "UNCHECKED_HEURISTIC"
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 31,
+              "end": 31
+            },
+            "javaLines": {
+              "start": 14,
+              "end": 14
+            },
+            "score": 0.9512724031470255,
+            "matchesWeakAnnotation": true
+          },
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 30
+            },
+            "javaLines": {
+              "start": 13,
+              "end": 13
+            },
+            "score": 0.8700034574828043,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 29,
+              "end": 29
+            },
+            "javaLines": {
+              "start": 12,
+              "end": 12
+            },
+            "score": 0.46599376630703854,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      },
+      {
+        "familyId": "F004",
+        "variantId": "F004-V4",
+        "defectLabel": 1,
+        "score": 0.4905559867987397,
+        "decision": "REVIEW_REQUIRED",
+        "abstained": false,
+        "parseCoverage": {
+          "strictCoverageProvided": false,
+          "status": "UNCHECKED_HEURISTIC"
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 30
+            },
+            "javaLines": {
+              "start": 13,
+              "end": 13
+            },
+            "score": 0.8733284865728086,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 29,
+              "end": 29
+            },
+            "javaLines": {
+              "start": 12,
+              "end": 12
+            },
+            "score": 0.47057570920705066,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 28,
+              "end": 28
+            },
+            "javaLines": {
+              "start": 11,
+              "end": 11
+            },
+            "score": 0.4671874816171095,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      },
+      {
+        "familyId": "F009",
+        "variantId": "F009-V1",
+        "defectLabel": 0,
+        "score": 0.06574134929096508,
+        "decision": "NO_DEFECT_SIGNAL",
+        "abstained": false,
+        "parseCoverage": {
+          "strictCoverageProvided": false,
+          "status": "UNCHECKED_HEURISTIC"
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 22,
+              "end": 22
+            },
+            "javaLines": null,
+            "score": 0.4452755505902417,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 37,
+              "end": 37
+            },
+            "javaLines": {
+              "start": 24,
+              "end": 24
+            },
+            "score": 0.3835663688883719,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 27,
+              "end": 27
+            },
+            "javaLines": null,
+            "score": 0.35357669351628,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      },
+      {
+        "familyId": "F009",
+        "variantId": "F009-V2",
+        "defectLabel": 0,
+        "score": 0.12522569830591215,
+        "decision": "NO_DEFECT_SIGNAL",
+        "abstained": false,
+        "parseCoverage": {
+          "strictCoverageProvided": false,
+          "status": "UNCHECKED_HEURISTIC"
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 22,
+              "end": 22
+            },
+            "javaLines": null,
+            "score": 0.4452755505902417,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 27,
+              "end": 27
+            },
+            "javaLines": null,
+            "score": 0.35357669351628,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 23,
+              "end": 23
+            },
+            "javaLines": {
+              "start": 11,
+              "end": 11
+            },
+            "score": 0.34350520747438695,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      },
+      {
+        "familyId": "F009",
+        "variantId": "F009-V3",
+        "defectLabel": 1,
+        "score": 0.10167251664548001,
+        "decision": "NO_DEFECT_SIGNAL",
+        "abstained": false,
+        "parseCoverage": {
+          "strictCoverageProvided": false,
+          "status": "UNCHECKED_HEURISTIC"
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 23,
+              "end": 23
+            },
+            "javaLines": {
+              "start": 12,
+              "end": 12
+            },
+            "score": 0.8130285348364067,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": null,
+            "javaLines": {
+              "start": 12,
+              "end": 12
+            },
+            "score": 0.5479404466012099,
+            "matchesWeakAnnotation": true
+          },
+          {
+            "cobolLines": {
+              "start": 22,
+              "end": 22
+            },
+            "javaLines": null,
+            "score": 0.4452755505902417,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      },
+      {
+        "familyId": "F009",
+        "variantId": "F009-V4",
+        "defectLabel": 1,
+        "score": 0.12610451187153107,
+        "decision": "NO_DEFECT_SIGNAL",
+        "abstained": false,
+        "parseCoverage": {
+          "strictCoverageProvided": false,
+          "status": "UNCHECKED_HEURISTIC"
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 22,
+              "end": 22
+            },
+            "javaLines": null,
+            "score": 0.4452755505902417,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 27,
+              "end": 27
+            },
+            "javaLines": null,
+            "score": 0.35357669351628,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 23,
+              "end": 23
+            },
+            "javaLines": {
+              "start": 11,
+              "end": 11
+            },
+            "score": 0.34350520747438695,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      }
+    ],
+    "aiIsProof": false,
+    "acceptanceAuthority": false
+  },
+  "typed-v2": {
+    "reviewTriageIncludingAbstentions": {
+      "pairs": 8,
+      "accuracy": 0.625,
+      "precision": 0.5714285714285714,
+      "recall": 1.0,
+      "f1": 0.7272727272727273,
+      "confusion": {
+        "truePositive": 4,
+        "trueNegative": 1,
+        "falsePositive": 3,
+        "falseNegative": 0
+      },
+      "reviewedPairs": 7,
+      "reviewWorkloadFraction": 0.875,
+      "nonFlaggedPairs": 1,
+      "nonFlaggedDefects": 0,
+      "autonomousAcceptances": 0
+    },
+    "coveredClassifierOnly": {
+      "pairs": 8,
+      "accuracy": 0.625,
+      "precision": 0.5714285714285714,
+      "recall": 1.0,
+      "f1": 0.7272727272727273,
+      "confusion": {
+        "truePositive": 4,
+        "trueNegative": 1,
+        "falsePositive": 3,
+        "falseNegative": 0
+      },
+      "reviewedPairs": 7,
+      "reviewWorkloadFraction": 0.875,
+      "nonFlaggedPairs": 1,
+      "nonFlaggedDefects": 0,
+      "autonomousAcceptances": 0
+    },
+    "coverage": {
+      "pairs": 8,
+      "supportedPairs": 8,
+      "computedPairs": 8,
+      "strictCoverageProvided": true,
+      "abstainedPairs": 0,
+      "fraction": 1.0
+    },
+    "localizationWeakLabels": {
+      "defectivePairs": 4,
+      "hitAt1Count": 1,
+      "hitAt3Count": 2,
+      "hitAt1": 0.25,
+      "hitAt3": 0.5,
+      "scope": "All labelled defective pairs, including abstentions and missed classifications; exploratory AI-generated span labels"
+    },
+    "perFamily": {
+      "F004": {
+        "reviewTriageIncludingAbstentions": {
+          "pairs": 4,
+          "accuracy": 0.75,
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "confusion": {
+            "truePositive": 2,
+            "trueNegative": 1,
+            "falsePositive": 1,
+            "falseNegative": 0
+          },
+          "reviewedPairs": 3,
+          "reviewWorkloadFraction": 0.75,
+          "nonFlaggedPairs": 1,
+          "nonFlaggedDefects": 0,
+          "autonomousAcceptances": 0
+        },
+        "computedPairs": 4
+      },
+      "F009": {
+        "reviewTriageIncludingAbstentions": {
+          "pairs": 4,
+          "accuracy": 0.5,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "confusion": {
+            "truePositive": 2,
+            "trueNegative": 0,
+            "falsePositive": 2,
+            "falseNegative": 0
+          },
+          "reviewedPairs": 4,
+          "reviewWorkloadFraction": 1.0,
+          "nonFlaggedPairs": 0,
+          "nonFlaggedDefects": 0,
+          "autonomousAcceptances": 0
+        },
+        "computedPairs": 4
+      }
+    },
+    "constantBaselines": {
+      "alwaysNoDefect": {
+        "pairs": 8,
+        "accuracy": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "confusion": {
+          "truePositive": 0,
+          "trueNegative": 4,
+          "falsePositive": 0,
+          "falseNegative": 4
+        },
+        "reviewedPairs": 0,
+        "reviewWorkloadFraction": 0.0,
+        "nonFlaggedPairs": 8,
+        "nonFlaggedDefects": 4,
+        "autonomousAcceptances": 0
+      },
+      "alwaysReview": {
+        "pairs": 8,
+        "accuracy": 0.5,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "confusion": {
+          "truePositive": 4,
+          "trueNegative": 0,
+          "falsePositive": 4,
+          "falseNegative": 0
+        },
+        "reviewedPairs": 8,
+        "reviewWorkloadFraction": 1.0,
+        "nonFlaggedPairs": 0,
+        "nonFlaggedDefects": 0,
+        "autonomousAcceptances": 0
+      }
+    },
+    "predictions": [
+      {
+        "familyId": "F004",
+        "variantId": "F004-V1",
+        "defectLabel": 0,
+        "score": 0.5249861816275446,
+        "decision": "REVIEW_REQUIRED",
+        "abstained": false,
+        "parseCoverage": {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 57,
+            "edges": 100,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 15,
+                "consumed_statements": 15,
+                "unconsumed_statements": 0
+              },
+              "input_count": 4,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 68,
+            "edges": 194,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal",
+                "java.math.RoundingMode",
+                "java.util.Scanner"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "main",
+                  "returnType": "void",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 5,
+                    "end_line": 16,
+                    "start_column": 5,
+                    "end_column": 6
+                  }
+                }
+              ],
+              "inputCount": 4,
+              "outputCount": 1
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 31
+            },
+            "javaLines": {
+              "start": 11,
+              "end": 14
+            },
+            "score": 0.993775913781059,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 31
+            },
+            "javaLines": {
+              "start": 12,
+              "end": 14
+            },
+            "score": 0.9904639548233701,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 29,
+              "end": 31
+            },
+            "javaLines": {
+              "start": 11,
+              "end": 14
+            },
+            "score": 0.9867387070123473,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      },
+      {
+        "familyId": "F004",
+        "variantId": "F004-V2",
+        "defectLabel": 0,
+        "score": 0.09146186587491911,
+        "decision": "NO_DEFECT_SIGNAL",
+        "abstained": false,
+        "parseCoverage": {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 57,
+            "edges": 100,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 15,
+                "consumed_statements": 15,
+                "unconsumed_statements": 0
+              },
+              "input_count": 4,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 68,
+            "edges": 196,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal",
+                "java.util.Scanner"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "main",
+                  "returnType": "void",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 4,
+                    "end_line": 14,
+                    "start_column": 5,
+                    "end_column": 6
+                  }
+                }
+              ],
+              "inputCount": 4,
+              "outputCount": 1
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 31
+            },
+            "javaLines": null,
+            "score": 0.5735201025926797,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 31
+            },
+            "javaLines": {
+              "start": 8,
+              "end": 10
+            },
+            "score": 0.5561967623698617,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 29,
+              "end": 31
+            },
+            "javaLines": null,
+            "score": 0.5350578916484757,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      },
+      {
+        "familyId": "F004",
+        "variantId": "F004-V3",
+        "defectLabel": 1,
+        "score": 0.5325707471945512,
+        "decision": "REVIEW_REQUIRED",
+        "abstained": false,
+        "parseCoverage": {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 57,
+            "edges": 100,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 15,
+                "consumed_statements": 15,
+                "unconsumed_statements": 0
+              },
+              "input_count": 4,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 68,
+            "edges": 194,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal",
+                "java.math.RoundingMode",
+                "java.util.Scanner"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "main",
+                  "returnType": "void",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 5,
+                    "end_line": 16,
+                    "start_column": 5,
+                    "end_column": 6
+                  }
+                }
+              ],
+              "inputCount": 4,
+              "outputCount": 1
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 31
+            },
+            "javaLines": {
+              "start": 11,
+              "end": 14
+            },
+            "score": 0.9826919987731486,
+            "matchesWeakAnnotation": true
+          },
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 31
+            },
+            "javaLines": {
+              "start": 12,
+              "end": 14
+            },
+            "score": 0.9760255559168843,
+            "matchesWeakAnnotation": true
+          },
+          {
+            "cobolLines": {
+              "start": 29,
+              "end": 31
+            },
+            "javaLines": {
+              "start": 11,
+              "end": 14
+            },
+            "score": 0.9707505124702042,
+            "matchesWeakAnnotation": true
+          }
+        ]
+      },
+      {
+        "familyId": "F004",
+        "variantId": "F004-V4",
+        "defectLabel": 1,
+        "score": 0.510791931812545,
+        "decision": "REVIEW_REQUIRED",
+        "abstained": false,
+        "parseCoverage": {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 57,
+            "edges": 100,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 15,
+                "consumed_statements": 15,
+                "unconsumed_statements": 0
+              },
+              "input_count": 4,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 68,
+            "edges": 193,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal",
+                "java.math.RoundingMode",
+                "java.util.Scanner"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "main",
+                  "returnType": "void",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 5,
+                    "end_line": 16,
+                    "start_column": 5,
+                    "end_column": 6
+                  }
+                }
+              ],
+              "inputCount": 4,
+              "outputCount": 1
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 29,
+              "end": 31
+            },
+            "javaLines": {
+              "start": 9,
+              "end": 12
+            },
+            "score": 0.9408295336320517,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 27,
+              "end": 29
+            },
+            "javaLines": {
+              "start": 8,
+              "end": 11
+            },
+            "score": 0.9405938450111946,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 30,
+              "end": 31
+            },
+            "javaLines": {
+              "start": 14,
+              "end": 14
+            },
+            "score": 0.9342786003451161,
+            "matchesWeakAnnotation": true
+          }
+        ]
+      },
+      {
+        "familyId": "F009",
+        "variantId": "F009-V1",
+        "defectLabel": 0,
+        "score": 0.3397764907212819,
+        "decision": "REVIEW_REQUIRED",
+        "abstained": false,
+        "parseCoverage": {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 77,
+            "edges": 169,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 25,
+                "consumed_statements": 25,
+                "unconsumed_statements": 0
+              },
+              "input_count": 3,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 70,
+            "edges": 245,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.util.Scanner"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "main",
+                  "returnType": "void",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 26,
+                    "start_column": 5,
+                    "end_column": 6
+                  }
+                }
+              ],
+              "inputCount": 3,
+              "outputCount": 1
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 28,
+              "end": 30
+            },
+            "javaLines": {
+              "start": 15,
+              "end": 17
+            },
+            "score": 0.6666445113670938,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 22,
+              "end": 28
+            },
+            "javaLines": {
+              "start": 14,
+              "end": 18
+            },
+            "score": 0.6594015719833464,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 28,
+              "end": 30
+            },
+            "javaLines": {
+              "start": 24,
+              "end": 25
+            },
+            "score": 0.6585847197926223,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      },
+      {
+        "familyId": "F009",
+        "variantId": "F009-V2",
+        "defectLabel": 0,
+        "score": 0.370173843999083,
+        "decision": "REVIEW_REQUIRED",
+        "abstained": false,
+        "parseCoverage": {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 77,
+            "edges": 169,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 25,
+                "consumed_statements": 25,
+                "unconsumed_statements": 0
+              },
+              "input_count": 3,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 78,
+            "edges": 269,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal",
+                "java.util.Scanner"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "main",
+                  "returnType": "void",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 4,
+                    "end_line": 27,
+                    "start_column": 5,
+                    "end_column": 6
+                  }
+                }
+              ],
+              "inputCount": 3,
+              "outputCount": 1
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 28,
+              "end": 30
+            },
+            "javaLines": {
+              "start": 16,
+              "end": 18
+            },
+            "score": 0.6636898195474693,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 22,
+              "end": 28
+            },
+            "javaLines": {
+              "start": 15,
+              "end": 19
+            },
+            "score": 0.6625206248195767,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 22,
+              "end": 28
+            },
+            "javaLines": {
+              "start": 20,
+              "end": 25
+            },
+            "score": 0.6599609004430927,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      },
+      {
+        "familyId": "F009",
+        "variantId": "F009-V3",
+        "defectLabel": 1,
+        "score": 0.3134901013827474,
+        "decision": "REVIEW_REQUIRED",
+        "abstained": false,
+        "parseCoverage": {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 77,
+            "edges": 169,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 25,
+                "consumed_statements": 25,
+                "unconsumed_statements": 0
+              },
+              "input_count": 3,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 73,
+            "edges": 260,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.util.Scanner"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "main",
+                  "returnType": "void",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 27,
+                    "start_column": 5,
+                    "end_column": 6
+                  }
+                }
+              ],
+              "inputCount": 3,
+              "outputCount": 1
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 23,
+              "end": 25
+            },
+            "javaLines": {
+              "start": 10,
+              "end": 12
+            },
+            "score": 0.9085731254152423,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 28,
+              "end": 30
+            },
+            "javaLines": {
+              "start": 10,
+              "end": 12
+            },
+            "score": 0.8432447729485117,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 33,
+              "end": 35
+            },
+            "javaLines": {
+              "start": 10,
+              "end": 12
+            },
+            "score": 0.8306474779962896,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      },
+      {
+        "familyId": "F009",
+        "variantId": "F009-V4",
+        "defectLabel": 1,
+        "score": 0.3356383841931678,
+        "decision": "REVIEW_REQUIRED",
+        "abstained": false,
+        "parseCoverage": {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 77,
+            "edges": 169,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 25,
+                "consumed_statements": 25,
+                "unconsumed_statements": 0
+              },
+              "input_count": 3,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 78,
+            "edges": 269,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal",
+                "java.util.Scanner"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "main",
+                  "returnType": "void",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 4,
+                    "end_line": 27,
+                    "start_column": 5,
+                    "end_column": 6
+                  }
+                }
+              ],
+              "inputCount": 3,
+              "outputCount": 1
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        "topLocations": [
+          {
+            "cobolLines": {
+              "start": 22,
+              "end": 28
+            },
+            "javaLines": {
+              "start": 15,
+              "end": 19
+            },
+            "score": 0.6636500020925968,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 28,
+              "end": 30
+            },
+            "javaLines": {
+              "start": 16,
+              "end": 18
+            },
+            "score": 0.6583676208813583,
+            "matchesWeakAnnotation": false
+          },
+          {
+            "cobolLines": {
+              "start": 28,
+              "end": 30
+            },
+            "javaLines": {
+              "start": 11,
+              "end": 13
+            },
+            "score": 0.6576196080301938,
+            "matchesWeakAnnotation": false
+          }
+        ]
+      }
+    ],
+    "aiIsProof": false,
+    "acceptanceAuthority": false
+  }
+}

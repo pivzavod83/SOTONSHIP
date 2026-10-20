@@ -1,0 +1,58 @@
+{
+  "artifact": "source-only representation contract fixtures",
+  "version": "extractor-v2-contracts-r1",
+  "notTrainingData": true,
+  "codeExecuted": false,
+  "description": "New illustrative snippets, not drawn from or added to the accuracy dataset. Structural fingerprints omit source hashes/layout/names; numeric feature collisions are reported separately.",
+  "cobolSource": "IDENTIFICATION DIVISION.\nPROGRAM-ID. CONTRACT.\nDATA DIVISION.\nWORKING-STORAGE SECTION.\n01 A PIC S9(5)V99 VALUE 0.\n01 B PIC S9(5)V99 VALUE 0.\n01 RESULT PIC S9(6)V99 VALUE 0.\nPROCEDURE DIVISION.\nMAIN.\nCOMPUTE RESULT = A - B.\nDISPLAY RESULT.\nSTOP RUN.",
+  "fixtures": [
+    {
+      "fixtureId": "return-absolute-value",
+      "property": "IR_DIFFERENT",
+      "javaA": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = amount.subtract(fee);\n  return result;\n }\n}",
+      "javaB": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = amount.subtract(fee);\n  return result.abs();\n }\n}"
+    },
+    {
+      "fixtureId": "arithmetic-operator",
+      "property": "IR_DIFFERENT",
+      "javaA": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = amount.subtract(fee);\n  return result;\n }\n}",
+      "javaB": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = amount.add(fee);\n  return result;\n }\n}"
+    },
+    {
+      "fixtureId": "ordered-receiver-and-argument",
+      "property": "IR_DIFFERENT",
+      "javaA": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = amount.subtract(fee);\n  return result;\n }\n}",
+      "javaB": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = fee.subtract(amount);\n  return result;\n }\n}"
+    },
+    {
+      "fixtureId": "multiline-statement",
+      "property": "IR_SAME",
+      "javaA": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = amount.subtract(fee);\n  return result;\n }\n}",
+      "javaB": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = amount\n      .subtract(\n          fee\n      );\n  return result;\n }\n}"
+    },
+    {
+      "fixtureId": "identifier-renaming",
+      "property": "IR_SAME",
+      "javaA": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = amount.subtract(fee);\n  return result;\n }\n}",
+      "javaB": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal principal, BigDecimal charge) {\n  BigDecimal balance = principal.subtract(charge);\n  return balance;\n }\n}"
+    },
+    {
+      "fixtureId": "unsupported-call",
+      "property": "ABSTAIN_SECOND",
+      "javaA": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = amount.subtract(fee);\n  return result;\n }\n}",
+      "javaB": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = amount.subtract(fee);\n  return result.unreviewedOperation();\n }\n}"
+    },
+    {
+      "fixtureId": "reassignment-kills-constant",
+      "property": "REASSIGNMENT_TRACKED",
+      "javaA": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = BigDecimal.ONE;\n  result = amount.subtract(fee);\n  return result;\n }\n}",
+      "javaB": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = BigDecimal.TEN;\n  result = amount.subtract(fee);\n  return result;\n }\n}"
+    },
+    {
+      "fixtureId": "observable-output-selection",
+      "property": "IR_DIFFERENT",
+      "javaA": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = amount.subtract(fee);\n  BigDecimal audit = amount.add(fee);\n  return result;\n }\n}",
+      "javaB": "import java.math.BigDecimal;\npublic class Program {\n public BigDecimal run(BigDecimal amount, BigDecimal fee) {\n  BigDecimal result = amount.subtract(fee);\n  BigDecimal audit = amount.add(fee);\n  return audit;\n }\n}"
+    }
+  ]
+}

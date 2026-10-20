@@ -1,0 +1,19 @@
+{
+  "modelSha256": "cab197bf904a524f832a002623dcb6171ca78fccb31bb8f4d2a7ea213e419f3e",
+  "datasetSha256": "7d6f612855da2e75ee5f552ea0ebc9e0fd95e5f3399a28e6d982f10c194c9dcb",
+  "splitPlanSha256": "8a4a35515b5fd6f3f320d9425f91b1816742238877116a863dc86da81d571bfe",
+  "protocolSha256": "944b10751d3ba5c75c8a96d53c265fe47e1b4102de8872632ba8cc40629f989b",
+  "contractAuditSha256": "6d2a22fbde0a5e6c4c6be7146b4fd08efd789fd9036a30e01d6aaa3cb62893de",
+  "implementationHashes": {
+    "scripts/benchmark_extractor_v2.py": "21100c6aad314301d0ca02f4aa1a64851632e994ad248cf98ff86285a36655ae",
+    "ml_engine/defect_features.py": "777de1500e54ab9c314fcaca89cd03188c1a9ed5d7d8bc462594c61898d3a04d",
+    "ml_engine/defect_features_v2.py": "cfbd906fd83e4d41b628719de263f8a48fc834156094bc59048e8ea829691a35",
+    "ml_engine/semantic_ir.py": "0415a42889cc7d39b779d09a5f1bfdc8f0c02283bc51406e22a6d63aba564fa0",
+    "ml_engine/java_extractor_v2.py": "e5133e89b862c4443e15ae0b088d9c1f7e39af455eceddc5a9a2be25501b7ab1",
+    "ml_engine/cobol_extractor_v2.py": "68e71eb02e3029ec883dc7445a60271c67ff77e0ba3350489c5c5e9c8d2f71e1",
+    "evaluation/extractor-v2/contract-fixtures.json": "c45051d22a8b35e0e55462f9c6ae2c949bb24934f69d87fd72b1bf05da1bd4bd"
+  },
+  "frozenBeforeRegressionAssessment": true,
+  "testIsReused": true,
+  "createdUtc": "2026-10-20T14:16:03.867039+00:00"
+}

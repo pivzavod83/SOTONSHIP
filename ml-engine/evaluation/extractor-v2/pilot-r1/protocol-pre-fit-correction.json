@@ -1,0 +1,10 @@
+{
+  "changedField": "classifierInputs",
+  "previousValue": "v2 source-only global features + ranker max, top-three mean, mean and standard deviation",
+  "value": "Each arm's source-only global features + ranker max, top-three mean, mean and standard deviation",
+  "reason": "Clarify that the identical classifier protocol uses each arm own source-only global features; no model settings or assignments changed.",
+  "oldProtocolSha256": "c0a4a528c814103795577b9d27df09797db9841f29b1da52e4cd0f5310446607",
+  "newProtocolSha256": "944b10751d3ba5c75c8a96d53c265fe47e1b4102de8872632ba8cc40629f989b",
+  "beforeAnyFittingOrRegressionAssessment": true,
+  "createdUtc": "2026-10-20T14:13:46.086759+00:00"
+}

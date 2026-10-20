@@ -80,6 +80,13 @@ spacing or multiline statements. These representation limits remain in the
 frozen evaluated version; correcting them requires a new model version and
 independent evaluation.
 
+A separate [typed extractor v2 benchmark](../ml-engine/evaluation/extractor-v2/README.md)
+now addresses those extraction blind spots without changing this deployed v1
+workflow. It includes a matched v1 control, grouped cross-fitting and explicit
+unsupported-syntax abstention. Both new arms scored 4/8 on the already-known
+regression set and missed one of four defects. V2 remains experimental; its
+representation improvements do not establish reliable defect detection.
+
 No model tuning followed the final assessment. The UI exposes the failure
 prominently through a hash-bound aggregate report; it does not modify the frozen
 weights to add metrics. The source/labels had already undergone quality review,

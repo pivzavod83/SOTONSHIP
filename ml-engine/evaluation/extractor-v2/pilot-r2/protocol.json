@@ -1,0 +1,79 @@
+{
+  "protocolVersion": "extractor-v2-fixed-pilot-r1",
+  "datasetSha256": "7d6f612855da2e75ee5f552ea0ebc9e0fd95e5f3399a28e6d982f10c194c9dcb",
+  "splitPlanSha256": "8a4a35515b5fd6f3f320d9425f91b1816742238877116a863dc86da81d571bfe",
+  "contractFixturesSha256": "c45051d22a8b35e0e55462f9c6ae2c949bb24934f69d87fd72b1bf05da1bd4bd",
+  "historicalV1ReportSha256": "6e4f49d42b612f38abcc7b720344a8070468f4ac770809169cde14b818bd0696",
+  "arms": {
+    "v1-refit-control": "Original heuristic extractor, newly fitted under this identical benchmark protocol; no strict parse-coverage guarantee",
+    "typed-v2": "Typed v2 extractor; incomplete or unsupported parsing always abstains"
+  },
+  "assignments": {
+    "train": [
+      "F001",
+      "F002",
+      "F003",
+      "F006",
+      "F007",
+      "F008"
+    ],
+    "validation": [
+      "F004",
+      "F009"
+    ],
+    "test": [
+      "F005",
+      "F010"
+    ]
+  },
+  "outerHeldOutFamilies": [
+    [
+      "F001",
+      "F006"
+    ],
+    [
+      "F002",
+      "F007"
+    ],
+    [
+      "F003",
+      "F008"
+    ]
+  ],
+  "model": {
+    "ranker": "L2 logistic regression",
+    "classifier": "L2 logistic regression",
+    "C": 0.1,
+    "classWeight": "balanced",
+    "randomState": 42,
+    "maxIterations": 3000,
+    "scaling": "StandardScaler fitted separately within each fitting partition"
+  },
+  "classifierInputs": "Each arm's source-only global features + ranker max, top-three mean, mean and standard deviation",
+  "stacking": "Inner leave-one-fitting-family-out rankers produce every classifier training row. Each outer ranker is then fitted on only its four fitting families.",
+  "operatingThreshold": 0.25,
+  "thresholdSelection": "FIXED_BEFORE_V2_RESULTS; no threshold or architecture search",
+  "abstention": "Every graph.status != SUPPORTED is excluded from fitting and always requires human review. No low-risk fallback.",
+  "deployment": "Benchmark-only mean of three fold checkpoints; no full-training refit; existing deployed models unchanged",
+  "safetyAuthority": {
+    "aiIsProof": false,
+    "canApproveCode": false,
+    "canAuthorizePatch": false
+  },
+  "validationPolicy": "Fixed-setting diagnostic only; not used to choose settings",
+  "testPolicy": "ALREADY_KNOWN_REUSED_REGRESSION_SPLIT; eight pairs/two families previously assessed by v1 and inspected during representation design, not a pristine final holdout",
+  "baselines": [
+    "constant no defect",
+    "constant all review",
+    "frozen v1 stored final report; no rerun of its evaluation"
+  ],
+  "localizationLabels": "AI-generated weak segment annotations, never expert-reviewed ground truth",
+  "independenceUnit": "Whole source family; statements and variants are correlated, not additional independent samples",
+  "measurement": "Report covered-only classifier metrics separately from review triage including abstentions, workload, coverage and per-family counts",
+  "limitations": [
+    "Only six fitting families and two reused test families.",
+    "Always reviewing every pair trivially gives full defect-review recall; that alone establishes no useful detector.",
+    "Passing finite tests does not prove an intended-equivalent label.",
+    "Representation contract fixtures are source-only diagnostics, not additional accuracy data."
+  ]
+}

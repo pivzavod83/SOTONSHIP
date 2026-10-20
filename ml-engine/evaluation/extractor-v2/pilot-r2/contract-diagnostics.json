@@ -1,0 +1,1092 @@
+{
+  "artifact": "Source-only contract diagnostics, not accuracy evaluation",
+  "contractFixturesSha256": "c45051d22a8b35e0e55462f9c6ae2c949bb24934f69d87fd72b1bf05da1bd4bd",
+  "fixtureCount": 8,
+  "passedContracts": 8,
+  "failedContracts": 0,
+  "results": [
+    {
+      "fixtureId": "return-absolute-value",
+      "property": "IR_DIFFERENT",
+      "passed": true,
+      "v1NumericFeaturesIdentical": true,
+      "v2NumericFeaturesIdentical": false,
+      "v2StructuralFingerprintsIdentical": false,
+      "v2Statuses": [
+        "SUPPORTED",
+        "SUPPORTED"
+      ],
+      "reassignmentTracked": null,
+      "v2Coverage": [
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 14,
+            "edges": 35,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 6,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 15,
+            "edges": 38,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 6,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        }
+      ]
+    },
+    {
+      "fixtureId": "arithmetic-operator",
+      "property": "IR_DIFFERENT",
+      "passed": true,
+      "v1NumericFeaturesIdentical": false,
+      "v2NumericFeaturesIdentical": false,
+      "v2StructuralFingerprintsIdentical": false,
+      "v2Statuses": [
+        "SUPPORTED",
+        "SUPPORTED"
+      ],
+      "reassignmentTracked": null,
+      "v2Coverage": [
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 14,
+            "edges": 35,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 6,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 14,
+            "edges": 35,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 6,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        }
+      ]
+    },
+    {
+      "fixtureId": "ordered-receiver-and-argument",
+      "property": "IR_DIFFERENT",
+      "passed": true,
+      "v1NumericFeaturesIdentical": true,
+      "v2NumericFeaturesIdentical": false,
+      "v2StructuralFingerprintsIdentical": false,
+      "v2Statuses": [
+        "SUPPORTED",
+        "SUPPORTED"
+      ],
+      "reassignmentTracked": null,
+      "v2Coverage": [
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 14,
+            "edges": 35,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 6,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 14,
+            "edges": 35,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 6,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        }
+      ]
+    },
+    {
+      "fixtureId": "multiline-statement",
+      "property": "IR_SAME",
+      "passed": true,
+      "v1NumericFeaturesIdentical": false,
+      "v2NumericFeaturesIdentical": true,
+      "v2StructuralFingerprintsIdentical": true,
+      "v2Statuses": [
+        "SUPPORTED",
+        "SUPPORTED"
+      ],
+      "reassignmentTracked": null,
+      "v2Coverage": [
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 14,
+            "edges": 35,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 6,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 14,
+            "edges": 35,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 9,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        }
+      ]
+    },
+    {
+      "fixtureId": "identifier-renaming",
+      "property": "IR_SAME",
+      "passed": true,
+      "v1NumericFeaturesIdentical": false,
+      "v2NumericFeaturesIdentical": true,
+      "v2StructuralFingerprintsIdentical": true,
+      "v2Statuses": [
+        "SUPPORTED",
+        "SUPPORTED"
+      ],
+      "reassignmentTracked": null,
+      "v2Coverage": [
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 14,
+            "edges": 35,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 6,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 14,
+            "edges": 35,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 6,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        }
+      ]
+    },
+    {
+      "fixtureId": "unsupported-call",
+      "property": "ABSTAIN_SECOND",
+      "passed": true,
+      "v1NumericFeaturesIdentical": true,
+      "v2NumericFeaturesIdentical": false,
+      "v2StructuralFingerprintsIdentical": false,
+      "v2Statuses": [
+        "SUPPORTED",
+        "ABSTAIN"
+      ],
+      "reassignmentTracked": null,
+      "v2Coverage": [
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 14,
+            "edges": 35,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 6,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "PARTIAL",
+            "nodes": 15,
+            "edges": 38,
+            "issues": [
+              {
+                "code": "JAVA_UNSUPPORTED_CALL",
+                "message": "Unsupported call BigDecimal.unreviewedOperation().",
+                "span": {
+                  "start_line": 5,
+                  "end_line": 5,
+                  "start_column": 17,
+                  "end_column": 36
+                },
+                "severity": "ERROR"
+              },
+              {
+                "code": "JAVA_RETURN_TYPE_MISMATCH",
+                "message": "Unsupported return conversion.",
+                "span": {
+                  "start_line": 6,
+                  "end_line": 6,
+                  "start_column": 2,
+                  "end_column": 3
+                },
+                "severity": "ERROR"
+              }
+            ],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 6,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        }
+      ]
+    },
+    {
+      "fixtureId": "reassignment-kills-constant",
+      "property": "REASSIGNMENT_TRACKED",
+      "passed": true,
+      "v1NumericFeaturesIdentical": true,
+      "v2NumericFeaturesIdentical": false,
+      "v2StructuralFingerprintsIdentical": false,
+      "v2Statuses": [
+        "SUPPORTED",
+        "SUPPORTED"
+      ],
+      "reassignmentTracked": true,
+      "v2Coverage": [
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 16,
+            "edges": 40,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 7,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 16,
+            "edges": 40,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 7,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        }
+      ]
+    },
+    {
+      "fixtureId": "observable-output-selection",
+      "property": "IR_DIFFERENT",
+      "passed": true,
+      "v1NumericFeaturesIdentical": true,
+      "v2NumericFeaturesIdentical": false,
+      "v2StructuralFingerprintsIdentical": false,
+      "v2Statuses": [
+        "SUPPORTED",
+        "SUPPORTED"
+      ],
+      "reassignmentTracked": null,
+      "v2Coverage": [
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 19,
+            "edges": 50,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 7,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        },
+        {
+          "cobol": {
+            "status": "COMPLETE",
+            "nodes": 17,
+            "edges": 26,
+            "issues": [],
+            "details": {
+              "compiler_profile": "GnuCOBOL_3_2_scalar_DISPLAY_subset",
+              "extraction_only": true,
+              "coverage": {
+                "logical_statements": 4,
+                "consumed_statements": 4,
+                "unconsumed_statements": 0
+              },
+              "input_count": 0,
+              "output_count": 1,
+              "limitations": [
+                "COMPLETE means supported syntax was represented; it is not a compiler, execution result, or equivalence proof.",
+                "Unsupported dialect, storage or statement forms generate issues."
+              ]
+            },
+            "isProof": false,
+            "codeExecuted": false
+          },
+          "java": {
+            "status": "COMPLETE",
+            "nodes": 19,
+            "edges": 50,
+            "issues": [],
+            "details": {
+              "extractor": "java-scalar-ast-v2",
+              "profile": "single class, scalar methods, typed locals, supported arithmetic/library calls, if/else and while",
+              "fullJavaCompiler": false,
+              "codeExecuted": false,
+              "imports": [
+                "java.math.BigDecimal"
+              ],
+              "class_name": "Program",
+              "methods": [
+                {
+                  "name": "run",
+                  "returnType": "BigDecimal",
+                  "node": "n1",
+                  "span": {
+                    "start_line": 3,
+                    "end_line": 7,
+                    "start_column": 2,
+                    "end_column": 3
+                  }
+                }
+              ],
+              "inputCount": 2,
+              "outputCount": 0
+            },
+            "isProof": false,
+            "codeExecuted": false
+          }
+        }
+      ]
+    }
+  ],
+  "implementationHashes": {
+    "scripts/benchmark_extractor_v2.py": "21100c6aad314301d0ca02f4aa1a64851632e994ad248cf98ff86285a36655ae",
+    "ml_engine/defect_features.py": "777de1500e54ab9c314fcaca89cd03188c1a9ed5d7d8bc462594c61898d3a04d",
+    "ml_engine/defect_features_v2.py": "cfbd906fd83e4d41b628719de263f8a48fc834156094bc59048e8ea829691a35",
+    "ml_engine/semantic_ir.py": "0415a42889cc7d39b779d09a5f1bfdc8f0c02283bc51406e22a6d63aba564fa0",
+    "ml_engine/java_extractor_v2.py": "e5133e89b862c4443e15ae0b088d9c1f7e39af455eceddc5a9a2be25501b7ab1",
+    "ml_engine/cobol_extractor_v2.py": "68e71eb02e3029ec883dc7445a60271c67ff77e0ba3350489c5c5e9c8d2f71e1",
+    "evaluation/extractor-v2/contract-fixtures.json": "c45051d22a8b35e0e55462f9c6ae2c949bb24934f69d87fd72b1bf05da1bd4bd"
+  },
+  "codeExecuted": false,
+  "modelTrained": false,
+  "accuracyDatasetChanged": false
+}
