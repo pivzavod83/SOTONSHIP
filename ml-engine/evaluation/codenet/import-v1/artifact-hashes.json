@@ -1,0 +1,16 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "ml-engine/evaluation/codenet/import-v1/download-receipt.json": "35e09d5a59b7d243c90c739a8519fddc9a8412db3fb5ae0b6f10999389ca6b09",
+    "ml-engine/evaluation/codenet/import-v1/extractor-coverage.json": "298b7c6d172a2533baf1a603d43bc341915a904e584a0bbb5725d9525dde11b9",
+    "ml-engine/evaluation/codenet/import-v1/inventory.json": "a8d7c32f4f9b15526504fbabe11542d40234afe55ef7f888430eb70bc0ea55c0",
+    "ml-engine/evaluation/codenet/import-v1/supporting-metadata.json": "877270e948905eecafc1251159e6672cfc86f868bc3dad0a9f5876cbd8133312",
+    "ml-engine/ml_engine/codenet_corpus.py": "b07cd7ac74514d5aec84f372048b99e54c8ae173aac8550358fef5a4fa8487bc",
+    "ml-engine/scripts/audit_codenet_coverage.py": "a6c0422401042e0353eac91d35a443881d30df3b0c6956abdf3b40b4781710d1",
+    "ml-engine/scripts/prepare_codenet.py": "45ac63c845bcbd16c0cb0f5663e2e87f6998edf9c0f349fe724a42e9b495fd71",
+    "ml-engine/tests/test_codenet_corpus.py": "ce48023b36053329ef35ad2a20e5d387792179f81ed3932da9915bc0c7513056",
+    "ml-engine/tests/test_codenet_coverage.py": "677c27da0be6d5db6324585d16f552f446a16a0651d5fecc12fbfba4a3772a77"
+  },
+  "schemaVersion": "codenet-import-coverage-evidence-v1",
+  "scope": "Post-collection identity record for acquisition and source-only coverage; not preregistered classifier performance."
+}

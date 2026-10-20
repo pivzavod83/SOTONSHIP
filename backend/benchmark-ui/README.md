@@ -22,6 +22,14 @@ commit. Research entries link to peer-reviewed papers and clearly distinguish
 proposed experiments from trained models. The failure inspector shows a stored,
 source-bound runtime discrepancy, not a newly executed program.
 
+The defect pilot contains **40 pairs across ten source families**: 24 grouped
+out-of-fold predictions, eight validation pairs and eight reused regression
+pairs. Use **View 24-pair cross-validation** to inspect the larger development
+assessment. These partitions remain separate; none is presented as a new blind
+test. The branch link follows the checked-out Git branch unless the catalog
+caller supplies an explicit branch override. Detached or unavailable branch
+information stays unavailable rather than showing a stale branch.
+
 Metrics are read from committed JSON reports, never invented or recomputed by
 training. Refresh reloads evidence; downloading a snapshot exports the catalog.
 The dashboard cannot train models, execute submitted source, approve a

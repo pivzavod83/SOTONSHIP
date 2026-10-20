@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { readFile, mkdtemp, mkdir, writeFile, rm, cp } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
+import { execFileSync } from 'node:child_process';
 import { buildCatalog, REPORT_FILES } from '../benchmark-ui/catalog.mjs';
 
 const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
@@ -20,9 +21,52 @@ test('catalog separates all recorded defect and matching versions without invent
   assert.equal(catalog.versions.some(item => item.id.includes('pilot-r1')), false);
   assert.equal(catalog.methodology.trainingPerformed, false);
   assert.equal(catalog.methodology.inferencePerformed, false);
-  assert.equal(catalog.repository.branch, 'research/benchmark-dashboard');
-  assert.match(catalog.repository.branchUrl, /\/tree\/research\/benchmark-dashboard$/);
+  const currentBranch = execFileSync('git', ['-C', repoRoot, 'symbolic-ref', '--quiet', '--short', 'HEAD'], { encoding: 'utf8' }).trim();
+  assert.equal(catalog.repository.branch, currentBranch);
+  assert.equal(catalog.repository.branchUrl, `https://github.com/pivzavod83/SOTONSHIP/tree/${currentBranch}`);
   assert.equal(catalog.generatedAt, '2026-10-20T00:00:00.000Z');
+});
+
+test('explicit branch override is preserved and defect pilot denominators remain separate', async () => {
+  const catalog = await buildCatalog({ repoRoot, branch: 'experiment/explicit-branch' });
+  assert.equal(catalog.repository.branch, 'experiment/explicit-branch');
+  assert.match(catalog.repository.branchUrl, /\/tree\/experiment\/explicit-branch$/);
+  assert.ok(catalog.versions.every(item => item.source.branchUrl === catalog.repository.branchUrl));
+  assert.deepEqual(catalog.methodology.defectPilot, {
+    totalPairs: 40, sourceFamilies: 10, groupedOutOfFoldPairs: 24,
+    validationPairs: 8, reusedRegressionPairs: 8, freshBlindTest: false,
+    note: 'Forty total synthetic pairs: 24 grouped out-of-fold, eight validation and eight reused regression pairs. Keep the assessments separate; these are not forty independent test examples.',
+  });
+  for (const item of catalog.versions.filter(item => item.task === 'defect')) {
+    assert.equal(item.assessments.find(assessment => assessment.id === 'regression').pairs, 8);
+  }
+});
+
+test('CodeNet readiness projects recorded source coverage without inventing defect metrics or model versions', async () => {
+  const catalog = await catalogPromise;
+  const inventory = await json('ml-engine/evaluation/codenet/import-v1/inventory.json');
+  const recorded = await json('ml-engine/evaluation/codenet/import-v1/extractor-coverage.json');
+  const readiness = catalog.codeNetReadiness;
+  assert.equal(readiness.counts.cobolSources, inventory.sourceFileCount.COBOL);
+  assert.equal(readiness.counts.javaSources, inventory.sourceFileCount.Java);
+  assert.equal(readiness.counts.selectedPairs, recorded.selectedPairs);
+  assert.equal(readiness.counts.selectedPairs, 650);
+  assert.equal(readiness.counts.selectedPairProblemIds, 325);
+  for (const profile of ['FREE', 'FIXED']) {
+    assert.equal(readiness.profiles[profile].completePairs, recorded.profileResults[profile].bothFrontendsComplete);
+    assert.equal(readiness.profiles[profile].completePairs, 0);
+    assert.equal(readiness.profiles[profile].abstainedPairs, 650);
+  }
+  assert.equal(readiness.accuracy, null);
+  assert.equal(readiness.recall, null);
+  assert.equal(readiness.semanticLabels, 'UNKNOWN');
+  assert.equal(readiness.trainingEligible, false);
+  assert.equal(readiness.modelInferencePerformed, false);
+  assert.equal(readiness.status, 'PARSER_SUPPORT_REQUIRED');
+  assert.equal(catalog.versions.length, 11);
+  assert.equal(catalog.versions.some(item => /codenet/i.test(item.id)), false);
+  assert.match(readiness.documentationUrl, /\/blob\/[0-9a-f]{40}\/ml-engine\/evaluation\/codenet\/README\.md$/);
+  assert.ok(Object.values(readiness.sources).every(item => item.reportPath.startsWith('ml-engine/evaluation/codenet/import-v1/')));
 });
 
 test('defect metrics bind to recorded reports and preserve unknown versus zero', async () => {
@@ -137,6 +181,9 @@ test('a corrupted hash-bound model cannot retain verified integrity', async () =
       'ml-engine/evaluation/extractor-v2/pilot-r2/validation-evaluation.json',
       'ml-engine/evaluation/synthetic-pilot/batch-03-f005-r2/runtime-audit-2026-10-18/artifact-hashes.json',
       'ml-engine/evaluation/synthetic-pilot/batch-03-f005-r2/runtime-audit-2026-10-18/source-hashes.json',
+      'ml-engine/evaluation/codenet/import-v1/inventory.json',
+      'ml-engine/evaluation/codenet/import-v1/extractor-coverage.json',
+      'ml-engine/evaluation/codenet/import-v1/supporting-metadata.json',
     ];
     extra.forEach(file => files.add(file));
     for (const directory of ['cv-v2', 'cv-v3-fold-ensemble', 'cv-v4-candidates']) {
@@ -158,6 +205,8 @@ test('a corrupted hash-bound model cannot retain verified integrity', async () =
     assert.equal(source.integrity, 'unverified');
     assert.equal(source.checks.find(check => check.path.endsWith('defect_model_v1.json')).verified, false);
     assert.equal(corrupted.repository.commit, null);
+    assert.equal(corrupted.repository.branch, null);
+    assert.equal(corrupted.repository.branchUrl, null);
     assert.equal(source.commitUrl, null);
   } finally { await rm(scratch, { recursive: true, force: true }); }
 });

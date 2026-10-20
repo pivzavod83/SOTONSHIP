@@ -82,6 +82,16 @@ The local browser workbench is a backend developer tool in `backend/dev-ui/`, st
 
 ## Validation
 
+CodeNet acquisition and coverage evidence live in `ml-engine/evaluation/codenet/`.
+The offline importer selectively retains COBOL, Java for COBOL-containing problems,
+metadata and contracts from the official archive; raw bytes remain in the ignored
+corpus cache. Same-problem programs and same-user Wrong Answer→Accepted histories
+are auxiliary candidates, not established translation pairs or defect labels.
+Keep semantic labels unknown and training eligibility false until contracts,
+witnesses and review exist. Source-only FREE/FIXED probes measure extractor
+coverage, never model accuracy or compilation validity. Preserve archive/source
+hashes, duplicate-cluster information and the CDLA-Permissive-2.0 dataset notice.
+
 The separate read-only benchmark dashboard is `backend/benchmark-ui/`, launched
 with `npm run benchmarks` on loopback port 3010. It catalogs committed reports,
 research and proposed experiments; never train or execute source from its routes.

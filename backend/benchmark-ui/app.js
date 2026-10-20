@@ -60,7 +60,7 @@
       state.catalog = catalog;
       state.research = result[1].status === 'fulfilled' ? result[1].value : null;
       state.researchError = result[1].status === 'rejected' ? result[1].reason.message : null;
-      renderRepository(); renderStats(); renderComparison(); renderRegistry(); renderCase(); renderResearch();
+      renderRepository(); renderCodeNetReadiness(); renderStats(); renderComparison(); renderRegistry(); renderCase(); renderResearch();
       $('#loading').hidden = true; $('#content').hidden = false;
       navigate(location.hash.slice(1));
     } catch (error) {
@@ -97,6 +97,15 @@
     $('#overview-stats').innerHTML = stats.map(s => `<article class="stat"><div class="stat-label">${escape(s.label)}</div><div class="stat-value ${s.color || ''}">${escape(s.value)}<small>${escape(s.unit)}</small></div><p>${escape(s.note)}</p></article>`).join('');
     const contracts = state.catalog.contracts;
     $('#contract-summary').innerHTML = contracts ? `<span><strong>${escape(contracts.passed)} / ${escape(contracts.fixtureCount)} extractor contracts passed</strong> · ${escape(contracts.scope || 'Representation diagnostics, not model accuracy')}</span>${link(contracts.source?.reportUrl, 'Inspect diagnostics')}` : '';
+  }
+
+  function renderCodeNetReadiness() {
+    const panel = $('#codenet-readiness'), evidence = state.catalog.codeNetReadiness;
+    panel.hidden = !evidence;
+    if (!evidence) return;
+    const counts = evidence.counts || {}, profiles = evidence.profiles || {};
+    const count = value => finite(value) ? Number(value).toLocaleString('en-GB') : '—';
+    panel.innerHTML = `<div class="readiness-heading"><div><span class="eyebrow">CODENET / SOURCE-ONLY READINESS</span><h3>${evidence.status === 'PARSER_SUPPORT_REQUIRED' ? 'Dataset acquired. Broader parser support needed.' : 'Dataset acquired. Behavioral labels still needed.'}</h3></div><span class="outline-badge amber">NOT AN ACCURACY BENCHMARK</span></div><p><strong>${count(counts.selectedPairs)} source-pair comparisons</strong> across ${count(counts.selectedPairProblemIds)} problem IDs. Both frontends complete: ${['FREE', 'FIXED'].map(profile => `${profile} ${count(profiles[profile]?.completePairs)} / ${count(profiles[profile]?.pairs)}`).join(' · ')}.</p><p>${count(counts.cobolSources)} COBOL sources · ${count(counts.javaSources)} Java sources · ${count(counts.problemIds)} problem IDs acquired. ${count(counts.javaRepairCandidates)} Java repair-history candidates remain unlabelled.</p><p><strong>Model accuracy and defect recall: not measured.</strong> Labels are unknown; no model inference, training or source execution occurred. Same-problem submissions are not established translations. Duplicate groups and cross-corpus overlap still need review.</p><div class="source-links">${link(evidence.documentationUrl, 'Read readiness report')}${link(evidence.sources?.inventory?.reportUrl, 'Inventory JSON')}${link(evidence.sources?.coverage?.reportUrl, 'Coverage JSON')}${link(evidence.sources?.supportingMetadata?.reportUrl, 'Supporting metadata')}</div>`;
   }
 
   function renderComparison() {
@@ -241,6 +250,10 @@
   });
   $('#retry-button').addEventListener('click', load);
   $('#assessment-select').addEventListener('change', event => { state.assessment = event.target.value; renderComparison(); });
+  $('#show-pilot-cv').addEventListener('click', () => {
+    state.task = 'defect'; state.assessment = 'cv'; renderComparison();
+    $('#assessment-select').focus();
+  });
   $('#version-search').addEventListener('input', renderRegistry);
   $('#registry-task').addEventListener('change', renderRegistry);
   $('#registry-status').addEventListener('change', renderRegistry);

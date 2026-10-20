@@ -11,6 +11,7 @@ const EXTRACTOR = 'ml-engine/evaluation/extractor-v2/pilot-r2';
 const MATCHING = 'ml-engine/evaluation/paired-code';
 const DATASET = 'ml-engine/evaluation/synthetic-pilot/pilot-10-r3/dataset.json';
 const AUDIT = 'ml-engine/evaluation/synthetic-pilot/batch-03-f005-r2/runtime-audit-2026-10-18';
+const CODENET = 'ml-engine/evaluation/codenet/import-v1';
 const metricKeys = ['accuracy', 'precision', 'recall', 'f1', 'top1', 'top3', 'top5', 'mrr', 'hitAt1', 'hitAt3', 'reviewWorkload', 'missedDefects'];
 const digest = value => createHash('sha256').update(value).digest('hex');
 const number = value => typeof value === 'number' && Number.isFinite(value) ? value : null;
@@ -32,13 +33,12 @@ export const REPORT_FILES = Object.freeze({
 export async function buildCatalog({
   repoRoot,
   repositoryUrl = 'https://github.com/pivzavod83/SOTONSHIP',
-  branch = 'research/benchmark-dashboard',
+  branch: requestedBranch,
   generatedAt = new Date().toISOString(),
 } = {}) {
   if (!repoRoot) throw new TypeError('repoRoot is required');
   const root = path.resolve(repoRoot);
   const url = repositoryUrl.replace(/\/$/, '');
-  const branchUrl = `${url}/tree/${encodePath(branch)}`;
   const cache = new Map();
   const loadBytes = file => {
     if (!cache.has(file)) cache.set(file, readFile(path.join(root, file)));
@@ -50,6 +50,8 @@ export async function buildCatalog({
     catch { return null; }
   };
   const commit = await git(['rev-parse', 'HEAD']);
+  const branch = requestedBranch ?? await git(['symbolic-ref', '--quiet', '--short', 'HEAD']);
+  const branchUrl = branch ? `${url}/tree/${encodePath(branch)}` : null;
   const commitUrl = commit ? `${url}/commit/${commit}` : null;
   const checks = async entries => Promise.all(entries.map(async ([file, expected]) => {
     let actual = null;
@@ -64,7 +66,7 @@ export async function buildCatalog({
     return {
       branchUrl, commit: reportCommit, commitUrl: reportCommit ? `${url}/commit/${reportCommit}` : null,
       reportPath: file,
-      reportUrl: `${url}/blob/${reportCommit ?? encodePath(branch)}/${encodePath(file)}`,
+      reportUrl: reportCommit || commit || branch ? `${url}/blob/${reportCommit ?? commit ?? encodePath(branch)}/${encodePath(file)}` : null,
       sha256: digest(await loadBytes(file)),
       integrity: hasReportBinding && contentChecks.every(check => check.verified) ? 'verified' : 'unverified',
       integrityScope: hasReportBinding ? 'Compared with recorded SHA-256 bindings; not a semantic or statistical validity claim.'
@@ -304,6 +306,43 @@ export async function buildCatalog({
   };
   const contractSource = await source(`${EXTRACTOR}/contract-diagnostics.json`, v2Freeze.contractAuditSha256,
     Object.entries(v2Freeze.implementationHashes).map(([file, hash]) => [`ml-engine/${file}`, hash]));
+  const [codeNetInventory, codeNetCoverage, codeNetMetadata] = await Promise.all([
+    load(`${CODENET}/inventory.json`), load(`${CODENET}/extractor-coverage.json`), load(`${CODENET}/supporting-metadata.json`),
+  ]);
+  if (codeNetInventory.stage !== 'INVENTORIED' || codeNetCoverage.semanticLabelStatus !== 'UNKNOWN'
+      || codeNetInventory.defectLabelsAssigned !== 0 || codeNetCoverage.defectLabelsAssigned !== 0
+      || codeNetCoverage.accuracy !== null || codeNetCoverage.recall !== null
+      || [codeNetInventory, codeNetCoverage, codeNetMetadata].some(report => report.sourcesExecuted !== false || report.trainingEligible !== false)
+      || codeNetCoverage.modelInferencePerformed !== false || codeNetCoverage.modelTrained !== false
+      || codeNetCoverage.modelsLoaded !== false || codeNetInventory.modelTrained !== false
+      || codeNetCoverage.sourceArchive.sha256 !== codeNetInventory.sourceArchive.sha256
+      || codeNetMetadata.sourceArchiveSha256 !== codeNetInventory.sourceArchive.sha256) {
+    throw new Error('CodeNet source-only readiness contract changed; an explicit reviewed adapter is required.');
+  }
+  const codeNetProfiles = Object.fromEntries(['FREE', 'FIXED'].map(profile => {
+    const recorded = codeNetCoverage.profileResults[profile];
+    return [profile, { pairs: recorded.pairs, completePairs: recorded.bothFrontendsComplete, abstainedPairs: recorded.abstainedPairs }];
+  }));
+  const codeNetReadiness = {
+    kind: 'SOURCE_ONLY_READINESS',
+    status: Object.values(codeNetProfiles).every(profile => profile.completePairs === 0) ? 'PARSER_SUPPORT_REQUIRED' : 'LABEL_VALIDATION_REQUIRED',
+    collectionDate: codeNetInventory.collectionDate,
+    counts: { cobolSources: codeNetInventory.sourceFileCount.COBOL, javaSources: codeNetInventory.sourceFileCount.Java,
+      problemIds: codeNetInventory.problemFamilyCount, candidateProblemIds: codeNetInventory.crossLanguageCandidateFamilyCount,
+      javaRepairCandidates: codeNetInventory.javaWrongAnswerToAcceptedHistoryCount,
+      selectedPairs: codeNetCoverage.selectedPairs, selectedPairProblemIds: codeNetCoverage.selectedPairProblemCount },
+    profiles: codeNetProfiles,
+    sampleProblemIds: codeNetMetadata.sampleContracts.withSampleInputAndOutput,
+    upstreamProblemGroups: codeNetMetadata.duplicateReadiness.upstreamClusterGroupsAmongRetainedProblems,
+    crossCorpusOverlapAuditComplete: codeNetMetadata.duplicateReadiness.crossCorpusOverlapAuditComplete,
+    independenceEstablished: codeNetMetadata.duplicateReadiness.independenceEstablished,
+    semanticLabels: 'UNKNOWN', accuracy: null, recall: null, trainingEligible: false,
+    sourcesExecuted: false, modelInferencePerformed: false,
+    note: 'Source coverage only. Same-problem programs are not established translations; judge outcomes and repair histories are not migration-defect labels.',
+    documentationUrl: commit ? `${url}/blob/${commit}/ml-engine/evaluation/codenet/README.md` : null,
+    sources: { inventory: await source(`${CODENET}/inventory.json`), coverage: await source(`${CODENET}/extractor-coverage.json`),
+      supportingMetadata: await source(`${CODENET}/supporting-metadata.json`) },
+  };
   return {
     schemaVersion: 1, generatedAt,
     repository: { url, branch, branchUrl, commit, commitUrl }, versions,
@@ -314,8 +353,14 @@ export async function buildCatalog({
       note: 'Eight representation contracts passed. This is extraction evidence, not eight accuracy samples or compiler validation.',
       abandonedAudit: { path: 'ml-engine/evaluation/extractor-v2/pilot-r1/contract-diagnostics.json',
         status: 'Pre-fit audit; no trained R1 version. Its issue was corrected before the R2 experiment.' } },
-    caseStudy,
+    caseStudy, codeNetReadiness,
     methodology: { readOnly: true, inferencePerformed: false, trainingPerformed: false,
+      defectPilot: { totalPairs: dataset.families.reduce((count, item) => count + item.variants.length, 0), sourceFamilies: dataset.families.length,
+        groupedOutOfFoldPairs: v2Oof['typed-v2'].reviewTriageIncludingAbstentions.pairs,
+        validationPairs: v2Validation['typed-v2'].reviewTriageIncludingAbstentions.pairs,
+        reusedRegressionPairs: v2Final.arms['typed-v2'].reviewTriageIncludingAbstentions.pairs,
+        freshBlindTest: false,
+        note: 'Forty total synthetic pairs: 24 grouped out-of-fold, eight validation and eight reused regression pairs. Keep the assessments separate; these are not forty independent test examples.' },
       metricUnits: 'Fractions in [0,1], except missedDefects which is a count; missing metrics are null.',
       acceptanceAuthority: false,
       warnings: ['Defect classification and program retrieval are different tasks. Never compare their scores as one accuracy measure.',
