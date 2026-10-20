@@ -1,4 +1,6 @@
-# COBOL-to-Java review corpus progress
+# Historical COBOL-to-Java review corpus progress
+
+This is the earlier CodeTransOcean import record, not the current model status. The retired node/risk evaluator mentioned by that plan has been removed. Current matching and synthetic-defect results are documented in [README.md](README.md); this imported corpus remains unreviewed and requires a compatible future evaluation protocol.
 
 ## Current state
 
@@ -12,15 +14,15 @@
 
 ## What this project can measure now
 
-The current pipeline can compare its advisory COBOL-to-Java code-region alignment and defect-risk ranking against completed human labels. The current application does not generate Java from COBOL. Its model outputs do not prove behavioral equivalence, and its scores must not approve a patch. The formal checker only reports a proof result when the input is within its explicitly supported profile; unsupported behavior stays unknown.
+This import was intended for future code-region alignment and defect-risk evaluation against completed human labels. The shipped program matcher does not implement that task; its outputs must not be substituted for defect labels. The application does not generate Java from COBOL. Model outputs do not prove behavioral equivalence or approve a patch. The formal checker only reports a proof result within its explicitly supported profile; unsupported behavior stays unknown.
 
-The evaluator will reject this corpus until each selected case has at least two independent reviewer votes and an adjudicated result with a named adjudicator and rationale. Do not fill those fields with model predictions. The corpus currently has only the held-out test split; it is not a training set. Keep it untouched while developing models or choosing thresholds.
+Each selected case requires at least two independent reviewer votes and an adjudicated result with a named adjudicator and rationale. Do not fill those fields with model predictions. The corpus has only the reserved test split; it is not a training set. Keep it untouched while developing models or choosing thresholds. No shipped evaluator currently supports this private-corpus schema.
 
 ## Next work
 
 1. Have COBOL and Java reviewers confirm which pairs correspond, identify any known calculation or behavior defects, and confirm source-format and dialect assumptions. If GNU COBOL 3.2 is not a reasonable compatibility profile for a sample, document the actual compiler profile or leave it unconfirmed.
 2. Have two qualified reviewers label each pair independently. Record graph-node mapping IDs, defect decisions, and disagreements. A qualified adjudicator resolves disagreements with a written rationale.
-3. Once labels are complete, evaluate the frozen test split with `ml_engine.evaluate_review_set`. Preserve the report, corpus hash, model hash, threshold decision, reviewer protocol, and code revision.
+3. Once labels are complete and a compatible model is available, implement a task-specific evaluator and freeze its protocol before assessing the test split. Preserve the report, corpus hash, model hash, threshold decision, reviewer protocol, and code revision.
 4. Before retraining, assemble separate authorized training and calibration corpora grouped by source application. Do not use these 88 test pairs for training or threshold selection.
 5. Add realistic held-out banking/CICS systems and tests for execution behavior. This small public benchmark slice is useful for pilot signal, not evidence of bank-scale coverage.
 

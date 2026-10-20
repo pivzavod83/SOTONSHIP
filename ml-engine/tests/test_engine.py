@@ -198,9 +198,3 @@ def test_optional_patch_is_not_required_for_analysis():
     assert verify_request(request)["formalProofStatus"] == SAT
     request["patchedJavaSource"] = ""
     assert verify_request(request)["formalProofStatus"] == SAT
-
-
-def test_legacy_review_cannot_report_program_matching_as_defect_accuracy(tmp_path):
-    from ml_engine.evaluate_review_set import evaluate
-    with pytest.raises(ValueError, match="does not predict those labels"):
-        evaluate(tmp_path / "review.json", "test")

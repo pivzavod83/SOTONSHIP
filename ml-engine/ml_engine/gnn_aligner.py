@@ -11,9 +11,7 @@ from time import perf_counter
 import networkx as nx
 import numpy as np
 
-from .paired_gnn import MODEL_PATH, encode_source, load_model, model_metadata
-
-MODEL_DIR = MODEL_PATH.parent
+from .paired_gnn import encode_source, load_model, model_metadata
 
 
 def align_sources(cobol_source: str, java_source: str, source_format: str = "AUTO") -> dict:

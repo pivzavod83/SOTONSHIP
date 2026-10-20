@@ -1,16 +1,14 @@
-# Archived workflow for future reviewed node/defect models
+# Human-reviewed corpus preparation
 
-The current paired-program model does not implement this task. Its evaluator explicitly refuses to report defect or statement-alignment accuracy from program-matching outputs. These review templates remain for future human-labelled research; they are not the training source used by the current GNN.
+The importer and review templates below prepare future human-labelled research data. The obsolete `ml_engine.evaluate_review_set` command was removed on the post-hackathon branch: it targeted a retired node-alignment/risk model and could not evaluate any shipped model. There is no replacement evaluator for this private-corpus schema yet.
 
-# Human-reviewed evaluation set
-
-The saved graph model and risk classifier were trained on generated data. Do not retrain or describe the scores as validated until an authorized, representative, human-reviewed corpus has been assembled and a held-out evaluation has been reported. This workflow evaluates the current model only; it never trains or modifies a model.
+The active GNN measures whole-program correspondence. The separate synthetic defect pilot has its own frozen dataset, protocol and failed evaluation. Neither can be evaluated as a human-reviewed statement mapper by using this template. Importing or completing reviewer labels does not train a model or establish accuracy.
 
 ## Protecting source code
 
 Keep real COBOL and Java outside Git, in an approved access-controlled location. Obtain authorization for evaluation and ML use, follow the code owner's retention and deletion requirements, and remove secrets and customer data only through an approved process. Do not copy production source into this repository. The corpus JSON references source files by relative path and SHA-256 so reviewers and reports can identify exact versions without embedding their contents in the manifest.
 
-No approved corpus is included with the repository. The JSON template is deliberately incomplete: its source files, hashes, reviewer identities, and adjudications must be replaced with authorized real review data before evaluation can run. Do not run the example command with the literal `path/to/approved-corpus.json` string.
+No approved corpus is included with the repository. The JSON template is deliberately incomplete: its source files, hashes, reviewer identities, and adjudications must be replaced with authorized real review data before it is eligible for a future, task-specific evaluation.
 
 Keep the completed manifest and its source files together in the approved access-controlled location. For JSONL datasets, the preparation command can create an **unreviewed draft**. It defaults every case to the test split and rejects output inside this repository. It supports generic paired JSONL and CodeTransOcean NicheTrans rows (`id`, `name`, `COBOL`, `Java`). Example for the CodeTransOcean COBOL-to-Java slice:
 
@@ -44,26 +42,19 @@ When using CodeTransOcean, cite Yan et al. (2023):
 - independent `reviewVotes` from at least two qualified reviewers, including each reviewer's defect decision and matched graph-node pairs;
 - a final `adjudication` with reviewer identity, rationale, resolved defect decision and resolved matches.
 
-Record disagreements rather than overwriting them. A qualified adjudicator reviews each disagreement, documents the rationale, and supplies the final labels. The report counts how often initial votes differed from adjudication. Cases with `PENDING` adjudication or fewer than two independent reviewer votes cannot be evaluated. The schema permits an empty vote list for an unreviewed draft; the evaluator enforces the stronger review requirement.
+Record disagreements rather than overwriting them. A qualified adjudicator reviews each disagreement, documents the rationale, and supplies the final labels. Cases with `PENDING` adjudication or fewer than two independent reviewer votes are not eligible as reviewed evaluation labels. The schema permits an empty vote list for an unreviewed draft; a future evaluator must enforce the stronger review requirement.
 
 For pair labels, use the node IDs in the exact output graph for that source hash (for example, `cobol:12` and `java:18`). The current graph builder is line-based; these IDs are graph node identifiers, not promised compiler source maps. Keep this limitation visible when reviewing mappings.
 
-The evaluator currently shares the verifier's 100,000-character / 1,500-line source limit and line-based graph extractor. It is suitable for bounded modules and pilot examples, not yet for arbitrary large enterprise portfolios. When a program is outside the formal proof profile, its proof result can remain `UNKNOWN`; its AI alignment/risk outputs can still be measured separately.
+The importer enforces a 100,000-character / 1,500-line source limit. These are bounded pilot modules, not arbitrary large enterprise portfolios. When a program is outside the formal proof profile, its proof result must remain `UNKNOWN`; a future model evaluation must distinguish unsupported programs from confirmed defects.
 
-## Split and evaluate
+## Plan a compatible evaluation
 
 Assign all modules from one application/system group to exactly one of `train`, `calibration`, or `test`. Never split individual source lines or near-duplicate modules across those groups. Use the calibration split to choose a risk threshold and freeze that threshold before inspecting test results. Keep the final test split untouched until the model and threshold are fixed.
 
-From `ml-engine/`, evaluate the frozen test split:
+Before evaluating a future model, implement an evaluator for its actual outputs and reviewed labels. Whole-program retrieval, binary defect classification and statement localization are different tasks. Choose operating thresholds using a calibration split before evaluating the test split. Do not substitute the retired legacy numeric risk field or synthetic-pilot labels for reviewed ground truth.
 
-```sh
-.venv/bin/python -m ml_engine.evaluate_review_set path/to/approved-corpus.json \
-  --split test --risk-threshold 0.5 --output evaluation-report.json
-```
-
-Replace both example paths with actual paths, for example `/approved/storage/review-corpus.json` and `/approved/storage/evaluation-report.json`. Choose the risk threshold using the calibration split before evaluating the test split; `0.5` is only an example value, not a validated operating threshold.
-
-The report records the corpus hash, saved model ID/hash, split, threshold, and resolved reviewer disagreements. It reports mapping precision/recall/F1 against an exact normalized-name baseline; defect-risk precision/recall/F1 and false negatives against the existing deterministic baseline; and risk/mapping results by dialect and pattern. A false negative is a reviewed defective case the model fails to flag. Group sizes and class balance must be read alongside every metric. Empty/small subgroups are not evidence of reliable performance.
+A future report should record the corpus hash, model ID/hash, split, threshold and resolved reviewer disagreements. Report precision/recall/F1, false negatives, simple baselines and results by dialect and pattern for the task actually implemented. A false negative is a reviewed defective case the model fails to flag. Group sizes and class balance must be read alongside every metric. Empty/small subgroups are not evidence of reliable performance.
 
 The score threshold is not automatically optimized. Select it on the calibration set for an agreed review capacity and acceptable miss rate; then run the test report once with that frozen threshold. Do not choose a threshold after looking at test results. Preserve reports, corpus hash, model hash, code revision, reviewer protocol, and threshold decision together in the approved evidence store.
 

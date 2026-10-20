@@ -127,3 +127,104 @@ The live check requires the API on port 3003 (`API_URL` overrides it). The
 original 143-pair matcher, reserved 23 families, proof engine and frozen source
 datasets are unchanged. All new extractor, training, integration, interface and
 documentation work is AI-assisted and needs human review.
+
+## Post-hackathon audit: 20 October 2026
+
+The cleanup on `post-hackathon-ideas` removes the retired private node/risk
+evaluator, its rejection-only test, an unused matching-module constant, an orphaned
+backend value object, write-only editor state and an unused browser demo alias.
+Active review, matching, verification and correction workflows remain. Historical
+trainers and models are still referenced by reproducibility tools, shared
+training utilities and compatibility tests; they are not dead code. Frozen
+datasets, weights, source snapshots, reports and once-only evaluation markers
+are retained unchanged.
+
+Cleanup validation: 413 Python tests, 165 backend tests, 27 extension tests and
+nine UI tests pass; the backend build and strict TypeScript unused-code checks
+pass. The Python total is one lower because the removed evaluator's rejection
+test was also removed. All 22 frozen defect-artifact hashes still match.
+
+The model's failure is not evidence that its binary labels should be flipped or
+that a larger model will work. Forty pairs represent ten source families. Only
+six families supply training examples; each retained fold fits 398 classifier
+features to 16 pairs from four families. The localizer has 135 features, and its
+many statement candidates are correlated observations. None of the training
+COBOL families contains a loop; the known final-test GCD family introduces one.
+These are coverage and representation limitations, not a new benchmark result.
+
+A source-only diagnostic, using newly written illustrative snippets rather than
+the evaluation set, found that both versions below produce identical candidate
+and program feature arrays in the frozen extractor:
+
+```java
+BigDecimal result = amount.subtract(fee);
+return result;
+```
+
+```java
+BigDecimal result = amount.subtract(fee);
+return result.abs();
+```
+
+The parser ignores the return statements, so a model receiving those features
+cannot distinguish these implementations even with more training examples.
+These snippets were not executed or added to training. Other source inspection
+found missing COBOL `FUNCTION ABS`/`MOD` features, dropped multiline remainder
+definitions, missing unary-negation features, incomplete receiving-variable/type
+tracking and width comparisons expressed in different units. The pair classifier
+also learns from in-sample localizer predictions; inner grouped cross-fitting is
+a candidate remedy for that stacking mismatch. The frozen v1 extractor has not
+been changed: fixes require a separately versioned implementation and evaluation.
+
+### Recommended next experiment
+
+1. Repair and independently check a v2 representation: statement boundaries,
+   declarations, signedness, decimal precision, storage behavior, return values,
+   unary operations, data dependencies and loop/control relationships. Preserve
+   source locations; compare function or dependency slices with their context.
+2. Review the six reproduced natural discrepancy families before admitting them
+   as labelled training data. Keep behavioral mismatches, compiler errors,
+   unsupported interfaces and inconclusive runs separate. Test agreement alone
+   is scoped evidence, not a universal equivalence label. Keep weak location
+   annotations separate from reviewed fault locations.
+3. Add independent source families and defect types, including harmless
+   equivalent rewrites. Group all translations, variants, fragments and near
+   clones of a source together. Ten variants of one algorithm are not ten
+   independent algorithms. Build learning curves by family count rather than
+   assume a required sample count or accuracy gain.
+4. Compare a compact, strongly regularized logistic baseline with shallow
+   gradient-boosted trees and, if feasible, frozen code embeddings plus a small
+   trained classifier. Select features, preprocessing and settings within the
+   fitting folds. Cross-fit localization scores used by the pair classifier.
+   Learn the ranker separately from the pair-level defect decision, and add
+   explicit unsupported/abstention behavior.
+5. Preserve the known eight-pair test as a regression set. Obtain new independent
+   holdout families before a new final assessment, freeze the representation,
+   weights and threshold, then evaluate once. Report precision, recall, false
+   alerts, localization Hit@k, per-family counts and abstention coverage. Compare
+   with constant predictions, semantic rules and the current frozen model.
+
+For this project, compiler-backed differential checks and supported Z3 queries
+should establish evidence; ML should prioritize suspicious functions and source
+locations for review. Inputs outside the current parser's coverage must not be
+treated as harmless. Future offline execution must retain the existing bounded,
+reviewed corpus workflow rather than expose arbitrary code execution through the
+HTTP API.
+
+Research supports these as candidates to test, not guaranteed improvements:
+
+- [Grinsztajn et al., NeurIPS 2022](https://proceedings.neurips.cc/paper_files/paper/2022/hash/0378c7692da36807bdec87ab043cdadc-Abstract-Datasets_and_Benchmarks.html)
+  motivate tree baselines for tabular features. Their medium-sized datasets do
+  not establish performance on our tiny COBOL corpus.
+- [Prokhorenkova et al., NeurIPS 2018](https://proceedings.neurips.cc/paper/2018/hash/14491b756b3a51daac41c24863285549-Abstract.html)
+  describe CatBoost, one candidate for nonlinear feature interactions.
+- [Northcutt et al., JAIR 2021](https://jair.org/index.php/jair/article/view/12125)
+  provide methods for auditing noisy labels. With this weak model, disagreement
+  should trigger review, never automatic relabelling or removal of hard cases.
+- [Guo et al., ICLR 2021](https://arxiv.org/abs/2009.08366)
+  motivate data-flow-aware pretrained representations. Their results do not
+  establish COBOL-to-Java defect detection or justify training a large GNN on
+  ten families.
+
+The recommendations above have not been implemented or trained. Cleanup is not
+an accuracy improvement, and the recorded final result remains 1/8.

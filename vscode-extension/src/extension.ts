@@ -4,7 +4,7 @@ import { ApiClient, normalizeBackendUrl } from './api-client';
 import { isScopedEquivalent, proofMatchesSources, validateProofInputs, validateSource } from './contracts';
 import type { ProofInputs, VerificationCategory, VerificationRequest, VerificationResult } from './contracts';
 import type { MatchingRequest, MatchingResult, MatchingSourceFormat } from './matching-contracts';
-import { aiSourceHash, sameAiReviewBinding, validateAiReviewRequest, type AiReviewBinding, type AiReviewRequest, type AiReviewResult, type AiReviewSourceFormat } from './ai-review-contracts';
+import { aiSourceHash, sameAiReviewBinding, validateAiReviewRequest, type AiReviewBinding, type AiReviewResult, type AiReviewSourceFormat } from './ai-review-contracts';
 import type { FileLabel, PanelState, WorkbenchMessage } from './panel-state';
 import { getWebviewHtml } from './webview';
 
@@ -19,7 +19,7 @@ interface MatchingSnapshot {
   cobol: DocumentSnapshot; candidates: { candidateId: string; document: DocumentSnapshot }[];
   backendUrl: string; sourceFormat: MatchingSourceFormat;
 }
-interface AiReviewSnapshot { cobol: DocumentSnapshot; java: DocumentSnapshot; binding: AiReviewBinding; request: AiReviewRequest; }
+interface AiReviewSnapshot { cobol: DocumentSnapshot; java: DocumentSnapshot; binding: AiReviewBinding; }
 const categories: VerificationCategory[] = ['FX_CONVERSION', 'INTEREST_CALC', 'REMITTANCE_FEE', 'EXTERNAL_LIMIT_CASE'];
 
 /** Desktop adapter only: proof decisions remain in the independent backend. */
@@ -29,7 +29,6 @@ export class WorkbenchController implements vscode.Disposable {
   private readonly diagnostics = vscode.languages.createDiagnosticCollection('sotonship');
   private readonly output = vscode.window.createOutputChannel('SOTONSHIP Verifier');
   private files: Partial<Record<Role, vscode.Uri>> = {};
-  private baselineSnapshot?: Snapshot;
   private candidateSnapshot?: Snapshot;
   private matchingFiles: vscode.Uri[] = [];
   private matchingSnapshot?: MatchingSnapshot;
@@ -213,7 +212,7 @@ export class WorkbenchController implements vscode.Disposable {
     if (this.state.busy) throw new Error('Wait for the current verification to finish.');
     const bytes = await vscode.workspace.fs.readFile(vscode.Uri.joinPath(this.context.extensionUri, 'examples', 'penny-drift.json'));
     const demo = JSON.parse(Buffer.from(bytes).toString('utf8')) as VerificationRequest;
-    this.diagnostics.clear(); this.baselineSnapshot = undefined; this.candidateSnapshot = undefined;
+    this.diagnostics.clear(); this.candidateSnapshot = undefined;
     const cobol = await vscode.workspace.openTextDocument({ language: 'cobol', content: demo.cobolSource });
     const java = await vscode.workspace.openTextDocument({ language: 'java', content: demo.javaSource });
     const candidate = await vscode.workspace.openTextDocument({ language: 'java', content: demo.patchedJavaSource ?? '' });
@@ -297,7 +296,7 @@ export class WorkbenchController implements vscode.Disposable {
       const [cobol, java] = await Promise.all([this.document(this.files.cobol, 'COBOL source'), this.document(this.files.java, 'Java implementation')]);
       const moduleName = basename(cobol.uri.path).replace(/[\x00-\x1f/\\]/g, '_').slice(0, 160) || 'Selected-COBOL.cbl';
       const request = validateAiReviewRequest({ moduleName, cobolSource: cobol.text, javaSource: java.text, cobolSourceFormat: sourceFormat, analysisContext });
-      const snapshot: AiReviewSnapshot = { cobol, java, request, binding: { ...this.aiBinding(cobol, java, generation), backendUrl, sourceFormat, analysisContext } };
+      const snapshot: AiReviewSnapshot = { cobol, java, binding: { ...this.aiBinding(cobol, java, generation), backendUrl, sourceFormat, analysisContext } };
       if (signal.aborted || !await this.aiReviewUnchanged(snapshot)) throw new Error('Sources or AI review settings changed before upload. Run AI analysis again.');
       const result = await this.client({ backendUrl }).reviewPair(request, signal);
       const current = !signal.aborted && await this.aiReviewUnchanged(snapshot);
@@ -437,7 +436,7 @@ export class WorkbenchController implements vscode.Disposable {
         this.state.canApply = current && isScopedEquivalent(result) && proofMatchesSources(result, snapshot.cobol.text, snapshot.candidate!.text);
         if (current) this.diagnose(snapshot.candidate!.uri, result);
       } else {
-        this.baselineSnapshot = snapshot; this.state.result = result; this.state.resultStale = !current;
+        this.state.result = result; this.state.resultStale = !current;
         if (current) this.diagnose(snapshot.java.uri, result);
       }
       this.state.applied = false;
@@ -506,7 +505,7 @@ export class WorkbenchController implements vscode.Disposable {
       }
       this.diagnostics.clear(); this.state.result = result; this.state.resultStale = false;
       this.state.candidateResult = result; this.state.candidateStale = false; this.state.canApply = false; this.state.applied = true;
-      this.baselineSnapshot = undefined; this.candidateSnapshot = undefined;
+      this.candidateSnapshot = undefined;
       this.state.message = 'Verified fix applied to the Java editor. It remains unsaved: review it, save it when ready, or use Undo to restore the previous text.';
       this.output.appendLine(`Applied source-bound result ${result.id} to Java editor; no automatic save.`);
       this.publish(); return true;

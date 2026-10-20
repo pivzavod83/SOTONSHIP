@@ -191,7 +191,7 @@ def main() -> None:
     except (OSError, json.JSONDecodeError, ValueError) as error:
         parser.error(str(error))
     print(f"Created unreviewed draft: {path}")
-    print("All labels are pending; evaluation will reject this draft until it is independently reviewed and adjudicated.")
+    print("All labels are pending. Independent review and a task-specific evaluation protocol are required before use.")
 
 
 if __name__ == "__main__":

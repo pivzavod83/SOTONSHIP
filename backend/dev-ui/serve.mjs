@@ -82,7 +82,6 @@ export function createWorkbenchServer({ backendOrigin = process.env.BACKEND_ORIG
       if (url.search) return send(404, { message: 'Unknown route.' });
       if (url.pathname === '/evaluation' && request.method === 'GET') return send(200, await loadEvaluation());
       if (url.pathname === '/examples' && request.method === 'GET') return send(200, await examplesLoader());
-      if (url.pathname === '/demo' && request.method === 'GET') { const examples = await examplesLoader(); return send(200, examples.examples[1]); }
       const staticFile = staticFiles.get(url.pathname);
       if (staticFile && request.method === 'GET') return send(200, await readFile(resolve(uiRoot, staticFile[0])), staticFile[1]);
       const methods = proxyRoutes.get(url.pathname);
