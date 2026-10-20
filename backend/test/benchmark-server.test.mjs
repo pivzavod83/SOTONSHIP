@@ -75,3 +75,25 @@ test('report bytes must match the catalog hash at download time', async () => {
     assert.equal(changed.status, 409); assert.match(await changed.text(), /changed after catalog validation/);
   } finally { await close(server); await rm(root, { recursive: true, force: true }); }
 });
+
+test('parser report has a separate read-only download without increasing trained model count', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'parser-benchmark-test-'));
+  const relative = 'ml-engine/evaluation/parser-v3/codenet-r1/report.json';
+  await mkdir(join(root, 'ml-engine/evaluation/parser-v3/codenet-r1'), { recursive: true });
+  const bytes = Buffer.from('{"kind":"PARSER_FRONTEND_COVERAGE","accuracy":null}\n');
+  await writeFile(join(root, relative), bytes);
+  const sha256 = createHash('sha256').update(bytes).digest('hex');
+  const { server, url } = await start({ repoRoot: root, catalogLoader: async () => ({ versions: [],
+    parserExperiments: { versions: [{ id: 'parser-v3', source: { reportPath: relative, sha256 } }] },
+  }) });
+  try {
+    const response = await fetch(`${url}/api/catalog`), data = await response.json();
+    assert.equal(data.versions.length, 0);
+    assert.equal(data.parserExperiments.versions[0].source.localReportUrl, '/reports/parser-v3');
+    const report = await fetch(`${url}/reports/parser-v3`);
+    assert.equal(report.status, 200); assert.equal(await report.text(), bytes.toString());
+    assert.equal((await fetch(`${url}/reports/parser-v3`, { method: 'POST' })).status, 405);
+    await writeFile(join(root, relative), '{}');
+    assert.equal((await fetch(`${url}/reports/parser-v3`)).status, 409);
+  } finally { await close(server); await rm(root, { recursive: true, force: true }); }
+});

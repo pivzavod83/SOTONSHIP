@@ -1,0 +1,20 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "ml-engine/evaluation/parser-v3/codenet-r1/protocol.json": "3c7c9b9a23d8b8ae3e03a62d19926cfa009d7c51096cf61ec4c655442cfc820e",
+    "ml-engine/evaluation/parser-v3/codenet-r1/report.json": "fd705be0ac5c0c0caecd83f792bed15e1c730950b7286adccdf72a4128d4b2ab",
+    "ml-engine/ml_engine/cobol_extractor_v2.py": "68e71eb02e3029ec883dc7445a60271c67ff77e0ba3350489c5c5e9c8d2f71e1",
+    "ml-engine/ml_engine/java_extractor_v2.py": "e5133e89b862c4443e15ae0b088d9c1f7e39af455eceddc5a9a2be25501b7ab1",
+    "ml-engine/ml_engine/parser_frontends_v3.py": "dbc5a99bd349b0c6a9f860cb198bdb6fade98f5c653b14318488f68da7286e63",
+    "ml-engine/ml_engine/semantic_ir.py": "0415a42889cc7d39b779d09a5f1bfdc8f0c02283bc51406e22a6d63aba564fa0",
+    "ml-engine/parser-frontends/pom.xml": "339385680f844af9e8cc6ceedb152c79882affafea58a94c6fcfd4eb4082842a",
+    "ml-engine/parser-frontends/src/main/java/org/omul/parser/CobolFrontend.java": "fa50be8d7f85a194b58dce1b06c3a4825ae32c9c56f6250ae5eb729e3302f790",
+    "ml-engine/parser-frontends/src/main/java/org/omul/parser/JavaFrontend.java": "e2eb777726efda4f76506ac4d13ae0de3c7766e9c4aa311cc771055d600708db",
+    "ml-engine/parser-frontends/src/main/java/org/omul/parser/ParserMain.java": "af22d5c56aaf99db1c4e0280fd9463b7c4b95c1ac35535f49651a62ae980da14",
+    "ml-engine/parser-frontends/src/test/java/org/omul/parser/CobolFrontendTest.java": "71066cd024a4be1a87a6433d90c71dfd08b9bef2dd2da47519e4a4eb83985542",
+    "ml-engine/parser-frontends/src/test/java/org/omul/parser/JavaFrontendTest.java": "4bdc320b67e2c937dca0e5bc7bebfd271ea68d55c2834e2926c136d14735e10e",
+    "ml-engine/scripts/audit_codenet_coverage.py": "a6c0422401042e0353eac91d35a443881d30df3b0c6956abdf3b40b4781710d1",
+    "ml-engine/scripts/benchmark_parser_v3.py": "b6c4109844d8277c5f9fbfdabc5bf82aff3a8bc3b6eb3850bb3db9471b1dff23"
+  },
+  "scope": "Source-only parser coverage identity; no ML performance claim"
+}

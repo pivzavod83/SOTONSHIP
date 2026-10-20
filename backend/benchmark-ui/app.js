@@ -3,9 +3,9 @@
 (() => {
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-  const state = { catalog: null, research: null, task: 'defect', metric: 'accuracy', assessment: 'default', view: 'overview', detail: null, trigger: null, toastTimer: null };
+  const state = { catalog: null, research: null, task: 'defect', metric: 'accuracy', assessment: 'default', view: 'overview', parserProfile: 'FREE', parserDiagnosticLanguage: 'all', detail: null, trigger: null, toastTimer: null };
   const metricNames = { accuracy: 'Accuracy', precision: 'Precision', recall: 'Defect recall', f1: 'F1', top1: 'Top-1', mrr: 'MRR', hitAt1: 'Hit@1', hitAt3: 'Hit@3', reviewWorkload: 'Review workload', missedDefects: 'Missed defects' };
-  const viewNames = { overview: 'Overview', versions: 'Model registry', 'case-study': 'Failure inspector', research: 'Research & next steps' };
+  const viewNames = { overview: 'Overview', versions: 'Model registry', parsers: 'Parser experiments', 'case-study': 'Failure inspector', research: 'Research & next steps' };
   const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
   const list = value => Array.isArray(value) ? value : value == null ? [] : [value];
   const text = value => typeof value === 'string' ? value : value == null ? '' : JSON.stringify(value);
@@ -60,7 +60,7 @@
       state.catalog = catalog;
       state.research = result[1].status === 'fulfilled' ? result[1].value : null;
       state.researchError = result[1].status === 'rejected' ? result[1].reason.message : null;
-      renderRepository(); renderCodeNetReadiness(); renderStats(); renderComparison(); renderRegistry(); renderCase(); renderResearch();
+      renderRepository(); renderCodeNetReadiness(); renderStats(); renderComparison(); renderRegistry(); renderParsers(); renderCase(); renderResearch();
       $('#loading').hidden = true; $('#content').hidden = false;
       navigate(location.hash.slice(1));
     } catch (error) {
@@ -79,6 +79,7 @@
     const commitUrl = safeUrl(repo.commitUrl); if (commitUrl) $('#footer-commit').href = commitUrl; else $('#footer-commit').removeAttribute('href');
     $('#footer-commit').textContent = repo.commit ? `Revision ${repo.commit.slice(0, 8)} ↗` : 'Revision unavailable';
     $('#version-count').textContent = String(getVersions().length);
+    $('#parser-count').textContent = String(list(state.catalog.parserExperiments?.versions).length);
   }
 
   function renderStats() {
@@ -105,7 +106,34 @@
     if (!evidence) return;
     const counts = evidence.counts || {}, profiles = evidence.profiles || {};
     const count = value => finite(value) ? Number(value).toLocaleString('en-GB') : '—';
-    panel.innerHTML = `<div class="readiness-heading"><div><span class="eyebrow">CODENET / SOURCE-ONLY READINESS</span><h3>${evidence.status === 'PARSER_SUPPORT_REQUIRED' ? 'Dataset acquired. Broader parser support needed.' : 'Dataset acquired. Behavioral labels still needed.'}</h3></div><span class="outline-badge amber">NOT AN ACCURACY BENCHMARK</span></div><p><strong>${count(counts.selectedPairs)} source-pair comparisons</strong> across ${count(counts.selectedPairProblemIds)} problem IDs. Both frontends complete: ${['FREE', 'FIXED'].map(profile => `${profile} ${count(profiles[profile]?.completePairs)} / ${count(profiles[profile]?.pairs)}`).join(' · ')}.</p><p>${count(counts.cobolSources)} COBOL sources · ${count(counts.javaSources)} Java sources · ${count(counts.problemIds)} problem IDs acquired. ${count(counts.javaRepairCandidates)} Java repair-history candidates remain unlabelled.</p><p><strong>Model accuracy and defect recall: not measured.</strong> Labels are unknown; no model inference, training or source execution occurred. Same-problem submissions are not established translations. Duplicate groups and cross-corpus overlap still need review.</p><div class="source-links">${link(evidence.documentationUrl, 'Read readiness report')}${link(evidence.sources?.inventory?.reportUrl, 'Inventory JSON')}${link(evidence.sources?.coverage?.reportUrl, 'Coverage JSON')}${link(evidence.sources?.supportingMetadata?.reportUrl, 'Supporting metadata')}</div>`;
+    panel.innerHTML = `<div class="readiness-heading"><div><span class="eyebrow">CODENET / SOURCE-ONLY READINESS</span><h3>${evidence.status === 'PARSER_SUPPORT_REQUIRED' ? 'Dataset acquired. V2 extraction coverage is limited.' : 'Dataset acquired. Behavioral labels still needed.'}</h3></div><span class="outline-badge amber">NOT AN ACCURACY BENCHMARK</span></div><p><strong>${count(counts.selectedPairs)} source-pair comparisons</strong> across ${count(counts.selectedPairProblemIds)} problem IDs. Frozen V2 extractor completes both sides: ${['FREE', 'FIXED'].map(profile => `${profile} ${count(profiles[profile]?.completePairs)} / ${count(profiles[profile]?.pairs)}`).join(' · ')}.</p><p>${count(counts.cobolSources)} COBOL sources · ${count(counts.javaSources)} Java sources · ${count(counts.problemIds)} problem IDs acquired. ${count(counts.javaRepairCandidates)} Java repair-history candidates remain unlabelled.</p><p><strong>Model accuracy and defect recall: not measured.</strong> Labels are unknown; no model inference, training or source execution occurred. Same-problem submissions are not established translations. Duplicate groups and cross-corpus overlap still need review.</p><div class="source-links">${link(evidence.documentationUrl, 'Read readiness report')}${link(evidence.sources?.inventory?.reportUrl, 'Inventory JSON')}${link(evidence.sources?.coverage?.reportUrl, 'Coverage JSON')}${link(evidence.sources?.supportingMetadata?.reportUrl, 'Supporting metadata')}</div>`;
+  }
+
+  const parserMetricNames = { syntaxParsed: 'Syntax parsed', namesTypesResolved: 'Names / types resolved', semanticsModeled: 'Semantic representation complete' };
+  function parserMetric(record) {
+    if (!record || record.status === 'NOT_MEASURED' || !finite(record.count) || !finite(record.denominator)) return '<span class="parser-unmeasured">Not measured</span>';
+    const denominator = Number(record.denominator), count = Number(record.count);
+    return `<strong>${escape(count)} <small>/ ${escape(denominator)}</small></strong><span>${denominator > 0 ? percent(count / denominator) : 'No eligible sources'}${record.status && record.status !== 'MEASURED' ? ` · ${escape(record.status.replaceAll('_', ' ').toLowerCase())}` : ''}${finite(record.unknown) && finite(record.failed) ? `<br>${escape(record.failed)} failed · ${escape(record.unknown)} unknown` : ''}</span>`;
+  }
+
+  function renderParsers() {
+    const experiment = state.catalog.parserExperiments, panel = $('#parser-content');
+    if (!experiment) {
+      panel.innerHTML = '<article class="empty-state"><h2>Parser experiment not yet recorded</h2><p>No V3 report is available. The existing model reports remain unchanged.</p></article>';
+      return;
+    }
+    const versions = list(experiment.versions), latest = versions.find(item => item.id === 'parser-v3'), profile = state.parserProfile;
+    const latestProfile = latest?.profiles?.[profile];
+    const metrics = latestProfile?.metrics || {};
+    const diagnostics = list(latest?.failureExamples).filter(item => (!item.profile || item.profile === profile) && (state.parserDiagnosticLanguage === 'all' || item.language === state.parserDiagnosticLanguage));
+    const languageRows = list(latest?.languageResults).filter(item => !item.profile || item.profile === profile);
+    const totalExamples = list(latest?.failureExamples).filter(item => !item.profile || item.profile === profile).length;
+    panel.innerHTML = `<article class="parser-summary"><div><span class="eyebrow">${escape(latest?.status || 'NOT_RUN')}</span><h2>${escape(latest?.name || 'Parser V3 · compiler frontends')}</h2><p>${escape(latest?.summary || 'No completed run is recorded. Counts remain unavailable.')}</p></div><span class="outline-badge">SOURCE-ONLY EXPERIMENT</span></article>
+      <div class="parser-metric-grid">${Object.entries(parserMetricNames).map(([key, label], index) => `<article class="parser-metric"><span class="eyebrow">STAGE ${index + 1}</span><h3>${escape(label)}</h3><div>${parserMetric(metrics[key])}</div><p>${escape({ syntaxParsed: 'Both sources parsed without syntax errors under this explicit profile.', namesTypesResolved: 'Both sources have resolved names and types under the recorded analysis contract.', semanticsModeled: 'Both sources are fully represented by the shared semantic IR. This is separate from syntax support.' }[key])}</p></article>`).join('')}</div>
+      <article class="panel parser-comparison"><div class="parser-panel-heading"><h2>Version comparison</h2><span class="subtle-label">${escape(profile)} probe · full recorded pair denominator</span></div><div class="table-scroll"><table><caption class="sr-only">Parser coverage by version, with separate stage counts</caption><thead><tr><th>Parser experiment</th>${Object.values(parserMetricNames).map(label => `<th>${escape(label)}</th>`).join('')}<th>Scope</th></tr></thead><tbody>${versions.map(version => `<tr><td><strong>${escape(version.name)}</strong><div class="cohort-note">${escape(version.status)}</div></td>${Object.keys(parserMetricNames).map(key => `<td class="parser-table-metric">${parserMetric(version.profiles?.[profile]?.metrics?.[key])}</td>`).join('')}<td class="parser-scope-cell">${escape(version.scope || '')}</td></tr>`).join('')}</tbody></table></div><div class="panel-foot"><span>Not measured stays unavailable. It is never converted into a zero.</span><span>No defect accuracy or equivalence claim.</span></div></article>
+      <article class="panel parser-language-panel"><div class="parser-panel-heading"><h2>Individual source coverage</h2><span class="subtle-label">Unique sources · denominators differ from pairs</span></div><div class="table-scroll"><table><caption class="sr-only">Per-language coverage on unique source files</caption><thead><tr><th>Language / profile</th>${Object.values(parserMetricNames).map(label => `<th>${escape(label)}</th>`).join('')}</tr></thead><tbody>${languageRows.length ? languageRows.map(item => `<tr><td><strong>${escape(item.language)}</strong>${item.profile ? ` · ${escape(item.profile)}` : ''}<div class="cohort-note">${escape(item.note || '')}</div></td>${Object.keys(parserMetricNames).map(key => `<td class="parser-table-metric">${parserMetric(item.metrics?.[key])}</td>`).join('')}</tr>`).join('') : '<tr><td colspan="4">No source-level result recorded.</td></tr>'}</tbody></table></div></article>
+      <div class="parser-bottom-grid"><article class="panel parser-explanation"><span class="eyebrow">WHAT CHANGED</span><h2>Compiler frontends, then shared semantics.</h2><ul>${list(latest?.changes).map(item => `<li>${escape(item)}</li>`).join('')}</ul><h3>Limits that still matter</h3><ul>${list(latest?.limitations).map(item => `<li>${escape(item)}</li>`).join('')}</ul></article><article class="panel parser-explanation"><span class="eyebrow">REPRODUCIBLE EVIDENCE</span><h2>Inspect the recorded run.</h2><p>The web app reads the offline report. It cannot execute source, train a model, or approve a translation.</p>${latest?.source ? sourceBlock(latest.source) : '<p class="notice-line">No report available.</p>'}${link(experiment.protocolUrl, 'Protocol on GitHub', 'text-link')}${link(experiment.documentationUrl, 'Parser experiment documentation', 'text-link')}</article></div>
+      <article class="panel parser-diagnostics"><div class="parser-panel-heading"><div><span class="eyebrow">DIAGNOSTIC SAMPLE</span><h2>What still needs work</h2></div><label class="select-label">Language <select id="parser-diagnostic-language" aria-label="Parser diagnostic language"><option value="all" ${state.parserDiagnosticLanguage === 'all' ? 'selected' : ''}>All languages</option><option value="Java" ${state.parserDiagnosticLanguage === 'Java' ? 'selected' : ''}>Java</option><option value="COBOL" ${state.parserDiagnosticLanguage === 'COBOL' ? 'selected' : ''}>COBOL</option></select></label></div><p class="parser-diagnostic-count">${diagnostics.length} of ${totalExamples} recorded diagnostic examples for this profile. These examples are not a count of all failures.</p><div class="parser-diagnostic-list">${diagnostics.length ? diagnostics.map(item => `<details><summary><span>${escape(item.language)}${item.profile ? ` / ${escape(item.profile)}` : ''} · ${escape(item.status || item.stage || 'Diagnostic')}</span><code>${escape(item.path || item.submissionId || 'Source not identified')}${finite(item.line) ? `:${escape(item.line)}` : ''}</code></summary><p>${escape(item.message || 'No diagnostic message recorded.')}</p>${item.sourceUrl ? link(item.sourceUrl, 'Source on GitHub', 'text-link') : ''}</details>`).join('') : '<p class="parser-no-diagnostics">No diagnostic examples recorded for this selection. This does not establish complete coverage.</p>'}</div></article>`;
   }
 
   function renderComparison() {
@@ -250,6 +278,10 @@
   });
   $('#retry-button').addEventListener('click', load);
   $('#assessment-select').addEventListener('change', event => { state.assessment = event.target.value; renderComparison(); });
+  $('#parser-profile').addEventListener('change', event => { state.parserProfile = event.target.value; renderParsers(); });
+  $('#parser-content').addEventListener('change', event => {
+    if (event.target.id === 'parser-diagnostic-language') { state.parserDiagnosticLanguage = event.target.value; renderParsers(); $('#parser-diagnostic-language').focus(); }
+  });
   $('#show-pilot-cv').addEventListener('click', () => {
     state.task = 'defect'; state.assessment = 'cv'; renderComparison();
     $('#assessment-select').focus();

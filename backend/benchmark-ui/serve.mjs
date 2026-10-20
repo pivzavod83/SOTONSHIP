@@ -30,7 +30,11 @@ export function createBenchmarkServer({
     const value = await catalogLoader();
     return { ...value, versions: value.versions.map(version => ({ ...version,
       source: { ...version.source, localReportUrl: `/reports/${encodeURIComponent(version.id)}` },
-    })) };
+    })), ...(value.parserExperiments ? { parserExperiments: { ...value.parserExperiments,
+      versions: value.parserExperiments.versions.map(version => ({ ...version,
+        source: { ...version.source, ...(version.id === 'parser-v3' ? { localReportUrl: '/reports/parser-v3' } : {}) },
+      })),
+    } } : {}) };
   };
   return createServer(async (request, response) => {
     const send = (status, body, type = 'application/json; charset=utf-8', extra = {}) => {
@@ -53,7 +57,8 @@ export function createBenchmarkServer({
         { 'Content-Disposition': 'attachment; filename="parity-benchmark-catalog.json"' });
       if (url.pathname.startsWith('/reports/')) {
         const id = decodeURIComponent(url.pathname.slice('/reports/'.length));
-        const version = (await catalog()).versions.find(item => item.id === id);
+        const recorded = await catalog();
+        const version = [...recorded.versions, ...(recorded.parserExperiments?.versions ?? [])].find(item => item.id === id);
         if (!version?.source?.reportPath) return send(404, { message: 'Unknown report.' });
         const relative = version.source.reportPath;
         const absolute = resolve(repoRoot, relative);

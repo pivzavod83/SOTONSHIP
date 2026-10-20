@@ -1,0 +1,99 @@
+{
+  "artifact": "parser-v3-build-provenance",
+  "bitForBitReproducibilityClaimed": false,
+  "builtAt": "2026-10-20T15:57:56.429475+00:00",
+  "jar": {
+    "bytes": 19519393,
+    "sha256": "e8e9920c7179983ed72837c7f685653d251f5b67941800ae75a2223d4b5ed21d"
+  },
+  "moduleSources": {
+    "src/main/java/org/omul/parser/CobolFrontend.java": "fa50be8d7f85a194b58dce1b06c3a4825ae32c9c56f6250ae5eb729e3302f790",
+    "src/main/java/org/omul/parser/JavaFrontend.java": "e2eb777726efda4f76506ac4d13ae0de3c7766e9c4aa311cc771055d600708db",
+    "src/main/java/org/omul/parser/ParserMain.java": "af22d5c56aaf99db1c4e0280fd9463b7c4b95c1ac35535f49651a62ae980da14",
+    "src/test/java/org/omul/parser/CobolFrontendTest.java": "71066cd024a4be1a87a6433d90c71dfd08b9bef2dd2da47519e4a4eb83985542",
+    "src/test/java/org/omul/parser/JavaFrontendTest.java": "4bdc320b67e2c937dca0e5bc7bebfd271ea68d55c2834e2926c136d14735e10e"
+  },
+  "pomSha256": "339385680f844af9e8cc6ceedb152c79882affafea58a94c6fcfd4eb4082842a",
+  "runtimeDependencies": [
+    {
+      "coordinate": "com.fasterxml.jackson.core:jackson-annotations:2.22",
+      "jarMetadata": "META-INF/maven/com.fasterxml.jackson.core/jackson-annotations/pom.properties",
+      "sha256": "21ddb598807d3a51a876704eb979d9296e1c6a6f47ab1826ff88c6d6a127a2d0"
+    },
+    {
+      "coordinate": "com.fasterxml.jackson.core:jackson-core:2.22.4",
+      "jarMetadata": "META-INF/maven/com.fasterxml.jackson.core/jackson-core/pom.properties",
+      "sha256": "2d30c375cddea9657a1e1ef97547a2694b663b355facb4de53a097782b312d1a"
+    },
+    {
+      "coordinate": "com.fasterxml.jackson.core:jackson-databind:2.22.4",
+      "jarMetadata": "META-INF/maven/com.fasterxml.jackson.core/jackson-databind/pom.properties",
+      "sha256": "d4cbf8947087f305869826801913abdc50735a1fab2074a1993e7bc67ca974a3"
+    },
+    {
+      "coordinate": "io.github.uwol:proleap-cobol-parser:4.0.0",
+      "jarMetadata": "META-INF/maven/io.github.uwol/proleap-cobol-parser/pom.properties",
+      "sha256": "c7a953fee57856a213c60c0ca58081ee7d886bd189c6b12a3adc2e8bb508b6c7"
+    },
+    {
+      "coordinate": "org.abego.treelayout:org.abego.treelayout.core:1.0.3",
+      "jarMetadata": "META-INF/maven/org.abego.treelayout/org.abego.treelayout.core/pom.properties",
+      "sha256": "fa5e31395c39c2e7d46aca0f81f72060931607b2fa41bd36038eb2cb6fb93326"
+    },
+    {
+      "coordinate": "org.antlr:ST4:4.1",
+      "jarMetadata": "META-INF/maven/org.antlr/ST4/pom.properties",
+      "sha256": "8b1ccaed9edc55cd255d9c19c4d8da4756d9b6fcb435671292b43470b16d75d8"
+    },
+    {
+      "coordinate": "org.antlr:antlr-runtime:3.5.2",
+      "jarMetadata": "META-INF/maven/org.antlr/antlr-runtime/pom.properties",
+      "sha256": "ce3fc8ecb10f39e9a3cddcbb2ce350d272d9cd3d0b1e18e6fe73c3b9389c8734"
+    },
+    {
+      "coordinate": "org.antlr:antlr4-runtime:4.7.2",
+      "jarMetadata": "META-INF/maven/org.antlr/antlr4-runtime/pom.properties",
+      "sha256": "4c518b87d4bdff8b44cd8cbc1af816e944b62a3fe5b80b781501cf1f4759bbc4"
+    },
+    {
+      "coordinate": "org.antlr:antlr4:4.7.2",
+      "jarMetadata": "META-INF/maven/org.antlr/antlr4/pom.properties",
+      "sha256": "a3811fad1e4cb6dde62c189c204cf931c5fa40e06e43839ead4a9f2e188f2fe5"
+    },
+    {
+      "coordinate": "org.glassfish:javax.json:1.0.4",
+      "jarMetadata": "META-INF/maven/org.glassfish/javax.json/pom.properties",
+      "sha256": "0e1dec40a1ede965941251eda968aeee052cc4f50378bc316cc48e8159bdbeb4"
+    },
+    {
+      "coordinate": "org.slf4j:slf4j-api:2.0.9",
+      "jarMetadata": "META-INF/maven/org.slf4j/slf4j-api/pom.properties",
+      "sha256": "0818930dc8d7debb403204611691da58e49d42c50b6ffcfdce02dadb7c3c2b6c"
+    },
+    {
+      "coordinate": "org.slf4j:slf4j-nop:2.0.9",
+      "jarMetadata": "META-INF/maven/org.slf4j/slf4j-nop/pom.properties",
+      "sha256": "5612367b12bac3eacf4e6ff4e06ce5ba1c83c4d8d6d5e2ea5f924635717a6d83"
+    }
+  ],
+  "schemaVersion": 1,
+  "submittedProgramsExecuted": false,
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 10
+  },
+  "toolchain": {
+    "javaVersion": "java version \"21.0.10\" 2026-01-20 LTS\nJava(TM) SE Runtime Environment (build 21.0.10+8-LTS-217)\nJava HotSpot(TM) 64-Bit Server VM (build 21.0.10+8-LTS-217, mixed mode, sharing)",
+    "javacVersion": "javac 21.0.10",
+    "mavenVersion": "Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb73fd829a51d5)"
+  },
+  "upstream": {
+    "commit": "d1bfe75bdd6d480f70c74c6345bcc02610ac30d3",
+    "license": "MIT",
+    "licenseSha256": "5de028e49764aa5f3212085092085b3c26350cb68d73535264667f96b05a98ac",
+    "repository": "https://github.com/uwol/proleap-cobol-parser.git",
+    "trackedSourceClean": true
+  }
+}

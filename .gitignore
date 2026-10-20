@@ -20,4 +20,5 @@ pgdata/
 ml-engine/evaluation/private/
 ml-engine/evaluation/corpora/
 ml-engine/evaluation/reports/
+ml-engine/parser-frontends/target/
 backend/src/common/migrations/.snapshot-*.json

@@ -1,0 +1,51 @@
+{
+  "budgets": {
+    "frontendRequestTimeoutSeconds": 15,
+    "jvmHeapMiB": 768,
+    "sourceBytes": 200000
+  },
+  "cobolCompilerProfile": "Configured GnuCOBOL default dialect (actual version in toolchain), explicit FREE/FIXED; upstream compiler contract unknown",
+  "cohort": "Exactly the frozen 650 pairs across325 CodeNet problem IDs; all1277 COBOL sources under each explicit FREE/FIXED probe,650 Java sources.",
+  "createdAtUtc": "2026-10-20T15:59:36.800134+00:00",
+  "evaluationReuse": "Existing exposed source-coverage cohort; no classifier training, labels, threshold selection or accuracy evaluation.",
+  "experimentId": "parser-v3",
+  "implementationHashes": {
+    "ml-engine/ml_engine/cobol_extractor_v2.py": "68e71eb02e3029ec883dc7445a60271c67ff77e0ba3350489c5c5e9c8d2f71e1",
+    "ml-engine/ml_engine/java_extractor_v2.py": "e5133e89b862c4443e15ae0b088d9c1f7e39af455eceddc5a9a2be25501b7ab1",
+    "ml-engine/ml_engine/parser_frontends_v3.py": "dbc5a99bd349b0c6a9f860cb198bdb6fade98f5c653b14318488f68da7286e63",
+    "ml-engine/ml_engine/semantic_ir.py": "0415a42889cc7d39b779d09a5f1bfdc8f0c02283bc51406e22a6d63aba564fa0",
+    "ml-engine/parser-frontends/pom.xml": "339385680f844af9e8cc6ceedb152c79882affafea58a94c6fcfd4eb4082842a",
+    "ml-engine/parser-frontends/src/main/java/org/omul/parser/CobolFrontend.java": "fa50be8d7f85a194b58dce1b06c3a4825ae32c9c56f6250ae5eb729e3302f790",
+    "ml-engine/parser-frontends/src/main/java/org/omul/parser/JavaFrontend.java": "e2eb777726efda4f76506ac4d13ae0de3c7766e9c4aa311cc771055d600708db",
+    "ml-engine/parser-frontends/src/main/java/org/omul/parser/ParserMain.java": "af22d5c56aaf99db1c4e0280fd9463b7c4b95c1ac35535f49651a62ae980da14",
+    "ml-engine/parser-frontends/src/test/java/org/omul/parser/CobolFrontendTest.java": "71066cd024a4be1a87a6433d90c71dfd08b9bef2dd2da47519e4a4eb83985542",
+    "ml-engine/parser-frontends/src/test/java/org/omul/parser/JavaFrontendTest.java": "4bdc320b67e2c937dca0e5bc7bebfd271ea68d55c2834e2926c136d14735e10e",
+    "ml-engine/scripts/audit_codenet_coverage.py": "a6c0422401042e0353eac91d35a443881d30df3b0c6956abdf3b40b4781710d1",
+    "ml-engine/scripts/benchmark_parser_v3.py": "b6c4109844d8277c5f9fbfdabc5bf82aff3a8bc3b6eb3850bb3db9471b1dff23"
+  },
+  "javaLanguageLevel": 17,
+  "metrics": {
+    "namesTypesResolved": "Java: javac analysis succeeds and recorded bindings are complete. COBOL: complete ProLeap ASG with zero undefined references AND GnuCOBOL static check succeeds. Compiler/profile scoped, not behavioral correctness.",
+    "semanticsModeled": "Earlier two stages complete AND existing bounded typed IR lowerer recorded COMPLETE for identical source/hash. Representation coverage only, not proof of faithful behavior or equivalence.",
+    "syntaxParsed": "Whole-source grammar parsed with no lexer/parser errors; not general compilation validity."
+  },
+  "modelTrained": false,
+  "schemaVersion": 1,
+  "selectionBeforeParsing": true,
+  "semanticLowerer": "Unchanged typed-semantic-ir-v2; per-source coverage reused from hash-verified frozen audit, then gated by V3 syntax/resolution.",
+  "sourceArchive": {
+    "bytes": 8343137473,
+    "filename": "Project_CodeNet.tar.gz",
+    "sha256": "7e96620307f874269a62cc0225f2a5a13d2de2b3c368cf61319c87ec276620fb"
+  },
+  "sourceCoverageReportSha256": "298b7c6d172a2533baf1a603d43bc341915a904e584a0bbb5725d9525dde11b9",
+  "sourceFormatInferred": false,
+  "toolchain": {
+    "cobol": "cobc (GnuCOBOL) 3.2.0",
+    "jarSha256": "e8e9920c7179983ed72837c7f685653d251f5b67941800ae75a2223d4b5ed21d",
+    "java": "java version \"21.0.10\" 2026-01-20 LTS",
+    "proleapCommit": "d1bfe75bdd6d480f70c74c6345bcc02610ac30d3"
+  },
+  "trainingEligible": false,
+  "upstreamProgramsExecuted": false
+}

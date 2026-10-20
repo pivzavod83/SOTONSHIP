@@ -22,6 +22,17 @@ commit. Research entries link to peer-reviewed papers and clearly distinguish
 proposed experiments from trained models. The failure inspector shows a stored,
 source-bound runtime discrepancy, not a newly executed program.
 
+The **Parser experiments** tab compares the frozen bounded V2 extractor with
+the experimental V3 compiler frontends. It reports **syntax parsed**, **complete
+name/type resolution**, and **complete shared semantic representation** as
+separate counts with explicit denominators, failures and unknown outcomes.
+FREE and FIXED COBOL source-format probes remain separate. Individual-language
+source counts differ from the pair-level cohort. V3 retains the bounded typed
+IR lowerer; an AST does not count as modeled semantics. These are coverage
+measurements, not classifier accuracy, and the eleven trained model versions
+remain unchanged. Diagnostic examples can be filtered by language. The page
+reads the frozen offline run and cannot run a parser or submitted code.
+
 The defect pilot contains **40 pairs across ten source families**: 24 grouped
 out-of-fold predictions, eight validation pairs and eight reused regression
 pairs. Use **View 24-pair cross-validation** to inspect the larger development

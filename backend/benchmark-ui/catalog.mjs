@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import path from 'node:path';
+import { PARSER_DIRECTORY, PARSER_REPORT, projectParserExperiment } from './parser-catalog.mjs';
 
 const run = promisify(execFile);
 const DEFECT = 'ml-engine/evaluation/synthetic-pilot/defect-model-v1';
@@ -343,6 +344,28 @@ export async function buildCatalog({
     sources: { inventory: await source(`${CODENET}/inventory.json`), coverage: await source(`${CODENET}/extractor-coverage.json`),
       supportingMetadata: await source(`${CODENET}/supporting-metadata.json`) },
   };
+  let parserExperiments = null;
+  let parserReport = null;
+  try { parserReport = await load(PARSER_REPORT); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+  if (parserReport) {
+    for (const profile of ['FREE', 'FIXED']) {
+      if (parserReport.profiles?.[profile]?.pairs !== codeNetCoverage.profileResults[profile].pairs
+          || parserReport.baseline?.profiles?.[profile]?.metrics?.semanticsModeled?.count !== codeNetCoverage.profileResults[profile].bothFrontendsComplete) {
+        throw new Error('Parser V3 comparison does not match the recorded CodeNet cohort and V2 baseline.');
+      }
+    }
+    const [manifest] = await Promise.all([load(`${PARSER_DIRECTORY}/artifact-hashes.json`), load(`${PARSER_DIRECTORY}/protocol.json`)]);
+    const expected = manifest.files?.[PARSER_REPORT];
+    if (!/^[a-f0-9]{64}$/.test(expected ?? '')) throw new Error('Parser V3 report hash binding missing.');
+    const parserSource = await source(PARSER_REPORT, expected,
+      Object.entries(manifest.files).filter(([file]) => file !== PARSER_REPORT));
+    if (parserSource.integrity !== 'verified') throw new Error('Parser V3 report or related artifact hash mismatch.');
+    parserExperiments = projectParserExperiment({ report: parserReport, source: parserSource,
+      baselineSource: codeNetReadiness.sources.coverage,
+      protocolUrl: `${url}/blob/${commit ?? encodePath(branch ?? 'HEAD')}/${PARSER_DIRECTORY}/protocol.json`,
+      documentationUrl: `${url}/blob/${commit ?? encodePath(branch ?? 'HEAD')}/ml-engine/evaluation/parser-v3/README.md` });
+  }
   return {
     schemaVersion: 1, generatedAt,
     repository: { url, branch, branchUrl, commit, commitUrl }, versions,
@@ -353,7 +376,7 @@ export async function buildCatalog({
       note: 'Eight representation contracts passed. This is extraction evidence, not eight accuracy samples or compiler validation.',
       abandonedAudit: { path: 'ml-engine/evaluation/extractor-v2/pilot-r1/contract-diagnostics.json',
         status: 'Pre-fit audit; no trained R1 version. Its issue was corrected before the R2 experiment.' } },
-    caseStudy, codeNetReadiness,
+    caseStudy, codeNetReadiness, parserExperiments,
     methodology: { readOnly: true, inferencePerformed: false, trainingPerformed: false,
       defectPilot: { totalPairs: dataset.families.reduce((count, item) => count + item.variants.length, 0), sourceFamilies: dataset.families.length,
         groupedOutOfFoldPairs: v2Oof['typed-v2'].reviewTriageIncludingAbstentions.pairs,

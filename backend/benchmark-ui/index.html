@@ -17,6 +17,7 @@
     <nav id="navigation">
       <a href="#overview" data-view="overview" class="nav-link active"><span aria-hidden="true">◫</span> Overview</a>
       <a href="#versions" data-view="versions" class="nav-link"><span aria-hidden="true">▤</span> Model registry <span id="version-count" class="nav-count">—</span></a>
+      <a href="#parsers" data-view="parsers" class="nav-link"><span aria-hidden="true">⌁</span> Parser experiments <span id="parser-count" class="nav-count">—</span></a>
       <a href="#case-study" data-view="case-study" class="nav-link"><span aria-hidden="true">⌘</span> Failure inspector</a>
       <a href="#research" data-view="research" class="nav-link"><span aria-hidden="true">↗</span> Research & next steps</a>
     </nav>
@@ -33,6 +34,7 @@
           <div class="scope-banner"><span class="scope-icon" aria-hidden="true">i</span><p><strong>Two tasks. Different questions.</strong> Defect detection examines a supplied COBOL–Java pair. Program matching retrieves a likely counterpart. Their scores are not interchangeable.</p><span class="outline-badge">NO AUTOMATIC APPROVAL</span></div>
           <div class="scope-banner" id="pilot-scope"><span class="scope-icon" aria-hidden="true">i</span><p><strong>Defect pilot: 40 pairs across 10 source families.</strong> 24 grouped out-of-fold predictions · 8 validation pairs · 8 reused regression pairs. These assessments remain separate; the regression examples are already known.</p><button id="show-pilot-cv" class="secondary-button">View 24-pair cross-validation <span aria-hidden="true">→</span></button></div>
           <article id="codenet-readiness" class="panel readiness-panel" hidden aria-label="CodeNet source coverage and training readiness"></article>
+          <a class="parser-overview-link" href="#parsers"><span><strong>Parser V3 · compiler frontends</strong><small>Compare syntax, name/type resolution, and semantic coverage separately.</small></span><span aria-hidden="true">→</span></a>
           <div id="overview-stats" class="stat-grid"></div>
           <div id="contract-summary" class="contract-summary"></div>
           <div class="section-top"><div><p class="eyebrow">EXPERIMENT TRACKER</p><h2>Compare the evidence</h2></div><span class="subtle-label">Original reports · no live retraining</span></div>
@@ -50,6 +52,12 @@
           <div class="page-heading"><div><p class="eyebrow"><span class="tiny-rule"></span> VERSIONED METHODS / INSPECTABLE REPORTS</p><h1>The model registry.</h1><p class="lead">Every recorded version, with its purpose, measurements, and limitations.</p></div><span class="outline-badge">REPOSITORY-BACKED</span></div>
           <div class="registry-controls"><label class="search-field"><span aria-hidden="true">⌕</span><input id="version-search" type="search" placeholder="Search models, methods, limitations…" aria-label="Search model versions"><kbd>/</kbd></label><label class="select-label">Task <select id="registry-task"><option value="all">All tasks</option><option value="defect">Defect detection</option><option value="matching">Program matching</option></select></label><label class="select-label">Status <select id="registry-status"><option value="all">All statuses</option><option value="deployed">Deployed</option><option value="experimental">Experimental</option><option value="historical">Historical</option></select></label></div>
           <div id="registry-summary" class="registry-summary" role="status"></div><div id="version-grid" class="version-grid"></div>
+        </section>
+        <section id="view-parsers" class="view" hidden>
+          <div class="page-heading"><div><p class="eyebrow"><span class="tiny-rule"></span> EXPERIMENTAL FRONTENDS / THREE COVERAGE STAGES</p><h1>Parse first. Understand next.</h1><p class="lead">The new Parser V3 and the frozen V2 baseline, measured on the same source pairs.</p></div><span class="outline-badge amber">PARSER ≠ TRAINED MODEL</span></div>
+          <div class="scope-banner"><span class="scope-icon" aria-hidden="true">i</span><p><strong>Three separate questions.</strong> Can we read the syntax? Can we resolve names and types? Can our shared representation capture the program's meaning? Parsing alone does not establish equivalent behavior.</p></div>
+          <div class="panel-controls parser-controls"><label class="select-label">COBOL source-format probe <select id="parser-profile" aria-label="Parser COBOL source format"><option value="FREE">FREE format</option><option value="FIXED">FIXED format</option></select></label><span class="subtle-label">Separate probes · source format has not been established for each file</span></div>
+          <div id="parser-content"></div>
         </section>
         <section id="view-case-study" class="view" hidden>
           <div class="page-heading"><div><p class="eyebrow"><span class="tiny-rule"></span> STORED BEHAVIORAL EVIDENCE</p><h1>A real mismatch, in context.</h1><p class="lead">Inspect the source, the responsible line, and the inputs that expose the difference.</p></div><span class="outline-badge amber">KNOWN REGRESSION CASE</span></div>

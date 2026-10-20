@@ -46,6 +46,7 @@ test('24-pair action switches from program matching to grouped defect CV without
   assert.equal(get('#error-panel').hidden, true);
   assert.equal(get('#codenet-readiness').hidden, false);
   assert.match(get('#codenet-readiness').innerHTML, /650 source-pair comparisons/);
+  assert.match(get('#codenet-readiness').innerHTML, /Frozen V2 extractor completes both sides/);
   assert.match(get('#codenet-readiness').innerHTML, /FREE 0 \/ 650 · FIXED 0 \/ 650/);
   assert.match(get('#codenet-readiness').innerHTML, /Model accuracy and defect recall: not measured/);
   assert.doesNotMatch(get('#codenet-readiness').innerHTML, /0%|100%/);
@@ -71,4 +72,50 @@ test('initial page explains all forty pairs and never embeds a stale branch URL'
   assert.match(html, /8 validation pairs · 8 reused regression pairs/);
   assert.match(html, /id="show-pilot-cv"/);
   assert.doesNotMatch(html, /\/tree\/research\/benchmark-dashboard|\/commits\/research\/benchmark-dashboard/);
+});
+
+test('parser UI preserves unknown stages, switches source-format probes and filters escaped diagnostics', async () => {
+  const nodes = new Map();
+  const get = selector => { if (!nodes.has(selector)) nodes.set(selector, node()); return nodes.get(selector); };
+  get('#registry-task').value = get('#registry-status').value = 'all';
+  const metrics = count => ({ syntaxParsed: { count, denominator: 10, status: 'MEASURED', unknown: 0, failed: 10 - count },
+    namesTypesResolved: { count: 0, denominator: 10, status: 'MEASURED', unknown: 10, failed: 0 },
+    semanticsModeled: { count: 0, denominator: 10, status: 'MEASURED', unknown: 10, failed: 0 } });
+  const baselineMetrics = { syntaxParsed: { count: null, denominator: 10, status: 'NOT_SEPARATELY_MEASURED' },
+    namesTypesResolved: { count: null, denominator: 10, status: 'NOT_SEPARATELY_MEASURED' },
+    semanticsModeled: { count: 0, denominator: 10, status: 'MEASURED' } };
+  const catalog = { repository: {}, versions: [], parserExperiments: { versions: [
+    { id: 'parser-typed-v2', name: 'V2', profiles: { FREE: { metrics: baselineMetrics }, FIXED: { metrics: baselineMetrics } } },
+    { id: 'parser-v3', name: 'V3', status: 'EXPERIMENTAL', profiles: { FREE: { metrics: metrics(10) }, FIXED: { metrics: metrics(6) } },
+      failureExamples: [{ language: 'COBOL', profile: 'FREE', path: 'free.cob', message: '<img src=x onerror=alert(1)>' },
+        { language: 'COBOL', profile: 'FIXED', path: 'fixed.cob', message: 'Expected division.' },
+        { language: 'Java', path: 'source.java', message: 'Unresolved import.' }] },
+  ] } };
+  const document = { querySelector: get, querySelectorAll: () => [], addEventListener() {} };
+  vm.runInNewContext(source, { document, window: { addEventListener() {} },
+    location: { origin: 'http://127.0.0.1:3010', hash: '#parsers' }, history: { replaceState() {} }, URL, setTimeout, clearTimeout,
+    fetch: async path => ({ ok: true, json: async () => path === '/api/catalog' ? catalog : { papers: [], proposals: [] } }) });
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(get('#error-panel').hidden, true);
+  assert.equal(get('#parser-count').textContent, '2');
+  assert.equal(get('#version-count').textContent, '0');
+  const initial = get('#parser-content').innerHTML;
+  assert.match(initial, /Syntax parsed/);
+  assert.match(initial, /Names \/ types resolved/);
+  assert.match(initial, /Semantic representation complete/);
+  assert.match(initial, /Not measured/);
+  assert.match(initial, /0 failed · 10 unknown/);
+  assert.match(initial, /&lt;img src=x onerror=alert\(1\)&gt;/);
+  assert.doesNotMatch(initial, /<img|fixed\.cob/);
+  get('#parser-profile').listeners.change({ target: { value: 'FIXED' } });
+  const fixed = get('#parser-content').innerHTML;
+  assert.match(fixed, /60\.0%/);
+  assert.match(fixed, /fixed\.cob/);
+  assert.doesNotMatch(fixed, /free\.cob/);
+  get('#parser-content').listeners.change({ target: { id: 'parser-diagnostic-language', value: 'Java' } });
+  const java = get('#parser-content').innerHTML;
+  assert.match(java, /source\.java/);
+  assert.doesNotMatch(java, /fixed\.cob/);
+  assert.match(java, /1 of 2 recorded diagnostic examples/);
+  assert.equal(get('#parser-diagnostic-language').focused, true);
 });
